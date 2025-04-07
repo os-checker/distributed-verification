@@ -1,4 +1,4 @@
-#![feature(rustc_private, let_chains)]
+#![feature(rustc_private, let_chains, try_blocks)]
 
 extern crate rustc_driver;
 extern crate rustc_hir;
@@ -7,8 +7,11 @@ extern crate rustc_middle;
 extern crate rustc_span;
 extern crate stable_mir;
 
+use eyre::{Context, Result};
 use rustc_driver::{Compilation, run_compiler};
+use std::path::PathBuf;
 
+mod cli;
 mod functions;
 mod logger;
 
@@ -17,9 +20,11 @@ extern crate tracing;
 
 fn main() {
     logger::init();
-    let mut v: Vec<_> = std::env::args().collect();
-    v.extend(
+    let cli = cli::parse();
+    let mut v = Vec::from(
         [
+            // the first argument to rustc is unimportant
+            "rustc",
             "--crate-type=lib",
             "--cfg=kani",
             "-Z",
@@ -38,10 +43,13 @@ fn main() {
         ]
         .map(String::from),
     );
-    run_compiler(&v, &mut Callback {});
+    v.extend(cli.rustc_args);
+    run_compiler(&v, &mut Callback { json: cli.json });
 }
 
-struct Callback {}
+struct Callback {
+    json: Option<PathBuf>,
+}
 
 impl rustc_driver::Callbacks for Callback {
     fn after_analysis<'tcx>(
@@ -50,12 +58,33 @@ impl rustc_driver::Callbacks for Callback {
         tcx: rustc_middle::ty::TyCtxt<'tcx>,
     ) -> Compilation {
         let src_map = rustc_span::source_map::get_source_map().expect("No source map.");
+
+        let mut output = Vec::new();
+
         for id in tcx.hir_free_items() {
             let _span = debug_span!("rustc_driver_callback", ?id).entered();
             let item = tcx.hir_item(id);
             let func = functions::Function::new(item, &src_map, tcx);
             debug!("{func:#?}");
+            if let Some(f) = func {
+                output.push(f);
+            }
         }
+
+        let res: Result<()> = try {
+            match &self.json {
+                Some(path) => {
+                    let _span = error_span!("write_json", ?path).entered();
+                    let file = std::fs::File::create(path)?;
+                    serde_json::to_writer_pretty(file, &output)
+                        .with_context(|| "Failed to write functions to json")?
+                }
+                None => serde_json::to_writer_pretty(std::io::stdout(), &output)
+                    .with_context(|| "Failed to write functions to stdout")?,
+            }
+        };
+
+        res.unwrap();
         Compilation::Stop
     }
 }
