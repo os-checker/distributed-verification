@@ -13,6 +13,10 @@ tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 tracing-error = "0.2"
 
+[dev-dependencies]
+assert_cmd = "2.0.16"
+expect-test = "1.5.1"
+
 [lints.rust]
 unexpected_cfgs = { level = "warn", check-cfg = ['cfg(kani)'] }
 
