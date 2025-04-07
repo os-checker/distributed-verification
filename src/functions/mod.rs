@@ -37,7 +37,7 @@ impl Function {
                 let src_attr = src_map
                     .span_to_source(attr.span(), |text, x, y| {
                         let src = &text[x..y];
-                        println!("[attr {i}] [{x}:{y}]\n{src}");
+                        debug!("[attr {i}] [{x}:{y}]\n{src}");
                         Ok(src.to_owned())
                     })
                     .unwrap();
@@ -48,7 +48,7 @@ impl Function {
             func.func = src_map
                 .span_to_source(item.span, |text, x, y| {
                     let src = &text[x..y];
-                    println!("[{x}:{y}]\n{src}");
+                    debug!("[{x}:{y}]\n{src}");
                     Ok(src.to_owned())
                 })
                 .unwrap();

@@ -10,8 +10,13 @@ extern crate stable_mir;
 use rustc_driver::{Compilation, run_compiler};
 
 mod functions;
+mod logger;
+
+#[macro_use]
+extern crate tracing;
 
 fn main() {
+    logger::init();
     let mut v: Vec<_> = std::env::args().collect();
     v.extend(
         [
@@ -46,12 +51,11 @@ impl rustc_driver::Callbacks for Callback {
     ) -> Compilation {
         let src_map = rustc_span::source_map::get_source_map().expect("No source map.");
         for id in tcx.hir_free_items() {
+            let _span = debug_span!("rustc_driver_callback", ?id).entered();
             let item = tcx.hir_item(id);
             let func = functions::Function::new(item, &src_map, tcx);
-            dbg!(func);
+            debug!("{func:#?}");
         }
-        // let items = stable_mir::all_local_items();
-        // dbg!(&items);
         Compilation::Stop
     }
 }
