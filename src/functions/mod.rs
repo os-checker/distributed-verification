@@ -4,6 +4,7 @@ use rustc_span::source_map::SourceMap;
 use serde::Serialize;
 
 mod call_graph;
+mod visit_expr;
 
 /// A Rust funtion with its file source, attributes, and raw function content.
 #[derive(Debug, Default, Serialize)]
@@ -59,7 +60,8 @@ impl Function {
             // dbg!(tcx.hir_body(*body));
             let fn_body = tcx.hir_body(*body);
             if let ExprKind::Block(block, _) = fn_body.value.kind {
-                dbg!(block);
+                let callees = visit_expr::get_callees(block, tcx);
+                dbg!(&callees);
             }
 
             return Some(func);

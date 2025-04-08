@@ -1,4 +1,4 @@
-#![feature(rustc_private, let_chains, try_blocks)]
+#![feature(rustc_private, let_chains, try_blocks, hash_set_entry)]
 
 extern crate rustc_driver;
 extern crate rustc_hir;
