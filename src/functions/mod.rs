@@ -1,7 +1,9 @@
-use rustc_hir::{Item, ItemKind};
+use rustc_hir::{ExprKind, Item, ItemKind};
 use rustc_middle::ty::TyCtxt;
 use rustc_span::source_map::SourceMap;
 use serde::Serialize;
+
+mod call_graph;
 
 /// A Rust funtion with its file source, attributes, and raw function content.
 #[derive(Debug, Default, Serialize)]
@@ -18,7 +20,7 @@ pub struct Function {
 
 impl Function {
     pub fn new(item: &Item, src_map: &SourceMap, tcx: TyCtxt) -> Option<Self> {
-        if let ItemKind::Fn { has_body, .. } = &item.kind
+        if let ItemKind::Fn { has_body, body, .. } = &item.kind
             && *has_body
         {
             let mut func = Function {
@@ -53,6 +55,13 @@ impl Function {
                     Ok(src.to_owned())
                 })
                 .unwrap();
+
+            // dbg!(tcx.hir_body(*body));
+            let fn_body = tcx.hir_body(*body);
+            if let ExprKind::Block(block, _) = fn_body.value.kind {
+                dbg!(block);
+            }
+
             return Some(func);
         }
         None
