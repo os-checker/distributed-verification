@@ -9,4 +9,17 @@ mod verify {
     #[kani::proof]
     #[allow(unused_mut)]
     fn standard_proof_empty() {}
+
+    #[kani::proof]
+    fn recursive_callees() {
+        crate::top_level();
+    }
+}
+
+pub fn top_level() {
+    m::func1();
+}
+
+mod m {
+    pub fn func1() {}
 }

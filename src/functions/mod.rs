@@ -17,6 +17,8 @@ pub struct Function {
     attrs: Vec<String>,
     /// Raw function string, including name, signature, and body.
     func: String,
+    /// Recursive fnction calls inside the body.
+    callees: Vec<String>,
 }
 
 impl Function {
@@ -57,12 +59,11 @@ impl Function {
                 })
                 .unwrap();
 
-            // dbg!(tcx.hir_body(*body));
             let fn_body = tcx.hir_body(*body);
-            if let ExprKind::Block(block, _) = fn_body.value.kind {
-                let callees = visit_expr::get_callees(block, tcx);
-                dbg!(&callees);
-            }
+            let ExprKind::Block(block, _) = fn_body.value.kind else { return None };
+            let callees = visitor::get_callees(block, tcx);
+            info!("{callees:#?}");
+            func.callees = callees.into_iter().map(|x| format!("{x:?}")).collect();
 
             return Some(func);
         }

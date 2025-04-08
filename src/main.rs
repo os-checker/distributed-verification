@@ -62,7 +62,7 @@ impl rustc_driver::Callbacks for Callback {
         let mut output = Vec::new();
 
         for id in tcx.hir_free_items() {
-            let _span = debug_span!("rustc_driver_callback", ?id).entered();
+            let _span = info_span!("rustc_driver_callback", ?id).entered();
             let item = tcx.hir_item(id);
             let func = functions::Function::new(item, &src_map, tcx);
             debug!("{func:#?}");
