@@ -6,7 +6,9 @@ type Callees = HashSet<DefId>;
 
 /// All nested callees for the fn body after recursive visit.
 pub fn get_callees<'tcx>(block: &'tcx Block, tcx: TyCtxt<'tcx>) -> Callees {
-    let mut visitor = VistFnBlock::new(block.hir_id, tcx);
+    let hir_id = block.hir_id;
+    let _span = info_span!("get_callees", ?hir_id);
+    let mut visitor = VistFnBlock::new(hir_id, tcx);
     visitor.visit_block(block);
     visitor.callee
 }
@@ -31,7 +33,8 @@ impl<'tcx> VistFnBlock<'tcx> {
 
     /// Add a callee from a function path.
     fn add_callee(&mut self, qpath: QPath<'_>) {
-        let def_id = self.tyck.qpath_res(&qpath, self.hir_id).def_id();
+        let qpath_res = self.tyck.qpath_res(&qpath, self.hir_id);
+        let def_id = qpath_res.def_id();
         self.callee.get_or_insert(def_id);
     }
 }
@@ -52,6 +55,8 @@ impl<'tcx> Visitor<'tcx> for VistFnBlock<'tcx> {
             ExprKind::Call(expr, exprs) => {
                 if let ExprKind::Path(qpath) = expr.kind {
                     self.add_callee(qpath);
+                } else {
+                    walk_expr(self, expr);
                 }
                 exprs.iter().for_each(|e| walk_expr(self, e));
             }

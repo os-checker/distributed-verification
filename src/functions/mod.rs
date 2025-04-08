@@ -4,7 +4,7 @@ use rustc_span::source_map::SourceMap;
 use serde::Serialize;
 
 mod call_graph;
-mod visit_expr;
+mod visitor;
 
 /// A Rust funtion with its file source, attributes, and raw function content.
 #[derive(Debug, Default, Serialize)]
