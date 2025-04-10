@@ -21,5 +21,7 @@ pub fn top_level() {
 }
 
 mod m {
-    pub fn func1() {}
+    pub fn func1() {
+        let _a = "".trim();
+    }
 }

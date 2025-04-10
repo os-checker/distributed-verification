@@ -1,6 +1,7 @@
 use rustc_hir::{ExprKind, Item, ItemKind};
 use rustc_middle::ty::TyCtxt;
-use rustc_span::source_map::SourceMap;
+use rustc_smir::rustc_internal::internal;
+use rustc_span::{Span, source_map::SourceMap};
 use serde::Serialize;
 
 mod call_graph;
@@ -51,22 +52,38 @@ impl Function {
             }
 
             // add function
-            func.func = src_map
-                .span_to_source(item.span, |text, x, y| {
-                    let src = &text[x..y];
-                    debug!("[{x}:{y}]\n{src}");
-                    Ok(src.to_owned())
-                })
-                .unwrap();
+            func.func = source_code(item.span, src_map);
 
             let fn_body = tcx.hir_body(*body);
             let ExprKind::Block(block, _) = fn_body.value.kind else { return None };
             let callees = visitor::get_callees(block, tcx);
-            info!("{callees:#?}");
+            debug!("{callees:#?}");
             func.callees = callees.into_iter().map(|x| format!("{x:?}")).collect();
 
+            // dbg!(tcx.promoted_mir(item.owner_id));
             return Some(func);
         }
         None
     }
+}
+
+/// Source code for a span.
+pub fn source_code(span: Span, src_map: &SourceMap) -> String {
+    src_map
+        .span_to_source(span, |text, x, y| {
+            let src = &text[x..y];
+            debug!("[{x}:{y}]\n{src}");
+            Ok(src.to_owned())
+        })
+        .unwrap()
+}
+
+/// Source code for a stable_mir span.
+pub fn source_code_with(
+    stable_mir_span: stable_mir::ty::Span,
+    tcx: TyCtxt,
+    src_map: &SourceMap,
+) -> String {
+    let span = internal(tcx, stable_mir_span);
+    source_code(span, src_map)
 }

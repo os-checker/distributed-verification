@@ -19,14 +19,15 @@ pub struct VistFnBlock<'tcx> {
     callee: HashSet<DefId>,
     hir_id: HirId,
     /// 'tcx seems to strict here
-    tyck: TypeckResults<'tcx>,
+    tyck: &'tcx TypeckResults<'tcx>,
     tcx: TyCtxt<'tcx>,
 }
 
 impl<'tcx> VistFnBlock<'tcx> {
     pub fn new(hir_id: HirId, tcx: TyCtxt<'tcx>) -> Self {
         let hir_owner = tcx.hir_get_parent_item(hir_id);
-        let tyck = TypeckResults::new(hir_owner);
+        // let tyck = TypeckResults::new(hir_owner);
+        let tyck = tcx.typeck(hir_owner);
         let callee = HashSet::new();
         VistFnBlock { callee, hir_id, tyck, tcx }
     }
