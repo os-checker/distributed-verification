@@ -1,4 +1,4 @@
-#![feature(rustc_private, let_chains, try_blocks, hash_set_entry)]
+#![feature(rustc_private, let_chains, hash_set_entry)]
 #![allow(unused)]
 
 extern crate rustc_driver;
@@ -57,7 +57,7 @@ fn main() {
 }
 
 struct Callback {
-    json: Option<PathBuf>,
+    json: Option<String>,
 }
 
 impl rustc_driver::Callbacks for Callback {
@@ -78,23 +78,21 @@ impl rustc_driver::Callbacks for Callback {
         })
         .expect("Failed to run rustc_smir.");
 
-        let res: Result<()> = try {
-            match &self.json {
-                Some(path) => {
-                    if path.to_str() == Some("false") {
-                        Ok(())?;
-                    }
-                    let _span = error_span!("write_json", ?path).entered();
-                    let file = std::fs::File::create(path)?;
-                    serde_json::to_writer_pretty(file, &output)
-                        .with_context(|| "Failed to write functions to json")?
+        let res = || match &self.json {
+            Some(path) => {
+                if path == "false" {
+                    return Ok(());
                 }
-                None => serde_json::to_writer_pretty(std::io::stdout(), &output)
-                    .with_context(|| "Failed to write functions to stdout")?,
+                let _span = error_span!("write_json", path).entered();
+                let file = std::fs::File::create(path)?;
+                serde_json::to_writer_pretty(file, &output)
+                    .with_context(|| "Failed to write functions to json")
             }
+            None => serde_json::to_writer_pretty(std::io::stdout(), &output)
+                .with_context(|| "Failed to write functions to stdout"),
         };
 
-        res.unwrap();
+        res().unwrap();
         Compilation::Stop
     }
 }
