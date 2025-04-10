@@ -1,5 +1,4 @@
 #![feature(rustc_private, let_chains, hash_set_entry)]
-#![allow(unused)]
 
 extern crate rustc_driver;
 extern crate rustc_hir;
@@ -9,15 +8,8 @@ extern crate rustc_smir;
 extern crate rustc_span;
 extern crate stable_mir;
 
-use eyre::{Context, Ok, Result};
+use eyre::{Context, Ok};
 use rustc_driver::{Compilation, run_compiler};
-use rustc_smir::rustc_internal::internal;
-use stable_mir::{
-    CrateDef, ItemKind,
-    mir::mono::Instance,
-    ty::{RigidTy, TyKind},
-};
-use std::path::PathBuf;
 
 mod cli;
 mod functions;
