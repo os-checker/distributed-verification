@@ -20,9 +20,8 @@ fn standard_proof() {
             ],
             "func": "fn standard_proof() {\n        let val: u8 = kani::any();\n        assert_eq!(val, 1, \"Not eq to 1.\");\n    }",
             "callees": [
-              "DefId(3:10310 ~ core[abab]::panicking::panic_fmt)",
-              "DefId(20:281 ~ kani[75bd]::assert)",
-              "DefId(20:283 ~ kani[75bd]::any)"
+              "FnDef(DefId { id: 5, name: \"kani::any\" })",
+              "FnDef(DefId { id: 6, name: \"kani::assert\" })"
             ]
           },
           {
@@ -43,7 +42,7 @@ fn standard_proof() {
             ],
             "func": "fn recursive_callees() {\n        crate::top_level();\n    }",
             "callees": [
-              "DefId(0:4 ~ standard_proof[50eb]::top_level)"
+              "FnDef(DefId { id: 3, name: \"top_level\" })"
             ]
           },
           {
@@ -51,14 +50,16 @@ fn standard_proof() {
             "attrs": [],
             "func": "pub fn top_level() {\n    m::func1();\n}",
             "callees": [
-              "DefId(0:6 ~ standard_proof[50eb]::m::func1)"
+              "FnDef(DefId { id: 4, name: \"m::func1\" })"
             ]
           },
           {
             "file": "tests/standard_proof.rs",
             "attrs": [],
-            "func": "pub fn func1() {}",
-            "callees": []
+            "func": "pub fn func1() {\n        let _a = \"\".trim();\n    }",
+            "callees": [
+              "FnDef(DefId { id: 7, name: \"core::str::<impl str>::trim\" })"
+            ]
           }
         ]"##]].assert_eq(&stdout);
 }
