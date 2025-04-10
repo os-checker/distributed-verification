@@ -9,7 +9,8 @@ extern crate rustc_smir;
 extern crate rustc_span;
 extern crate stable_mir;
 
-// use eyre::{Context, Result};
+use eyre::{Context, Ok, Result};
+use functions::source_code_with;
 use rustc_driver::{Compilation, run_compiler};
 use rustc_smir::rustc_internal::internal;
 use stable_mir::{
@@ -66,55 +67,34 @@ impl rustc_driver::Callbacks for Callback {
         tcx: rustc_middle::ty::TyCtxt<'tcx>,
     ) -> Compilation {
         let src_map = rustc_span::source_map::get_source_map().expect("No source map.");
+        let mut output = Vec::new();
 
         rustc_smir::rustc_internal::run(tcx, || {
             for item in stable_mir::all_local_items() {
-                // Using items inside the callback!
-
-                let inst = Instance::try_from(item).unwrap();
-                let TyKind::RigidTy(RigidTy::FnDef(fn_def, _)) = inst.ty().kind() else {
-                    continue;
-                };
-                let src = functions::source_code_with(fn_def.span(), tcx, &src_map);
-                println!(" - {:?} ({:?}): {src}", item.name(), item.span());
-                // println!(
-                //     " - {:?} ({:?}): {:?}\n    - {inst:?}\n    - {fn_body:#?}\n    - {src}",
-                //     item.name(),
-                //     item.span(),
-                //     item.tool_attrs(&["kanitool".into(), "proof".into()])
-                // );
-                // println!(" - {:?}: {:?}", item.name(), item.all_tool_attrs());
-                // item.emit_mir(&mut std::io::stdout()).unwrap();
+                if let Some(fun) = functions::Function::new2(item, tcx, &src_map) {
+                    output.push(fun);
+                }
             }
         })
         .expect("Failed to run rustc_smir.");
 
-        // let mut output = Vec::new();
-        //
-        // for id in tcx.hir_free_items() {
-        //     let _span = info_span!("rustc_driver_callback", ?id).entered();
-        //     let item = tcx.hir_item(id);
-        //     let func = functions::Function::new(item, &src_map, tcx);
-        //     debug!("{func:#?}");
-        //     if let Some(f) = func {
-        //         output.push(f);
-        //     }
-        // }
-        //
-        // let res: Result<()> = try {
-        //     match &self.json {
-        //         Some(path) => {
-        //             let _span = error_span!("write_json", ?path).entered();
-        //             let file = std::fs::File::create(path)?;
-        //             serde_json::to_writer_pretty(file, &output)
-        //                 .with_context(|| "Failed to write functions to json")?
-        //         }
-        //         None => serde_json::to_writer_pretty(std::io::stdout(), &output)
-        //             .with_context(|| "Failed to write functions to stdout")?,
-        //     }
-        // };
+        let res: Result<()> = try {
+            match &self.json {
+                Some(path) => {
+                    if path.to_str() == Some("false") {
+                        Ok(())?;
+                    }
+                    let _span = error_span!("write_json", ?path).entered();
+                    let file = std::fs::File::create(path)?;
+                    serde_json::to_writer_pretty(file, &output)
+                        .with_context(|| "Failed to write functions to json")?
+                }
+                None => serde_json::to_writer_pretty(std::io::stdout(), &output)
+                    .with_context(|| "Failed to write functions to stdout")?,
+            }
+        };
 
-        // res.unwrap();
+        res.unwrap();
         Compilation::Stop
     }
 }

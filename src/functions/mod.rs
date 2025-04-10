@@ -3,6 +3,7 @@ use rustc_middle::ty::TyCtxt;
 use rustc_smir::rustc_internal::internal;
 use rustc_span::{Span, source_map::SourceMap};
 use serde::Serialize;
+use stable_mir::{CrateDef, CrateItem, mir::mono::Instance, ty::TyKind};
 
 mod call_graph;
 mod visitor;
@@ -64,6 +65,18 @@ impl Function {
             return Some(func);
         }
         None
+    }
+
+    pub fn new2(item: CrateItem, tcx: TyCtxt, src_map: &SourceMap) -> Option<Self> {
+        let inst = Instance::try_from(item).unwrap();
+        let TyKind::RigidTy(stable_mir::ty::RigidTy::FnDef(fn_def, _)) = inst.ty().kind() else {
+            return None;
+        };
+        let body = fn_def.body()?;
+        let func = source_code_with(body.span, tcx, src_map);
+        println!(" - {:?} ({:?}): {func}", item.name(), item.span());
+        let file = item.span().get_filename();
+        Some(Function { file, attrs: vec![], func, callees: vec![] })
     }
 }
 
