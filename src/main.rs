@@ -10,7 +10,6 @@ extern crate rustc_span;
 extern crate stable_mir;
 
 use eyre::{Context, Ok, Result};
-use functions::source_code_with;
 use rustc_driver::{Compilation, run_compiler};
 use rustc_smir::rustc_internal::internal;
 use stable_mir::{

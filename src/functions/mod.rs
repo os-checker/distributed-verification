@@ -2,7 +2,7 @@ use rustc_middle::ty::TyCtxt;
 use rustc_smir::rustc_internal::internal;
 use rustc_span::{Span, source_map::SourceMap};
 use serde::Serialize;
-use stable_mir::{CrateDef, CrateItem, ItemKind, mir::mono::Instance, ty::TyKind};
+use stable_mir::{CrateDef, CrateItem, DefId, ItemKind, mir::mono::Instance, ty::TyKind};
 
 mod call_graph;
 mod visitor;
@@ -34,14 +34,15 @@ impl Function {
         };
         let body = fn_def.body()?;
         let func = source_code_with(body.span, tcx, src_map);
-        println!(" - {:?} ({:?}): {func}", item.name(), item.span());
+        info!(" - {:?} ({:?}): {func}", item.name(), item.span());
         let file = item.span().get_filename();
-        Some(Function { file, attrs: vec![], func, callees: vec![] })
+        let attrs = get_all_attributes(item.def_id(), tcx, src_map);
+        Some(Function { file, attrs, func, callees: vec![] })
     }
 }
 
 /// Source code for a span.
-pub fn source_code(span: Span, src_map: &SourceMap) -> String {
+fn source_code(span: Span, src_map: &SourceMap) -> String {
     src_map
         .span_to_source(span, |text, x, y| {
             let src = &text[x..y];
@@ -52,11 +53,22 @@ pub fn source_code(span: Span, src_map: &SourceMap) -> String {
 }
 
 /// Source code for a stable_mir span.
-pub fn source_code_with(
+fn source_code_with(
     stable_mir_span: stable_mir::ty::Span,
     tcx: TyCtxt,
     src_map: &SourceMap,
 ) -> String {
     let span = internal(tcx, stable_mir_span);
     source_code(span, src_map)
+}
+
+/// Get all attributes for the item.
+///
+/// We don't call [`all_tool_attrs`], because it only gives tool attributes,
+/// we want as raw attributes as possible.
+///
+/// [`all_tool_attrs`]: https://doc.rust-lang.org/nightly/nightly-rustc/stable_mir/struct.CrateItem.html#impl-CrateDef-for-CrateItem
+fn get_all_attributes(stable_mir_def_id: DefId, tcx: TyCtxt, src_map: &SourceMap) -> Vec<String> {
+    let def_id = internal(tcx, stable_mir_def_id);
+    tcx.get_all_attrs(def_id).map(|attr| source_code(attr.span(), src_map)).collect()
 }
