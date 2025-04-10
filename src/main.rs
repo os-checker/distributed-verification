@@ -71,7 +71,8 @@ impl rustc_driver::Callbacks for Callback {
 
         rustc_smir::rustc_internal::run(tcx, || {
             for item in stable_mir::all_local_items() {
-                if let Some(fun) = functions::Function::new2(item, tcx, &src_map) {
+                let _span = debug_span!("all_local_items", ?item).entered();
+                if let Some(fun) = functions::Function::new(item, tcx, &src_map) {
                     output.push(fun);
                 }
             }

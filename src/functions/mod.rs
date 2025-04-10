@@ -1,9 +1,8 @@
-use rustc_hir::{ExprKind, Item, ItemKind};
 use rustc_middle::ty::TyCtxt;
 use rustc_smir::rustc_internal::internal;
 use rustc_span::{Span, source_map::SourceMap};
 use serde::Serialize;
-use stable_mir::{CrateDef, CrateItem, mir::mono::Instance, ty::TyKind};
+use stable_mir::{CrateDef, CrateItem, ItemKind, mir::mono::Instance, ty::TyKind};
 
 mod call_graph;
 mod visitor;
@@ -24,51 +23,12 @@ pub struct Function {
 }
 
 impl Function {
-    pub fn new(item: &Item, src_map: &SourceMap, tcx: TyCtxt) -> Option<Self> {
-        if let ItemKind::Fn { has_body, body, .. } = &item.kind
-            && *has_body
-        {
-            let mut func = Function {
-                file: src_map
-                    .span_to_filename(item.span)
-                    .prefer_remapped_unconditionaly()
-                    .to_string(),
-                ..Default::default()
-            };
-
-            // add attributes
-            for (i, attr) in tcx.get_all_attrs(item.owner_id).enumerate() {
-                // FIXME: kani rewrites attributes from source to `#[allow(dead_code)]`
-                // and `#[kanitool::...]`, but share the same span with the source span.
-                // As a result, repeated `#[kani::proof]` are obtained from the source text,
-                // but `attr: &AttrItem` contains real expanded attributes.
-                let src_attr = src_map
-                    .span_to_source(attr.span(), |text, x, y| {
-                        let src = &text[x..y];
-                        debug!("[attr {i}] [{x}:{y}]\n{src}");
-                        Ok(src.to_owned())
-                    })
-                    .unwrap();
-                func.attrs.push(src_attr);
-            }
-
-            // add function
-            func.func = source_code(item.span, src_map);
-
-            let fn_body = tcx.hir_body(*body);
-            let ExprKind::Block(block, _) = fn_body.value.kind else { return None };
-            let callees = visitor::get_callees(block, tcx);
-            debug!("{callees:#?}");
-            func.callees = callees.into_iter().map(|x| format!("{x:?}")).collect();
-
-            // dbg!(tcx.promoted_mir(item.owner_id));
-            return Some(func);
+    pub fn new(item: CrateItem, tcx: TyCtxt, src_map: &SourceMap) -> Option<Self> {
+        if !matches!(item.kind(), ItemKind::Fn) {
+            // skip non fn items
+            return None;
         }
-        None
-    }
-
-    pub fn new2(item: CrateItem, tcx: TyCtxt, src_map: &SourceMap) -> Option<Self> {
-        let inst = Instance::try_from(item).unwrap();
+        let inst = Instance::try_from(item).inspect_err(|err| error!(?err)).ok()?;
         let TyKind::RigidTy(stable_mir::ty::RigidTy::FnDef(fn_def, _)) = inst.ty().kind() else {
             return None;
         };
