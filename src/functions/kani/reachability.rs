@@ -82,6 +82,7 @@ pub fn collect_reachable_items(
 
 /// Collect all (top-level) items in the crate that matches the given predicate.
 /// An item can only be a root if they are a non-generic function.
+#[allow(dead_code)]
 pub fn filter_crate_items<F>(tcx: TyCtxt, predicate: F) -> Vec<Instance>
 where
     F: Fn(TyCtxt, Instance) -> bool,
@@ -115,6 +116,7 @@ where
 ///
 /// Probably only specifically useful with a predicate to find `TestDescAndFn` const declarations from
 /// tests and extract the closures from them.
+#[allow(dead_code)]
 pub fn filter_const_crate_items<F>(tcx: TyCtxt, mut predicate: F) -> Vec<MonoItem>
 where
     F: FnMut(TyCtxt, Instance) -> bool,
@@ -444,7 +446,7 @@ impl MirVisitor for MonoItemsFnCollector<'_, '_> {
                 return;
             }
         };
-        self.collect_allocation(&allocation);
+        self.collect_allocation(allocation);
     }
 
     /// Collect function calls.

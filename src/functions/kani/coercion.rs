@@ -58,6 +58,7 @@ use stable_mir::ty::{RigidTy, Ty as TyStable, TyKind};
 ///    - Extract the tail element of the struct which are of type `T` and `U`, respectively.
 /// 4. Coercion between smart pointers of wrapper structs.
 ///    - Apply the logic from item 2 then item 3.
+#[allow(dead_code)]
 pub fn extract_unsize_casting_stable(
     tcx: TyCtxt,
     src_ty: TyStable,
@@ -89,14 +90,12 @@ pub fn extract_unsize_casting<'tcx>(
     .last()
     .unwrap();
     // Extract the pointee type that is being coerced.
-    let src_pointee_ty = extract_pointee(tcx, coerce_info.src_ty).expect(&format!(
-        "Expected source to be a pointer. Found {:?} instead",
-        coerce_info.src_ty
-    ));
-    let dst_pointee_ty = extract_pointee(tcx, coerce_info.dst_ty).expect(&format!(
-        "Expected destination to be a pointer. Found {:?} instead",
-        coerce_info.dst_ty
-    ));
+    let src_pointee_ty = extract_pointee(tcx, coerce_info.src_ty).unwrap_or_else(|| {
+        panic!("Expected source to be a pointer. Found {:?} instead", coerce_info.src_ty)
+    });
+    let dst_pointee_ty = extract_pointee(tcx, coerce_info.dst_ty).unwrap_or_else(|| {
+        panic!("Expected destination to be a pointer. Found {:?} instead", coerce_info.dst_ty)
+    });
     // Find the tail of the coercion that determines the type of metadata to be stored.
     let (src_base_ty, dst_base_ty) = tcx.struct_lockstep_tails_for_codegen(
         src_pointee_ty,
@@ -124,6 +123,7 @@ pub struct CoercionBase<'tcx> {
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]
 pub struct CoercionBaseStable {
     pub src_ty: TyStable,
     pub dst_ty: TyStable,
@@ -221,8 +221,8 @@ impl Iterator for CoerceUnsizedIterator<'_> {
                 let coerce_index = coerce_index.as_usize();
                 assert!(coerce_index < src_fields.len());
 
-                self.src_ty = Some(src_fields[coerce_index].ty_with_args(&src_args));
-                self.dst_ty = Some(dst_fields[coerce_index].ty_with_args(&dst_args));
+                self.src_ty = Some(src_fields[coerce_index].ty_with_args(src_args));
+                self.dst_ty = Some(dst_fields[coerce_index].ty_with_args(dst_args));
                 Some(src_fields[coerce_index].name.clone())
             }
             _ => {
