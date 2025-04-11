@@ -44,8 +44,7 @@ impl Function {
         // recursive calls
         let direct_calls: Vec<_> = callees.iter().copied().collect();
         for call in direct_calls {
-            dbg!(call);
-            callees::recursive_callees(call, tcx, &mut callees);
+            callees::recursive_callees(call, &mut callees);
         }
         let callees = callees.into_iter().map(|x| format!("{x:?}")).collect();
 
