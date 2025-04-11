@@ -1,5 +1,4 @@
 use clap::Parser;
-use std::path::PathBuf;
 
 /// Parse cli arguments.
 pub fn parse() -> Args {
@@ -10,9 +9,12 @@ pub fn parse() -> Args {
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
 pub struct Args {
-    /// Json output file path. Print to stdout if not set.
+    /// Possible one of these values:
+    /// * `--json false`: skip serializing to json
+    /// * `--json path/to/file.json`
+    /// * print to stdout if not set
     #[arg(long)]
-    pub json: Option<PathBuf>,
+    pub json: Option<String>,
 
     /// Args for rustc.
     pub rustc_args: Vec<String>,

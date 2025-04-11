@@ -1,15 +1,15 @@
-#![feature(rustc_private, let_chains, try_blocks)]
+#![feature(rustc_private, let_chains, hash_set_entry)]
 
 extern crate rustc_driver;
 extern crate rustc_hir;
 extern crate rustc_interface;
 extern crate rustc_middle;
+extern crate rustc_smir;
 extern crate rustc_span;
 extern crate stable_mir;
 
-use eyre::{Context, Result};
+use eyre::{Context, Ok};
 use rustc_driver::{Compilation, run_compiler};
-use std::path::PathBuf;
 
 mod cli;
 mod functions;
@@ -27,10 +27,8 @@ fn main() {
             "rustc",
             "--crate-type=lib",
             "--cfg=kani",
-            "-Z",
-            "crate-attr=feature(register_tool)",
-            "-Z",
-            "crate-attr=register_tool(kanitool)",
+            "-Zcrate-attr=feature(register_tool)",
+            "-Zcrate-attr=register_tool(kanitool)",
             "--sysroot",
             "/home/zjp/rust/kani/target/kani",
             "-L",
@@ -40,6 +38,8 @@ fn main() {
             "--extern",
             "noprelude:std=/home/zjp/rust/kani/target/kani/lib/libstd.rlib",
             "-Zunstable-options",
+            "-Zalways-encode-mir",
+            "-Zmir-enable-passes=-RemoveStorageMarkers",
         ]
         .map(String::from),
     );
@@ -48,7 +48,7 @@ fn main() {
 }
 
 struct Callback {
-    json: Option<PathBuf>,
+    json: Option<String>,
 }
 
 impl rustc_driver::Callbacks for Callback {
@@ -58,33 +58,33 @@ impl rustc_driver::Callbacks for Callback {
         tcx: rustc_middle::ty::TyCtxt<'tcx>,
     ) -> Compilation {
         let src_map = rustc_span::source_map::get_source_map().expect("No source map.");
-
         let mut output = Vec::new();
 
-        for id in tcx.hir_free_items() {
-            let _span = debug_span!("rustc_driver_callback", ?id).entered();
-            let item = tcx.hir_item(id);
-            let func = functions::Function::new(item, &src_map, tcx);
-            debug!("{func:#?}");
-            if let Some(f) = func {
-                output.push(f);
-            }
-        }
-
-        let res: Result<()> = try {
-            match &self.json {
-                Some(path) => {
-                    let _span = error_span!("write_json", ?path).entered();
-                    let file = std::fs::File::create(path)?;
-                    serde_json::to_writer_pretty(file, &output)
-                        .with_context(|| "Failed to write functions to json")?
+        rustc_smir::rustc_internal::run(tcx, || {
+            for item in stable_mir::all_local_items() {
+                let _span = debug_span!("all_local_items", ?item).entered();
+                if let Some(fun) = functions::Function::new(item, tcx, &src_map) {
+                    output.push(fun);
                 }
-                None => serde_json::to_writer_pretty(std::io::stdout(), &output)
-                    .with_context(|| "Failed to write functions to stdout")?,
             }
+        })
+        .expect("Failed to run rustc_smir.");
+
+        let res = || match &self.json {
+            Some(path) => {
+                if path == "false" {
+                    return Ok(());
+                }
+                let _span = error_span!("write_json", path).entered();
+                let file = std::fs::File::create(path)?;
+                serde_json::to_writer_pretty(file, &output)
+                    .with_context(|| "Failed to write functions to json")
+            }
+            None => serde_json::to_writer_pretty(std::io::stdout(), &output)
+                .with_context(|| "Failed to write functions to stdout"),
         };
 
-        res.unwrap();
+        res().unwrap();
         Compilation::Stop
     }
 }
