@@ -1140,7 +1140,9 @@
   },
   {
     "file": "tests/standard_proof.rs",
-    "attrs": [],
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
     "func": "fn standard_proof_empty() {}",
     "callees": []
   },
@@ -1152,7 +1154,9 @@
   },
   {
     "file": "tests/standard_proof.rs",
-    "attrs": [],
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
     "func": "fn standard_proof() {\n        let val: u8 = kani::any();\n        assert_eq!(val, 1, \"Not eq to 1.\");\n    }",
     "callees": [
       "DefId { id: 6, name: \"kani::assert\" }",
@@ -1917,7 +1921,9 @@
   },
   {
     "file": "tests/standard_proof.rs",
-    "attrs": [],
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
     "func": "fn recursive_callees() {\n        crate::top_level();\n    }",
     "callees": [
       "DefId { id: 3, name: \"top_level\" }",
