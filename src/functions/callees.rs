@@ -50,6 +50,9 @@ fn push_fn_def(
 /// Recursively retrieve calls for a call.
 pub fn recursive_callees(fn_def: FnDef, visited: &mut IndexSet<FnDef>) {
     let Some(body) = fn_def.body() else { return };
+    let mut buf = Vec::with_capacity(1024);
+    body.dump(&mut buf, &format!("{fn_def:?}")).unwrap();
+    println!("{}", String::from_utf8(buf).unwrap());
     let mut direct = calls_in_body(&body, visited);
     while let Some(call) = direct.pop() {
         // the call hasn't been reached, traverse
