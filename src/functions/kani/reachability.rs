@@ -20,6 +20,8 @@
 extern crate rustc_data_structures;
 extern crate rustc_session;
 
+use super::coercion;
+use indexmap::IndexSet;
 use rustc_data_structures::fingerprint::Fingerprint;
 use rustc_data_structures::fx::FxHashSet;
 use rustc_data_structures::stable_hasher::{HashStable, StableHasher};
@@ -41,8 +43,6 @@ use std::{
     fs::File,
     io::{BufWriter, Write},
 };
-
-use super::coercion;
 
 /// Collect all reachable items starting from the given starting points.
 pub fn collect_reachable_items(
@@ -68,15 +68,6 @@ pub fn collect_reachable_items(
     // order of the errors and warnings is stable.
     let mut sorted_items: Vec<_> = collector.collected.into_iter().collect();
     sorted_items.sort_by_cached_key(|item| to_fingerprint(tcx, item));
-    // print collected fn names
-    let item_names: Vec<_> = sorted_items
-        .iter()
-        .filter_map(|item| match item {
-            MonoItem::Fn(f) => Some(f.name()),
-            _ => None,
-        })
-        .collect();
-    dbg!(item_names);
     (sorted_items, collector.call_graph)
 }
 
@@ -584,6 +575,25 @@ struct Node(pub MonoItem);
 /// Newtype around CollectedItem.
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 struct CollectedNode(pub CollectedItem);
+
+impl CallGraph {
+    pub fn recursive_callees(&self, item: &MonoItem, callees: &mut IndexSet<Instance>) {
+        let key = &Node(item.clone());
+        let nodes = self.edges.get(key).unwrap_or_else(|| panic!("No {item:?} in the call graph."));
+
+        for node in nodes {
+            let item = &node.0.item;
+            match item {
+                MonoItem::Fn(inst) => _ = callees.insert(*inst),
+                // TODO: only consider functions items.
+                // Functions may be in statics, but need testing to comfirm.
+                MonoItem::Static(_) => (),
+                _ => continue,
+            }
+            self.recursive_callees(item, callees);
+        }
+    }
+}
 
 impl CallGraph {
     /// Add a new node into a graph.

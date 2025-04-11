@@ -1,4 +1,4 @@
 mod coercion;
 mod reachability;
 
-pub use reachability::collect_reachable_items;
+pub use reachability::{CallGraph, collect_reachable_items};
