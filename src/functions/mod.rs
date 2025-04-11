@@ -10,7 +10,6 @@ use stable_mir::{
     ty::{FnDef, RigidTy, Ty, TyKind},
 };
 
-mod callees;
 mod kani;
 
 pub fn analyze(tcx: TyCtxt, src_map: &SourceMap) -> Vec<Function> {
