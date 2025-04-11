@@ -9,9 +9,7 @@ use stable_mir::{
     ty::{FnDef, RigidTy, Ty, TyKind},
 };
 
-mod call_graph;
 mod callees;
-mod visitor;
 
 /// A Rust funtion with its file source, attributes, and raw function content.
 #[derive(Debug, Default, Serialize)]

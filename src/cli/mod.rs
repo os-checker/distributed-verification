@@ -1,5 +1,4 @@
 use clap::Parser;
-use std::path::PathBuf;
 
 /// Parse cli arguments.
 pub fn parse() -> Args {
