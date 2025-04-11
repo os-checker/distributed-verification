@@ -1,3 +1,4 @@
+use indexmap::IndexSet;
 use rustc_middle::ty::TyCtxt;
 use rustc_smir::rustc_internal::internal;
 use rustc_span::{Span, source_map::SourceMap};
@@ -39,8 +40,15 @@ impl Function {
         let file = item.span().get_filename();
         let body = fn_def.body()?;
 
-        let mut callees = Vec::new();
+        let mut callees = IndexSet::new();
+        // retrieve direct calls
         callees::calls_in_body(&body, &mut callees);
+        // recursive calls
+        let direct_calls: Vec<_> = callees.iter().copied().collect();
+        for call in direct_calls {
+            dbg!(call);
+            callees::recursive_callees(call, tcx, &mut callees);
+        }
         let callees = callees.into_iter().map(|x| format!("{x:?}")).collect();
 
         let func = source_code_with(body.span, tcx, src_map);

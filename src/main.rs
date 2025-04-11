@@ -27,10 +27,8 @@ fn main() {
             "rustc",
             "--crate-type=lib",
             "--cfg=kani",
-            "-Z",
-            "crate-attr=feature(register_tool)",
-            "-Z",
-            "crate-attr=register_tool(kanitool)",
+            "-Zcrate-attr=feature(register_tool)",
+            "-Zcrate-attr=register_tool(kanitool)",
             "--sysroot",
             "/home/zjp/rust/kani/target/kani",
             "-L",
@@ -40,6 +38,8 @@ fn main() {
             "--extern",
             "noprelude:std=/home/zjp/rust/kani/target/kani/lib/libstd.rlib",
             "-Zunstable-options",
+            "-Zalways-encode-mir",
+            "-Zmir-enable-passes=-RemoveStorageMarkers",
         ]
         .map(String::from),
     );
