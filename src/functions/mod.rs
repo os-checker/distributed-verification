@@ -5,7 +5,7 @@ use rustc_smir::rustc_internal::internal;
 use rustc_span::{Span, source_map::SourceMap};
 use serde::Serialize;
 use stable_mir::{
-    CrateDef, DefId,
+    CrateDef,
     mir::mono::{Instance, MonoItem},
     ty::{FnDef, RigidTy, Ty, TyKind},
 };
@@ -20,7 +20,7 @@ pub fn analyze(tcx: TyCtxt, src_map: &SourceMap) -> Vec<Function> {
     let mut entries = Vec::with_capacity(cap);
 
     for item in local_items {
-        let _span = debug_span!("all_local_items", ?item).entered();
+        let _span = error_span!("all_local_items", ?item).entered();
 
         let Ok(inst) = Instance::try_from(item).inspect_err(|err| error!(?err)) else { continue };
         entries.push(MonoItem::from(inst));
