@@ -1,16 +1,36 @@
 use indexmap::IndexSet;
+use kani::collect_reachable_items;
 use rustc_middle::ty::TyCtxt;
 use rustc_smir::rustc_internal::internal;
 use rustc_span::{Span, source_map::SourceMap};
 use serde::Serialize;
 use stable_mir::{
     CrateDef, CrateItem, DefId, ItemKind,
-    mir::mono::Instance,
+    mir::mono::{Instance, MonoItem},
     ty::{FnDef, RigidTy, Ty, TyKind},
 };
 
 mod callees;
 mod kani;
+
+pub fn analyze(tcx: TyCtxt, src_map: &SourceMap) -> crate::Result<Vec<Function>> {
+    let local_items = stable_mir::all_local_items();
+    let cap = local_items.len();
+
+    let mut outputs = Vec::with_capacity(cap);
+    let mut entries = Vec::with_capacity(cap);
+
+    for item in local_items {
+        let _span = debug_span!("all_local_items", ?item).entered();
+
+        let Ok(inst) = Instance::try_from(item).inspect_err(|err| error!(?err)) else { continue };
+        entries.push(MonoItem::from(inst));
+    }
+
+    let (mono_items, callgraph) = collect_reachable_items(tcx, &entries);
+
+    Ok(outputs)
+}
 
 /// A Rust funtion with its file source, attributes, and raw function content.
 #[derive(Debug, Default, Serialize)]
