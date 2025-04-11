@@ -44,7 +44,16 @@ fn standard_proof() {
             "func": "fn recursive_callees() {\n        crate::top_level();\n    }",
             "callees": [
               "FnDef(DefId { id: 3, name: \"top_level\" })",
-              "FnDef(DefId { id: 4, name: \"m::func1\" })"
+              "FnDef(DefId { id: 4, name: \"m::func1\" })",
+              "FnDef(DefId { id: 8, name: \"core::str::<impl str>::trim\" })",
+              "FnDef(DefId { id: 9, name: \"core::str::<impl str>::trim_matches\" })",
+              "FnDef(DefId { id: 15, name: \"core::str::<impl str>::get_unchecked\" })",
+              "FnDef(DefId { id: 16, name: \"std::slice::SliceIndex::get_unchecked\" })",
+              "FnDef(DefId { id: 14, name: \"std::str::pattern::ReverseSearcher::next_reject_back\" })",
+              "FnDef(DefId { id: 18, name: \"std::str::pattern::ReverseSearcher::next_back\" })",
+              "FnDef(DefId { id: 13, name: \"std::str::pattern::Searcher::next_reject\" })",
+              "FnDef(DefId { id: 19, name: \"std::str::pattern::Searcher::next\" })",
+              "FnDef(DefId { id: 12, name: \"std::str::pattern::Pattern::into_searcher\" })"
             ]
           },
           {
@@ -53,7 +62,15 @@ fn standard_proof() {
             "func": "pub fn top_level() {\n    m::func1();\n}",
             "callees": [
               "FnDef(DefId { id: 4, name: \"m::func1\" })",
-              "FnDef(DefId { id: 8, name: \"core::str::<impl str>::trim\" })"
+              "FnDef(DefId { id: 8, name: \"core::str::<impl str>::trim\" })",
+              "FnDef(DefId { id: 9, name: \"core::str::<impl str>::trim_matches\" })",
+              "FnDef(DefId { id: 15, name: \"core::str::<impl str>::get_unchecked\" })",
+              "FnDef(DefId { id: 16, name: \"std::slice::SliceIndex::get_unchecked\" })",
+              "FnDef(DefId { id: 14, name: \"std::str::pattern::ReverseSearcher::next_reject_back\" })",
+              "FnDef(DefId { id: 18, name: \"std::str::pattern::ReverseSearcher::next_back\" })",
+              "FnDef(DefId { id: 13, name: \"std::str::pattern::Searcher::next_reject\" })",
+              "FnDef(DefId { id: 19, name: \"std::str::pattern::Searcher::next\" })",
+              "FnDef(DefId { id: 12, name: \"std::str::pattern::Pattern::into_searcher\" })"
             ]
           },
           {
@@ -62,7 +79,14 @@ fn standard_proof() {
             "func": "pub fn func1() {\n        let _a = \"\".trim();\n    }",
             "callees": [
               "FnDef(DefId { id: 8, name: \"core::str::<impl str>::trim\" })",
-              "FnDef(DefId { id: 9, name: \"core::str::<impl str>::trim_matches\" })"
+              "FnDef(DefId { id: 9, name: \"core::str::<impl str>::trim_matches\" })",
+              "FnDef(DefId { id: 15, name: \"core::str::<impl str>::get_unchecked\" })",
+              "FnDef(DefId { id: 16, name: \"std::slice::SliceIndex::get_unchecked\" })",
+              "FnDef(DefId { id: 14, name: \"std::str::pattern::ReverseSearcher::next_reject_back\" })",
+              "FnDef(DefId { id: 18, name: \"std::str::pattern::ReverseSearcher::next_back\" })",
+              "FnDef(DefId { id: 13, name: \"std::str::pattern::Searcher::next_reject\" })",
+              "FnDef(DefId { id: 19, name: \"std::str::pattern::Searcher::next\" })",
+              "FnDef(DefId { id: 12, name: \"std::str::pattern::Pattern::into_searcher\" })"
             ]
           }
         ]"##]].assert_eq(&stdout);

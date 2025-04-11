@@ -40,7 +40,7 @@ impl Function {
 
         let mut callees = IndexSet::new();
         // retrieve direct calls
-        callees::calls_in_body(&body, &mut callees);
+        callees.extend(callees::calls_in_body(&body));
         // recursive calls
         let direct_calls: Vec<_> = callees.iter().copied().collect();
         for call in direct_calls {
