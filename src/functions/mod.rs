@@ -10,6 +10,7 @@ use stable_mir::{
 };
 
 mod callees;
+mod kani;
 
 /// A Rust funtion with its file source, attributes, and raw function content.
 #[derive(Debug, Default, Serialize)]
