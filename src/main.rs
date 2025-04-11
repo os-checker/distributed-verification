@@ -8,7 +8,7 @@ extern crate rustc_smir;
 extern crate rustc_span;
 extern crate stable_mir;
 
-use eyre::{Context, Ok, Result};
+use eyre::{Context, Ok};
 use functions::analyze;
 use rustc_driver::{Compilation, run_compiler};
 
@@ -60,7 +60,7 @@ impl rustc_driver::Callbacks for Callback {
     ) -> Compilation {
         let src_map = rustc_span::source_map::get_source_map().expect("No source map.");
 
-        let output = rustc_smir::rustc_internal::run(tcx, || analyze(tcx, &src_map, &mut output))
+        let output = rustc_smir::rustc_internal::run(tcx, || analyze(tcx, &src_map))
             .expect("Failed to run rustc_smir.");
 
         let res = || match &self.json {

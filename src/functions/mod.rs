@@ -13,7 +13,7 @@ use stable_mir::{
 mod callees;
 mod kani;
 
-pub fn analyze(tcx: TyCtxt, src_map: &SourceMap) -> crate::Result<Vec<Function>> {
+pub fn analyze(tcx: TyCtxt, src_map: &SourceMap) -> Vec<Function> {
     let local_items = stable_mir::all_local_items();
     let cap = local_items.len();
 
@@ -29,7 +29,7 @@ pub fn analyze(tcx: TyCtxt, src_map: &SourceMap) -> crate::Result<Vec<Function>>
 
     let (mono_items, callgraph) = collect_reachable_items(tcx, &entries);
 
-    Ok(outputs)
+    outputs
 }
 
 /// A Rust funtion with its file source, attributes, and raw function content.
