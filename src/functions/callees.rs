@@ -50,10 +50,10 @@ fn push_fn_def(
 /// Recursively retrieve calls for a call.
 pub fn recursive_callees(fn_def: FnDef, visited: &mut IndexSet<FnDef>) {
     let Some(body) = fn_def.body() else { return };
-    let direct = calls_in_body(&body, visited);
-    if direct.iter().any(|f| !visited.contains(f)) {
-        // some calls haven't been reached, recurse
-        for call in direct {
+    let mut direct = calls_in_body(&body, visited);
+    while let Some(call) = direct.pop() {
+        // the call hasn't been reached, traverse
+        if !visited.contains(&call) {
             recursive_callees(call, visited);
         }
     }
