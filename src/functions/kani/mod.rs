@@ -1,4 +1,4 @@
 mod coercion;
-mod visitor;
+mod reachability;
 
-pub use visitor::collect_reachable_items;
+pub use reachability::collect_reachable_items;
