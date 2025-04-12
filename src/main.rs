@@ -1,4 +1,4 @@
-#![feature(rustc_private, let_chains, hash_set_entry)]
+#![feature(rustc_private, let_chains, hash_set_entry, hasher_prefixfree_extras)]
 
 extern crate rustc_driver;
 extern crate rustc_hir;
@@ -6,6 +6,7 @@ extern crate rustc_interface;
 extern crate rustc_middle;
 extern crate rustc_smir;
 extern crate rustc_span;
+extern crate rustc_stable_hash;
 extern crate stable_mir;
 
 use eyre::{Context, Ok};
