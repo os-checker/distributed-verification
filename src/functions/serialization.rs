@@ -1,5 +1,7 @@
+use rustc_middle::ty::TyCtxt;
+use rustc_span::source_map::SourceMap;
 use serde::Serialize;
-use stable_mir::{CrateDef, DefId};
+use stable_mir::{CrateDef, DefId, mir::mono::Instance};
 
 /// A Rust funtion with its file source, attributes, and raw function content.
 #[derive(Debug, Serialize)]
@@ -15,21 +17,38 @@ pub struct SerFunction {
     /// Raw function string, including name, signature, and body.
     func: String,
     /// Recursive fnction calls inside the body.
-    callees: Vec<String>,
+    callees: Vec<Callee>,
 }
 
 impl SerFunction {
-    pub fn new(fun: super::Function) -> Self {
+    pub fn new(fun: super::Function, tcx: TyCtxt, src_map: &SourceMap) -> Self {
         SerFunction {
             def_id: format_def_id(&fun.def_id),
             file: fun.file,
             attrs: fun.attrs.iter().map(|a| a.as_str().to_owned()).collect(),
             func: fun.func,
-            callees: fun.callees.into_iter().map(|x| format_def_id(&x.def.def_id())).collect(),
+            callees: fun.callees.iter().map(|x| Callee::new(x, tcx, src_map)).collect(),
         }
     }
 }
 
 fn format_def_id(def_id: &DefId) -> String {
     format!("{def_id:?}")
+}
+
+#[derive(Debug, Serialize)]
+pub struct Callee {
+    def_id: String,
+    func: String,
+}
+
+impl Callee {
+    fn new(inst: &Instance, tcx: TyCtxt, src_map: &SourceMap) -> Self {
+        let def_id = format_def_id(&inst.def.def_id());
+        let func = inst
+            .body()
+            .map(|body| super::source_code_with(body.span, tcx, src_map))
+            .unwrap_or_default();
+        Callee { def_id, func }
+    }
 }
