@@ -3,9 +3,10 @@ use kani::{CallGraph, KANI_TOOL_ATTRS, collect_reachable_items};
 use rustc_middle::ty::TyCtxt;
 use rustc_smir::rustc_internal::internal;
 use rustc_span::{Span, source_map::SourceMap};
-use serde::{Serialize, Serializer};
+use serde::{Serialize, Serializer, ser::SerializeSeq};
 use stable_mir::{
     CrateDef, DefId,
+    crate_def::Attribute,
     mir::mono::{Instance, MonoItem},
     ty::{FnDef, RigidTy, Ty, TyKind},
 };
@@ -41,7 +42,8 @@ pub struct Function {
     file: String,
     /// Attributes are attached the function, but it seems that attributes
     /// and function must be separated to query.
-    attrs: Vec<String>,
+    #[serde(serialize_with = "ser_attrs")]
+    attrs: Vec<Attribute>,
     /// Raw function string, including name, signature, and body.
     func: String,
     /// Recursive fnction calls inside the body.
@@ -75,11 +77,7 @@ impl Function {
         info!(" - {:?} ({span:?}): {func}", inst_def.name());
 
         // Only need kanitool attrs: proof, proof_for_contract, contract, ...
-        let attrs = KANI_TOOL_ATTRS
-            .iter()
-            .flat_map(|v| inst_def.tool_attrs(v))
-            .map(|attr| attr.as_str().to_owned())
-            .collect();
+        let attrs = KANI_TOOL_ATTRS.iter().flat_map(|v| inst_def.tool_attrs(v)).collect();
 
         let def_id = fn_def.def_id();
         Some(Function { def_id, file, attrs, func, callees })
@@ -118,4 +116,12 @@ fn source_code_with(
 fn ser_def_id<S: Serializer>(def_id: &DefId, serializer: S) -> Result<S::Ok, S::Error> {
     let def_id_str = format!("{def_id:?}");
     serializer.serialize_str(&def_id_str)
+}
+
+fn ser_attrs<S: Serializer>(attrs: &Vec<Attribute>, serializer: S) -> Result<S::Ok, S::Error> {
+    let mut seq = serializer.serialize_seq(Some(attrs.len()))?;
+    for attr in attrs {
+        seq.serialize_element(attr.as_str())?;
+    }
+    seq.end()
 }
