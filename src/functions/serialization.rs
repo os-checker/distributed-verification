@@ -39,16 +39,19 @@ fn format_def_id(def_id: &DefId) -> String {
 #[derive(Debug, Serialize)]
 pub struct Callee {
     def_id: String,
+    file: String,
     func: String,
 }
 
 impl Callee {
     fn new(inst: &Instance, tcx: TyCtxt, src_map: &SourceMap) -> Self {
-        let def_id = format_def_id(&inst.def.def_id());
+        let inst_def = &inst.def;
+        let def_id = format_def_id(&inst_def.def_id());
+        let file = inst_def.span().get_filename();
         let func = inst
             .body()
             .map(|body| super::source_code_with(body.span, tcx, src_map))
             .unwrap_or_default();
-        Callee { def_id, func }
+        Callee { def_id, file, func }
     }
 }
