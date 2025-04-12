@@ -1,5 +1,6 @@
 [
   {
+    "hash": "42109808322873561223875447740690337681",
     "def_id": "DefId { id: 1, name: \"verify::standard_proof_empty\" }",
     "file": "tests/standard_proofs.rs",
     "attrs": [
@@ -9,6 +10,7 @@
     "callees": []
   },
   {
+    "hash": "98192936616641250112552906219302378668",
     "def_id": "DefId { id: 0, name: \"verify::standard_proof\" }",
     "file": "tests/standard_proofs.rs",
     "attrs": [
@@ -49,6 +51,7 @@
     ]
   },
   {
+    "hash": "119307450917325760212416660484109988218",
     "def_id": "DefId { id: 2, name: \"verify::recursive_callees\" }",
     "file": "tests/standard_proofs.rs",
     "attrs": [
