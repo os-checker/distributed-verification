@@ -33,7 +33,7 @@ pub fn analyze(tcx: TyCtxt, src_map: &SourceMap) -> Vec<SerFunction> {
     mono_items
         .iter()
         .filter_map(|item| Function::new(item, &callgraph, tcx, src_map, |x| !x.attrs.is_empty()))
-        .map(SerFunction::new)
+        .map(|fun| SerFunction::new(fun, tcx, src_map))
         .collect()
 }
 
@@ -51,6 +51,7 @@ pub struct Function {
     /// Raw function string, including name, signature, and body.
     func: String,
     /// Recursive fnction calls inside the body.
+    /// This set has insertion order, which is nice to check out call contexts.
     callees: IndexSet<Instance>,
 }
 
