@@ -1,11 +1,14 @@
 use rustc_middle::ty::TyCtxt;
 use rustc_span::source_map::SourceMap;
+use rustc_stable_hash::{FromStableHash, SipHasher128Hash, StableHasher, hashers::SipHasher128};
 use serde::Serialize;
 use stable_mir::{CrateDef, DefId, mir::mono::Instance};
+use std::hash::Hasher;
 
 /// A Rust funtion with its file source, attributes, and raw function content.
 #[derive(Debug, Serialize)]
 pub struct SerFunction {
+    hash: String,
     /// DefId in stable_mir.
     def_id: String,
     /// Every funtion must be declared in a specific file, even for those
@@ -22,15 +25,40 @@ pub struct SerFunction {
 
 impl SerFunction {
     pub fn new(fun: super::Function, tcx: TyCtxt, src_map: &SourceMap) -> Self {
-        SerFunction {
-            def_id: format_def_id(&fun.def_id),
-            file: fun.file,
-            attrs: fun.attrs.iter().map(|a| a.as_str().to_owned()).collect(),
-            func: fun.func,
-            callees: fun.callees.iter().map(|x| Callee::new(x, tcx, src_map)).collect(),
-        }
+        let def_id = format_def_id(&fun.def_id);
+        let file = fun.file;
+        let attrs: Vec<_> = fun.attrs.iter().map(|a| a.as_str().to_owned()).collect();
+        let func = fun.func;
+        let callees: Vec<_> = fun.callees.iter().map(|x| Callee::new(x, tcx, src_map)).collect();
+
+        // Hash
+        let mut hasher = StableHasher::<SipHasher128>::new();
+        hasher.write_str(&file);
+        hasher.write_str(&func);
+        hasher.write_length_prefix(attrs.len());
+        attrs.iter().for_each(|a| hasher.write_str(a));
+        hasher.write_length_prefix(callees.len());
+        callees.iter().for_each(|c| {
+            hasher.write_str(&c.file);
+            hasher.write_str(&c.func);
+        });
+        let Hash128(hash) = hasher.finish();
+
+        SerFunction { hash, def_id, file, attrs, func, callees }
     }
 }
+
+// ************* hash *************
+struct Hash128(String);
+
+impl FromStableHash for Hash128 {
+    type Hash = SipHasher128Hash;
+
+    fn from(SipHasher128Hash([a, b]): SipHasher128Hash) -> Hash128 {
+        Hash128(format!("{a}{b}"))
+    }
+}
+// ************* hash *************
 
 fn format_def_id(def_id: &DefId) -> String {
     format!("{def_id:?}")
@@ -39,16 +67,19 @@ fn format_def_id(def_id: &DefId) -> String {
 #[derive(Debug, Serialize)]
 pub struct Callee {
     def_id: String,
+    file: String,
     func: String,
 }
 
 impl Callee {
     fn new(inst: &Instance, tcx: TyCtxt, src_map: &SourceMap) -> Self {
-        let def_id = format_def_id(&inst.def.def_id());
+        let inst_def = &inst.def;
+        let def_id = format_def_id(&inst_def.def_id());
+        let file = inst_def.span().get_filename();
         let func = inst
             .body()
             .map(|body| super::source_code_with(body.span, tcx, src_map))
             .unwrap_or_default();
-        Callee { def_id, func }
+        Callee { def_id, file, func }
     }
 }
