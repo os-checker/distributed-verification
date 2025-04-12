@@ -29,9 +29,10 @@ pub fn analyze(tcx: TyCtxt, src_map: &SourceMap) -> Vec<SerFunction> {
 
     let (mono_items, callgraph) = collect_reachable_items(tcx, &entries);
 
+    // Filter out non kanitool functions.
     mono_items
         .iter()
-        .filter_map(|item| Function::new(item, &callgraph, tcx, src_map))
+        .filter_map(|item| Function::new(item, &callgraph, tcx, src_map, |x| !x.attrs.is_empty()))
         .map(SerFunction::new)
         .collect()
 }
@@ -59,17 +60,22 @@ impl Function {
         callgraph: &CallGraph,
         tcx: TyCtxt,
         src_map: &SourceMap,
+        filter: impl FnOnce(&Self) -> bool,
     ) -> Option<Self> {
         // skip non fn items
         let &MonoItem::Fn(inst) = item else {
             return None;
         };
 
-        let fn_def = ty_to_fndef(inst.ty())?;
         let inst_def = inst.def;
-        let span = inst_def.span();
 
+        // Only need kanitool attrs: proof, proof_for_contract, contract, ...
+        let attrs = KANI_TOOL_ATTRS.iter().flat_map(|v| inst_def.tool_attrs(v)).collect();
+
+        let span = inst_def.span();
         let file = span.get_filename();
+
+        let fn_def = ty_to_fndef(inst.ty())?;
         let body = fn_def.body()?;
 
         let mut callees = IndexSet::new();
@@ -78,11 +84,9 @@ impl Function {
         let func = source_code_with(body.span, tcx, src_map);
         info!(" - {:?} ({span:?}): {func}", inst_def.name());
 
-        // Only need kanitool attrs: proof, proof_for_contract, contract, ...
-        let attrs = KANI_TOOL_ATTRS.iter().flat_map(|v| inst_def.tool_attrs(v)).collect();
-
         let def_id = inst_def.def_id();
-        Some(Function { def_id, file, attrs, func, callees })
+        let this = Function { def_id, file, attrs, func, callees };
+        filter(&this).then_some(this)
     }
 }
 
