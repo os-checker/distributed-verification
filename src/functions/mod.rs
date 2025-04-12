@@ -81,7 +81,7 @@ impl Function {
         // Only need kanitool attrs: proof, proof_for_contract, contract, ...
         let attrs = KANI_TOOL_ATTRS.iter().flat_map(|v| inst_def.tool_attrs(v)).collect();
 
-        let def_id = fn_def.def_id();
+        let def_id = inst_def.def_id();
         Some(Function { def_id, file, attrs, func, callees })
     }
 }
