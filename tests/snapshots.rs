@@ -1,6 +1,7 @@
 use assert_cmd::Command;
 use distributed_verification::SerFunction;
 use expect_test::expect_file;
+use pretty_assertions::assert_eq;
 use std::fs::{copy, remove_file};
 
 fn cmd(args: &[&str]) -> String {
@@ -26,9 +27,10 @@ fn standard_proofs_with_contracts() {
     expect_file!["./snapshots/standard_proofs_with_contracts.json"].assert_eq(&json);
 }
 
-fn get_hash(text: &str, start: &str) -> String {
-    let v: Vec<SerFunction> = serde_json::from_str(text).unwrap();
-    v.into_iter().find(|f| f.func.starts_with(start)).unwrap().hash
+fn get(text: &str, start: &str) -> SerFunction {
+    let json = &text[text.find("[\n").unwrap()..];
+    let v: Vec<SerFunction> = serde_json::from_str(json).unwrap();
+    v.into_iter().find(|f| f.func.starts_with(start)).unwrap()
 }
 
 #[test]
@@ -49,5 +51,29 @@ fn compare_proof() {
     let f = "pub fn f()";
     // For the same proof (w.r.t same path and body),
     // the hash value must be the same.
-    assert_eq!(get_hash(text1, f), get_hash(text2, f));
+    assert_eq!(get(text1, f).hash, get(text2, f).hash);
+}
+
+#[test]
+fn compare_contract() {
+    let file = "tests/compare/contract.rs";
+
+    copy("tests/compare/contract1.rs", file).unwrap();
+    let text1 = &cmd(&["tests/compare/contract.rs"]);
+    expect_file!["./snapshots/contract1.json"].assert_eq(text1);
+
+    copy("tests/compare/contract2.rs", file).unwrap();
+    let text2 = &cmd(&["tests/compare/contract.rs"]);
+    expect_file!["./snapshots/contract2.json"].assert_eq(text2);
+
+    remove_file(file).unwrap();
+
+    let f = "pub fn f()";
+    let f1 = get(text1, f);
+    let f2 = get(text2, f);
+    let callees1 = f1.callee_sorted_by_file_func();
+    let callees2 = f2.callee_sorted_by_file_func();
+
+    assert_eq!(callees1, callees2);
+    assert_eq!(f1.hash, f2.hash);
 }
