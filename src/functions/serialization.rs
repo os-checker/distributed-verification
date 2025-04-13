@@ -76,10 +76,7 @@ impl Callee {
         let inst_def = &inst.def;
         let def_id = format_def_id(&inst_def.def_id());
         let file = inst_def.span().get_filename();
-        let func = inst
-            .body()
-            .map(|body| super::source_code_with(body.span, tcx, src_map))
-            .unwrap_or_default();
+        let func = super::source_code_of_body(inst, tcx, src_map).unwrap_or_default();
         Callee { def_id, file, func }
     }
 }

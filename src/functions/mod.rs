@@ -9,6 +9,7 @@ use stable_mir::{
     mir::mono::{Instance, MonoItem},
     ty::{FnDef, RigidTy, Ty, TyKind},
 };
+use std::cmp::Ordering;
 
 mod kani;
 mod serialization;
@@ -81,6 +82,7 @@ impl Function {
 
         let mut callees = IndexSet::new();
         callgraph.recursive_callees(item, &mut callees);
+        callees.sort_by(|a, b| cmp_callees(a, b, tcx, src_map));
 
         let func = source_code_with(body.span, tcx, src_map);
         info!(" - {:?} ({span:?}): {func}", inst_def.name());
@@ -118,4 +120,21 @@ fn source_code_with(
 ) -> String {
     let span = internal(tcx, stable_mir_span);
     source_code(span, src_map)
+}
+
+fn source_code_of_body(inst: &Instance, tcx: TyCtxt, src_map: &SourceMap) -> Option<String> {
+    inst.body().map(|body| source_code_with(body.span, tcx, src_map))
+}
+
+fn cmp_callees(a: &Instance, b: &Instance, tcx: TyCtxt, src_map: &SourceMap) -> Ordering {
+    let filename_a = a.def.span().get_filename();
+    let filename_b = b.def.span().get_filename();
+    match filename_a.cmp(&filename_b) {
+        Ordering::Equal => (),
+        ord => return ord,
+    }
+
+    let body_a = source_code_of_body(a, tcx, src_map);
+    let body_b = source_code_of_body(b, tcx, src_map);
+    body_a.cmp(&body_b)
 }
