@@ -1,30 +1,30 @@
-[2m2025-04-12T10:16:11.295073Z[0m [31mERROR[0m [1mall_local_items[0m[1m{[0m[3mitem[0m[2m=[0mCrateItem(DefId { id: 1, name: "verify::contract1::kani_register_contract" })[1m}[0m[2m:[0m [2mdistributed_verification::functions[0m[2m:[0m [3merr[0m[2m=[0mError("Item requires monomorphization")
-[2m2025-04-12T10:16:11.295497Z[0m [31mERROR[0m [1mall_local_items[0m[1m{[0m[3mitem[0m[2m=[0mCrateItem(DefId { id: 3, name: "verify::contract1::{closure#0}" })[1m}[0m[2m:[0m [2mdistributed_verification::functions[0m[2m:[0m [3merr[0m[2m=[0mError("Item requires monomorphization")
-[2m2025-04-12T10:16:11.295816Z[0m [31mERROR[0m [1mall_local_items[0m[1m{[0m[3mitem[0m[2m=[0mCrateItem(DefId { id: 5, name: "verify::contract1::{closure#0}::{closure#0}" })[1m}[0m[2m:[0m [2mdistributed_verification::functions[0m[2m:[0m [3merr[0m[2m=[0mError("Item requires monomorphization")
-[2m2025-04-12T10:16:11.296068Z[0m [31mERROR[0m [1mall_local_items[0m[1m{[0m[3mitem[0m[2m=[0mCrateItem(DefId { id: 6, name: "verify::contract1::{closure#0}::{closure#1}" })[1m}[0m[2m:[0m [2mdistributed_verification::functions[0m[2m:[0m [3merr[0m[2m=[0mError("Item requires monomorphization")
-[2m2025-04-12T10:16:11.296318Z[0m [31mERROR[0m [1mall_local_items[0m[1m{[0m[3mitem[0m[2m=[0mCrateItem(DefId { id: 7, name: "verify::contract1::{closure#0}::{closure#1}::{closure#0}" })[1m}[0m[2m:[0m [2mdistributed_verification::functions[0m[2m:[0m [3merr[0m[2m=[0mError("Item requires monomorphization")
-[2m2025-04-12T10:16:11.296567Z[0m [31mERROR[0m [1mall_local_items[0m[1m{[0m[3mitem[0m[2m=[0mCrateItem(DefId { id: 8, name: "verify::contract1::{closure#1}" })[1m}[0m[2m:[0m [2mdistributed_verification::functions[0m[2m:[0m [3merr[0m[2m=[0mError("Item requires monomorphization")
-[2m2025-04-12T10:16:11.296815Z[0m [31mERROR[0m [1mall_local_items[0m[1m{[0m[3mitem[0m[2m=[0mCrateItem(DefId { id: 9, name: "verify::contract1::{closure#2}" })[1m}[0m[2m:[0m [2mdistributed_verification::functions[0m[2m:[0m [3merr[0m[2m=[0mError("Item requires monomorphization")
-[2m2025-04-12T10:16:11.297064Z[0m [31mERROR[0m [1mall_local_items[0m[1m{[0m[3mitem[0m[2m=[0mCrateItem(DefId { id: 10, name: "verify::contract1::{closure#2}::{closure#0}" })[1m}[0m[2m:[0m [2mdistributed_verification::functions[0m[2m:[0m [3merr[0m[2m=[0mError("Item requires monomorphization")
-[2m2025-04-12T10:16:11.297311Z[0m [31mERROR[0m [1mall_local_items[0m[1m{[0m[3mitem[0m[2m=[0mCrateItem(DefId { id: 11, name: "verify::contract1::{closure#3}" })[1m}[0m[2m:[0m [2mdistributed_verification::functions[0m[2m:[0m [3merr[0m[2m=[0mError("Item requires monomorphization")
-[2m2025-04-12T10:16:11.297559Z[0m [31mERROR[0m [1mall_local_items[0m[1m{[0m[3mitem[0m[2m=[0mCrateItem(DefId { id: 12, name: "verify::contract1::{closure#3}::{closure#0}" })[1m}[0m[2m:[0m [2mdistributed_verification::functions[0m[2m:[0m [3merr[0m[2m=[0mError("Item requires monomorphization")
+[2m2025-04-13T09:15:33.230754Z[0m [31mERROR[0m [1mall_local_items[0m[1m{[0m[3mitem[0m[2m=[0mCrateItem(DefId { id: 1, name: "verify::contract_requires::kani_register_contract" })[1m}[0m[2m:[0m [2mdistributed_verification::functions[0m[2m:[0m [3merr[0m[2m=[0mError("Item requires monomorphization")
+[2m2025-04-13T09:15:33.231137Z[0m [31mERROR[0m [1mall_local_items[0m[1m{[0m[3mitem[0m[2m=[0mCrateItem(DefId { id: 3, name: "verify::contract_requires::{closure#0}" })[1m}[0m[2m:[0m [2mdistributed_verification::functions[0m[2m:[0m [3merr[0m[2m=[0mError("Item requires monomorphization")
+[2m2025-04-13T09:15:33.231468Z[0m [31mERROR[0m [1mall_local_items[0m[1m{[0m[3mitem[0m[2m=[0mCrateItem(DefId { id: 5, name: "verify::contract_requires::{closure#0}::{closure#0}" })[1m}[0m[2m:[0m [2mdistributed_verification::functions[0m[2m:[0m [3merr[0m[2m=[0mError("Item requires monomorphization")
+[2m2025-04-13T09:15:33.231730Z[0m [31mERROR[0m [1mall_local_items[0m[1m{[0m[3mitem[0m[2m=[0mCrateItem(DefId { id: 6, name: "verify::contract_requires::{closure#0}::{closure#1}" })[1m}[0m[2m:[0m [2mdistributed_verification::functions[0m[2m:[0m [3merr[0m[2m=[0mError("Item requires monomorphization")
+[2m2025-04-13T09:15:33.231992Z[0m [31mERROR[0m [1mall_local_items[0m[1m{[0m[3mitem[0m[2m=[0mCrateItem(DefId { id: 7, name: "verify::contract_requires::{closure#0}::{closure#1}::{closure#0}" })[1m}[0m[2m:[0m [2mdistributed_verification::functions[0m[2m:[0m [3merr[0m[2m=[0mError("Item requires monomorphization")
+[2m2025-04-13T09:15:33.232253Z[0m [31mERROR[0m [1mall_local_items[0m[1m{[0m[3mitem[0m[2m=[0mCrateItem(DefId { id: 8, name: "verify::contract_requires::{closure#1}" })[1m}[0m[2m:[0m [2mdistributed_verification::functions[0m[2m:[0m [3merr[0m[2m=[0mError("Item requires monomorphization")
+[2m2025-04-13T09:15:33.232513Z[0m [31mERROR[0m [1mall_local_items[0m[1m{[0m[3mitem[0m[2m=[0mCrateItem(DefId { id: 9, name: "verify::contract_requires::{closure#2}" })[1m}[0m[2m:[0m [2mdistributed_verification::functions[0m[2m:[0m [3merr[0m[2m=[0mError("Item requires monomorphization")
+[2m2025-04-13T09:15:33.232777Z[0m [31mERROR[0m [1mall_local_items[0m[1m{[0m[3mitem[0m[2m=[0mCrateItem(DefId { id: 10, name: "verify::contract_requires::{closure#2}::{closure#0}" })[1m}[0m[2m:[0m [2mdistributed_verification::functions[0m[2m:[0m [3merr[0m[2m=[0mError("Item requires monomorphization")
+[2m2025-04-13T09:15:33.233037Z[0m [31mERROR[0m [1mall_local_items[0m[1m{[0m[3mitem[0m[2m=[0mCrateItem(DefId { id: 11, name: "verify::contract_requires::{closure#3}" })[1m}[0m[2m:[0m [2mdistributed_verification::functions[0m[2m:[0m [3merr[0m[2m=[0mError("Item requires monomorphization")
+[2m2025-04-13T09:15:33.233297Z[0m [31mERROR[0m [1mall_local_items[0m[1m{[0m[3mitem[0m[2m=[0mCrateItem(DefId { id: 12, name: "verify::contract_requires::{closure#3}::{closure#0}" })[1m}[0m[2m:[0m [2mdistributed_verification::functions[0m[2m:[0m [3merr[0m[2m=[0mError("Item requires monomorphization")
 [
   {
-    "hash": "17238183815665182814913666463002909661",
+    "hash": "45984388636004832399216585912235356802",
     "def_id": "DefId { id: 13, name: \"verify::standard_proof_with_contract_requires\" }",
     "file": "tests/standard_proofs_with_contracts.rs",
     "attrs": [
       "#[kanitool::proof]"
     ],
-    "func": "fn standard_proof_with_contract_requires() {\n        contract1(0);\n    }",
+    "func": "fn standard_proof_with_contract_requires() {\n        contract_requires(0);\n    }",
     "callees": [
       {
-        "def_id": "DefId { id: 0, name: \"verify::contract1\" }",
+        "def_id": "DefId { id: 0, name: \"verify::contract_requires\" }",
         "file": "tests/standard_proofs_with_contracts.rs",
         "func": "#[kani::requires(a > 0)]"
       },
       {
-        "def_id": "DefId { id: 1, name: \"verify::contract1::kani_register_contract\" }",
+        "def_id": "DefId { id: 1, name: \"verify::contract_requires::kani_register_contract\" }",
         "file": "tests/standard_proofs_with_contracts.rs",
         "func": "#[kani::requires(a > 0)]"
       },
@@ -1229,7 +1229,7 @@
         "func": "pub unsafe fn drop_in_place<T: ?Sized>(to_drop: *mut T)"
       },
       {
-        "def_id": "DefId { id: 1, name: \"verify::contract1::kani_register_contract\" }",
+        "def_id": "DefId { id: 1, name: \"verify::contract_requires::kani_register_contract\" }",
         "file": "tests/standard_proofs_with_contracts.rs",
         "func": "#[kani::requires(a > 0)]"
       },
@@ -1239,12 +1239,12 @@
         "func": "pub unsafe fn drop_in_place<T: ?Sized>(to_drop: *mut T)"
       },
       {
-        "def_id": "DefId { id: 2, name: \"verify::contract1::kani_contract_mode\" }",
+        "def_id": "DefId { id: 2, name: \"verify::contract_requires::kani_contract_mode\" }",
         "file": "tests/standard_proofs_with_contracts.rs",
         "func": "#[kani::requires(a > 0)]"
       },
       {
-        "def_id": "DefId { id: 1, name: \"verify::contract1::kani_register_contract\" }",
+        "def_id": "DefId { id: 1, name: \"verify::contract_requires::kani_register_contract\" }",
         "file": "tests/standard_proofs_with_contracts.rs",
         "func": "#[kani::requires(a > 0)]"
       },
@@ -1254,7 +1254,7 @@
         "func": "pub unsafe fn drop_in_place<T: ?Sized>(to_drop: *mut T)"
       },
       {
-        "def_id": "DefId { id: 1, name: \"verify::contract1::kani_register_contract\" }",
+        "def_id": "DefId { id: 1, name: \"verify::contract_requires::kani_register_contract\" }",
         "file": "tests/standard_proofs_with_contracts.rs",
         "func": "#[kani::requires(a > 0)]"
       },
