@@ -4,14 +4,15 @@ extern crate rustc_driver;
 extern crate rustc_hir;
 extern crate rustc_interface;
 extern crate rustc_middle;
+#[macro_use]
 extern crate rustc_smir;
 extern crate rustc_span;
 extern crate rustc_stable_hash;
 extern crate stable_mir;
 
-use eyre::{Context, Ok};
-use functions::analyze;
-use rustc_driver::{Compilation, run_compiler};
+// FIXME: this is a bug for rustc_smir, because rustc_interface is used by
+// run_with_tcx! without being imported inside.
+use rustc_smir::rustc_internal;
 
 mod cli;
 mod functions;
@@ -23,7 +24,7 @@ extern crate tracing;
 fn main() {
     logger::init();
     let cli = cli::parse();
-    let mut v = Vec::from(
+    let mut args = Vec::from(
         [
             // the first argument to rustc is unimportant
             "rustc",
@@ -45,26 +46,14 @@ fn main() {
         ]
         .map(String::from),
     );
-    v.extend(cli.rustc_args);
-    run_compiler(&v, &mut Callback { json: cli.json });
-}
+    args.extend(cli.rustc_args);
 
-struct Callback {
-    json: Option<String>,
-}
-
-impl rustc_driver::Callbacks for Callback {
-    fn after_analysis<'tcx>(
-        &mut self,
-        _compiler: &rustc_interface::interface::Compiler,
-        tcx: rustc_middle::ty::TyCtxt<'tcx>,
-    ) -> Compilation {
+    let res = run_with_tcx!(args, |tcx| {
+        use eyre::{Context, Ok};
         let src_map = rustc_span::source_map::get_source_map().expect("No source map.");
+        let output = functions::analyze(tcx, &src_map);
 
-        let output = rustc_smir::rustc_internal::run(tcx, || analyze(tcx, &src_map))
-            .expect("Failed to run rustc_smir.");
-
-        let res = || match &self.json {
+        let res = || match &cli.json {
             Some(path) => {
                 if path == "false" {
                     return Ok(());
@@ -79,6 +68,10 @@ impl rustc_driver::Callbacks for Callback {
         };
 
         res().unwrap();
-        Compilation::Stop
-    }
+
+        // Stop emitting artifact for the source code being compiled.
+        ControlFlow::<(), ()>::Break(())
+    });
+    // rustc_smir uses `Err(CompilerError::Interrupted)` to represent ControlFlow::Break.
+    assert!(res == Err(stable_mir::CompilerError::Interrupted(())), "Unexpected {res:?}");
 }
