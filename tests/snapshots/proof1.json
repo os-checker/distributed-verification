@@ -1,0 +1,18 @@
+[
+  {
+    "hash": "575801690269439979516926484838947128219",
+    "def_id": "DefId { id: 0, name: \"verify::f\" }",
+    "file": "tests/compare/proof.rs",
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
+    "func": "pub fn f() {\n        let a = 1;\n        assert_eq!(a + 1, 2);\n    }",
+    "callees": [
+      {
+        "def_id": "DefId { id: 1, name: \"kani::assert\" }",
+        "file": "/home/zjp/rust/kani/library/kani_core/src/lib.rs",
+        "func": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }"
+      }
+    ]
+  }
+]
