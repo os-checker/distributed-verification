@@ -5,7 +5,9 @@ use pretty_assertions::assert_eq;
 use std::fs::{copy, remove_file};
 
 fn cmd(args: &[&str]) -> String {
-    let output = Command::cargo_bin(env!("CARGO_PKG_NAME")).unwrap().args(args).output().unwrap();
+    let mut command = Command::cargo_bin(env!("CARGO_PKG_NAME")).unwrap();
+    command.env("RUST_LOG", "off").args(args);
+    let output = command.output().unwrap();
     assert!(
         output.status.success(),
         "Failed to test standard_proof.rs:\n{}",
