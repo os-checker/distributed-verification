@@ -1,6 +1,7 @@
 use assert_cmd::Command;
 
-pub use expect_test::expect_file;
+#[allow(unused_imports)] // seems a bug in clippy
+pub use expect_test::{expect, expect_file};
 #[allow(unused_imports)] // seems a bug in clippy
 pub use pretty_assertions::assert_eq;
 

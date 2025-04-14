@@ -1,8 +1,8 @@
 [
   {
-    "hash": "42109808322873561223875447740690337681",
+    "hash": "46975737574545431849805961234274153517",
     "def_id": "DefId { id: 1, name: \"verify::standard_proof_empty\" }",
-    "file": "tests/standard_proofs.rs",
+    "file": "tests/proofs/standard_proofs.rs",
     "attrs": [
       "#[kanitool::proof]"
     ],
@@ -10,9 +10,9 @@
     "callees": []
   },
   {
-    "hash": "119935654822495658609677948466451012436",
+    "hash": "154269283551974763216917429380903124467",
     "def_id": "DefId { id: 0, name: \"verify::standard_proof\" }",
-    "file": "tests/standard_proofs.rs",
+    "file": "tests/proofs/standard_proofs.rs",
     "attrs": [
       "#[kanitool::proof]"
     ],
@@ -51,9 +51,9 @@
     ]
   },
   {
-    "hash": "353125589356689115114026576863231049982",
+    "hash": "58801092890548413495612860413695445693",
     "def_id": "DefId { id: 2, name: \"verify::recursive_callees\" }",
-    "file": "tests/standard_proofs.rs",
+    "file": "tests/proofs/standard_proofs.rs",
     "attrs": [
       "#[kanitool::proof]"
     ],
@@ -596,12 +596,12 @@
       },
       {
         "def_id": "DefId { id: 4, name: \"m::func1\" }",
-        "file": "tests/standard_proofs.rs",
+        "file": "tests/proofs/standard_proofs.rs",
         "func": "pub fn func1() {\n        let _a = \"\".trim();\n    }"
       },
       {
         "def_id": "DefId { id: 3, name: \"top_level\" }",
-        "file": "tests/standard_proofs.rs",
+        "file": "tests/proofs/standard_proofs.rs",
         "func": "pub fn top_level() {\n    m::func1();\n}"
       }
     ]
