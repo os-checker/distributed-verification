@@ -19,7 +19,7 @@ jobs:
         working-directory: kani
         run: |
           ./scripts/setup/ubuntu/install_deps.sh
-          cargo build-dev -- --release
+          cargo build-dev
           echo PATH=$(pwd)/scripts:$PATH >> $GITHUB_ENV
 
       - name: Check kani folder
