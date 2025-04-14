@@ -24,13 +24,3 @@ pub struct Callee {
     pub file: String,
     pub func: String,
 }
-
-impl SerFunction {
-    /// Even though callees are in insertion order, to make them easy to check,
-    /// sort by file and function.
-    pub fn callee_sorted_by_file_func(&self) -> Vec<[&str; 2]> {
-        let mut callees: Vec<_> = self.callees.iter().collect();
-        callees.sort_by(|a, b| (&a.file, &a.func).cmp(&(&b.file, &b.func)));
-        callees.into_iter().map(|c| [&*c.file, &*c.func]).collect()
-    }
-}
