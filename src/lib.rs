@@ -24,3 +24,13 @@ pub struct Callee {
     pub file: String,
     pub func: String,
 }
+
+/// A local path to kani's artifacts.
+pub fn kani_path() -> String {
+    let kani = std::process::Command::new("kani").arg("--version").output().unwrap();
+    let kani_folder = std::str::from_utf8(&kani.stdout).unwrap().trim().replace(' ', "-");
+
+    let home = std::env::var("HOME").unwrap();
+    let path = format!("{home}/.kani/{kani_folder}");
+    path
+}

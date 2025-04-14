@@ -35,11 +35,7 @@ fn test_proofs() -> eyre::Result<()> {
 /// Make sure latest kani is installed through cargo.
 /// FIXME: we'll install kani from source code to keep rust-toolchain sync.
 fn kani_installed() {
-    let kani = std::process::Command::new("kani").arg("--version").output().unwrap();
-    let kani_folder = std::str::from_utf8(&kani.stdout).unwrap().trim().replace(' ', "-");
-
-    let home = std::env::var("HOME").unwrap();
-    let path = format!("{home}/.kani/{kani_folder}");
+    let path = distributed_verification::kani_path();
     dbg!(&path);
     assert!(std::fs::exists(path).unwrap());
 }
