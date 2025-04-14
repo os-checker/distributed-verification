@@ -10,5 +10,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: kani-verifier
+
+      - name: Check kani folder
+        run: kani --version | awk '{system("ls -alh ~/.kani/"$1 "-" $2)}'
+
       - name: Run tests
         run: cargo test -- --nocapture
