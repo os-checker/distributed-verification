@@ -1,8 +1,8 @@
 [
   {
-    "hash": "883956136257843376812272307543917525328",
+    "hash": "638100731549357801415843699110435929671",
     "def_id": "DefId { id: 13, name: \"verify::standard_proof_with_contract_requires\" }",
-    "file": "tests/standard_proofs_with_contracts.rs",
+    "file": "tests/proofs/standard_proofs_with_contracts.rs",
     "attrs": [
       "#[kanitool::proof]"
     ],
@@ -1225,40 +1225,40 @@
       },
       {
         "def_id": "DefId { id: 0, name: \"verify::contract_requires\" }",
-        "file": "tests/standard_proofs_with_contracts.rs",
+        "file": "tests/proofs/standard_proofs_with_contracts.rs",
         "func": "#[kani::requires(a > 0)]"
       },
       {
         "def_id": "DefId { id: 1, name: \"verify::contract_requires::kani_register_contract\" }",
-        "file": "tests/standard_proofs_with_contracts.rs",
+        "file": "tests/proofs/standard_proofs_with_contracts.rs",
         "func": "#[kani::requires(a > 0)]"
       },
       {
         "def_id": "DefId { id: 1, name: \"verify::contract_requires::kani_register_contract\" }",
-        "file": "tests/standard_proofs_with_contracts.rs",
+        "file": "tests/proofs/standard_proofs_with_contracts.rs",
         "func": "#[kani::requires(a > 0)]"
       },
       {
         "def_id": "DefId { id: 2, name: \"verify::contract_requires::kani_contract_mode\" }",
-        "file": "tests/standard_proofs_with_contracts.rs",
+        "file": "tests/proofs/standard_proofs_with_contracts.rs",
         "func": "#[kani::requires(a > 0)]"
       },
       {
         "def_id": "DefId { id: 1, name: \"verify::contract_requires::kani_register_contract\" }",
-        "file": "tests/standard_proofs_with_contracts.rs",
+        "file": "tests/proofs/standard_proofs_with_contracts.rs",
         "func": "#[kani::requires(a > 0)]"
       },
       {
         "def_id": "DefId { id: 1, name: \"verify::contract_requires::kani_register_contract\" }",
-        "file": "tests/standard_proofs_with_contracts.rs",
+        "file": "tests/proofs/standard_proofs_with_contracts.rs",
         "func": "#[kani::requires(a > 0)]"
       }
     ]
   },
   {
-    "hash": "1209015469125850433012148577517296907918",
+    "hash": "153447193349631547573109754293264803070",
     "def_id": "DefId { id: 32, name: \"verify::standard_proof_with_contract_ensures\" }",
-    "file": "tests/standard_proofs_with_contracts.rs",
+    "file": "tests/proofs/standard_proofs_with_contracts.rs",
     "attrs": [
       "#[kanitool::proof]"
     ],
@@ -2481,32 +2481,32 @@
       },
       {
         "def_id": "DefId { id: 14, name: \"verify::contract_ensures\" }",
-        "file": "tests/standard_proofs_with_contracts.rs",
+        "file": "tests/proofs/standard_proofs_with_contracts.rs",
         "func": "#[kani::ensures(|&ret| ret > 0)]"
       },
       {
         "def_id": "DefId { id: 16, name: \"verify::contract_ensures::kani_contract_mode\" }",
-        "file": "tests/standard_proofs_with_contracts.rs",
+        "file": "tests/proofs/standard_proofs_with_contracts.rs",
         "func": "#[kani::ensures(|&ret| ret > 0)]"
       },
       {
         "def_id": "DefId { id: 15, name: \"verify::contract_ensures::kani_register_contract\" }",
-        "file": "tests/standard_proofs_with_contracts.rs",
+        "file": "tests/proofs/standard_proofs_with_contracts.rs",
         "func": "#[kani::ensures(|&ret| ret > 0)]"
       },
       {
         "def_id": "DefId { id: 15, name: \"verify::contract_ensures::kani_register_contract\" }",
-        "file": "tests/standard_proofs_with_contracts.rs",
+        "file": "tests/proofs/standard_proofs_with_contracts.rs",
         "func": "#[kani::ensures(|&ret| ret > 0)]"
       },
       {
         "def_id": "DefId { id: 15, name: \"verify::contract_ensures::kani_register_contract\" }",
-        "file": "tests/standard_proofs_with_contracts.rs",
+        "file": "tests/proofs/standard_proofs_with_contracts.rs",
         "func": "#[kani::ensures(|&ret| ret > 0)]"
       },
       {
         "def_id": "DefId { id: 15, name: \"verify::contract_ensures::kani_register_contract\" }",
-        "file": "tests/standard_proofs_with_contracts.rs",
+        "file": "tests/proofs/standard_proofs_with_contracts.rs",
         "func": "#[kani::ensures(|&ret| ret > 0)]"
       }
     ]

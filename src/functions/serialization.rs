@@ -19,7 +19,7 @@ pub struct SerFunction {
     attrs: Vec<String>,
     /// Raw function string, including name, signature, and body.
     func: String,
-    /// Recursive fnction calls inside the body.
+    /// Recursive function calls inside the proof.
     callees: Vec<Callee>,
 }
 
