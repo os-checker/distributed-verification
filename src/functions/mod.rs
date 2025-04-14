@@ -52,7 +52,7 @@ pub struct Function {
     /// Raw function string, including name, signature, and body.
     func: String,
     /// Recursive fnction calls inside the body.
-    /// This set has insertion order, which is nice to check out call contexts.
+    /// The elements are sorted by file path and fn source code to keep hash value stable.
     callees: IndexSet<Instance>,
 }
 
