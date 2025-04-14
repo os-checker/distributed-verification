@@ -4,11 +4,26 @@ on:
   push:
     branches: 
 
+env:
+  CARGO_TERM_COLOR: always
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+
+      - name: Install kani
+        working-directory: kani
+        run: |
+          ./scripts/setup/ubuntu/install_deps.sh
+          cargo build-dev
+          echo PATH=$(pwd)/scripts:$PATH >> $GITHUB_ENV
+
+      - name: Check kani folder
+        run: kani --version
 
       - name: Run tests
         run: cargo test -- --nocapture

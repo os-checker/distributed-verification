@@ -30,3 +30,10 @@ fn test_proofs() -> eyre::Result<()> {
 
     Ok(())
 }
+
+#[test]
+/// Make sure latest kani is installed through cargo.
+fn kani_installed() {
+    let path = distributed_verification::kani_path();
+    dbg!(&path);
+}
