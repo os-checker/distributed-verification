@@ -31,11 +31,13 @@ pub fn analyze(tcx: TyCtxt, src_map: &SourceMap) -> Vec<SerFunction> {
     let (mono_items, callgraph) = collect_reachable_items(tcx, &entries);
 
     // Filter out non kanitool functions.
-    mono_items
+    let mut proofs: Vec<_> = mono_items
         .iter()
-        .filter_map(|item| Function::new(item, &callgraph, tcx, src_map, |x| !x.attrs.is_empty()))
-        .map(|fun| SerFunction::new(fun, tcx, src_map))
-        .collect()
+        .filter_map(|f| Function::new(f, &callgraph, tcx, src_map, |x| !x.attrs.is_empty()))
+        .collect();
+    // Sort proofs by file path and source code.
+    proofs.sort_by(|a, b| (&*a.file, &*a.func).cmp(&(&*b.file, &*b.func)));
+    proofs.into_iter().map(|fun| SerFunction::new(fun, tcx, src_map)).collect()
 }
 
 /// A Rust funtion with its file source, attributes, and raw function content.
