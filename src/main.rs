@@ -26,7 +26,7 @@ fn main() {
     logger::init();
     let cli = cli::parse();
     let kani_path = kani_path();
-    assert!(std::fs::exists(&kani_path).unwrap());
+    info!(kani_path);
     let mut args = Vec::from(
         [
             // the first argument to rustc is unimportant
@@ -42,7 +42,7 @@ fn main() {
             "--extern",
             "kani",
             "--extern",
-            "noprelude:std=/home/zjp/rust/kani/target/kani/lib/libstd.rlib",
+            &format!("noprelude:std={kani_path}/lib/libstd.rlib"),
             "-Zunstable-options",
             "-Zalways-encode-mir",
             "-Zmir-enable-passes=-RemoveStorageMarkers",
