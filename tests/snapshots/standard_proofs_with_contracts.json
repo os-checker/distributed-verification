@@ -1,6 +1,6 @@
 [
   {
-    "hash": "1025309838735755950413656814657831068918",
+    "hash": "1720175471726112845615145613787907368267",
     "def_id": "DefId { id: 13, name: \"verify::standard_proof_with_contract_requires\" }",
     "file": "tests/proofs/standard_proofs_with_contracts.rs",
     "attrs": [
@@ -1220,7 +1220,7 @@
       },
       {
         "def_id": "DefId { id: 33, name: \"kani::panic\" }",
-        "file": "/home/zjp/rust/distributed-verification/kani/library/kani_core/src/lib.rs",
+        "file": "kani/library/kani_core/src/lib.rs",
         "func": "pub const fn panic(message: &'static str) -> ! {\n            panic!(\"{}\", message)\n        }"
       },
       {
@@ -1256,7 +1256,7 @@
     ]
   },
   {
-    "hash": "1317424779862856706714064197163667502053",
+    "hash": "176046216958037015626605244695592309696",
     "def_id": "DefId { id: 32, name: \"verify::standard_proof_with_contract_ensures\" }",
     "file": "tests/proofs/standard_proofs_with_contracts.rs",
     "attrs": [
@@ -2476,7 +2476,7 @@
       },
       {
         "def_id": "DefId { id: 33, name: \"kani::panic\" }",
-        "file": "/home/zjp/rust/distributed-verification/kani/library/kani_core/src/lib.rs",
+        "file": "kani/library/kani_core/src/lib.rs",
         "func": "pub const fn panic(message: &'static str) -> ! {\n            panic!(\"{}\", message)\n        }"
       },
       {

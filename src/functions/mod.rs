@@ -75,7 +75,7 @@ impl Function {
         let attrs = KANI_TOOL_ATTRS.iter().flat_map(|v| inst_def.tool_attrs(v)).collect();
 
         let span = inst_def.span();
-        let file = span.get_filename();
+        let file = file_path(&inst);
 
         let fn_def = ty_to_fndef(inst.ty())?;
         let body = fn_def.body()?;
@@ -127,8 +127,8 @@ fn source_code_of_body(inst: &Instance, tcx: TyCtxt, src_map: &SourceMap) -> Opt
 }
 
 fn cmp_callees(a: &Instance, b: &Instance, tcx: TyCtxt, src_map: &SourceMap) -> Ordering {
-    let filename_a = a.def.span().get_filename();
-    let filename_b = b.def.span().get_filename();
+    let filename_a = file_path(a);
+    let filename_b = file_path(b);
     match filename_a.cmp(&filename_b) {
         Ordering::Equal => (),
         ord => return ord,
@@ -137,4 +137,15 @@ fn cmp_callees(a: &Instance, b: &Instance, tcx: TyCtxt, src_map: &SourceMap) -> 
     let body_a = source_code_of_body(a, tcx, src_map);
     let body_b = source_code_of_body(b, tcx, src_map);
     body_a.cmp(&body_b)
+}
+
+fn file_path(inst: &Instance) -> String {
+    use std::sync::LazyLock;
+    static PWD: LazyLock<String> = LazyLock::new(|| {
+        let mut path = std::env::current_dir().unwrap().into_os_string().into_string().unwrap();
+        path.push('/');
+        path
+    });
+    let file = inst.def.span().get_filename();
+    file.strip_prefix(&*PWD).map(String::from).unwrap_or(file)
 }

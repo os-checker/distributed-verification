@@ -1,6 +1,6 @@
 [
   {
-    "hash": "1333061076946858250810580638840992453503",
+    "hash": "115172008545498701307566340849891514113",
     "def_id": "DefId { id: 13, name: \"verify::f\" }",
     "file": "tests/compare/contract.rs",
     "attrs": [
@@ -1220,7 +1220,7 @@
       },
       {
         "def_id": "DefId { id: 14, name: \"kani::panic\" }",
-        "file": "/home/zjp/rust/distributed-verification/kani/library/kani_core/src/lib.rs",
+        "file": "kani/library/kani_core/src/lib.rs",
         "func": "pub const fn panic(message: &'static str) -> ! {\n            panic!(\"{}\", message)\n        }"
       },
       {

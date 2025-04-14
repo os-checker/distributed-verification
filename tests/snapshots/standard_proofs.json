@@ -10,7 +10,7 @@
     "callees": []
   },
   {
-    "hash": "598200882196848966016444482128164260930",
+    "hash": "1326945528524461068796384134380740941",
     "def_id": "DefId { id: 0, name: \"verify::standard_proof\" }",
     "file": "tests/proofs/standard_proofs.rs",
     "attrs": [
@@ -20,32 +20,32 @@
     "callees": [
       {
         "def_id": "DefId { id: 8, name: \"<u8 as kani::Arbitrary>::any\" }",
-        "file": "/home/zjp/rust/distributed-verification/kani/library/kani_core/src/arbitrary.rs",
+        "file": "kani/library/kani_core/src/arbitrary.rs",
         "func": "fn any() -> Self {\n                        // This size_of call does not use generic_const_exprs feature. It's inside a macro, and Self isn't generic.\n                        unsafe { crate::kani::any_raw_internal::<Self>() }\n                    }"
       },
       {
         "def_id": "DefId { id: 10, name: \"kani::any_raw\" }",
-        "file": "/home/zjp/rust/distributed-verification/kani/library/kani_core/src/lib.rs",
+        "file": "kani/library/kani_core/src/lib.rs",
         "func": "fn any_raw<T: Copy>() -> T {\n            kani_intrinsic()\n        }"
       },
       {
         "def_id": "DefId { id: 11, name: \"kani::kani_intrinsic\" }",
-        "file": "/home/zjp/rust/distributed-verification/kani/library/kani_core/src/lib.rs",
+        "file": "kani/library/kani_core/src/lib.rs",
         "func": "fn kani_intrinsic<T>() -> T {\n            #[allow(clippy::empty_loop)]\n            loop {}\n        }"
       },
       {
         "def_id": "DefId { id: 6, name: \"kani::assert\" }",
-        "file": "/home/zjp/rust/distributed-verification/kani/library/kani_core/src/lib.rs",
+        "file": "kani/library/kani_core/src/lib.rs",
         "func": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }"
       },
       {
         "def_id": "DefId { id: 5, name: \"kani::any\" }",
-        "file": "/home/zjp/rust/distributed-verification/kani/library/kani_core/src/lib.rs",
+        "file": "kani/library/kani_core/src/lib.rs",
         "func": "pub fn any<T: Arbitrary>() -> T {\n            T::any()\n        }"
       },
       {
         "def_id": "DefId { id: 9, name: \"kani::any_raw_internal\" }",
-        "file": "/home/zjp/rust/distributed-verification/kani/library/kani_core/src/lib.rs",
+        "file": "kani/library/kani_core/src/lib.rs",
         "func": "unsafe fn any_raw_internal<T: Copy>() -> T {\n            any_raw::<T>()\n        }"
       }
     ]
