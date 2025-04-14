@@ -141,11 +141,21 @@ fn cmp_callees(a: &Instance, b: &Instance, tcx: TyCtxt, src_map: &SourceMap) -> 
 
 fn file_path(inst: &Instance) -> String {
     use std::sync::LazyLock;
-    static PWD: LazyLock<String> = LazyLock::new(|| {
-        let mut path = std::env::current_dir().unwrap().into_os_string().into_string().unwrap();
-        path.push('/');
-        path
+    static PREFIXES: LazyLock<[String; 2]> = LazyLock::new(|| {
+        let mut pwd = std::env::current_dir().unwrap().into_os_string().into_string().unwrap();
+        pwd.push('/');
+
+        let out = std::process::Command::new("rustc").arg("--print=sysroot").output().unwrap();
+        let sysroot = std::str::from_utf8(&out.stdout).unwrap().trim();
+        let sysroot = format!("{sysroot}/lib/rustlib/src/rust/");
+        [pwd, sysroot]
     });
+
     let file = inst.def.span().get_filename();
-    file.strip_prefix(&*PWD).map(String::from).unwrap_or(file)
+    for prefix in &*PREFIXES {
+        if let Some(file) = file.strip_prefix(prefix) {
+            return file.to_owned();
+        }
+    }
+    file
 }
