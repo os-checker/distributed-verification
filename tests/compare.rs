@@ -10,47 +10,38 @@ fn get(text: &str, start: &str) -> SerFunction {
     v.into_iter().find(|f| f.func.starts_with(start)).unwrap()
 }
 
-#[test]
-fn compare_proof() {
-    let file = "tests/compare/proof.rs";
+const COMPARE: &str = "tests/compare";
 
-    copy("tests/compare/proof1.rs", file).unwrap();
-    let text1 = &cmd(&["tests/compare/proof.rs"]);
-    expect_file!["./snapshots/proof1.json"].assert_eq(text1);
+fn compare(tmp: &str, v_file: &[&str], f: &str) {
+    let len = v_file.len();
+    assert!(len > 1);
+    let tmp = format!("{COMPARE}/{tmp}.rs");
 
-    // Add another proof won't affact the previous one.
-    copy("tests/compare/proof2.rs", file).unwrap();
-    let text2 = &cmd(&["tests/compare/proof.rs"]);
-    expect_file!["./snapshots/proof2.json"].assert_eq(text2);
+    let mut v_func = vec![];
+    for ele in v_file {
+        copy(format!("{COMPARE}/{ele}.rs"), &tmp).unwrap();
+        let text = cmd(&[&tmp]);
+        expect_file![format!("./snapshots/{ele}.json")].assert_eq(&text);
+        v_func.push(get(&text, f));
+    }
 
-    remove_file(file).unwrap();
+    remove_file(tmp).unwrap();
 
-    let f = "pub fn f()";
     // For the same proof (w.r.t same path and body),
     // the hash value must be the same.
-    assert_eq!(get(text1, f).hash, get(text2, f).hash);
+    for i in 0..len - 1 {
+        for j in 1..len {
+            assert_eq!(
+                v_func[i].hash, v_func[j].hash,
+                "Hash values are not equal: {} ≠ {}",
+                v_file[i], v_file[j]
+            );
+        }
+    }
 }
 
 #[test]
-fn compare_contract() {
-    let file = "tests/compare/contract.rs";
-
-    copy("tests/compare/contract1.rs", file).unwrap();
-    let text1 = &cmd(&["tests/compare/contract.rs"]);
-    expect_file!["./snapshots/contract1.json"].assert_eq(text1);
-
-    copy("tests/compare/contract2.rs", file).unwrap();
-    let text2 = &cmd(&["tests/compare/contract.rs"]);
-    expect_file!["./snapshots/contract2.json"].assert_eq(text2);
-
-    remove_file(file).unwrap();
-
-    let f = "pub fn f()";
-    let f1 = get(text1, f);
-    let f2 = get(text2, f);
-    let callees1 = f1.callee_sorted_by_file_func();
-    let callees2 = f2.callee_sorted_by_file_func();
-
-    assert_eq!(callees1, callees2);
-    assert_eq!(f1.hash, f2.hash);
+fn test_compare() {
+    compare("proof", &["proof1", "proof2"], "pub fn f()");
+    compare("contract", &["contract1", "contract2"], "pub fn f()");
 }
