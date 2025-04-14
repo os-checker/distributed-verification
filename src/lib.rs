@@ -26,11 +26,21 @@ pub struct Callee {
 }
 
 /// A local path to kani's artifacts.
+///
+/// Choose the following if found
+/// * `$KANI_DIR`
+/// * or `$KANI_HOME/kani-{version}`
+/// * or `$HOME/.kani/kani-{version}`
 pub fn kani_path() -> String {
-    let kani = std::process::Command::new("kani").arg("--version").output().unwrap();
-    let kani_folder = std::str::from_utf8(&kani.stdout).unwrap().trim().replace(' ', "-");
-
-    let home = std::env::var("HOME").unwrap();
-    let path = format!("{home}/.kani/{kani_folder}");
+    use std::env::var;
+    let path = if let Ok(path) = var("KANI_DIR") {
+        path
+    } else {
+        let kani = std::process::Command::new("kani").arg("--version").output().unwrap();
+        let kani_folder = std::str::from_utf8(&kani.stdout).unwrap().trim().replace(' ', "-");
+        let home = var("KANI_HOME").or_else(|_| var("HOME")).unwrap();
+        format!("{home}/.kani/{kani_folder}")
+    };
+    assert!(std::fs::exists(&path).unwrap());
     path
 }
