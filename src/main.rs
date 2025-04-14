@@ -10,6 +10,7 @@ extern crate rustc_span;
 extern crate rustc_stable_hash;
 extern crate stable_mir;
 
+use distributed_verification::kani_path;
 // FIXME: this is a bug for rustc_smir, because rustc_interface is used by
 // run_with_tcx! without being imported inside.
 use rustc_smir::rustc_internal;
@@ -24,6 +25,8 @@ extern crate tracing;
 fn main() {
     logger::init();
     let cli = cli::parse();
+    let kani_path = kani_path();
+    assert!(std::fs::exists(&kani_path).unwrap());
     let mut args = Vec::from(
         [
             // the first argument to rustc is unimportant
@@ -33,9 +36,9 @@ fn main() {
             "-Zcrate-attr=feature(register_tool)",
             "-Zcrate-attr=register_tool(kanitool)",
             "--sysroot",
-            "/home/zjp/rust/kani/target/kani",
+            &kani_path,
             "-L",
-            "/home/zjp/rust/kani/target/kani/lib",
+            &format!("{kani_path}/lib"),
             "--extern",
             "kani",
             "--extern",
