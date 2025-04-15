@@ -16,6 +16,7 @@ fn test_proofs() -> eyre::Result<()> {
 
     expect![[r#"
         [
+            "tests/proofs/proofs_for_contract.rs",
             "tests/proofs/standard_proofs_with_contracts.rs",
             "tests/proofs/standard_proofs.rs",
             "tests/proofs/ad_hoc.rs",
