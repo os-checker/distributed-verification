@@ -3,7 +3,7 @@ mod verify {
     #[kani::requires(a > 0)]
     fn contract_requires(a: u8) {}
 
-    #[kani::proof]
+    #[kani::proof_for_contract(contract_requires)]
     fn single_contract_requires() {
         contract_requires(0);
     }
@@ -13,12 +13,12 @@ mod verify {
         a
     }
 
-    #[kani::proof]
+    #[kani::proof_for_contract(contract_ensures)]
     fn single_with_contract_ensures() {
         contract_ensures(0);
     }
 
-    #[kani::proof]
+    #[kani::proof_for_contract(contract_requires)]
     fn two_contracts_requires_and_ensures() {
         let val = contract_ensures(0);
         contract_requires(val);
@@ -30,7 +30,7 @@ mod verify {
         a
     }
 
-    #[kani::proof]
+    #[kani::proof_for_contract(contract)]
     fn single_contract() {
         let val = contract(1);
         assert!(val > 0);
