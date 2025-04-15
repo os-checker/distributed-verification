@@ -1,1 +1,4 @@
 /target
+
+# ignore kani folder for grep or files findings
+# kani
