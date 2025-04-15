@@ -1,0 +1,85 @@
+[
+  {
+    "hash": "952175153267326104817555187587143859995",
+    "def_id": "DefId { id: 0, name: \"adhoc::callee_defined_in_proof\" }",
+    "file": "tests/proofs/ad_hoc.rs",
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
+    "func": "fn callee_defined_in_proof() {\n        fn f() -> u8 {\n            1\n        }\n        assert!(f() == 1);\n    }",
+    "callees": [
+      {
+        "def_id": "DefId { id: 6, name: \"kani::assert\" }",
+        "file": "kani/library/kani_core/src/lib.rs",
+        "func": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }"
+      },
+      {
+        "def_id": "DefId { id: 1, name: \"adhoc::callee_defined_in_proof::f\" }",
+        "file": "tests/proofs/ad_hoc.rs",
+        "func": "fn f() -> u8 {\n            1\n        }"
+      }
+    ]
+  },
+  {
+    "hash": "75621983092344117614099719256493026487",
+    "def_id": "DefId { id: 2, name: \"adhoc::closure_in_proof\" }",
+    "file": "tests/proofs/ad_hoc.rs",
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
+    "func": "fn closure_in_proof() {\n        let f = || 1;\n        assert!(f() == 1);\n    }",
+    "callees": [
+      {
+        "def_id": "DefId { id: 6, name: \"kani::assert\" }",
+        "file": "kani/library/kani_core/src/lib.rs",
+        "func": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }"
+      },
+      {
+        "def_id": "DefId { id: 3, name: \"adhoc::closure_in_proof::{closure#0}\" }",
+        "file": "tests/proofs/ad_hoc.rs",
+        "func": "|| 1"
+      }
+    ]
+  },
+  {
+    "hash": "767440852073129240514318853477184375838",
+    "def_id": "DefId { id: 5, name: \"adhoc::proof_in_fn_item::proof\" }",
+    "file": "tests/proofs/ad_hoc.rs",
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
+    "func": "fn proof() {\n            assert!(kani::any::<u8>() == 1);\n        }",
+    "callees": [
+      {
+        "def_id": "DefId { id: 10, name: \"<u8 as kani::Arbitrary>::any\" }",
+        "file": "kani/library/kani_core/src/arbitrary.rs",
+        "func": "fn any() -> Self {\n                        // This size_of call does not use generic_const_exprs feature. It's inside a macro, and Self isn't generic.\n                        unsafe { crate::kani::any_raw_internal::<Self>() }\n                    }"
+      },
+      {
+        "def_id": "DefId { id: 12, name: \"kani::any_raw\" }",
+        "file": "kani/library/kani_core/src/lib.rs",
+        "func": "fn any_raw<T: Copy>() -> T {\n            kani_intrinsic()\n        }"
+      },
+      {
+        "def_id": "DefId { id: 13, name: \"kani::kani_intrinsic\" }",
+        "file": "kani/library/kani_core/src/lib.rs",
+        "func": "fn kani_intrinsic<T>() -> T {\n            #[allow(clippy::empty_loop)]\n            loop {}\n        }"
+      },
+      {
+        "def_id": "DefId { id: 6, name: \"kani::assert\" }",
+        "file": "kani/library/kani_core/src/lib.rs",
+        "func": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }"
+      },
+      {
+        "def_id": "DefId { id: 8, name: \"kani::any\" }",
+        "file": "kani/library/kani_core/src/lib.rs",
+        "func": "pub fn any<T: Arbitrary>() -> T {\n            T::any()\n        }"
+      },
+      {
+        "def_id": "DefId { id: 11, name: \"kani::any_raw_internal\" }",
+        "file": "kani/library/kani_core/src/lib.rs",
+        "func": "unsafe fn any_raw_internal<T: Copy>() -> T {\n            any_raw::<T>()\n        }"
+      }
+    ]
+  }
+]
