@@ -3728,13 +3728,13 @@
     ]
   },
   {
-    "hash": "1170450786039970335618003573750607965481",
+    "hash": "32030356900424297107786268568518419185",
     "def_id": "DefId { id: 33, name: \"verify::two_contracts_requires_and_ensures\" }",
     "file": "tests/proofs/standard_proofs_with_contracts.rs",
     "attrs": [
       "#[kanitool::proof]"
     ],
-    "func": "fn two_contracts_requires_and_ensures() {\n        let val = contract_ensures(0);\n        contract_ensures(val);\n    }",
+    "func": "fn two_contracts_requires_and_ensures() {\n        let val = contract_ensures(0);\n        contract_requires(val);\n    }",
     "callees": [
       {
         "def_id": "DefId { id: 53, name: \"kani::panic\" }",
@@ -4387,6 +4387,26 @@
         "func": "pub unsafe fn drop_in_place<T: ?Sized>(to_drop: *mut T)"
       },
       {
+        "def_id": "DefId { id: 54, name: \"std::ptr::drop_in_place\" }",
+        "file": "library/core/src/ptr/mod.rs",
+        "func": "pub unsafe fn drop_in_place<T: ?Sized>(to_drop: *mut T)"
+      },
+      {
+        "def_id": "DefId { id: 54, name: \"std::ptr::drop_in_place\" }",
+        "file": "library/core/src/ptr/mod.rs",
+        "func": "pub unsafe fn drop_in_place<T: ?Sized>(to_drop: *mut T)"
+      },
+      {
+        "def_id": "DefId { id: 54, name: \"std::ptr::drop_in_place\" }",
+        "file": "library/core/src/ptr/mod.rs",
+        "func": "pub unsafe fn drop_in_place<T: ?Sized>(to_drop: *mut T)"
+      },
+      {
+        "def_id": "DefId { id: 54, name: \"std::ptr::drop_in_place\" }",
+        "file": "library/core/src/ptr/mod.rs",
+        "func": "pub unsafe fn drop_in_place<T: ?Sized>(to_drop: *mut T)"
+      },
+      {
         "def_id": "DefId { id: 211, name: \"std::ptr::align_offset\" }",
         "file": "library/core/src/ptr/mod.rs",
         "func": "pub(crate) unsafe fn align_offset<T: Sized>(p: *const T, a: usize) -> usize {\n    // FIXME(#75598): Direct use of these intrinsics improves codegen significantly at opt-level <=\n    // 1, where the method versions of these operations are not inlined.\n    use intrinsics::{\n        assume, cttz_nonzero, exact_div, mul_with_overflow, unchecked_rem, unchecked_shl,\n        unchecked_shr, unchecked_sub, wrapping_add, wrapping_mul, wrapping_sub,\n    };\n\n    /// Calculate multiplicative modular inverse of `x` modulo `m`.\n    ///\n    /// This implementation is tailored for `align_offset` and has following preconditions:\n    ///\n    /// * `m` is a power-of-two;\n    /// * `x < m`; (if `x ≥ m`, pass in `x % m` instead)\n    ///\n    /// Implementation of this function shall not panic. Ever.\n    #[inline]\n    const unsafe fn mod_inv(x: usize, m: usize) -> usize {\n        /// Multiplicative modular inverse table modulo 2⁴ = 16.\n        ///\n        /// Note, that this table does not contain values where inverse does not exist (i.e., for\n        /// `0⁻¹ mod 16`, `2⁻¹ mod 16`, etc.)\n        const INV_TABLE_MOD_16: [u8; 8] = [1, 11, 13, 7, 9, 3, 5, 15];\n        /// Modulo for which the `INV_TABLE_MOD_16` is intended.\n        const INV_TABLE_MOD: usize = 16;\n\n        // SAFETY: `m` is required to be a power-of-two, hence non-zero.\n        let m_minus_one = unsafe { unchecked_sub(m, 1) };\n        let mut inverse = INV_TABLE_MOD_16[(x & (INV_TABLE_MOD - 1)) >> 1] as usize;\n        let mut mod_gate = INV_TABLE_MOD;\n        // We iterate \"up\" using the following formula:\n        //\n        // $$ xy ≡ 1 (mod 2ⁿ) → xy (2 - xy) ≡ 1 (mod 2²ⁿ) $$\n        //\n        // This application needs to be applied at least until `2²ⁿ ≥ m`, at which point we can\n        // finally reduce the computation to our desired `m` by taking `inverse mod m`.\n        //\n        // This computation is `O(log log m)`, which is to say, that on 64-bit machines this loop\n        // will always finish in at most 4 iterations.\n        loop {\n            // y = y * (2 - xy) mod n\n            //\n            // Note, that we use wrapping operations here intentionally – the original formula\n            // uses e.g., subtraction `mod n`. It is entirely fine to do them `mod\n            // usize::MAX` instead, because we take the result `mod n` at the end\n            // anyway.\n            if mod_gate >= m {\n                break;\n            }\n            inverse = wrapping_mul(inverse, wrapping_sub(2usize, wrapping_mul(x, inverse)));\n            let (new_gate, overflow) = mul_with_overflow(mod_gate, mod_gate);\n            if overflow {\n                break;\n            }\n            mod_gate = new_gate;\n        }\n        inverse & m_minus_one\n    }\n\n    let stride = size_of::<T>();\n\n    let addr: usize = p.addr();\n\n    // SAFETY: `a` is a power-of-two, therefore non-zero.\n    let a_minus_one = unsafe { unchecked_sub(a, 1) };\n\n    if stride == 0 {\n        // SPECIAL_CASE: handle 0-sized types. No matter how many times we step, the address will\n        // stay the same, so no offset will be able to align the pointer unless it is already\n        // aligned. This branch _will_ be optimized out as `stride` is known at compile-time.\n        let p_mod_a = addr & a_minus_one;\n        return if p_mod_a == 0 { 0 } else { usize::MAX };\n    }\n\n    // SAFETY: `stride == 0` case has been handled by the special case above.\n    let a_mod_stride = unsafe { unchecked_rem(a, stride) };\n    if a_mod_stride == 0 {\n        // SPECIAL_CASE: In cases where the `a` is divisible by `stride`, byte offset to align a\n        // pointer can be computed more simply through `-p (mod a)`. In the off-chance the byte\n        // offset is not a multiple of `stride`, the input pointer was misaligned and no pointer\n        // offset will be able to produce a `p` aligned to the specified `a`.\n        //\n        // The naive `-p (mod a)` equation inhibits LLVM's ability to select instructions\n        // like `lea`. We compute `(round_up_to_next_alignment(p, a) - p)` instead. This\n        // redistributes operations around the load-bearing, but pessimizing `and` instruction\n        // sufficiently for LLVM to be able to utilize the various optimizations it knows about.\n        //\n        // LLVM handles the branch here particularly nicely. If this branch needs to be evaluated\n        // at runtime, it will produce a mask `if addr_mod_stride == 0 { 0 } else { usize::MAX }`\n        // in a branch-free way and then bitwise-OR it with whatever result the `-p mod a`\n        // computation produces.\n\n        let aligned_address = wrapping_add(addr, a_minus_one) & wrapping_sub(0, a);\n        let byte_offset = wrapping_sub(aligned_address, addr);\n        // FIXME: Remove the assume after <https://github.com/llvm/llvm-project/issues/62502>\n        // SAFETY: Masking by `-a` can only affect the low bits, and thus cannot have reduced\n        // the value by more than `a-1`, so even though the intermediate values might have\n        // wrapped, the byte_offset is always in `[0, a)`.\n        unsafe { assume(byte_offset < a) };\n\n        // SAFETY: `stride == 0` case has been handled by the special case above.\n        let addr_mod_stride = unsafe { unchecked_rem(addr, stride) };\n\n        return if addr_mod_stride == 0 {\n            // SAFETY: `stride` is non-zero. This is guaranteed to divide exactly as well, because\n            // addr has been verified to be aligned to the original type’s alignment requirements.\n            unsafe { exact_div(byte_offset, stride) }\n        } else {\n            usize::MAX\n        };\n    }\n\n    // GENERAL_CASE: From here on we’re handling the very general case where `addr` may be\n    // misaligned, there isn’t an obvious relationship between `stride` and `a` that we can take an\n    // advantage of, etc. This case produces machine code that isn’t particularly high quality,\n    // compared to the special cases above. The code produced here is still within the realm of\n    // miracles, given the situations this case has to deal with.\n\n    // SAFETY: a is power-of-two hence non-zero. stride == 0 case is handled above.\n    // FIXME(const-hack) replace with min\n    let gcdpow = unsafe {\n        let x = cttz_nonzero(stride);\n        let y = cttz_nonzero(a);\n        if x < y { x } else { y }\n    };\n    // SAFETY: gcdpow has an upper-bound that’s at most the number of bits in a `usize`.\n    let gcd = unsafe { unchecked_shl(1usize, gcdpow) };\n    // SAFETY: gcd is always greater or equal to 1.\n    if addr & unsafe { unchecked_sub(gcd, 1) } == 0 {\n        // This branch solves for the following linear congruence equation:\n        //\n        // ` p + so = 0 mod a `\n        //\n        // `p` here is the pointer value, `s` - stride of `T`, `o` offset in `T`s, and `a` - the\n        // requested alignment.\n        //\n        // With `g = gcd(a, s)`, and the above condition asserting that `p` is also divisible by\n        // `g`, we can denote `a' = a/g`, `s' = s/g`, `p' = p/g`, then this becomes equivalent to:\n        //\n        // ` p' + s'o = 0 mod a' `\n        // ` o = (a' - (p' mod a')) * (s'^-1 mod a') `\n        //\n        // The first term is \"the relative alignment of `p` to `a`\" (divided by the `g`), the\n        // second term is \"how does incrementing `p` by `s` bytes change the relative alignment of\n        // `p`\" (again divided by `g`). Division by `g` is necessary to make the inverse well\n        // formed if `a` and `s` are not co-prime.\n        //\n        // Furthermore, the result produced by this solution is not \"minimal\", so it is necessary\n        // to take the result `o mod lcm(s, a)`. This `lcm(s, a)` is the same as `a'`.\n\n        // SAFETY: `gcdpow` has an upper-bound not greater than the number of trailing 0-bits in\n        // `a`.\n        let a2 = unsafe { unchecked_shr(a, gcdpow) };\n        // SAFETY: `a2` is non-zero. Shifting `a` by `gcdpow` cannot shift out any of the set bits\n        // in `a` (of which it has exactly one).\n        let a2minus1 = unsafe { unchecked_sub(a2, 1) };\n        // SAFETY: `gcdpow` has an upper-bound not greater than the number of trailing 0-bits in\n        // `a`.\n        let s2 = unsafe { unchecked_shr(stride & a_minus_one, gcdpow) };\n        // SAFETY: `gcdpow` has an upper-bound not greater than the number of trailing 0-bits in\n        // `a`. Furthermore, the subtraction cannot overflow, because `a2 = a >> gcdpow` will\n        // always be strictly greater than `(p % a) >> gcdpow`.\n        let minusp2 = unsafe { unchecked_sub(a2, unchecked_shr(addr & a_minus_one, gcdpow)) };\n        // SAFETY: `a2` is a power-of-two, as proven above. `s2` is strictly less than `a2`\n        // because `(s % a) >> gcdpow` is strictly less than `a >> gcdpow`.\n        return wrapping_mul(minusp2, unsafe { mod_inv(s2, a2) }) & a2minus1;\n    }\n\n    // Cannot be aligned at all.\n    usize::MAX\n}"
@@ -4965,6 +4985,36 @@
         "def_id": "DefId { id: 16, name: \"verify::contract_ensures::kani_contract_mode\" }",
         "file": "tests/proofs/standard_proofs_with_contracts.rs",
         "func": "#[kani::ensures(|&ret| ret > 0)]"
+      },
+      {
+        "def_id": "DefId { id: 0, name: \"verify::contract_requires\" }",
+        "file": "tests/proofs/standard_proofs_with_contracts.rs",
+        "func": "#[kani::requires(a > 0)]"
+      },
+      {
+        "def_id": "DefId { id: 1, name: \"verify::contract_requires::kani_register_contract\" }",
+        "file": "tests/proofs/standard_proofs_with_contracts.rs",
+        "func": "#[kani::requires(a > 0)]"
+      },
+      {
+        "def_id": "DefId { id: 1, name: \"verify::contract_requires::kani_register_contract\" }",
+        "file": "tests/proofs/standard_proofs_with_contracts.rs",
+        "func": "#[kani::requires(a > 0)]"
+      },
+      {
+        "def_id": "DefId { id: 2, name: \"verify::contract_requires::kani_contract_mode\" }",
+        "file": "tests/proofs/standard_proofs_with_contracts.rs",
+        "func": "#[kani::requires(a > 0)]"
+      },
+      {
+        "def_id": "DefId { id: 1, name: \"verify::contract_requires::kani_register_contract\" }",
+        "file": "tests/proofs/standard_proofs_with_contracts.rs",
+        "func": "#[kani::requires(a > 0)]"
+      },
+      {
+        "def_id": "DefId { id: 1, name: \"verify::contract_requires::kani_register_contract\" }",
+        "file": "tests/proofs/standard_proofs_with_contracts.rs",
+        "func": "#[kani::requires(a > 0)]"
       }
     ]
   }

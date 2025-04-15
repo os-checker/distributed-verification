@@ -21,7 +21,7 @@ mod verify {
     #[kani::proof]
     fn two_contracts_requires_and_ensures() {
         let val = contract_ensures(0);
-        contract_ensures(val);
+        contract_requires(val);
     }
 
     #[kani::requires(a > 0)]
