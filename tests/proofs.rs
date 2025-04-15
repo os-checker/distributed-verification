@@ -14,12 +14,13 @@ fn test_proofs() -> eyre::Result<()> {
         }
     }
 
+    proofs.sort();
     expect![[r#"
         [
-            "tests/proofs/proofs_for_contract.rs",
-            "tests/proofs/standard_proofs_with_contracts.rs",
-            "tests/proofs/standard_proofs.rs",
             "tests/proofs/ad_hoc.rs",
+            "tests/proofs/proofs_for_contract.rs",
+            "tests/proofs/standard_proofs.rs",
+            "tests/proofs/standard_proofs_with_contracts.rs",
         ]
     "#]]
     .assert_debug_eq(&proofs);
