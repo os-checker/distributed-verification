@@ -1,0 +1,125 @@
+[
+  {
+    "hash": "139208611264660498073262442478349906824",
+    "def_id": "DefId { id: 1, name: \"verify::proof2\" }",
+    "file": "tests/proofs/gen_by_macros.rs",
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
+    "func": "fn $name() $block",
+    "callees": [
+      {
+        "def_id": "DefId { id: 6, name: \"<u8 as kani::Arbitrary>::any\" }",
+        "file": "kani/library/kani_core/src/arbitrary.rs",
+        "func": "fn any() -> Self {\n                        // This size_of call does not use generic_const_exprs feature. It's inside a macro, and Self isn't generic.\n                        unsafe { crate::kani::any_raw_internal::<Self>() }\n                    }"
+      },
+      {
+        "def_id": "DefId { id: 8, name: \"kani::any_raw\" }",
+        "file": "kani/library/kani_core/src/lib.rs",
+        "func": "fn any_raw<T: Copy>() -> T {\n            kani_intrinsic()\n        }"
+      },
+      {
+        "def_id": "DefId { id: 9, name: \"kani::kani_intrinsic\" }",
+        "file": "kani/library/kani_core/src/lib.rs",
+        "func": "fn kani_intrinsic<T>() -> T {\n            #[allow(clippy::empty_loop)]\n            loop {}\n        }"
+      },
+      {
+        "def_id": "DefId { id: 4, name: \"kani::assert\" }",
+        "file": "kani/library/kani_core/src/lib.rs",
+        "func": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }"
+      },
+      {
+        "def_id": "DefId { id: 3, name: \"kani::any\" }",
+        "file": "kani/library/kani_core/src/lib.rs",
+        "func": "pub fn any<T: Arbitrary>() -> T {\n            T::any()\n        }"
+      },
+      {
+        "def_id": "DefId { id: 7, name: \"kani::any_raw_internal\" }",
+        "file": "kani/library/kani_core/src/lib.rs",
+        "func": "unsafe fn any_raw_internal<T: Copy>() -> T {\n            any_raw::<T>()\n        }"
+      }
+    ]
+  },
+  {
+    "hash": "139208611264660498073262442478349906824",
+    "def_id": "DefId { id: 0, name: \"verify::proof1\" }",
+    "file": "tests/proofs/gen_by_macros.rs",
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
+    "func": "fn $name() $block",
+    "callees": [
+      {
+        "def_id": "DefId { id: 6, name: \"<u8 as kani::Arbitrary>::any\" }",
+        "file": "kani/library/kani_core/src/arbitrary.rs",
+        "func": "fn any() -> Self {\n                        // This size_of call does not use generic_const_exprs feature. It's inside a macro, and Self isn't generic.\n                        unsafe { crate::kani::any_raw_internal::<Self>() }\n                    }"
+      },
+      {
+        "def_id": "DefId { id: 8, name: \"kani::any_raw\" }",
+        "file": "kani/library/kani_core/src/lib.rs",
+        "func": "fn any_raw<T: Copy>() -> T {\n            kani_intrinsic()\n        }"
+      },
+      {
+        "def_id": "DefId { id: 9, name: \"kani::kani_intrinsic\" }",
+        "file": "kani/library/kani_core/src/lib.rs",
+        "func": "fn kani_intrinsic<T>() -> T {\n            #[allow(clippy::empty_loop)]\n            loop {}\n        }"
+      },
+      {
+        "def_id": "DefId { id: 4, name: \"kani::assert\" }",
+        "file": "kani/library/kani_core/src/lib.rs",
+        "func": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }"
+      },
+      {
+        "def_id": "DefId { id: 3, name: \"kani::any\" }",
+        "file": "kani/library/kani_core/src/lib.rs",
+        "func": "pub fn any<T: Arbitrary>() -> T {\n            T::any()\n        }"
+      },
+      {
+        "def_id": "DefId { id: 7, name: \"kani::any_raw_internal\" }",
+        "file": "kani/library/kani_core/src/lib.rs",
+        "func": "unsafe fn any_raw_internal<T: Copy>() -> T {\n            any_raw::<T>()\n        }"
+      }
+    ]
+  },
+  {
+    "hash": "139208611264660498073262442478349906824",
+    "def_id": "DefId { id: 2, name: \"verify::proof3\" }",
+    "file": "tests/proofs/gen_by_macros.rs",
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
+    "func": "fn $name() $block",
+    "callees": [
+      {
+        "def_id": "DefId { id: 6, name: \"<u8 as kani::Arbitrary>::any\" }",
+        "file": "kani/library/kani_core/src/arbitrary.rs",
+        "func": "fn any() -> Self {\n                        // This size_of call does not use generic_const_exprs feature. It's inside a macro, and Self isn't generic.\n                        unsafe { crate::kani::any_raw_internal::<Self>() }\n                    }"
+      },
+      {
+        "def_id": "DefId { id: 8, name: \"kani::any_raw\" }",
+        "file": "kani/library/kani_core/src/lib.rs",
+        "func": "fn any_raw<T: Copy>() -> T {\n            kani_intrinsic()\n        }"
+      },
+      {
+        "def_id": "DefId { id: 9, name: \"kani::kani_intrinsic\" }",
+        "file": "kani/library/kani_core/src/lib.rs",
+        "func": "fn kani_intrinsic<T>() -> T {\n            #[allow(clippy::empty_loop)]\n            loop {}\n        }"
+      },
+      {
+        "def_id": "DefId { id: 4, name: \"kani::assert\" }",
+        "file": "kani/library/kani_core/src/lib.rs",
+        "func": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }"
+      },
+      {
+        "def_id": "DefId { id: 3, name: \"kani::any\" }",
+        "file": "kani/library/kani_core/src/lib.rs",
+        "func": "pub fn any<T: Arbitrary>() -> T {\n            T::any()\n        }"
+      },
+      {
+        "def_id": "DefId { id: 7, name: \"kani::any_raw_internal\" }",
+        "file": "kani/library/kani_core/src/lib.rs",
+        "func": "unsafe fn any_raw_internal<T: Copy>() -> T {\n            any_raw::<T>()\n        }"
+      }
+    ]
+  }
+]
