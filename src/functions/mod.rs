@@ -105,6 +105,18 @@ fn ty_to_fndef(ty: Ty) -> Option<FnDef> {
 
 /// Source code for a span.
 fn source_code(span: Span, src_map: &SourceMap) -> String {
+    // println!("{span:?}\n{:?}\n\n", span.find_oldest_ancestor_in_same_ctxt());
+    _ = src_map.span_to_source(span, |text, x, y| {
+        println!("(stable_mir span to internal span) [{span:?}]\n{}", &text[x..y]);
+        Ok(())
+    });
+    let ancestor_span = span.find_oldest_ancestor_in_same_ctxt();
+    dbg!(span.from_expansion(), ancestor_span.from_expansion());
+    _ = src_map.span_to_source(ancestor_span, |text, x, y| {
+        println!("(find_oldest_ancestor_in_same_ctxt) [{ancestor_span:?}]\n{}\n\n", &text[x..y]);
+        Ok(())
+    });
+
     src_map
         .span_to_source(span, |text, x, y| {
             let src = &text[x..y];
