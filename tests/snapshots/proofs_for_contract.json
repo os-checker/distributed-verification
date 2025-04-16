@@ -1,6 +1,6 @@
 [
   {
-    "hash": "91093625084678398772417494263818534423",
+    "hash": "1541452575249063343918340705763670937398",
     "def_id": "DefId { id: 52, name: \"verify::single_contract\" }",
     "attrs": [
       "#[kanitool::proof_for_contract = \"contract\"]"
@@ -2022,7 +2022,7 @@
     ]
   },
   {
-    "hash": "85631967875463156587823964361925379798",
+    "hash": "756825828074763827912320486039553786331",
     "def_id": "DefId { id: 13, name: \"verify::single_contract_requires\" }",
     "attrs": [
       "#[kanitool::proof_for_contract = \"contract_requires\"]"
@@ -4036,7 +4036,7 @@
     ]
   },
   {
-    "hash": "998343249299451067011292903713166671073",
+    "hash": "801752073635256757417019786875529748974",
     "def_id": "DefId { id: 32, name: \"verify::single_with_contract_ensures\" }",
     "attrs": [
       "#[kanitool::proof_for_contract = \"contract_ensures\"]"
@@ -6050,7 +6050,7 @@
     ]
   },
   {
-    "hash": "1497837271333938501322803356149404226",
+    "hash": "151755455217283930895298708343973534301",
     "def_id": "DefId { id: 33, name: \"verify::two_contracts_requires_and_ensures\" }",
     "attrs": [
       "#[kanitool::proof_for_contract = \"contract_requires\"]"
