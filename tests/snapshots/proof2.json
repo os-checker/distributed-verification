@@ -1,20 +1,20 @@
 [
   {
-    "hash": "876433099390387370318218200145590989814",
+    "hash": "327831672023728938116624563073238276451",
     "def_id": "DefId { id: 0, name: \"verify::f\" }",
-    "file": "tests/compare/proof.rs",
     "attrs": [
       "#[kanitool::proof]"
     ],
     "func": {
+      "file": "tests/compare/proof.rs",
       "src": "pub fn f() {\n        let a = 1;\n        assert_eq!(a + 1, 2);\n    }",
       "before_expansion": null
     },
     "callees": [
       {
         "def_id": "DefId { id: 2, name: \"kani::assert\" }",
-        "file": "kani/library/kani_core/src/lib.rs",
         "func": {
+          "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
           "before_expansion": "kani_core::kani_intrinsics!(std)"
         }
@@ -22,21 +22,21 @@
     ]
   },
   {
-    "hash": "47211252920145052832965334366253119118",
+    "hash": "588068929243813241914251336986802616528",
     "def_id": "DefId { id: 1, name: \"verify::g\" }",
-    "file": "tests/compare/proof.rs",
     "attrs": [
       "#[kanitool::proof]"
     ],
     "func": {
+      "file": "tests/compare/proof.rs",
       "src": "pub fn g() {\n        let a = 1;\n        assert_eq!(a + 1, 2);\n    }",
       "before_expansion": null
     },
     "callees": [
       {
         "def_id": "DefId { id: 2, name: \"kani::assert\" }",
-        "file": "kani/library/kani_core/src/lib.rs",
         "func": {
+          "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
           "before_expansion": "kani_core::kani_intrinsics!(std)"
         }

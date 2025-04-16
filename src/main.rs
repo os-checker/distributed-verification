@@ -1,9 +1,11 @@
 #![feature(rustc_private, let_chains, hash_set_entry, hasher_prefixfree_extras)]
 
+extern crate rustc_data_structures;
 extern crate rustc_driver;
 extern crate rustc_hir;
 extern crate rustc_interface;
 extern crate rustc_middle;
+extern crate rustc_session;
 #[macro_use]
 extern crate rustc_smir;
 extern crate rustc_span;
@@ -11,6 +13,7 @@ extern crate rustc_stable_hash;
 extern crate stable_mir;
 
 use distributed_verification::kani_path;
+use functions::{clear_rustc_ctx, set_rustc_ctx};
 // FIXME: this is a bug for rustc_smir, because rustc_interface is used by
 // run_with_tcx! without being imported inside.
 use rustc_smir::rustc_internal;
@@ -53,8 +56,12 @@ fn main() {
 
     let res = run_with_tcx!(args, |tcx| {
         use eyre::{Context, Ok};
-        let src_map = rustc_span::source_map::get_source_map().expect("No source map.");
-        let output = functions::analyze(tcx, &src_map);
+
+        set_rustc_ctx(tcx);
+
+        let output = functions::analyze(tcx);
+
+        clear_rustc_ctx();
 
         let res = || match &cli.json {
             Some(path) => {
