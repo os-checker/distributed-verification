@@ -1,8 +1,7 @@
 use indexmap::IndexSet;
 use kani::{CallGraph, KANI_TOOL_ATTRS, collect_reachable_items};
 use rustc_middle::ty::TyCtxt;
-use rustc_smir::rustc_internal::internal;
-use rustc_span::{Span, source_map::SourceMap};
+use rustc_span::source_map::SourceMap;
 use stable_mir::{
     CrateDef,
     crate_def::Attribute,
@@ -11,11 +10,11 @@ use stable_mir::{
         mono::{Instance, MonoItem},
     },
 };
-use std::cmp::Ordering;
 
 mod kani;
 mod serialization;
 pub use serialization::SerFunction;
+mod utils;
 
 pub fn analyze(tcx: TyCtxt, src_map: &SourceMap) -> Vec<SerFunction> {
     let local_items = stable_mir::all_local_items();
@@ -75,98 +74,15 @@ impl Function {
 
         // Skip if no body.
         let body = instance.body()?;
-        // let inst_def = inst.def;
-        //
-        //
-        // let span = inst_def.span();
-        // let file = file_path(&inst);
-        //
-        // let fn_def = ty_to_fndef(inst.ty())?;
-        // let body = fn_def.body()?;
-        //
-        //
-        // let func = source_code_with(body.span, tcx, src_map);
-        // info!(" - {:?} ({span:?}): {func}", inst_def.name());
 
         // Only need kanitool attrs: proof, proof_for_contract, contract, ...
         let attrs = KANI_TOOL_ATTRS.iter().flat_map(|v| instance.def.tool_attrs(v)).collect();
 
         let mut callees = IndexSet::new();
         callgraph.recursive_callees(item, &mut callees);
-        callees.sort_by(|a, b| cmp_callees(a, b, tcx, src_map));
+        callees.sort_by(|a, b| utils::cmp_callees(a, b, tcx, src_map));
 
         let this = Function { instance, attrs, body, callees };
         filter(&this).then_some(this)
     }
-}
-
-/// Source code for a span.
-fn source_code(span: Span, src_map: &SourceMap) -> String {
-    // println!("{span:?}\n{:?}\n\n", span.find_oldest_ancestor_in_same_ctxt());
-    // _ = src_map.span_to_source(span, |text, x, y| {
-    //     println!("(stable_mir span to internal span) [{span:?}]\n{}", &text[x..y]);
-    //     Ok(())
-    // });
-    // let ancestor_span = span.find_oldest_ancestor_in_same_ctxt();
-    // dbg!(span.from_expansion(), ancestor_span.from_expansion());
-    // _ = src_map.span_to_source(ancestor_span, |text, x, y| {
-    //     println!("(find_oldest_ancestor_in_same_ctxt) [{ancestor_span:?}]\n{}\n\n", &text[x..y]);
-    //     Ok(())
-    // });
-
-    src_map
-        .span_to_source(span, |text, x, y| {
-            let src = &text[x..y];
-            debug!("[{x}:{y}]\n{src}");
-            Ok(src.to_owned())
-        })
-        .unwrap()
-}
-
-/// Source code for a stable_mir span.
-fn source_code_with(
-    stable_mir_span: stable_mir::ty::Span,
-    tcx: TyCtxt,
-    src_map: &SourceMap,
-) -> String {
-    let span = internal(tcx, stable_mir_span);
-    source_code(span, src_map)
-}
-
-fn source_code_of_body(inst: &Instance, tcx: TyCtxt, src_map: &SourceMap) -> Option<String> {
-    inst.body().map(|body| source_code_with(body.span, tcx, src_map))
-}
-
-fn cmp_callees(a: &Instance, b: &Instance, tcx: TyCtxt, src_map: &SourceMap) -> Ordering {
-    let filename_a = file_path(a);
-    let filename_b = file_path(b);
-    match filename_a.cmp(&filename_b) {
-        Ordering::Equal => (),
-        ord => return ord,
-    }
-
-    let body_a = source_code_of_body(a, tcx, src_map);
-    let body_b = source_code_of_body(b, tcx, src_map);
-    body_a.cmp(&body_b)
-}
-
-fn file_path(inst: &Instance) -> String {
-    use std::sync::LazyLock;
-    static PREFIXES: LazyLock<[String; 2]> = LazyLock::new(|| {
-        let mut pwd = std::env::current_dir().unwrap().into_os_string().into_string().unwrap();
-        pwd.push('/');
-
-        let out = std::process::Command::new("rustc").arg("--print=sysroot").output().unwrap();
-        let sysroot = std::str::from_utf8(&out.stdout).unwrap().trim();
-        let sysroot = format!("{sysroot}/lib/rustlib/src/rust/");
-        [pwd, sysroot]
-    });
-
-    let file = inst.def.span().get_filename();
-    for prefix in &*PREFIXES {
-        if let Some(file) = file.strip_prefix(prefix) {
-            return file.to_owned();
-        }
-    }
-    file
 }
