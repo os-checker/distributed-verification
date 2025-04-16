@@ -75,7 +75,7 @@ impl Function {
 
         let mut callees = IndexSet::new();
         callgraph.recursive_callees(item, &mut callees);
-        callees.sort_by(utils::cmp_callees);
+        callees.sort_by(cache::cmp_callees);
 
         let this = Function { instance, attrs, callees };
         filter(&this).then_some(this)
