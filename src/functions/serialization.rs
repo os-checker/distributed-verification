@@ -2,8 +2,8 @@ use rustc_middle::ty::TyCtxt;
 use rustc_span::source_map::SourceMap;
 use rustc_stable_hash::{FromStableHash, SipHasher128Hash, StableHasher, hashers::SipHasher128};
 use serde::Serialize;
-use stable_mir::{CrateDef, DefId, mir::mono::Instance};
-use std::hash::Hasher;
+use stable_mir::{CrateDef, mir::mono::Instance};
+use std::{cmp::Ordering, hash::Hasher};
 
 /// A Rust funtion with its file source, attributes, and raw function content.
 #[derive(Debug, Serialize)]
@@ -25,10 +25,12 @@ pub struct SerFunction {
 
 impl SerFunction {
     pub fn new(fun: super::Function, tcx: TyCtxt, src_map: &SourceMap) -> Self {
-        let def_id = format_def_id(&fun.def_id);
-        let file = fun.file;
+        let inst = fun.instance;
+        let def_id = format_def_id(&inst);
+        let file = super::file_path(&inst);
         let attrs: Vec<_> = fun.attrs.iter().map(|a| a.as_str().to_owned()).collect();
-        let func = fun.func;
+        // Though this is from body span, fn name and signature are included.
+        let func = super::source_code_with(fun.body.span, tcx, src_map);
         let callees: Vec<_> = fun.callees.iter().map(|x| Callee::new(x, tcx, src_map)).collect();
 
         // Hash
@@ -46,6 +48,11 @@ impl SerFunction {
 
         SerFunction { hash, def_id, file, attrs, func, callees }
     }
+
+    /// Compare by file and func string.
+    pub fn cmp_by_file_and_func(&self, other: &Self) -> Ordering {
+        (&*self.file, &*self.func).cmp(&(&*other.file, &*other.func))
+    }
 }
 
 // ************* hash *************
@@ -60,8 +67,8 @@ impl FromStableHash for Hash128 {
 }
 // ************* hash *************
 
-fn format_def_id(def_id: &DefId) -> String {
-    format!("{def_id:?}")
+fn format_def_id(inst: &Instance) -> String {
+    format!("{:?}", inst.def.def_id())
 }
 
 #[derive(Debug, Serialize)]
@@ -73,8 +80,7 @@ pub struct Callee {
 
 impl Callee {
     fn new(inst: &Instance, tcx: TyCtxt, src_map: &SourceMap) -> Self {
-        let inst_def = &inst.def;
-        let def_id = format_def_id(&inst_def.def_id());
+        let def_id = format_def_id(inst);
         let file = super::file_path(inst);
         let func = super::source_code_of_body(inst, tcx, src_map).unwrap_or_default();
         Callee { def_id, file, func }
