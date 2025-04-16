@@ -1,4 +1,4 @@
-use super::utils;
+use super::utils::{self, SourceCode};
 use rustc_middle::ty::TyCtxt;
 use rustc_span::source_map::SourceMap;
 use rustc_stable_hash::{FromStableHash, SipHasher128Hash, StableHasher, hashers::SipHasher128};
@@ -19,7 +19,7 @@ pub struct SerFunction {
     /// and function must be separated to query.
     attrs: Vec<String>,
     /// Raw function string, including name, signature, and body.
-    func: String,
+    func: SourceCode,
     /// Recursive function calls inside the proof.
     callees: Vec<Callee>,
 }
@@ -37,13 +37,13 @@ impl SerFunction {
         // Hash
         let mut hasher = StableHasher::<SipHasher128>::new();
         hasher.write_str(&file);
-        hasher.write_str(&func);
+        func.with_hasher(&mut hasher);
         hasher.write_length_prefix(attrs.len());
         attrs.iter().for_each(|a| hasher.write_str(a));
         hasher.write_length_prefix(callees.len());
         callees.iter().for_each(|c| {
             hasher.write_str(&c.file);
-            hasher.write_str(&c.func);
+            c.func.with_hasher(&mut hasher);
         });
         let Hash128(hash) = hasher.finish();
 
@@ -52,7 +52,7 @@ impl SerFunction {
 
     /// Compare by file and func string.
     pub fn cmp_by_file_and_func(&self, other: &Self) -> Ordering {
-        (&*self.file, &*self.func).cmp(&(&*other.file, &*other.func))
+        (&*self.file, &self.func).cmp(&(&*other.file, &other.func))
     }
 }
 
@@ -76,7 +76,7 @@ fn format_def_id(inst: &Instance) -> String {
 pub struct Callee {
     def_id: String,
     file: String,
-    func: String,
+    func: SourceCode,
 }
 
 impl Callee {

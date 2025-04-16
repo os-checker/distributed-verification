@@ -13,7 +13,7 @@ pub struct SerFunction {
     /// and function must be separated to query.
     pub attrs: Vec<String>,
     /// Raw function string, including name, signature, and body.
-    pub func: String,
+    pub func: SourceCode,
     /// Recursive function calls inside the body.
     pub callees: Vec<Callee>,
 }
@@ -22,7 +22,22 @@ pub struct SerFunction {
 pub struct Callee {
     pub def_id: String,
     pub file: String,
-    pub func: String,
+    pub func: SourceCode,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct SourceCode {
+    // TODO:
+    // file: String,
+    //
+    /// Source that a stable_mir span points to.
+    pub src: String,
+    /// Is the stable_mir span from a macro expansion?
+    /// If it is from an expansion, what's the source code before expansion?
+    /// * Some(_) happens when the src (stable_mir) span comes from expansion, and tells
+    ///   the source before the expansion.
+    /// * None if the src is not from a macro expansion.
+    pub before_expansion: Option<String>,
 }
 
 /// A local path to kani's artifacts.

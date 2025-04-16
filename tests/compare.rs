@@ -7,7 +7,7 @@ use utils::{assert_eq, cmd, expect_file};
 fn get(text: &str, start: &str) -> SerFunction {
     let json = &text[text.find("[\n").unwrap()..];
     let v: Vec<SerFunction> = serde_json::from_str(json).unwrap();
-    v.into_iter().find(|f| f.func.starts_with(start)).unwrap()
+    v.into_iter().find(|f| f.func.src.starts_with(start)).unwrap()
 }
 
 const COMPARE: &str = "tests/compare";
