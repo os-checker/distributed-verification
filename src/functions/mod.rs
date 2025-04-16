@@ -1,22 +1,22 @@
 use indexmap::IndexSet;
 use kani::{CallGraph, KANI_TOOL_ATTRS, collect_reachable_items};
 use rustc_middle::ty::TyCtxt;
-use rustc_span::source_map::SourceMap;
 use stable_mir::{
     CrateDef,
     crate_def::Attribute,
-    mir::{
-        Body,
-        mono::{Instance, MonoItem},
-    },
+    mir::mono::{Instance, MonoItem},
 };
 
+mod cache;
+pub use cache::{clear_rustc_ctx, set_rustc_ctx};
+
 mod kani;
-mod serialization;
-pub use serialization::SerFunction;
 mod utils;
 
-pub fn analyze(tcx: TyCtxt, src_map: &SourceMap) -> Vec<SerFunction> {
+mod serialization;
+pub use serialization::SerFunction;
+
+pub fn analyze(tcx: TyCtxt) -> Vec<SerFunction> {
     let local_items = stable_mir::all_local_items();
     let cap = local_items.len();
 
@@ -34,8 +34,8 @@ pub fn analyze(tcx: TyCtxt, src_map: &SourceMap) -> Vec<SerFunction> {
     // Filter out non kanitool functions.
     let mut proofs: Vec<_> = mono_items
         .iter()
-        .filter_map(|f| Function::new(f, &callgraph, tcx, src_map, |x| !x.attrs.is_empty()))
-        .map(|fun| SerFunction::new(fun, tcx, src_map))
+        .filter_map(|f| Function::new(f, &callgraph, |x| !x.attrs.is_empty()))
+        .map(SerFunction::new)
         .collect();
     // Sort proofs by file path and source code.
     proofs.sort_by(|a, b| a.cmp_by_file_and_func(b));
@@ -51,9 +51,6 @@ pub struct Function {
     /// kanitool's attributs.
     attrs: Vec<Attribute>,
 
-    /// Function body.
-    body: Body,
-
     /// Recursive fnction calls inside the body.
     /// The elements are sorted by file path and fn source code to keep hash value stable.
     callees: IndexSet<Instance>,
@@ -63,8 +60,6 @@ impl Function {
     pub fn new(
         item: &MonoItem,
         callgraph: &CallGraph,
-        tcx: TyCtxt,
-        src_map: &SourceMap,
         filter: impl FnOnce(&Self) -> bool,
     ) -> Option<Self> {
         // Skip non fn items
@@ -73,16 +68,16 @@ impl Function {
         };
 
         // Skip if no body.
-        let body = instance.body()?;
+        cache::get_body(&instance, |_| ())?;
 
         // Only need kanitool attrs: proof, proof_for_contract, contract, ...
         let attrs = KANI_TOOL_ATTRS.iter().flat_map(|v| instance.def.tool_attrs(v)).collect();
 
         let mut callees = IndexSet::new();
         callgraph.recursive_callees(item, &mut callees);
-        callees.sort_by(|a, b| utils::cmp_callees(a, b, tcx, src_map));
+        callees.sort_by(utils::cmp_callees);
 
-        let this = Function { instance, attrs, body, callees };
+        let this = Function { instance, attrs, callees };
         filter(&this).then_some(this)
     }
 }

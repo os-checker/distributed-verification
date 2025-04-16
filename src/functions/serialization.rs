@@ -1,6 +1,7 @@
-use super::utils::{self, SourceCode};
-use rustc_middle::ty::TyCtxt;
-use rustc_span::source_map::SourceMap;
+use super::{
+    cache,
+    utils::{self, SourceCode},
+};
 use rustc_stable_hash::{FromStableHash, SipHasher128Hash, StableHasher, hashers::SipHasher128};
 use serde::Serialize;
 use stable_mir::{CrateDef, mir::mono::Instance};
@@ -25,14 +26,14 @@ pub struct SerFunction {
 }
 
 impl SerFunction {
-    pub fn new(fun: super::Function, tcx: TyCtxt, src_map: &SourceMap) -> Self {
+    pub fn new(fun: super::Function) -> Self {
         let inst = fun.instance;
         let def_id = format_def_id(&inst);
         let file = utils::file_path(&inst);
         let attrs: Vec<_> = fun.attrs.iter().map(|a| a.as_str().to_owned()).collect();
         // Though this is from body span, fn name and signature are included.
-        let func = utils::source_code_with(fun.body.span, tcx, src_map);
-        let callees: Vec<_> = fun.callees.iter().map(|x| Callee::new(x, tcx, src_map)).collect();
+        let func = cache::get_source_code(&inst).unwrap_or_default();
+        let callees: Vec<_> = fun.callees.iter().map(|x| Callee::new(x)).collect();
 
         // Hash
         let mut hasher = StableHasher::<SipHasher128>::new();
@@ -80,10 +81,10 @@ pub struct Callee {
 }
 
 impl Callee {
-    fn new(inst: &Instance, tcx: TyCtxt, src_map: &SourceMap) -> Self {
+    fn new(inst: &Instance) -> Self {
         let def_id = format_def_id(inst);
         let file = utils::file_path(inst);
-        let func = utils::source_code_of_body(inst, tcx, src_map).unwrap_or_default();
+        let func = cache::get_source_code(inst).unwrap_or_default();
         Callee { def_id, file, func }
     }
 }

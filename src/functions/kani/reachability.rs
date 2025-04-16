@@ -17,9 +17,6 @@
 //! Note that this is a copy of `reachability.rs` that uses StableMIR but the public APIs are still
 //! kept with internal APIs.
 
-extern crate rustc_data_structures;
-extern crate rustc_session;
-
 use super::coercion;
 use indexmap::IndexSet;
 use rustc_data_structures::fingerprint::Fingerprint;

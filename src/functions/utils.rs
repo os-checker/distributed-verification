@@ -6,10 +6,12 @@ use serde::Serialize;
 use stable_mir::{CrateDef, mir::mono::Instance};
 use std::{cmp::Ordering, hash::Hasher};
 
+use super::cache;
+
 /// Source code and potential source code before expansion.
 ///
 /// Refer to
-#[derive(Debug, Serialize, PartialEq, Eq, PartialOrd, Ord, Default)]
+#[derive(Clone, Debug, Serialize, PartialEq, Eq, PartialOrd, Ord, Default)]
 pub struct SourceCode {
     // TODO:
     // file: String,
@@ -47,8 +49,13 @@ fn span_to_source(span: Span, src_map: &SourceMap) -> String {
         .unwrap()
 }
 
-/// Source code for a span.
-fn source_code(span: Span, src_map: &SourceMap) -> SourceCode {
+/// Source code for a stable_mir span.
+pub fn source_code_with(
+    stable_mir_span: stable_mir::ty::Span,
+    tcx: TyCtxt,
+    src_map: &SourceMap,
+) -> SourceCode {
+    let span = internal(tcx, stable_mir_span);
     let src = span_to_source(span, src_map);
     let before_expansion = span.from_expansion().then(|| {
         let ancestor_span = span.find_oldest_ancestor_in_same_ctxt();
@@ -57,26 +64,7 @@ fn source_code(span: Span, src_map: &SourceMap) -> SourceCode {
     SourceCode { src, before_expansion }
 }
 
-/// Source code for a stable_mir span.
-pub fn source_code_with(
-    stable_mir_span: stable_mir::ty::Span,
-    tcx: TyCtxt,
-    src_map: &SourceMap,
-) -> SourceCode {
-    let span = internal(tcx, stable_mir_span);
-    source_code(span, src_map)
-}
-
-// FIXME: takes body and returns SourceCode
-pub fn source_code_of_body(
-    inst: &Instance,
-    tcx: TyCtxt,
-    src_map: &SourceMap,
-) -> Option<SourceCode> {
-    inst.body().map(|body| source_code_with(body.span, tcx, src_map))
-}
-
-pub fn cmp_callees(a: &Instance, b: &Instance, tcx: TyCtxt, src_map: &SourceMap) -> Ordering {
+pub fn cmp_callees(a: &Instance, b: &Instance) -> Ordering {
     let filename_a = file_path(a);
     let filename_b = file_path(b);
     match filename_a.cmp(&filename_b) {
@@ -84,8 +72,8 @@ pub fn cmp_callees(a: &Instance, b: &Instance, tcx: TyCtxt, src_map: &SourceMap)
         ord => return ord,
     }
 
-    let body_a = source_code_of_body(a, tcx, src_map);
-    let body_b = source_code_of_body(b, tcx, src_map);
+    let body_a = cache::get_source_code(a);
+    let body_b = cache::get_source_code(b);
     body_a.cmp(&body_b)
 }
 
