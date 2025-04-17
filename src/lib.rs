@@ -11,6 +11,8 @@ pub struct SerFunction {
     pub attrs: Vec<String>,
     /// Raw function string, including name, signature, and body.
     pub func: SourceCode,
+    /// Count of callees.
+    pub callees_len: usize,
     /// Recursive function calls inside the body.
     pub callees: Vec<Callee>,
 }

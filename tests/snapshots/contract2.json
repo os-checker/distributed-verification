@@ -10,6 +10,7 @@
       "src": "pub fn f() {\n        contract(0);\n    }",
       "before_expansion": null
     },
+    "callees_len": 249,
     "callees": [
       {
         "def_id": "DefId { id: 27, name: \"kani::panic\" }",

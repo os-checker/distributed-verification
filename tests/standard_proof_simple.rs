@@ -1,18 +1,10 @@
 #[cfg(kani)]
 mod verify {
+    #[kani::requires(a>0)]
+    fn f(a: u8) {}
 
     #[kani::proof]
     fn recursive_callees() {
-        crate::top_level();
-    }
-}
-
-pub fn top_level() {
-    m::func1();
-}
-
-mod m {
-    pub fn func1() {
-        let _a = "".trim();
+        f(0);
     }
 }

@@ -10,6 +10,7 @@
       "src": "fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }",
       "before_expansion": "gen! { proof1: contract1(arg), arg > 0}"
     },
+    "callees_len": 6,
     "callees": [
       {
         "def_id": "DefId { id: 1, name: \"verify::contract1::kani_register_contract\" }",
@@ -72,6 +73,7 @@
       "src": "fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }",
       "before_expansion": "gen! { proof2: contract2(arg), arg != 0}"
     },
+    "callees_len": 6,
     "callees": [
       {
         "def_id": "DefId { id: 15, name: \"verify::contract2::kani_register_contract\" }",
@@ -134,6 +136,7 @@
       "src": "fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }",
       "before_expansion": "gen! { proof3: contract3(arg), arg < 10}"
     },
+    "callees_len": 6,
     "callees": [
       {
         "def_id": "DefId { id: 29, name: \"verify::contract3::kani_register_contract\" }",

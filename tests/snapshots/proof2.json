@@ -10,6 +10,7 @@
       "src": "pub fn f() {\n        let a = 1;\n        assert_eq!(a + 1, 2);\n    }",
       "before_expansion": null
     },
+    "callees_len": 1,
     "callees": [
       {
         "def_id": "DefId { id: 2, name: \"kani::assert\" }",
@@ -32,6 +33,7 @@
       "src": "pub fn g() {\n        let a = 1;\n        assert_eq!(a + 1, 2);\n    }",
       "before_expansion": null
     },
+    "callees_len": 1,
     "callees": [
       {
         "def_id": "DefId { id: 2, name: \"kani::assert\" }",

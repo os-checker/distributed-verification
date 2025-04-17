@@ -10,6 +10,7 @@
       "src": "fn $name() $block",
       "before_expansion": "gen! { proof1, { assert_eq!(kani::any::<u8>(), 0) }}"
     },
+    "callees_len": 0,
     "callees": []
   },
   {
@@ -23,6 +24,7 @@
       "src": "fn $name() $block",
       "before_expansion": "gen! { proof2, { assert_eq!(kani::any::<u8>(), 0) }}"
     },
+    "callees_len": 0,
     "callees": []
   },
   {
@@ -36,6 +38,7 @@
       "src": "fn $name() $block",
       "before_expansion": "gen! { proof3, { assert_eq!(kani::any::<u8>(), 1) }}"
     },
+    "callees_len": 0,
     "callees": []
   }
 ]

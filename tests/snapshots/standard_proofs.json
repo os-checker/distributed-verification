@@ -10,6 +10,7 @@
       "src": "fn recursive_callees() {\n        crate::top_level();\n    }",
       "before_expansion": null
     },
+    "callees_len": 109,
     "callees": [
       {
         "def_id": "DefId { id: 75, name: \"std::char::convert::char_try_from_u32\" }",
@@ -896,6 +897,7 @@
       "src": "fn standard_proof() {\n        let val: u8 = kani::any();\n        assert_eq!(val, 1, \"Not eq to 1.\");\n    }",
       "before_expansion": null
     },
+    "callees_len": 6,
     "callees": [
       {
         "def_id": "DefId { id: 8, name: \"<u8 as kani::Arbitrary>::any\" }",
@@ -958,6 +960,7 @@
       "src": "fn standard_proof_empty() {}",
       "before_expansion": null
     },
+    "callees_len": 0,
     "callees": []
   }
 ]

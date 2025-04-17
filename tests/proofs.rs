@@ -46,7 +46,7 @@ fn extract_macros_items(json: &[SerFunction]) -> Vec<SerFunction> {
     // filter out kani items).
     json.iter()
         .map(|j| {
-            let callees = j
+            let callees: Vec<_> = j
                 .callees
                 .iter()
                 .filter(|callee| callee.def_id.contains("\"verify::"))
@@ -57,6 +57,7 @@ fn extract_macros_items(json: &[SerFunction]) -> Vec<SerFunction> {
                 def_id: j.def_id.clone(),
                 attrs: j.attrs.clone(),
                 func: j.func.clone(),
+                callees_len: callees.len(),
                 callees,
             }
         })

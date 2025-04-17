@@ -10,6 +10,7 @@
       "src": "fn single_contract() {\n        let val = contract(1);\n        assert!(val > 0);\n    }",
       "before_expansion": null
     },
+    "callees_len": 250,
     "callees": [
       {
         "def_id": "DefId { id: 271, name: \"kani::assert\" }",
@@ -2024,6 +2025,7 @@
       "src": "fn single_contract_requires() {\n        contract_requires(0);\n    }",
       "before_expansion": null
     },
+    "callees_len": 249,
     "callees": [
       {
         "def_id": "DefId { id: 53, name: \"kani::panic\" }",
@@ -4030,6 +4032,7 @@
       "src": "fn single_with_contract_ensures() {\n        contract_ensures(0);\n    }",
       "before_expansion": null
     },
+    "callees_len": 249,
     "callees": [
       {
         "def_id": "DefId { id: 53, name: \"kani::panic\" }",
@@ -6036,6 +6039,7 @@
       "src": "fn two_contracts_requires_and_ensures() {\n        let val = contract_ensures(0);\n        contract_requires(val);\n    }",
       "before_expansion": null
     },
+    "callees_len": 259,
     "callees": [
       {
         "def_id": "DefId { id: 53, name: \"kani::panic\" }",

@@ -10,6 +10,7 @@
       "src": "fn callee_defined_in_proof() {\n        fn f() -> u8 {\n            1\n        }\n        assert!(f() == 1);\n    }",
       "before_expansion": null
     },
+    "callees_len": 2,
     "callees": [
       {
         "def_id": "DefId { id: 6, name: \"kani::assert\" }",
@@ -40,6 +41,7 @@
       "src": "fn closure_in_proof() {\n        let f = || 1;\n        assert!(f() == 1);\n    }",
       "before_expansion": null
     },
+    "callees_len": 2,
     "callees": [
       {
         "def_id": "DefId { id: 6, name: \"kani::assert\" }",
@@ -70,6 +72,7 @@
       "src": "fn proof() {\n            assert!(kani::any::<u8>() == 1);\n        }",
       "before_expansion": null
     },
+    "callees_len": 6,
     "callees": [
       {
         "def_id": "DefId { id: 10, name: \"<u8 as kani::Arbitrary>::any\" }",
