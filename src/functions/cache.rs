@@ -75,7 +75,7 @@ impl Cache {
                 let body = inst.body()?;
                 let rustc = self.rustc.as_ref()?;
                 let prefix = self.path_prefixes.prefixes();
-                let src = source_code_with(body.span, rustc.tcx, &rustc.src_map, prefix);
+                let src = source_code_with(inst, body.span, rustc.tcx, &rustc.src_map, prefix);
                 Some(CacheFunction { body, src })
             })
             .as_ref()

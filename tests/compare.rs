@@ -32,7 +32,7 @@ fn compare(tmp: &str, v_file: &[&str], f: &str) {
         for j in 1..len {
             assert_eq!(
                 v_func[i].hash, v_func[j].hash,
-                "Hash values are not equal: {} ≠ {}",
+                "Hash values of {f:?} are not equal: {} ≠ {}",
                 v_file[i], v_file[j]
             );
         }

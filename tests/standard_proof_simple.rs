@@ -4,7 +4,7 @@ mod verify {
     fn f(a: u8) {}
 
     #[kani::proof]
-    fn recursive_callees() {
+    fn proof() {
         f(0);
     }
 }

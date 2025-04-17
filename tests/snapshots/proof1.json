@@ -1,11 +1,13 @@
 [
   {
-    "hash": "876433099390387370318218200145590989814",
+    "hash": "177631543608855386312483865423304532457",
     "def_id": "DefId { id: 0, name: \"verify::f\" }",
     "attrs": [
       "#[kanitool::proof]"
     ],
     "func": {
+      "name": "verify::f",
+      "kind": "Item",
       "file": "tests/compare/proof.rs",
       "src": "pub fn f() {\n        let a = 1;\n        assert_eq!(a + 1, 2);\n    }",
       "before_expansion": null
@@ -15,6 +17,8 @@
       {
         "def_id": "DefId { id: 1, name: \"kani::assert\" }",
         "func": {
+          "name": "kani::assert",
+          "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
           "before_expansion": "kani_core::kani_intrinsics!(std)"
