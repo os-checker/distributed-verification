@@ -1,0 +1,188 @@
+[
+  {
+    "hash": "173901617224167753396123006979376078418",
+    "def_id": "DefId { id: 13, name: \"verify::proof1\" }",
+    "attrs": [
+      "#[kanitool::proof_for_contract = \"contract1\"]"
+    ],
+    "func": {
+      "file": "tests/proofs/gen_contracts_by_macros.rs",
+      "src": "fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }",
+      "before_expansion": "gen! { proof1: contract1(arg), arg > 0}"
+    },
+    "callees": [
+      {
+        "def_id": "DefId { id: 1, name: \"verify::contract1::kani_register_contract\" }",
+        "func": {
+          "file": "tests/proofs/gen_contracts_by_macros.rs",
+          "src": "#[kani::requires($e)]",
+          "before_expansion": "#[kani::requires($e)]"
+        }
+      },
+      {
+        "def_id": "DefId { id: 1, name: \"verify::contract1::kani_register_contract\" }",
+        "func": {
+          "file": "tests/proofs/gen_contracts_by_macros.rs",
+          "src": "#[kani::requires($e)]",
+          "before_expansion": "#[kani::requires($e)]"
+        }
+      },
+      {
+        "def_id": "DefId { id: 2, name: \"verify::contract1::kani_contract_mode\" }",
+        "func": {
+          "file": "tests/proofs/gen_contracts_by_macros.rs",
+          "src": "#[kani::requires($e)]",
+          "before_expansion": "#[kani::requires($e)]"
+        }
+      },
+      {
+        "def_id": "DefId { id: 1, name: \"verify::contract1::kani_register_contract\" }",
+        "func": {
+          "file": "tests/proofs/gen_contracts_by_macros.rs",
+          "src": "#[kani::requires($e)]",
+          "before_expansion": "#[kani::requires($e)]"
+        }
+      },
+      {
+        "def_id": "DefId { id: 1, name: \"verify::contract1::kani_register_contract\" }",
+        "func": {
+          "file": "tests/proofs/gen_contracts_by_macros.rs",
+          "src": "#[kani::requires($e)]",
+          "before_expansion": "#[kani::requires($e)]"
+        }
+      },
+      {
+        "def_id": "DefId { id: 0, name: \"verify::contract1\" }",
+        "func": {
+          "file": "tests/proofs/gen_contracts_by_macros.rs",
+          "src": "fn",
+          "before_expansion": "gen! { proof1: contract1(arg), arg > 0}"
+        }
+      }
+    ]
+  },
+  {
+    "hash": "123976172475411212985328458414396205982",
+    "def_id": "DefId { id: 27, name: \"verify::proof2\" }",
+    "attrs": [
+      "#[kanitool::proof_for_contract = \"contract2\"]"
+    ],
+    "func": {
+      "file": "tests/proofs/gen_contracts_by_macros.rs",
+      "src": "fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }",
+      "before_expansion": "gen! { proof2: contract2(arg), arg != 0}"
+    },
+    "callees": [
+      {
+        "def_id": "DefId { id: 15, name: \"verify::contract2::kani_register_contract\" }",
+        "func": {
+          "file": "tests/proofs/gen_contracts_by_macros.rs",
+          "src": "#[kani::requires($e)]",
+          "before_expansion": "#[kani::requires($e)]"
+        }
+      },
+      {
+        "def_id": "DefId { id: 15, name: \"verify::contract2::kani_register_contract\" }",
+        "func": {
+          "file": "tests/proofs/gen_contracts_by_macros.rs",
+          "src": "#[kani::requires($e)]",
+          "before_expansion": "#[kani::requires($e)]"
+        }
+      },
+      {
+        "def_id": "DefId { id: 15, name: \"verify::contract2::kani_register_contract\" }",
+        "func": {
+          "file": "tests/proofs/gen_contracts_by_macros.rs",
+          "src": "#[kani::requires($e)]",
+          "before_expansion": "#[kani::requires($e)]"
+        }
+      },
+      {
+        "def_id": "DefId { id: 15, name: \"verify::contract2::kani_register_contract\" }",
+        "func": {
+          "file": "tests/proofs/gen_contracts_by_macros.rs",
+          "src": "#[kani::requires($e)]",
+          "before_expansion": "#[kani::requires($e)]"
+        }
+      },
+      {
+        "def_id": "DefId { id: 16, name: \"verify::contract2::kani_contract_mode\" }",
+        "func": {
+          "file": "tests/proofs/gen_contracts_by_macros.rs",
+          "src": "#[kani::requires($e)]",
+          "before_expansion": "#[kani::requires($e)]"
+        }
+      },
+      {
+        "def_id": "DefId { id: 14, name: \"verify::contract2\" }",
+        "func": {
+          "file": "tests/proofs/gen_contracts_by_macros.rs",
+          "src": "fn",
+          "before_expansion": "gen! { proof2: contract2(arg), arg != 0}"
+        }
+      }
+    ]
+  },
+  {
+    "hash": "65100024384283587041305320168463434750",
+    "def_id": "DefId { id: 41, name: \"verify::proof3\" }",
+    "attrs": [
+      "#[kanitool::proof_for_contract = \"contract3\"]"
+    ],
+    "func": {
+      "file": "tests/proofs/gen_contracts_by_macros.rs",
+      "src": "fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }",
+      "before_expansion": "gen! { proof3: contract3(arg), arg < 10}"
+    },
+    "callees": [
+      {
+        "def_id": "DefId { id: 29, name: \"verify::contract3::kani_register_contract\" }",
+        "func": {
+          "file": "tests/proofs/gen_contracts_by_macros.rs",
+          "src": "#[kani::requires($e)]",
+          "before_expansion": "#[kani::requires($e)]"
+        }
+      },
+      {
+        "def_id": "DefId { id: 30, name: \"verify::contract3::kani_contract_mode\" }",
+        "func": {
+          "file": "tests/proofs/gen_contracts_by_macros.rs",
+          "src": "#[kani::requires($e)]",
+          "before_expansion": "#[kani::requires($e)]"
+        }
+      },
+      {
+        "def_id": "DefId { id: 29, name: \"verify::contract3::kani_register_contract\" }",
+        "func": {
+          "file": "tests/proofs/gen_contracts_by_macros.rs",
+          "src": "#[kani::requires($e)]",
+          "before_expansion": "#[kani::requires($e)]"
+        }
+      },
+      {
+        "def_id": "DefId { id: 29, name: \"verify::contract3::kani_register_contract\" }",
+        "func": {
+          "file": "tests/proofs/gen_contracts_by_macros.rs",
+          "src": "#[kani::requires($e)]",
+          "before_expansion": "#[kani::requires($e)]"
+        }
+      },
+      {
+        "def_id": "DefId { id: 29, name: \"verify::contract3::kani_register_contract\" }",
+        "func": {
+          "file": "tests/proofs/gen_contracts_by_macros.rs",
+          "src": "#[kani::requires($e)]",
+          "before_expansion": "#[kani::requires($e)]"
+        }
+      },
+      {
+        "def_id": "DefId { id: 28, name: \"verify::contract3\" }",
+        "func": {
+          "file": "tests/proofs/gen_contracts_by_macros.rs",
+          "src": "fn",
+          "before_expansion": "gen! { proof3: contract3(arg), arg < 10}"
+        }
+      }
+    ]
+  }
+]
