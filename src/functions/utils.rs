@@ -3,6 +3,7 @@ use rustc_smir::rustc_internal::internal;
 use rustc_span::{Span, source_map::SourceMap};
 use rustc_stable_hash::{StableHasher, hashers::SipHasher128};
 use serde::Serialize;
+use stable_mir::mir::mono::Instance;
 use std::hash::Hasher;
 
 /// Source code and potential source code before expansion.
@@ -10,6 +11,14 @@ use std::hash::Hasher;
 /// The field order matters, since this struct implements Ord.
 #[derive(Clone, Debug, Serialize, PartialEq, Eq, PartialOrd, Ord, Default)]
 pub struct SourceCode {
+    /// Function name.
+    pub name: String,
+
+    /// String of [`InstanceKind`].
+    ///
+    /// [`InstanceKind`]: https://doc.rust-lang.org/nightly/nightly-rustc/stable_mir/mir/mono/enum.InstanceKind.html
+    pub kind: String,
+
     // A file path where src lies.
     // The path is stripped with pwd or sysroot prefix.
     pub file: String,
@@ -31,6 +40,8 @@ pub struct SourceCode {
 
 impl SourceCode {
     pub fn with_hasher(&self, hasher: &mut StableHasher<SipHasher128>) {
+        hasher.write_str(&self.name);
+        hasher.write_str(&self.kind);
         hasher.write_str(&self.file);
         hasher.write_str(&self.src);
         match &self.before_expansion {
@@ -55,6 +66,7 @@ fn span_to_source(span: Span, src_map: &SourceMap) -> String {
 
 /// Source code for a stable_mir span.
 pub fn source_code_with(
+    inst: &Instance,
     stable_mir_span: stable_mir::ty::Span,
     tcx: TyCtxt,
     src_map: &SourceMap,
@@ -75,5 +87,7 @@ pub fn source_code_with(
         }
     }
 
-    SourceCode { file, src, before_expansion }
+    let name = inst.name();
+    let kind = format!("{:?}", inst.kind);
+    SourceCode { name, kind, file, src, before_expansion }
 }

@@ -11,6 +11,8 @@ pub struct SerFunction {
     pub attrs: Vec<String>,
     /// Raw function string, including name, signature, and body.
     pub func: SourceCode,
+    /// Count of callees.
+    pub callees_len: usize,
     /// Recursive function calls inside the body.
     pub callees: Vec<Callee>,
 }
@@ -23,6 +25,14 @@ pub struct Callee {
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct SourceCode {
+    /// Function name.
+    pub name: String,
+
+    /// String of [`InstanceKind`].
+    ///
+    /// [`InstanceKind`]: https://doc.rust-lang.org/nightly/nightly-rustc/stable_mir/mir/mono/enum.InstanceKind.html
+    pub kind: String,
+
     // A file path where src lies.
     // The path is stripped with pwd or sysroot prefix.
     file: String,
