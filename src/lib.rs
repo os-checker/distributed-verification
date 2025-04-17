@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 /// A Rust funtion with its file source, attributes, and raw function content.
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct SerFunction {
     pub hash: String,
     /// DefId in stable_mir.
@@ -15,13 +15,13 @@ pub struct SerFunction {
     pub callees: Vec<Callee>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Callee {
     pub def_id: String,
     pub func: SourceCode,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct SourceCode {
     // A file path where src lies.
     // The path is stripped with pwd or sysroot prefix.
