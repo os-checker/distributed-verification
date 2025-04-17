@@ -1,8 +1,7 @@
-use distributed_verification::SerFunction;
 use std::fs::{copy, remove_file};
 
 mod utils;
-use utils::{assert_eq, cmd, expect_file};
+use utils::{assert_eq, *};
 
 fn get(text: &str, start: &str) -> SerFunction {
     let json = &text[text.find("[\n").unwrap()..];

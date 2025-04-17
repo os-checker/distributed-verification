@@ -31,6 +31,7 @@ pub struct SourceCode {
 
 impl SourceCode {
     pub fn with_hasher(&self, hasher: &mut StableHasher<SipHasher128>) {
+        hasher.write_str(&self.file);
         hasher.write_str(&self.src);
         match &self.before_expansion {
             Some(text) => {

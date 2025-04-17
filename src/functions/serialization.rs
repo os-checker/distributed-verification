@@ -32,11 +32,9 @@ impl SerFunction {
         let mut hasher = StableHasher::<SipHasher128>::new();
         func.with_hasher(&mut hasher);
         hasher.write_length_prefix(attrs.len());
-        attrs.iter().for_each(|a| hasher.write_str(a));
+        attrs.iter().for_each(|attr| hasher.write_str(attr));
         hasher.write_length_prefix(callees.len());
-        callees.iter().for_each(|c| {
-            c.func.with_hasher(&mut hasher);
-        });
+        callees.iter().for_each(|callee| callee.func.with_hasher(&mut hasher));
         let Hash128(hash) = hasher.finish();
 
         SerFunction { hash, def_id, attrs, func, callees }

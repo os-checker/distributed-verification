@@ -1,7 +1,10 @@
 use assert_cmd::Command;
 
-#[allow(unused_imports)] // seems a bug in clippy
+pub use distributed_verification::SerFunction;
+#[allow(unused_imports)] // seems a bug in clippy: RA only recognizes the usage in compare.rs
 pub use expect_test::{expect, expect_file};
+#[allow(unused_imports)] // seems a bug in clippy
+pub use eyre::Result;
 #[allow(unused_imports)] // seems a bug in clippy
 pub use pretty_assertions::assert_eq;
 
