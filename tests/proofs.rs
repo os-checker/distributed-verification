@@ -47,7 +47,8 @@ fn test_proofs() -> Result<()> {
     expect![[r#"
         [
             "tests/proofs/ad_hoc.rs",
-            "tests/proofs/gen_by_macros.rs",
+            "tests/proofs/gen_contracts_by_macros.rs",
+            "tests/proofs/gen_proofs_by_macros.rs",
             "tests/proofs/proofs_for_contract.rs",
             "tests/proofs/standard_proofs.rs",
             "tests/proofs/standard_proofs_with_contracts.rs",
