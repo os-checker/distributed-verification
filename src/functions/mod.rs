@@ -1,8 +1,8 @@
-use indexmap::IndexSet;
+use indexmap::{IndexMap, IndexSet};
 use kani::{CallGraph, KANI_TOOL_ATTRS, collect_reachable_items};
 use rustc_middle::ty::TyCtxt;
 use stable_mir::{
-    CrateDef,
+    CrateDef, DefId,
     crate_def::Attribute,
     mir::mono::{Instance, MonoItem},
 };
@@ -75,6 +75,25 @@ impl Function {
 
         let mut callees = IndexSet::new();
         callgraph.recursive_callees(item, &mut callees);
+
+        {
+            // https://github.com/os-checker/distributed-verification/issues/42
+            let mut map = IndexMap::<DefId, Vec<Instance>>::new();
+            for &callee in callees.iter() {
+                map.entry(callee.def.def_id())
+                    .and_modify(|v| v.push(callee))
+                    .or_insert_with(|| vec![callee]);
+            }
+            for (idx, (defid, v)) in map.iter().enumerate() {
+                if defid.name() == "verify::f::kani_register_contract" {
+                    dbg!(v);
+                }
+                let v: Vec<_> = v.iter().map(|i| i.name()).collect();
+                let len = v.len();
+                println!("[{idx} -> {len}] [{defid:?}] {v:?}");
+            }
+            println!("\n\n\n");
+        }
 
         // Multiple instances may share the same defid (or rather SourceCode), so deduplicate them.
         let mut callees: Vec<_> = callees.into_iter().collect();
