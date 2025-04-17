@@ -45,6 +45,27 @@ pub fn get_source_code(inst: &Instance) -> Option<SourceCode> {
     get_cache_func(inst, |cf| cf.src.clone())
 }
 
+/// NOTE: this function doesn't auto insert SourceCode if Instance isn't handled.
+pub fn share_same_source_code(a: &Instance, b: &Instance) -> bool {
+    get_cache(|cache| {
+        let defid_a = a.def.def_id();
+        let defid_b = b.def.def_id();
+        let src_a = cache.set.get(&defid_a);
+        let src_b = cache.set.get(&defid_b);
+        match (src_a, src_b) {
+            (Some(cache_a), Some(cache_b)) => match (cache_a, cache_b) {
+                (Some(func_a), Some(func_b)) => func_a.src == func_b.src,
+                (None, None) => defid_a == defid_b,
+                (None, Some(_)) => false,
+                (Some(_), None) => false,
+            },
+            (None, None) => defid_a == defid_b,
+            (None, Some(_)) => false,
+            (Some(_), None) => false,
+        }
+    })
+}
+
 pub fn cmp_callees(a: &Instance, b: &Instance) -> Ordering {
     get_cache(|cache| {
         cache.get_or_insert(a);

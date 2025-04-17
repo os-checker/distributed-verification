@@ -53,7 +53,7 @@ pub struct Function {
 
     /// Recursive fnction calls inside the body.
     /// The elements are sorted by file path and fn source code to keep hash value stable.
-    callees: IndexSet<Instance>,
+    callees: Vec<Instance>,
 }
 
 impl Function {
@@ -75,7 +75,11 @@ impl Function {
 
         let mut callees = IndexSet::new();
         callgraph.recursive_callees(item, &mut callees);
+
+        // Multiple instances may share the same defid (or rather SourceCode), so deduplicate them.
+        let mut callees: Vec<_> = callees.into_iter().collect();
         callees.sort_by(cache::cmp_callees);
+        callees.dedup_by(|a, b| cache::share_same_source_code(a, b));
 
         let this = Function { instance, attrs, callees };
         filter(&this).then_some(this)
