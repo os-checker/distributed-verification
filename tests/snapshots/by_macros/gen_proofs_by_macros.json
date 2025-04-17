@@ -1,11 +1,13 @@
 [
   {
-    "hash": "46016022776817712457248418356562080180",
+    "hash": "142324393913032614161438847443070542401",
     "def_id": "DefId { id: 0, name: \"verify::proof1\" }",
     "attrs": [
       "#[kanitool::proof]"
     ],
     "func": {
+      "name": "verify::proof1",
+      "kind": "Item",
       "file": "tests/proofs/gen_proofs_by_macros.rs",
       "src": "fn $name() $block",
       "before_expansion": "gen! { proof1, { assert_eq!(kani::any::<u8>(), 0) }}"
@@ -14,12 +16,14 @@
     "callees": []
   },
   {
-    "hash": "790930765940395853317344064822859799449",
+    "hash": "1225837020836258327313751040515830526577",
     "def_id": "DefId { id: 1, name: \"verify::proof2\" }",
     "attrs": [
       "#[kanitool::proof]"
     ],
     "func": {
+      "name": "verify::proof2",
+      "kind": "Item",
       "file": "tests/proofs/gen_proofs_by_macros.rs",
       "src": "fn $name() $block",
       "before_expansion": "gen! { proof2, { assert_eq!(kani::any::<u8>(), 0) }}"
@@ -28,12 +32,14 @@
     "callees": []
   },
   {
-    "hash": "1212665539524790206110637770712875499847",
+    "hash": "19747672167383027672278738792967795470",
     "def_id": "DefId { id: 2, name: \"verify::proof3\" }",
     "attrs": [
       "#[kanitool::proof]"
     ],
     "func": {
+      "name": "verify::proof3",
+      "kind": "Item",
       "file": "tests/proofs/gen_proofs_by_macros.rs",
       "src": "fn $name() $block",
       "before_expansion": "gen! { proof3, { assert_eq!(kani::any::<u8>(), 1) }}"
