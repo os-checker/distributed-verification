@@ -1,6 +1,6 @@
 [
   {
-    "hash": "66828500926882579217797073317874945254",
+    "hash": "1356236627636940283815155365783737138560",
     "def_id": "DefId { id: 2, name: \"verify::recursive_callees\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -12,7 +12,7 @@
       "src": "fn recursive_callees() {\n        crate::top_level();\n    }",
       "before_expansion": null
     },
-    "callees_len": 101,
+    "callees_len": 109,
     "callees": [
       {
         "def_id": "DefId { id: 81, name: \"<std::option::Option<T> as std::ops::Try>::branch\" }",
@@ -677,6 +677,26 @@
       {
         "def_id": "DefId { id: 41, name: \"std::option::Option::<T>::map\" }",
         "func": {
+          "name": "std::option::Option::<char>::map::<(usize, char), {closure@<std::str::CharIndices<'_> as std::iter::DoubleEndedIterator>::next_back::{closure#0}}>",
+          "kind": "Item",
+          "file": "library/core/src/option.rs",
+          "src": "pub fn map<U, F>(self, f: F) -> Option<U>\n    where\n        F: FnOnce(T) -> U,\n    {\n        match self {\n            Some(x) => Some(f(x)),\n            None => None,\n        }\n    }",
+          "before_expansion": null
+        }
+      },
+      {
+        "def_id": "DefId { id: 41, name: \"std::option::Option::<T>::map\" }",
+        "func": {
+          "name": "std::option::Option::<u32>::map::<char, {closure@<std::str::Chars<'_> as std::iter::DoubleEndedIterator>::next_back::{closure#0}}>",
+          "kind": "Item",
+          "file": "library/core/src/option.rs",
+          "src": "pub fn map<U, F>(self, f: F) -> Option<U>\n    where\n        F: FnOnce(T) -> U,\n    {\n        match self {\n            Some(x) => Some(f(x)),\n            None => None,\n        }\n    }",
+          "before_expansion": null
+        }
+      },
+      {
+        "def_id": "DefId { id: 41, name: \"std::option::Option::<T>::map\" }",
+        "func": {
           "name": "std::option::Option::<u32>::map::<char, {closure@<std::str::Chars<'_> as std::iter::Iterator>::next::{closure#0}}>",
           "kind": "Item",
           "file": "library/core/src/option.rs",
@@ -731,6 +751,16 @@
           "kind": "Item",
           "file": "library/core/src/ptr/non_null.rs",
           "src": "pub const unsafe fn add(self, count: usize) -> Self\n    where\n        T: Sized,\n    {\n        // SAFETY: the caller must uphold the safety contract for `offset`.\n        // Additionally safety contract of `offset` guarantees that the resulting pointer is\n        // pointing to an allocation, there can't be an allocation at null, thus it's safe to\n        // construct `NonNull`.\n        unsafe { NonNull { pointer: intrinsics::offset(self.as_ptr(), count) } }\n    }",
+          "before_expansion": null
+        }
+      },
+      {
+        "def_id": "DefId { id: 47, name: \"std::ptr::NonNull::<T>::as_ptr\" }",
+        "func": {
+          "name": "std::ptr::NonNull::<u8>::as_ptr",
+          "kind": "Item",
+          "file": "library/core/src/ptr/non_null.rs",
+          "src": "pub const fn as_ptr(self) -> *mut T {\n        // This is a transmute for the same reasons as `NonZero::get`.\n\n        // SAFETY: `NonNull` is `transparent` over a `*const T`, and `*const T`\n        // and `*mut T` have the same layout, so transitively we can transmute\n        // our `NonNull` to a `*mut T` directly.\n        unsafe { mem::transmute::<Self, *mut T>(self) }\n    }",
           "before_expansion": null
         }
       },
@@ -867,6 +897,46 @@
       {
         "def_id": "DefId { id: 22, name: \"std::ptr::drop_in_place\" }",
         "func": {
+          "name": "std::ptr::drop_in_place::<[u8; 256]>",
+          "kind": "Shim",
+          "file": "library/core/src/ptr/mod.rs",
+          "src": "pub unsafe fn drop_in_place<T: ?Sized>(to_drop: *mut T)",
+          "before_expansion": null
+        }
+      },
+      {
+        "def_id": "DefId { id: 22, name: \"std::ptr::drop_in_place\" }",
+        "func": {
+          "name": "std::ptr::drop_in_place::<std::str::pattern::CharPredicateSearcher<'_, {closure@core::str::<impl str>::trim::{closure#0}}>>",
+          "kind": "Shim",
+          "file": "library/core/src/ptr/mod.rs",
+          "src": "pub unsafe fn drop_in_place<T: ?Sized>(to_drop: *mut T)",
+          "before_expansion": null
+        }
+      },
+      {
+        "def_id": "DefId { id: 22, name: \"std::ptr::drop_in_place\" }",
+        "func": {
+          "name": "std::ptr::drop_in_place::<{closure@<std::str::CharIndices<'_> as std::iter::DoubleEndedIterator>::next_back::{closure#0}}>",
+          "kind": "Shim",
+          "file": "library/core/src/ptr/mod.rs",
+          "src": "pub unsafe fn drop_in_place<T: ?Sized>(to_drop: *mut T)",
+          "before_expansion": null
+        }
+      },
+      {
+        "def_id": "DefId { id: 22, name: \"std::ptr::drop_in_place\" }",
+        "func": {
+          "name": "std::ptr::drop_in_place::<{closure@<std::str::Chars<'_> as std::iter::DoubleEndedIterator>::next_back::{closure#0}}>",
+          "kind": "Shim",
+          "file": "library/core/src/ptr/mod.rs",
+          "src": "pub unsafe fn drop_in_place<T: ?Sized>(to_drop: *mut T)",
+          "before_expansion": null
+        }
+      },
+      {
+        "def_id": "DefId { id: 22, name: \"std::ptr::drop_in_place\" }",
+        "func": {
           "name": "std::ptr::drop_in_place::<{closure@<std::str::Chars<'_> as std::iter::Iterator>::next::{closure#0}}>",
           "kind": "Shim",
           "file": "library/core/src/ptr/mod.rs",
@@ -891,6 +961,16 @@
           "kind": "Item",
           "file": "library/core/src/ptr/metadata.rs",
           "src": "pub const fn metadata<T: ?Sized>(ptr: *const T) -> <T as Pointee>::Metadata {\n    ptr_metadata(ptr)\n}",
+          "before_expansion": null
+        }
+      },
+      {
+        "def_id": "DefId { id: 97, name: \"std::ptr::mut_ptr::<impl *mut T>::cast\" }",
+        "func": {
+          "name": "std::ptr::mut_ptr::<impl *mut *const u8>::cast::<std::ptr::NonNull<u8>>",
+          "kind": "Item",
+          "file": "library/core/src/ptr/mut_ptr.rs",
+          "src": "pub const fn cast<U>(self) -> *mut U {\n        self as _\n    }",
           "before_expansion": null
         }
       },

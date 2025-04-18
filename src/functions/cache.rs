@@ -6,10 +6,7 @@ use super::utils::{SourceCode, source_code_with};
 use rustc_data_structures::fx::FxHashMap;
 use rustc_middle::ty::TyCtxt;
 use rustc_span::source_map::{SourceMap, get_source_map};
-use stable_mir::{
-    CrateDef, DefId,
-    mir::{Body, mono::Instance},
-};
+use stable_mir::mir::{Body, mono::Instance};
 use std::{cell::RefCell, cmp::Ordering, sync::Arc};
 
 thread_local! {
@@ -45,39 +42,20 @@ pub fn get_source_code(inst: &Instance) -> Option<SourceCode> {
     get_cache_func(inst, |cf| cf.src.clone())
 }
 
-/// NOTE: this function doesn't auto insert SourceCode if Instance isn't handled.
-pub fn share_same_source_code(a: &Instance, b: &Instance) -> bool {
-    get_cache(|cache| {
-        let defid_a = a.def.def_id();
-        let defid_b = b.def.def_id();
-        let src_a = cache.set.get(&defid_a);
-        let src_b = cache.set.get(&defid_b);
-        match (src_a, src_b) {
-            (Some(cache_a), Some(cache_b)) => match (cache_a, cache_b) {
-                (Some(func_a), Some(func_b)) => func_a.src == func_b.src,
-                (None, None) => defid_a == defid_b,
-                (None, Some(_)) => false,
-                (Some(_), None) => false,
-            },
-            (None, None) => defid_a == defid_b,
-            (None, Some(_)) => false,
-            (Some(_), None) => false,
-        }
-    })
-}
-
 pub fn cmp_callees(a: &Instance, b: &Instance) -> Ordering {
     get_cache(|cache| {
         cache.get_or_insert(a);
         cache.get_or_insert(b);
-        let func_a = cache.set.get(&a.def.def_id()).unwrap().as_ref().map(|f| &f.src);
-        let func_b = cache.set.get(&b.def.def_id()).unwrap().as_ref().map(|f| &f.src);
+        let func_a = cache.set.get(a).unwrap().as_ref().map(|f| &f.src);
+        let func_b = cache.set.get(b).unwrap().as_ref().map(|f| &f.src);
         func_a.cmp(&func_b)
     })
 }
 
 struct Cache {
-    set: FxHashMap<DefId, Option<CacheFunction>>,
+    /// The reason to have Instance as the key is
+    /// https://github.com/os-checker/distributed-verification/issues/42
+    set: FxHashMap<Instance, Option<CacheFunction>>,
     rustc: Option<RustcCxt>,
     path_prefixes: PathPrefixes,
 }
@@ -91,7 +69,7 @@ impl Cache {
 
     fn get_or_insert(&mut self, inst: &Instance) -> Option<&CacheFunction> {
         self.set
-            .entry(inst.def.def_id())
+            .entry(*inst)
             .or_insert_with(|| {
                 let body = inst.body()?;
                 let rustc = self.rustc.as_ref()?;
