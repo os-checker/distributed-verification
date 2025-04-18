@@ -114,6 +114,8 @@ fn test_compare_unique_hash() -> Result<()> {
         [
             "tests/compare/contract1.rs",
             "tests/compare/contract2.rs",
+            "tests/compare/gen_proofs_by_nested_macros1.rs",
+            "tests/compare/gen_proofs_by_nested_macros2.rs",
             "tests/compare/proof1.rs",
             "tests/compare/proof2.rs",
         ]

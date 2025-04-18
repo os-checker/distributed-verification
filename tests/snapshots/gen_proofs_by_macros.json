@@ -1,6 +1,6 @@
 [
   {
-    "hash": "172515572526024733973663110246078682042",
+    "hash": "1289310285961474724924182518107456977",
     "def_id": "DefId { id: 0, name: \"verify::proof1\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -11,7 +11,13 @@
       "kind": "Item",
       "file": "tests/proofs/gen_proofs_by_macros.rs",
       "src": "fn $name() $block",
-      "before_expansion": "gen! { proof1, { assert_eq!(kani::any::<u8>(), 0) }}"
+      "macro_backtrace_len": 1,
+      "macro_backtrace": [
+        {
+          "callsite": "gen! { proof1, { assert_eq!(kani::any::<u8>(), 0) }}",
+          "defsite": "macro_rules! gen {\n    ($name:ident, $block:block) => {\n        #[kani::proof]\n        fn $name() $block\n    }\n}"
+        }
+      ]
     },
     "callees_len": 6,
     "callees": [
@@ -23,7 +29,21 @@
           "kind": "Item",
           "file": "kani/library/kani_core/src/arbitrary.rs",
           "src": "fn any() -> Self {\n                        // This size_of call does not use generic_const_exprs feature. It's inside a macro, and Self isn't generic.\n                        unsafe { crate::kani::any_raw_internal::<Self>() }\n                    }",
-          "before_expansion": "trivial_arbitrary!(u8)"
+          "macro_backtrace_len": 3,
+          "macro_backtrace": [
+            {
+              "callsite": "trivial_arbitrary!(u8)",
+              "defsite": "macro_rules! trivial_arbitrary {\n            ( $type: ty ) => {\n                impl Arbitrary for $type {\n                    #[inline(always)]\n                    fn any() -> Self {\n                        // This size_of call does not use generic_const_exprs feature. It's inside a macro, and Self isn't generic.\n                        unsafe { crate::kani::any_raw_internal::<Self>() }\n                    }\n                    fn any_array<const MAX_ARRAY_LENGTH: usize>() -> [Self; MAX_ARRAY_LENGTH] {\n                        unsafe { crate::kani::any_raw_array::<Self, MAX_ARRAY_LENGTH>() }\n                    }\n                }\n            };\n        }"
+            },
+            {
+              "callsite": "kani_core::generate_arbitrary!(std)",
+              "defsite": "macro_rules! generate_arbitrary"
+            },
+            {
+              "callsite": "kani_core::kani_lib!(kani)",
+              "defsite": "macro_rules! kani_lib"
+            }
+          ]
         }
       },
       {
@@ -34,7 +54,17 @@
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub fn any<T: Arbitrary>() -> T {\n            T::any()\n        }",
-          "before_expansion": "kani_core::kani_intrinsics!(std)"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "kani_core::kani_intrinsics!(std)",
+              "defsite": "macro_rules! kani_intrinsics"
+            },
+            {
+              "callsite": "kani_core::kani_lib!(kani)",
+              "defsite": "macro_rules! kani_lib"
+            }
+          ]
         }
       },
       {
@@ -45,7 +75,17 @@
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "fn any_raw<T: Copy>() -> T {\n            kani_intrinsic()\n        }",
-          "before_expansion": "kani_core::kani_intrinsics!(std)"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "kani_core::kani_intrinsics!(std)",
+              "defsite": "macro_rules! kani_intrinsics"
+            },
+            {
+              "callsite": "kani_core::kani_lib!(kani)",
+              "defsite": "macro_rules! kani_lib"
+            }
+          ]
         }
       },
       {
@@ -56,7 +96,17 @@
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "unsafe fn any_raw_internal<T: Copy>() -> T {\n            any_raw::<T>()\n        }",
-          "before_expansion": "kani_core::kani_intrinsics!(std)"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "kani_core::kani_intrinsics!(std)",
+              "defsite": "macro_rules! kani_intrinsics"
+            },
+            {
+              "callsite": "kani_core::kani_lib!(kani)",
+              "defsite": "macro_rules! kani_lib"
+            }
+          ]
         }
       },
       {
@@ -67,7 +117,17 @@
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
-          "before_expansion": "kani_core::kani_intrinsics!(std)"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "kani_core::kani_intrinsics!(std)",
+              "defsite": "macro_rules! kani_intrinsics"
+            },
+            {
+              "callsite": "kani_core::kani_lib!(kani)",
+              "defsite": "macro_rules! kani_lib"
+            }
+          ]
         }
       },
       {
@@ -78,13 +138,23 @@
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "fn kani_intrinsic<T>() -> T {\n            #[allow(clippy::empty_loop)]\n            loop {}\n        }",
-          "before_expansion": "kani_core::kani_intrinsics!(std)"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "kani_core::kani_intrinsics!(std)",
+              "defsite": "macro_rules! kani_intrinsics"
+            },
+            {
+              "callsite": "kani_core::kani_lib!(kani)",
+              "defsite": "macro_rules! kani_lib"
+            }
+          ]
         }
       }
     ]
   },
   {
-    "hash": "1498844359471053435818444414434108506651",
+    "hash": "8714424720005270906357815700291297349",
     "def_id": "DefId { id: 1, name: \"verify::proof2\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -95,7 +165,13 @@
       "kind": "Item",
       "file": "tests/proofs/gen_proofs_by_macros.rs",
       "src": "fn $name() $block",
-      "before_expansion": "gen! { proof2, { assert_eq!(kani::any::<u8>(), 0) }}"
+      "macro_backtrace_len": 1,
+      "macro_backtrace": [
+        {
+          "callsite": "gen! { proof2, { assert_eq!(kani::any::<u8>(), 0) }}",
+          "defsite": "macro_rules! gen {\n    ($name:ident, $block:block) => {\n        #[kani::proof]\n        fn $name() $block\n    }\n}"
+        }
+      ]
     },
     "callees_len": 6,
     "callees": [
@@ -107,7 +183,21 @@
           "kind": "Item",
           "file": "kani/library/kani_core/src/arbitrary.rs",
           "src": "fn any() -> Self {\n                        // This size_of call does not use generic_const_exprs feature. It's inside a macro, and Self isn't generic.\n                        unsafe { crate::kani::any_raw_internal::<Self>() }\n                    }",
-          "before_expansion": "trivial_arbitrary!(u8)"
+          "macro_backtrace_len": 3,
+          "macro_backtrace": [
+            {
+              "callsite": "trivial_arbitrary!(u8)",
+              "defsite": "macro_rules! trivial_arbitrary {\n            ( $type: ty ) => {\n                impl Arbitrary for $type {\n                    #[inline(always)]\n                    fn any() -> Self {\n                        // This size_of call does not use generic_const_exprs feature. It's inside a macro, and Self isn't generic.\n                        unsafe { crate::kani::any_raw_internal::<Self>() }\n                    }\n                    fn any_array<const MAX_ARRAY_LENGTH: usize>() -> [Self; MAX_ARRAY_LENGTH] {\n                        unsafe { crate::kani::any_raw_array::<Self, MAX_ARRAY_LENGTH>() }\n                    }\n                }\n            };\n        }"
+            },
+            {
+              "callsite": "kani_core::generate_arbitrary!(std)",
+              "defsite": "macro_rules! generate_arbitrary"
+            },
+            {
+              "callsite": "kani_core::kani_lib!(kani)",
+              "defsite": "macro_rules! kani_lib"
+            }
+          ]
         }
       },
       {
@@ -118,7 +208,17 @@
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub fn any<T: Arbitrary>() -> T {\n            T::any()\n        }",
-          "before_expansion": "kani_core::kani_intrinsics!(std)"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "kani_core::kani_intrinsics!(std)",
+              "defsite": "macro_rules! kani_intrinsics"
+            },
+            {
+              "callsite": "kani_core::kani_lib!(kani)",
+              "defsite": "macro_rules! kani_lib"
+            }
+          ]
         }
       },
       {
@@ -129,7 +229,17 @@
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "fn any_raw<T: Copy>() -> T {\n            kani_intrinsic()\n        }",
-          "before_expansion": "kani_core::kani_intrinsics!(std)"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "kani_core::kani_intrinsics!(std)",
+              "defsite": "macro_rules! kani_intrinsics"
+            },
+            {
+              "callsite": "kani_core::kani_lib!(kani)",
+              "defsite": "macro_rules! kani_lib"
+            }
+          ]
         }
       },
       {
@@ -140,7 +250,17 @@
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "unsafe fn any_raw_internal<T: Copy>() -> T {\n            any_raw::<T>()\n        }",
-          "before_expansion": "kani_core::kani_intrinsics!(std)"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "kani_core::kani_intrinsics!(std)",
+              "defsite": "macro_rules! kani_intrinsics"
+            },
+            {
+              "callsite": "kani_core::kani_lib!(kani)",
+              "defsite": "macro_rules! kani_lib"
+            }
+          ]
         }
       },
       {
@@ -151,7 +271,17 @@
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
-          "before_expansion": "kani_core::kani_intrinsics!(std)"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "kani_core::kani_intrinsics!(std)",
+              "defsite": "macro_rules! kani_intrinsics"
+            },
+            {
+              "callsite": "kani_core::kani_lib!(kani)",
+              "defsite": "macro_rules! kani_lib"
+            }
+          ]
         }
       },
       {
@@ -162,13 +292,23 @@
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "fn kani_intrinsic<T>() -> T {\n            #[allow(clippy::empty_loop)]\n            loop {}\n        }",
-          "before_expansion": "kani_core::kani_intrinsics!(std)"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "kani_core::kani_intrinsics!(std)",
+              "defsite": "macro_rules! kani_intrinsics"
+            },
+            {
+              "callsite": "kani_core::kani_lib!(kani)",
+              "defsite": "macro_rules! kani_lib"
+            }
+          ]
         }
       }
     ]
   },
   {
-    "hash": "112512525167431077293054940275626137814",
+    "hash": "181794177222049211791961616871103743706",
     "def_id": "DefId { id: 2, name: \"verify::proof3\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -179,7 +319,13 @@
       "kind": "Item",
       "file": "tests/proofs/gen_proofs_by_macros.rs",
       "src": "fn $name() $block",
-      "before_expansion": "gen! { proof3, { assert_eq!(kani::any::<u8>(), 1) }}"
+      "macro_backtrace_len": 1,
+      "macro_backtrace": [
+        {
+          "callsite": "gen! { proof3, { assert_eq!(kani::any::<u8>(), 1) }}",
+          "defsite": "macro_rules! gen {\n    ($name:ident, $block:block) => {\n        #[kani::proof]\n        fn $name() $block\n    }\n}"
+        }
+      ]
     },
     "callees_len": 6,
     "callees": [
@@ -191,7 +337,21 @@
           "kind": "Item",
           "file": "kani/library/kani_core/src/arbitrary.rs",
           "src": "fn any() -> Self {\n                        // This size_of call does not use generic_const_exprs feature. It's inside a macro, and Self isn't generic.\n                        unsafe { crate::kani::any_raw_internal::<Self>() }\n                    }",
-          "before_expansion": "trivial_arbitrary!(u8)"
+          "macro_backtrace_len": 3,
+          "macro_backtrace": [
+            {
+              "callsite": "trivial_arbitrary!(u8)",
+              "defsite": "macro_rules! trivial_arbitrary {\n            ( $type: ty ) => {\n                impl Arbitrary for $type {\n                    #[inline(always)]\n                    fn any() -> Self {\n                        // This size_of call does not use generic_const_exprs feature. It's inside a macro, and Self isn't generic.\n                        unsafe { crate::kani::any_raw_internal::<Self>() }\n                    }\n                    fn any_array<const MAX_ARRAY_LENGTH: usize>() -> [Self; MAX_ARRAY_LENGTH] {\n                        unsafe { crate::kani::any_raw_array::<Self, MAX_ARRAY_LENGTH>() }\n                    }\n                }\n            };\n        }"
+            },
+            {
+              "callsite": "kani_core::generate_arbitrary!(std)",
+              "defsite": "macro_rules! generate_arbitrary"
+            },
+            {
+              "callsite": "kani_core::kani_lib!(kani)",
+              "defsite": "macro_rules! kani_lib"
+            }
+          ]
         }
       },
       {
@@ -202,7 +362,17 @@
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub fn any<T: Arbitrary>() -> T {\n            T::any()\n        }",
-          "before_expansion": "kani_core::kani_intrinsics!(std)"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "kani_core::kani_intrinsics!(std)",
+              "defsite": "macro_rules! kani_intrinsics"
+            },
+            {
+              "callsite": "kani_core::kani_lib!(kani)",
+              "defsite": "macro_rules! kani_lib"
+            }
+          ]
         }
       },
       {
@@ -213,7 +383,17 @@
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "fn any_raw<T: Copy>() -> T {\n            kani_intrinsic()\n        }",
-          "before_expansion": "kani_core::kani_intrinsics!(std)"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "kani_core::kani_intrinsics!(std)",
+              "defsite": "macro_rules! kani_intrinsics"
+            },
+            {
+              "callsite": "kani_core::kani_lib!(kani)",
+              "defsite": "macro_rules! kani_lib"
+            }
+          ]
         }
       },
       {
@@ -224,7 +404,17 @@
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "unsafe fn any_raw_internal<T: Copy>() -> T {\n            any_raw::<T>()\n        }",
-          "before_expansion": "kani_core::kani_intrinsics!(std)"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "kani_core::kani_intrinsics!(std)",
+              "defsite": "macro_rules! kani_intrinsics"
+            },
+            {
+              "callsite": "kani_core::kani_lib!(kani)",
+              "defsite": "macro_rules! kani_lib"
+            }
+          ]
         }
       },
       {
@@ -235,7 +425,17 @@
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
-          "before_expansion": "kani_core::kani_intrinsics!(std)"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "kani_core::kani_intrinsics!(std)",
+              "defsite": "macro_rules! kani_intrinsics"
+            },
+            {
+              "callsite": "kani_core::kani_lib!(kani)",
+              "defsite": "macro_rules! kani_lib"
+            }
+          ]
         }
       },
       {
@@ -246,7 +446,17 @@
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "fn kani_intrinsic<T>() -> T {\n            #[allow(clippy::empty_loop)]\n            loop {}\n        }",
-          "before_expansion": "kani_core::kani_intrinsics!(std)"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "kani_core::kani_intrinsics!(std)",
+              "defsite": "macro_rules! kani_intrinsics"
+            },
+            {
+              "callsite": "kani_core::kani_lib!(kani)",
+              "defsite": "macro_rules! kani_lib"
+            }
+          ]
         }
       }
     ]

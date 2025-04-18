@@ -1,6 +1,6 @@
 [
   {
-    "hash": "15655498580014772503585770745754984328",
+    "hash": "304736074877460803410466733508053236623",
     "def_id": "DefId { id: 0, name: \"verify::f\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -11,7 +11,8 @@
       "kind": "Item",
       "file": "tests/compare/proof.rs",
       "src": "pub fn f() {\n        let a = 1;\n        assert_eq!(a + 1, 2);\n    }",
-      "before_expansion": null
+      "macro_backtrace_len": 0,
+      "macro_backtrace": []
     },
     "callees_len": 1,
     "callees": [
@@ -23,7 +24,17 @@
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
-          "before_expansion": "kani_core::kani_intrinsics!(std)"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "kani_core::kani_intrinsics!(std)",
+              "defsite": "macro_rules! kani_intrinsics"
+            },
+            {
+              "callsite": "kani_core::kani_lib!(kani)",
+              "defsite": "macro_rules! kani_lib"
+            }
+          ]
         }
       }
     ]
