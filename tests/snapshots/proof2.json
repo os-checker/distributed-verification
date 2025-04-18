@@ -1,12 +1,13 @@
 [
   {
-    "hash": "177631543608855386312483865423304532457",
+    "hash": "15655498580014772503585770745754984328",
     "def_id": "DefId { id: 0, name: \"verify::f\" }",
     "attrs": [
       "#[kanitool::proof]"
     ],
     "func": {
       "name": "verify::f",
+      "mangled_name": "_ZN5proof6verify1f17h452f3f200e19af70E",
       "kind": "Item",
       "file": "tests/compare/proof.rs",
       "src": "pub fn f() {\n        let a = 1;\n        assert_eq!(a + 1, 2);\n    }",
@@ -18,6 +19,7 @@
         "def_id": "DefId { id: 2, name: \"kani::assert\" }",
         "func": {
           "name": "kani::assert",
+          "mangled_name": "_ZN4kani6assert17hcc89e8c2e0f13823E",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
@@ -27,13 +29,14 @@
     ]
   },
   {
-    "hash": "14466344698218474136540205228183942188",
+    "hash": "918825000450498417817273116812866457443",
     "def_id": "DefId { id: 1, name: \"verify::g\" }",
     "attrs": [
       "#[kanitool::proof]"
     ],
     "func": {
       "name": "verify::g",
+      "mangled_name": "_ZN5proof6verify1g17h5fcfac3fd6095cd2E",
       "kind": "Item",
       "file": "tests/compare/proof.rs",
       "src": "pub fn g() {\n        let a = 1;\n        assert_eq!(a + 1, 2);\n    }",
@@ -45,6 +48,7 @@
         "def_id": "DefId { id: 2, name: \"kani::assert\" }",
         "func": {
           "name": "kani::assert",
+          "mangled_name": "_ZN4kani6assert17hcc89e8c2e0f13823E",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",

@@ -14,6 +14,9 @@ pub struct SourceCode {
     /// Function name.
     pub name: String,
 
+    /// Mangled function name.
+    pub mangled_name: String,
+
     /// String of [`InstanceKind`].
     ///
     /// [`InstanceKind`]: https://doc.rust-lang.org/nightly/nightly-rustc/stable_mir/mir/mono/enum.InstanceKind.html
@@ -41,6 +44,7 @@ pub struct SourceCode {
 impl SourceCode {
     pub fn with_hasher(&self, hasher: &mut StableHasher<SipHasher128>) {
         hasher.write_str(&self.name);
+        hasher.write_str(&self.mangled_name);
         hasher.write_str(&self.kind);
         hasher.write_str(&self.file);
         hasher.write_str(&self.src);
@@ -88,6 +92,7 @@ pub fn source_code_with(
     }
 
     let name = inst.name();
+    let mangled_name = inst.mangled_name();
     let kind = format!("{:?}", inst.kind);
-    SourceCode { name, kind, file, src, before_expansion }
+    SourceCode { name, mangled_name, kind, file, src, before_expansion }
 }

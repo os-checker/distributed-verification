@@ -28,6 +28,9 @@ pub struct SourceCode {
     /// Function name.
     pub name: String,
 
+    /// Mangled function name.
+    pub mangled_name: String,
+
     /// String of [`InstanceKind`].
     ///
     /// [`InstanceKind`]: https://doc.rust-lang.org/nightly/nightly-rustc/stable_mir/mir/mono/enum.InstanceKind.html
