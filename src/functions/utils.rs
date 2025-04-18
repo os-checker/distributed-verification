@@ -29,6 +29,9 @@ pub struct SourceCode {
     /// Source that a stable_mir span points to.
     pub src: String,
 
+    /// The count of macro backtraces.
+    pub macro_backtrace_len: usize,
+
     /// Is the stable_mir span from a macro expansion?
     /// If it is from an expansion, what's the source code before expansion?
     /// * Some(_) happens when the src (stable_mir) span comes from expansion, and tells
@@ -38,7 +41,7 @@ pub struct SourceCode {
     /// Refer to [#31] to know sepecific cases.
     ///
     /// [#31]: https://github.com/os-checker/distributed-verification/issues/31
-    pub before_expansion: Option<String>,
+    pub macro_backtrace: Vec<MacroBacktrace>,
 }
 
 impl SourceCode {
@@ -48,14 +51,18 @@ impl SourceCode {
         hasher.write_str(&self.kind);
         hasher.write_str(&self.file);
         hasher.write_str(&self.src);
-        match &self.before_expansion {
-            Some(text) => {
-                hasher.write_u8(1);
-                hasher.write_str(text);
-            }
-            None => hasher.write_u8(0),
+        hasher.write_length_prefix(self.macro_backtrace_len);
+        for m in &self.macro_backtrace {
+            hasher.write_str(&m.callsite);
+            hasher.write_str(&m.defsite);
         }
     }
+}
+
+#[derive(Clone, Debug, Serialize, PartialEq, Eq, PartialOrd, Ord, Default)]
+pub struct MacroBacktrace {
+    callsite: String,
+    defsite: String,
 }
 
 fn span_to_source(span: Span, src_map: &SourceMap) -> String {
@@ -78,25 +85,30 @@ pub fn source_code_with(
 ) -> SourceCode {
     let span = internal(tcx, stable_mir_span);
     let src = span_to_source(span, src_map);
-    let before_expansion = span.from_expansion().then(|| {
-        {
-            debug!(
-                "[find_oldest_ancestor_in_same_ctxt] {}",
-                span_to_source(span.find_oldest_ancestor_in_same_ctxt(), src_map)
-            );
-            debug!("[source_callsite] {}", span_to_source(span.source_callsite(), src_map));
-            if let Some(parent_callsite) = span.parent_callsite() {
-                debug!("[parent_callsite] {}", span_to_source(parent_callsite, src_map));
-            }
-            for m in span.macro_backtrace() {
-                debug!("[macro_backtrace - callsite] {}", span_to_source(m.call_site, src_map));
-                debug!("[macro_backtrace - defsite ] {}", span_to_source(m.def_site, src_map));
-            }
-            debug!("\n");
+
+    if span.from_expansion() {
+        debug!(
+            "[find_oldest_ancestor_in_same_ctxt] {}",
+            span_to_source(span.find_oldest_ancestor_in_same_ctxt(), src_map)
+        );
+        debug!("[source_callsite] {}", span_to_source(span.source_callsite(), src_map));
+        if let Some(parent_callsite) = span.parent_callsite() {
+            debug!("[parent_callsite] {}", span_to_source(parent_callsite, src_map));
         }
-        let ancestor_span = span.find_oldest_ancestor_in_same_ctxt();
-        span_to_source(ancestor_span, src_map)
-    });
+        for m in span.macro_backtrace() {
+            debug!("[macro_backtrace - callsite] {}", span_to_source(m.call_site, src_map));
+            debug!("[macro_backtrace - defsite ] {}", span_to_source(m.def_site, src_map));
+        }
+        debug!("\n");
+    }
+    let macro_backtrace: Vec<_> = span
+        .macro_backtrace()
+        .map(|m| MacroBacktrace {
+            callsite: span_to_source(m.call_site, src_map),
+            defsite: span_to_source(m.def_site, src_map),
+        })
+        .collect();
+    let macro_backtrace_len = macro_backtrace.len();
 
     let mut file = stable_mir_span.get_filename();
     for prefix in path_prefixes {
@@ -109,5 +121,5 @@ pub fn source_code_with(
     let name = inst.name();
     let mangled_name = inst.mangled_name();
     let kind = format!("{:?}", inst.kind);
-    SourceCode { name, mangled_name, kind, file, src, before_expansion }
+    SourceCode { name, mangled_name, kind, file, src, macro_backtrace_len, macro_backtrace }
 }
