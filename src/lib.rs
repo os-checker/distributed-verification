@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 /// A Rust funtion with its file source, attributes, and raw function content.
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Default, Serialize, Deserialize, Clone)]
 pub struct SerFunction {
     pub hash: String,
     /// DefId in stable_mir.
@@ -17,13 +17,13 @@ pub struct SerFunction {
     pub callees: Vec<Callee>,
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Default, Serialize, Deserialize, Clone)]
 pub struct Callee {
     pub def_id: String,
     pub func: SourceCode,
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Default, Serialize, Deserialize, Clone)]
 pub struct SourceCode {
     /// Function name.
     pub name: String,
@@ -38,16 +38,30 @@ pub struct SourceCode {
 
     // A file path where src lies.
     // The path is stripped with pwd or sysroot prefix.
-    file: String,
+    pub file: String,
 
     /// Source that a stable_mir span points to.
     pub src: String,
+
+    /// The count of macro backtraces.
+    pub macro_backtrace_len: usize,
+
     /// Is the stable_mir span from a macro expansion?
     /// If it is from an expansion, what's the source code before expansion?
     /// * Some(_) happens when the src (stable_mir) span comes from expansion, and tells
     ///   the source before the expansion.
     /// * None if the src is not from a macro expansion.
-    pub before_expansion: Option<String>,
+    ///
+    /// Refer to [#31] to know sepecific cases.
+    ///
+    /// [#31]: https://github.com/os-checker/distributed-verification/issues/31
+    pub macro_backtrace: Vec<MacroBacktrace>,
+}
+
+#[derive(Debug, Default, Serialize, Deserialize, Clone)]
+pub struct MacroBacktrace {
+    callsite: String,
+    defsite: String,
 }
 
 /// A local path to kani's artifacts.

@@ -1,6 +1,6 @@
 [
   {
-    "hash": "53883336862579689525661064515327026093",
+    "hash": "869229759361561288914140593756304897721",
     "def_id": "DefId { id: 13, name: \"verify::proof1\" }",
     "attrs": [
       "#[kanitool::proof_for_contract = \"contract1\"]"
@@ -11,7 +11,13 @@
       "kind": "Item",
       "file": "tests/proofs/gen_contracts_by_macros.rs",
       "src": "fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }",
-      "before_expansion": "gen! { proof1: contract1(arg), arg > 0}"
+      "macro_backtrace_len": 1,
+      "macro_backtrace": [
+        {
+          "callsite": "gen! { proof1: contract1(arg), arg > 0}",
+          "defsite": "macro_rules! gen {\n    ($proof:ident: $contract_name:ident($arg:ident), $e:expr) => {\n        #[kani::requires($e)]\n        fn $contract_name($arg: u8) -> u8 { $arg }\n\n        #[kani::proof_for_contract($contract_name)]\n        fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }\n    }\n}"
+        }
+      ]
     },
     "callees_len": 6,
     "callees": [
@@ -23,7 +29,13 @@
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "fn",
-          "before_expansion": "gen! { proof1: contract1(arg), arg > 0}"
+          "macro_backtrace_len": 1,
+          "macro_backtrace": [
+            {
+              "callsite": "gen! { proof1: contract1(arg), arg > 0}",
+              "defsite": "macro_rules! gen {\n    ($proof:ident: $contract_name:ident($arg:ident), $e:expr) => {\n        #[kani::requires($e)]\n        fn $contract_name($arg: u8) -> u8 { $arg }\n\n        #[kani::proof_for_contract($contract_name)]\n        fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }\n    }\n}"
+            }
+          ]
         }
       },
       {
@@ -34,7 +46,17 @@
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
-          "before_expansion": "#[kani::requires($e)]"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "#[kani::requires($e)]",
+              "defsite": "pub fn requires(attr: TokenStream, item: TokenStream) -> TokenStream"
+            },
+            {
+              "callsite": "gen! { proof1: contract1(arg), arg > 0}",
+              "defsite": "macro_rules! gen {\n    ($proof:ident: $contract_name:ident($arg:ident), $e:expr) => {\n        #[kani::requires($e)]\n        fn $contract_name($arg: u8) -> u8 { $arg }\n\n        #[kani::proof_for_contract($contract_name)]\n        fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }\n    }\n}"
+            }
+          ]
         }
       },
       {
@@ -45,7 +67,17 @@
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
-          "before_expansion": "#[kani::requires($e)]"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "#[kani::requires($e)]",
+              "defsite": "pub fn requires(attr: TokenStream, item: TokenStream) -> TokenStream"
+            },
+            {
+              "callsite": "gen! { proof1: contract1(arg), arg > 0}",
+              "defsite": "macro_rules! gen {\n    ($proof:ident: $contract_name:ident($arg:ident), $e:expr) => {\n        #[kani::requires($e)]\n        fn $contract_name($arg: u8) -> u8 { $arg }\n\n        #[kani::proof_for_contract($contract_name)]\n        fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }\n    }\n}"
+            }
+          ]
         }
       },
       {
@@ -56,7 +88,17 @@
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
-          "before_expansion": "#[kani::requires($e)]"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "#[kani::requires($e)]",
+              "defsite": "pub fn requires(attr: TokenStream, item: TokenStream) -> TokenStream"
+            },
+            {
+              "callsite": "gen! { proof1: contract1(arg), arg > 0}",
+              "defsite": "macro_rules! gen {\n    ($proof:ident: $contract_name:ident($arg:ident), $e:expr) => {\n        #[kani::requires($e)]\n        fn $contract_name($arg: u8) -> u8 { $arg }\n\n        #[kani::proof_for_contract($contract_name)]\n        fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }\n    }\n}"
+            }
+          ]
         }
       },
       {
@@ -67,7 +109,17 @@
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
-          "before_expansion": "#[kani::requires($e)]"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "#[kani::requires($e)]",
+              "defsite": "pub fn requires(attr: TokenStream, item: TokenStream) -> TokenStream"
+            },
+            {
+              "callsite": "gen! { proof1: contract1(arg), arg > 0}",
+              "defsite": "macro_rules! gen {\n    ($proof:ident: $contract_name:ident($arg:ident), $e:expr) => {\n        #[kani::requires($e)]\n        fn $contract_name($arg: u8) -> u8 { $arg }\n\n        #[kani::proof_for_contract($contract_name)]\n        fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }\n    }\n}"
+            }
+          ]
         }
       },
       {
@@ -78,13 +130,23 @@
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
-          "before_expansion": "#[kani::requires($e)]"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "#[kani::requires($e)]",
+              "defsite": "pub fn requires(attr: TokenStream, item: TokenStream) -> TokenStream"
+            },
+            {
+              "callsite": "gen! { proof1: contract1(arg), arg > 0}",
+              "defsite": "macro_rules! gen {\n    ($proof:ident: $contract_name:ident($arg:ident), $e:expr) => {\n        #[kani::requires($e)]\n        fn $contract_name($arg: u8) -> u8 { $arg }\n\n        #[kani::proof_for_contract($contract_name)]\n        fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }\n    }\n}"
+            }
+          ]
         }
       }
     ]
   },
   {
-    "hash": "9746173011318684529009241340785190655",
+    "hash": "1097249433164666459915721006926476787210",
     "def_id": "DefId { id: 27, name: \"verify::proof2\" }",
     "attrs": [
       "#[kanitool::proof_for_contract = \"contract2\"]"
@@ -95,7 +157,13 @@
       "kind": "Item",
       "file": "tests/proofs/gen_contracts_by_macros.rs",
       "src": "fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }",
-      "before_expansion": "gen! { proof2: contract2(arg), arg != 0}"
+      "macro_backtrace_len": 1,
+      "macro_backtrace": [
+        {
+          "callsite": "gen! { proof2: contract2(arg), arg != 0}",
+          "defsite": "macro_rules! gen {\n    ($proof:ident: $contract_name:ident($arg:ident), $e:expr) => {\n        #[kani::requires($e)]\n        fn $contract_name($arg: u8) -> u8 { $arg }\n\n        #[kani::proof_for_contract($contract_name)]\n        fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }\n    }\n}"
+        }
+      ]
     },
     "callees_len": 6,
     "callees": [
@@ -107,7 +175,13 @@
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "fn",
-          "before_expansion": "gen! { proof2: contract2(arg), arg != 0}"
+          "macro_backtrace_len": 1,
+          "macro_backtrace": [
+            {
+              "callsite": "gen! { proof2: contract2(arg), arg != 0}",
+              "defsite": "macro_rules! gen {\n    ($proof:ident: $contract_name:ident($arg:ident), $e:expr) => {\n        #[kani::requires($e)]\n        fn $contract_name($arg: u8) -> u8 { $arg }\n\n        #[kani::proof_for_contract($contract_name)]\n        fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }\n    }\n}"
+            }
+          ]
         }
       },
       {
@@ -118,7 +192,17 @@
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
-          "before_expansion": "#[kani::requires($e)]"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "#[kani::requires($e)]",
+              "defsite": "pub fn requires(attr: TokenStream, item: TokenStream) -> TokenStream"
+            },
+            {
+              "callsite": "gen! { proof2: contract2(arg), arg != 0}",
+              "defsite": "macro_rules! gen {\n    ($proof:ident: $contract_name:ident($arg:ident), $e:expr) => {\n        #[kani::requires($e)]\n        fn $contract_name($arg: u8) -> u8 { $arg }\n\n        #[kani::proof_for_contract($contract_name)]\n        fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }\n    }\n}"
+            }
+          ]
         }
       },
       {
@@ -129,7 +213,17 @@
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
-          "before_expansion": "#[kani::requires($e)]"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "#[kani::requires($e)]",
+              "defsite": "pub fn requires(attr: TokenStream, item: TokenStream) -> TokenStream"
+            },
+            {
+              "callsite": "gen! { proof2: contract2(arg), arg != 0}",
+              "defsite": "macro_rules! gen {\n    ($proof:ident: $contract_name:ident($arg:ident), $e:expr) => {\n        #[kani::requires($e)]\n        fn $contract_name($arg: u8) -> u8 { $arg }\n\n        #[kani::proof_for_contract($contract_name)]\n        fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }\n    }\n}"
+            }
+          ]
         }
       },
       {
@@ -140,7 +234,17 @@
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
-          "before_expansion": "#[kani::requires($e)]"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "#[kani::requires($e)]",
+              "defsite": "pub fn requires(attr: TokenStream, item: TokenStream) -> TokenStream"
+            },
+            {
+              "callsite": "gen! { proof2: contract2(arg), arg != 0}",
+              "defsite": "macro_rules! gen {\n    ($proof:ident: $contract_name:ident($arg:ident), $e:expr) => {\n        #[kani::requires($e)]\n        fn $contract_name($arg: u8) -> u8 { $arg }\n\n        #[kani::proof_for_contract($contract_name)]\n        fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }\n    }\n}"
+            }
+          ]
         }
       },
       {
@@ -151,7 +255,17 @@
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
-          "before_expansion": "#[kani::requires($e)]"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "#[kani::requires($e)]",
+              "defsite": "pub fn requires(attr: TokenStream, item: TokenStream) -> TokenStream"
+            },
+            {
+              "callsite": "gen! { proof2: contract2(arg), arg != 0}",
+              "defsite": "macro_rules! gen {\n    ($proof:ident: $contract_name:ident($arg:ident), $e:expr) => {\n        #[kani::requires($e)]\n        fn $contract_name($arg: u8) -> u8 { $arg }\n\n        #[kani::proof_for_contract($contract_name)]\n        fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }\n    }\n}"
+            }
+          ]
         }
       },
       {
@@ -162,13 +276,23 @@
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
-          "before_expansion": "#[kani::requires($e)]"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "#[kani::requires($e)]",
+              "defsite": "pub fn requires(attr: TokenStream, item: TokenStream) -> TokenStream"
+            },
+            {
+              "callsite": "gen! { proof2: contract2(arg), arg != 0}",
+              "defsite": "macro_rules! gen {\n    ($proof:ident: $contract_name:ident($arg:ident), $e:expr) => {\n        #[kani::requires($e)]\n        fn $contract_name($arg: u8) -> u8 { $arg }\n\n        #[kani::proof_for_contract($contract_name)]\n        fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }\n    }\n}"
+            }
+          ]
         }
       }
     ]
   },
   {
-    "hash": "9281657212352396567602207150619318725",
+    "hash": "142376100482858891002023960128004072277",
     "def_id": "DefId { id: 41, name: \"verify::proof3\" }",
     "attrs": [
       "#[kanitool::proof_for_contract = \"contract3\"]"
@@ -179,7 +303,13 @@
       "kind": "Item",
       "file": "tests/proofs/gen_contracts_by_macros.rs",
       "src": "fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }",
-      "before_expansion": "gen! { proof3: contract3(arg), arg < 10}"
+      "macro_backtrace_len": 1,
+      "macro_backtrace": [
+        {
+          "callsite": "gen! { proof3: contract3(arg), arg < 10}",
+          "defsite": "macro_rules! gen {\n    ($proof:ident: $contract_name:ident($arg:ident), $e:expr) => {\n        #[kani::requires($e)]\n        fn $contract_name($arg: u8) -> u8 { $arg }\n\n        #[kani::proof_for_contract($contract_name)]\n        fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }\n    }\n}"
+        }
+      ]
     },
     "callees_len": 6,
     "callees": [
@@ -191,7 +321,13 @@
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "fn",
-          "before_expansion": "gen! { proof3: contract3(arg), arg < 10}"
+          "macro_backtrace_len": 1,
+          "macro_backtrace": [
+            {
+              "callsite": "gen! { proof3: contract3(arg), arg < 10}",
+              "defsite": "macro_rules! gen {\n    ($proof:ident: $contract_name:ident($arg:ident), $e:expr) => {\n        #[kani::requires($e)]\n        fn $contract_name($arg: u8) -> u8 { $arg }\n\n        #[kani::proof_for_contract($contract_name)]\n        fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }\n    }\n}"
+            }
+          ]
         }
       },
       {
@@ -202,7 +338,17 @@
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
-          "before_expansion": "#[kani::requires($e)]"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "#[kani::requires($e)]",
+              "defsite": "pub fn requires(attr: TokenStream, item: TokenStream) -> TokenStream"
+            },
+            {
+              "callsite": "gen! { proof3: contract3(arg), arg < 10}",
+              "defsite": "macro_rules! gen {\n    ($proof:ident: $contract_name:ident($arg:ident), $e:expr) => {\n        #[kani::requires($e)]\n        fn $contract_name($arg: u8) -> u8 { $arg }\n\n        #[kani::proof_for_contract($contract_name)]\n        fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }\n    }\n}"
+            }
+          ]
         }
       },
       {
@@ -213,7 +359,17 @@
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
-          "before_expansion": "#[kani::requires($e)]"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "#[kani::requires($e)]",
+              "defsite": "pub fn requires(attr: TokenStream, item: TokenStream) -> TokenStream"
+            },
+            {
+              "callsite": "gen! { proof3: contract3(arg), arg < 10}",
+              "defsite": "macro_rules! gen {\n    ($proof:ident: $contract_name:ident($arg:ident), $e:expr) => {\n        #[kani::requires($e)]\n        fn $contract_name($arg: u8) -> u8 { $arg }\n\n        #[kani::proof_for_contract($contract_name)]\n        fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }\n    }\n}"
+            }
+          ]
         }
       },
       {
@@ -224,7 +380,17 @@
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
-          "before_expansion": "#[kani::requires($e)]"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "#[kani::requires($e)]",
+              "defsite": "pub fn requires(attr: TokenStream, item: TokenStream) -> TokenStream"
+            },
+            {
+              "callsite": "gen! { proof3: contract3(arg), arg < 10}",
+              "defsite": "macro_rules! gen {\n    ($proof:ident: $contract_name:ident($arg:ident), $e:expr) => {\n        #[kani::requires($e)]\n        fn $contract_name($arg: u8) -> u8 { $arg }\n\n        #[kani::proof_for_contract($contract_name)]\n        fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }\n    }\n}"
+            }
+          ]
         }
       },
       {
@@ -235,7 +401,17 @@
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
-          "before_expansion": "#[kani::requires($e)]"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "#[kani::requires($e)]",
+              "defsite": "pub fn requires(attr: TokenStream, item: TokenStream) -> TokenStream"
+            },
+            {
+              "callsite": "gen! { proof3: contract3(arg), arg < 10}",
+              "defsite": "macro_rules! gen {\n    ($proof:ident: $contract_name:ident($arg:ident), $e:expr) => {\n        #[kani::requires($e)]\n        fn $contract_name($arg: u8) -> u8 { $arg }\n\n        #[kani::proof_for_contract($contract_name)]\n        fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }\n    }\n}"
+            }
+          ]
         }
       },
       {
@@ -246,7 +422,17 @@
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
-          "before_expansion": "#[kani::requires($e)]"
+          "macro_backtrace_len": 2,
+          "macro_backtrace": [
+            {
+              "callsite": "#[kani::requires($e)]",
+              "defsite": "pub fn requires(attr: TokenStream, item: TokenStream) -> TokenStream"
+            },
+            {
+              "callsite": "gen! { proof3: contract3(arg), arg < 10}",
+              "defsite": "macro_rules! gen {\n    ($proof:ident: $contract_name:ident($arg:ident), $e:expr) => {\n        #[kani::requires($e)]\n        fn $contract_name($arg: u8) -> u8 { $arg }\n\n        #[kani::proof_for_contract($contract_name)]\n        fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }\n    }\n}"
+            }
+          ]
         }
       }
     ]

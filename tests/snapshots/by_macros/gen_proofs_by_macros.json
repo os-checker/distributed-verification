@@ -1,6 +1,6 @@
 [
   {
-    "hash": "172515572526024733973663110246078682042",
+    "hash": "1289310285961474724924182518107456977",
     "def_id": "DefId { id: 0, name: \"verify::proof1\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -11,13 +11,19 @@
       "kind": "Item",
       "file": "tests/proofs/gen_proofs_by_macros.rs",
       "src": "fn $name() $block",
-      "before_expansion": "gen! { proof1, { assert_eq!(kani::any::<u8>(), 0) }}"
+      "macro_backtrace_len": 1,
+      "macro_backtrace": [
+        {
+          "callsite": "gen! { proof1, { assert_eq!(kani::any::<u8>(), 0) }}",
+          "defsite": "macro_rules! gen {\n    ($name:ident, $block:block) => {\n        #[kani::proof]\n        fn $name() $block\n    }\n}"
+        }
+      ]
     },
     "callees_len": 0,
     "callees": []
   },
   {
-    "hash": "1498844359471053435818444414434108506651",
+    "hash": "8714424720005270906357815700291297349",
     "def_id": "DefId { id: 1, name: \"verify::proof2\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -28,13 +34,19 @@
       "kind": "Item",
       "file": "tests/proofs/gen_proofs_by_macros.rs",
       "src": "fn $name() $block",
-      "before_expansion": "gen! { proof2, { assert_eq!(kani::any::<u8>(), 0) }}"
+      "macro_backtrace_len": 1,
+      "macro_backtrace": [
+        {
+          "callsite": "gen! { proof2, { assert_eq!(kani::any::<u8>(), 0) }}",
+          "defsite": "macro_rules! gen {\n    ($name:ident, $block:block) => {\n        #[kani::proof]\n        fn $name() $block\n    }\n}"
+        }
+      ]
     },
     "callees_len": 0,
     "callees": []
   },
   {
-    "hash": "112512525167431077293054940275626137814",
+    "hash": "181794177222049211791961616871103743706",
     "def_id": "DefId { id: 2, name: \"verify::proof3\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -45,7 +57,13 @@
       "kind": "Item",
       "file": "tests/proofs/gen_proofs_by_macros.rs",
       "src": "fn $name() $block",
-      "before_expansion": "gen! { proof3, { assert_eq!(kani::any::<u8>(), 1) }}"
+      "macro_backtrace_len": 1,
+      "macro_backtrace": [
+        {
+          "callsite": "gen! { proof3, { assert_eq!(kani::any::<u8>(), 1) }}",
+          "defsite": "macro_rules! gen {\n    ($name:ident, $block:block) => {\n        #[kani::proof]\n        fn $name() $block\n    }\n}"
+        }
+      ]
     },
     "callees_len": 0,
     "callees": []
