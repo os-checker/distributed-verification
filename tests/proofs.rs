@@ -73,6 +73,7 @@ fn test_proofs() -> Result<()> {
             "tests/proofs/ad_hoc.rs",
             "tests/proofs/gen_contracts_by_macros.rs",
             "tests/proofs/gen_proofs_by_macros.rs",
+            "tests/proofs/gen_proofs_by_nested_macros.rs",
             "tests/proofs/proofs_for_contract.rs",
             "tests/proofs/standard_proofs.rs",
             "tests/proofs/standard_proofs_with_contracts.rs",
@@ -88,7 +89,7 @@ fn test_proofs() -> Result<()> {
         expect_file![format!("./snapshots/{file_stem}.json")].assert_eq(&text);
         v_json.push(serde_json::from_str(&text).unwrap());
         // collect macro generated proofs
-        if file_stem.ends_with("by_macros") {
+        if file_stem.ends_with("by_macros") || file_stem.ends_with("by_nested_macros") {
             v_macro.push((idx, file_stem));
         }
     }
