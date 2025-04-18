@@ -62,7 +62,7 @@ fn span_to_source(span: Span, src_map: &SourceMap) -> String {
     src_map
         .span_to_source(span, |text, x, y| {
             let src = &text[x..y];
-            debug!("[{x}:{y}]\n{src}");
+            // debug!("[{x}:{y}]\n{src}");
             Ok(src.to_owned())
         })
         .unwrap()
@@ -79,6 +79,21 @@ pub fn source_code_with(
     let span = internal(tcx, stable_mir_span);
     let src = span_to_source(span, src_map);
     let before_expansion = span.from_expansion().then(|| {
+        {
+            debug!(
+                "[find_oldest_ancestor_in_same_ctxt] {}",
+                span_to_source(span.find_oldest_ancestor_in_same_ctxt(), src_map)
+            );
+            debug!("[source_callsite] {}", span_to_source(span.source_callsite(), src_map));
+            if let Some(parent_callsite) = span.parent_callsite() {
+                debug!("[parent_callsite] {}", span_to_source(parent_callsite, src_map));
+            }
+            for m in span.macro_backtrace() {
+                debug!("[macro_backtrace - callsite] {}", span_to_source(m.call_site, src_map));
+                debug!("[macro_backtrace - defsite ] {}", span_to_source(m.def_site, src_map));
+            }
+            debug!("\n");
+        }
         let ancestor_span = span.find_oldest_ancestor_in_same_ctxt();
         span_to_source(ancestor_span, src_map)
     });
