@@ -20,14 +20,12 @@ fn validate_kani_list_json() -> Result<()> {
 }
 
 fn get_kani_list(file: &str) -> KaniList {
-    // kani list -Zlist --format=json file.rs
-    let output = Command::new("kani")
-        .args(["list", "-Zlist", "-Zfunction-contracts", "--format=json", file])
-        .output()
-        .unwrap();
+    // kani list -Zlist -Zfunction-contracts --format=json file.rs
+    let args = ["list", "-Zlist", "-Zfunction-contracts", "--format=json", file];
+    let output = Command::new("kani").args(args).output().unwrap();
     assert!(
         output.status.success(),
-        "Failed to run `kani list -Zlist --format=json {file}`:\n{}",
+        "Failed to run `kani list -Zlist -Zfunction-contracts --format=json {file}`:\n{}",
         std::str::from_utf8(&output.stderr).unwrap()
     );
 
