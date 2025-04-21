@@ -1,0 +1,18 @@
+KaniList {
+    kani_version: "0.60.0",
+    file_version: "0.1",
+    standard_harnesses: {
+        "tests/proofs/ad_hoc.rs": {
+            "adhoc::callee_defined_in_proof",
+            "adhoc::closure_in_proof",
+            "adhoc::proof_in_fn_item::proof",
+        },
+    },
+    contract_harnesses: {},
+    contracts: {},
+    totals: Total {
+        standard_harnesses: 3,
+        contract_harnesses: 0,
+        functions_under_contract: 0,
+    },
+}

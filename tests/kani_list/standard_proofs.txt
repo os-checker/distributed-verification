@@ -1,0 +1,18 @@
+KaniList {
+    kani_version: "0.60.0",
+    file_version: "0.1",
+    standard_harnesses: {
+        "tests/proofs/standard_proofs.rs": {
+            "verify::recursive_callees",
+            "verify::standard_proof",
+            "verify::standard_proof_empty",
+        },
+    },
+    contract_harnesses: {},
+    contracts: {},
+    totals: Total {
+        standard_harnesses: 3,
+        contract_harnesses: 0,
+        functions_under_contract: 0,
+    },
+}

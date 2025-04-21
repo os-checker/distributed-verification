@@ -1,0 +1,42 @@
+KaniList {
+    kani_version: "0.60.0",
+    file_version: "0.1",
+    standard_harnesses: {},
+    contract_harnesses: {
+        "tests/proofs/proofs_for_contract.rs": {
+            "verify::single_contract",
+            "verify::single_contract_requires",
+            "verify::single_with_contract_ensures",
+            "verify::two_contracts_requires_and_ensures",
+        },
+    },
+    contracts: {
+        ContractedFunction {
+            function: "verify::contract",
+            file: "tests/proofs/proofs_for_contract.rs",
+            harnesses: [
+                "verify::single_contract",
+            ],
+        },
+        ContractedFunction {
+            function: "verify::contract_ensures",
+            file: "tests/proofs/proofs_for_contract.rs",
+            harnesses: [
+                "verify::single_with_contract_ensures",
+            ],
+        },
+        ContractedFunction {
+            function: "verify::contract_requires",
+            file: "tests/proofs/proofs_for_contract.rs",
+            harnesses: [
+                "verify::single_contract_requires",
+                "verify::two_contracts_requires_and_ensures",
+            ],
+        },
+    },
+    totals: Total {
+        standard_harnesses: 0,
+        contract_harnesses: 4,
+        functions_under_contract: 3,
+    },
+}
