@@ -1,11 +1,10 @@
+#![allow(dead_code, unused_imports)]
 use assert_cmd::Command;
+use std::path::{Path, PathBuf};
 
 pub use distributed_verification::SerFunction;
-#[allow(unused_imports)] // seems a bug in clippy: RA only recognizes the usage in compare.rs
 pub use expect_test::{expect, expect_file};
-#[allow(unused_imports)] // seems a bug in clippy
 pub use eyre::Result;
-#[allow(unused_imports)] // seems a bug in clippy
 pub use pretty_assertions::assert_eq;
 
 pub fn cmd(args: &[&str]) -> String {
@@ -19,4 +18,24 @@ pub fn cmd(args: &[&str]) -> String {
     );
 
     String::from_utf8(output.stdout).unwrap()
+}
+
+/// Get rs files under a dir.
+pub fn get_proofs(dir: &str) -> Result<Vec<PathBuf>> {
+    let mut proofs = vec![];
+    for entry in std::fs::read_dir(dir)? {
+        let entry = entry?;
+        let path = entry.path();
+        if path.is_file()
+            && path.extension().and_then(|ext| Some(ext.to_str()? == "rs")).unwrap_or(false)
+        {
+            proofs.push(path);
+        }
+    }
+    proofs.sort();
+    Ok(proofs)
+}
+
+pub fn file_stem(path: &Path) -> &str {
+    path.file_stem().and_then(|f| f.to_str()).unwrap()
 }

@@ -4,21 +4,6 @@ use std::path::{Path, PathBuf};
 mod utils;
 use utils::{assert_eq, *};
 
-fn get_proofs(dir: &str) -> Result<Vec<PathBuf>> {
-    let mut proofs = vec![];
-    for entry in std::fs::read_dir(dir)? {
-        let entry = entry?;
-        let path = entry.path();
-        if path.is_file()
-            && path.extension().and_then(|ext| Some(ext.to_str()? == "rs")).unwrap_or(false)
-        {
-            proofs.push(path);
-        }
-    }
-    proofs.sort();
-    Ok(proofs)
-}
-
 fn assert_unique_hash(proofs: &[PathBuf], v_json: &[Vec<SerFunction>]) {
     let mut map = IndexMap::<&str, Vec<(&Path, &str)>>::new();
     for (v, proof) in v_json.iter().zip(proofs) {
@@ -84,7 +69,7 @@ fn test_proofs() -> Result<()> {
     let mut v_json = Vec::<Vec<SerFunction>>::with_capacity(proofs.len());
     let mut v_macro = vec![];
     for (idx, path) in proofs.iter().enumerate() {
-        let file_stem = path.file_stem().and_then(|f| f.to_str()).unwrap();
+        let file_stem = file_stem(path);
         let text = cmd(&[&format!("tests/proofs/{file_stem}.rs")]);
         expect_file![format!("./snapshots/{file_stem}.json")].assert_eq(&text);
         v_json.push(serde_json::from_str(&text).unwrap());

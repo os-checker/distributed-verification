@@ -1,0 +1,18 @@
+KaniList {
+    kani_version: "0.60.0",
+    file_version: "0.1",
+    standard_harnesses: {
+        "tests/proofs/gen_proofs_by_nested_macros.rs": {
+            "verify::proof1",
+            "verify::proof2",
+            "verify::proof3",
+        },
+    },
+    contract_harnesses: {},
+    contracts: {},
+    totals: Total {
+        standard_harnesses: 3,
+        contract_harnesses: 0,
+        functions_under_contract: 0,
+    },
+}

@@ -1,4 +1,7 @@
 /target
 
+# kani list
+kani-list.json
+
 # ignore kani folder for grep or files findings
 # kani
