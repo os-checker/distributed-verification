@@ -1,4 +1,4 @@
-use distributed_verification::KaniList;
+use distributed_verification::{KaniList, Kind};
 use std::{collections::HashMap, process::Command};
 
 mod utils;
@@ -58,15 +58,15 @@ fn merge(list: &KaniList, v_ser_fun: &[SerFunction]) {
     let map: HashMap<_, _> = v_ser_fun
         .iter()
         .enumerate()
-        .map(|(idx, f)| ((&*f.func.file, &*f.func.name), idx))
+        .map(|(idx, f)| ((&*f.func.file, &*f.func.name), (idx, f.kind)))
         .collect();
 
     // check all standard proofs are in distributed-verification json
     for (path, proofs) in &list.standard_harnesses {
         for proof in proofs {
             let key = (path.as_str(), proof.as_str());
-            let idx = map.get(&key).unwrap();
-            dbg!(idx);
+            let val = map.get(&key).unwrap();
+            dbg!(val);
         }
     }
 
@@ -79,15 +79,12 @@ fn merge(list: &KaniList, v_ser_fun: &[SerFunction]) {
         }
     }
 
-    // douoble check
-    for &(path, proof) in map.keys() {
-        // FIXME: split standard and contract proofs if kind supported
-        match list.standard_harnesses.get(path) {
-            Some(set) => _ = set.get(proof).unwrap(),
-            None => match list.contract_harnesses.get(path) {
-                Some(set) => _ = set.get(proof).unwrap(),
-                None => panic!("{path} {proof} does not exist"),
-            },
+    // double check
+    for (&(path, proof), &(_, kind)) in &map {
+        let harnesses = match kind {
+            Kind::Standard => &list.standard_harnesses[path],
+            Kind::Contract => &list.contract_harnesses[path],
         };
+        _ = harnesses.get(proof).unwrap();
     }
 }
