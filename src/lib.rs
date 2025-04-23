@@ -74,8 +74,8 @@ pub struct SourceCode {
 
 #[derive(Debug, Default, Serialize, Deserialize, Clone)]
 pub struct MacroBacktrace {
-    callsite: String,
-    defsite: String,
+    pub callsite: String,
+    pub defsite: String,
 }
 
 /// A local path to kani's artifacts.

@@ -106,3 +106,58 @@ impl Kind {
         panic!("{attrs:?} doesn't contain a proof kind.")
     }
 }
+
+/// Convertion from lib's SerFunction into the counterpart in main.rs
+mod conversion {
+    use super::*;
+    use crate::functions::utils::{MacroBacktrace, vec_convertion};
+    use distributed_verification as lib;
+
+    impl From<SerFunction> for lib::SerFunction {
+        fn from(value: SerFunction) -> Self {
+            let SerFunction { hash, def_id, attrs, kind, func, callees_len, callees } = value;
+            let func = func.into();
+            let kind = kind.into();
+            let callees = vec_convertion(callees);
+            Self { hash, def_id, attrs, kind, func, callees_len, callees }
+        }
+    }
+
+    impl From<Kind> for lib::Kind {
+        fn from(value: Kind) -> Self {
+            match value {
+                Kind::Standard => Self::Standard,
+                Kind::Contract => Self::Contract,
+            }
+        }
+    }
+
+    impl From<Callee> for lib::Callee {
+        fn from(Callee { def_id, func }: Callee) -> Self {
+            let func = func.into();
+            Self { def_id, func }
+        }
+    }
+
+    impl From<SourceCode> for lib::SourceCode {
+        fn from(value: SourceCode) -> Self {
+            let SourceCode {
+                name,
+                mangled_name,
+                kind,
+                file,
+                src,
+                macro_backtrace_len,
+                macro_backtrace,
+            } = value;
+            let macro_backtrace = vec_convertion(macro_backtrace);
+            Self { name, mangled_name, kind, file, src, macro_backtrace_len, macro_backtrace }
+        }
+    }
+
+    impl From<MacroBacktrace> for lib::MacroBacktrace {
+        fn from(MacroBacktrace { callsite, defsite }: MacroBacktrace) -> Self {
+            Self { callsite, defsite }
+        }
+    }
+}

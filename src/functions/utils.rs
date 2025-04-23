@@ -61,8 +61,8 @@ impl SourceCode {
 
 #[derive(Clone, Debug, Serialize, PartialEq, Eq, PartialOrd, Ord, Default)]
 pub struct MacroBacktrace {
-    callsite: String,
-    defsite: String,
+    pub callsite: String,
+    pub defsite: String,
 }
 
 fn span_to_source(span: Span, src_map: &SourceMap) -> String {
@@ -122,4 +122,8 @@ pub fn source_code_with(
     let mangled_name = inst.mangled_name();
     let kind = format!("{:?}", inst.kind);
     SourceCode { name, mangled_name, kind, file, src, macro_backtrace_len, macro_backtrace }
+}
+
+pub fn vec_convertion<U, T: From<U>>(vec: Vec<U>) -> Vec<T> {
+    vec.into_iter().map(T::from).collect()
 }
