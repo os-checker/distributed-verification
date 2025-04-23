@@ -1,8 +1,7 @@
-use distributed_verification::{KaniList, Kind};
-use std::{collections::HashMap, process::Command};
+use distributed_verification::kani_list::{check_proofs, get_kani_list};
 
 mod utils;
-use utils::{assert_eq, *};
+use utils::*;
 
 #[test]
 fn validate_kani_list_json() -> Result<()> {
@@ -21,70 +20,8 @@ fn validate_kani_list_json() -> Result<()> {
         // run `distributed_verification`
         let text = cmd(&[path]);
         let v_ser_function: Vec<SerFunction> = serde_json::from_str(&text).unwrap();
-        merge(&kani_list, &v_ser_function);
+        check_proofs(&kani_list, &v_ser_function);
     }
 
     Ok(())
-}
-
-fn get_kani_list(file: &str) -> KaniList {
-    // kani list -Zlist -Zfunction-contracts --format=json file.rs
-    let args = ["list", "-Zlist", "-Zfunction-contracts", "--format=json", file];
-    let output = Command::new("kani").args(args).output().unwrap();
-    assert!(
-        output.status.success(),
-        "Failed to run `kani list -Zlist -Zfunction-contracts --format=json {file}`:\n{}",
-        std::str::from_utf8(&output.stderr).unwrap()
-    );
-
-    // read kani-list.json
-    let file_json = std::fs::File::open("kani-list.json").unwrap();
-    serde_json::from_reader(file_json).unwrap()
-}
-
-fn merge(list: &KaniList, v_ser_fun: &[SerFunction]) {
-    // sanity check
-    let totals = &list.totals;
-    assert_eq!(v_ser_fun.len(), totals.standard_harnesses + totals.contract_harnesses);
-    assert_eq!(
-        list.standard_harnesses.values().map(|s| s.len()).sum::<usize>(),
-        totals.standard_harnesses
-    );
-    assert_eq!(
-        list.contract_harnesses.values().map(|s| s.len()).sum::<usize>(),
-        totals.contract_harnesses
-    );
-
-    let map: HashMap<_, _> = v_ser_fun
-        .iter()
-        .enumerate()
-        .map(|(idx, f)| ((&*f.func.file, &*f.func.name), (idx, f.kind)))
-        .collect();
-
-    // check all standard proofs are in distributed-verification json
-    for (path, proofs) in &list.standard_harnesses {
-        for proof in proofs {
-            let key = (path.as_str(), proof.as_str());
-            let val = map.get(&key).unwrap();
-            dbg!(val);
-        }
-    }
-
-    // check all contract proofs are in distributed-verification json
-    for (path, proofs) in &list.contract_harnesses {
-        for proof in proofs {
-            let key = (path.as_str(), proof.as_str());
-            let idx = map.get(&key).unwrap();
-            dbg!(idx);
-        }
-    }
-
-    // double check
-    for (&(path, proof), &(_, kind)) in &map {
-        let harnesses = match kind {
-            Kind::Standard => &list.standard_harnesses[path],
-            Kind::Contract => &list.contract_harnesses[path],
-        };
-        _ = harnesses.get(proof).unwrap();
-    }
 }

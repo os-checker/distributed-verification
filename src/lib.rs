@@ -1,5 +1,6 @@
-use indexmap::{IndexMap, IndexSet};
 use serde::{Deserialize, Serialize};
+
+pub mod kani_list;
 
 /// A kani proof with its file source, attributes, and raw function content.
 #[derive(Debug, Default, Serialize, Deserialize, Clone)]
@@ -95,31 +96,4 @@ pub fn kani_path() -> String {
     };
     assert!(std::fs::exists(&path).unwrap());
     path
-}
-
-/// Output of `kani list` command.
-#[derive(Debug, Serialize, Deserialize, Clone)]
-#[serde(rename_all = "kebab-case")]
-pub struct KaniList {
-    pub kani_version: String,
-    pub file_version: String,
-    pub standard_harnesses: IndexMap<String, IndexSet<String>>,
-    pub contract_harnesses: IndexMap<String, IndexSet<String>>,
-    pub contracts: IndexSet<ContractedFunction>,
-    pub totals: Total,
-}
-
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ContractedFunction {
-    pub function: String,
-    pub file: String,
-    pub harnesses: Vec<String>,
-}
-
-#[derive(Debug, Serialize, Deserialize, Clone)]
-#[serde(rename_all = "kebab-case")]
-pub struct Total {
-    pub standard_harnesses: usize,
-    pub contract_harnesses: usize,
-    pub functions_under_contract: usize,
 }
