@@ -41,6 +41,7 @@ fn extract_macros_items(json: &[SerFunction]) -> Vec<SerFunction> {
                 hash: j.hash.clone(),
                 def_id: j.def_id.clone(),
                 attrs: j.attrs.clone(),
+                kind: j.kind,
                 func: j.func.clone(),
                 callees_len: callees.len(),
                 callees,

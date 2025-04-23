@@ -1,7 +1,7 @@
 use indexmap::{IndexMap, IndexSet};
 use serde::{Deserialize, Serialize};
 
-/// A Rust funtion with its file source, attributes, and raw function content.
+/// A kani proof with its file source, attributes, and raw function content.
 #[derive(Debug, Default, Serialize, Deserialize, Clone)]
 pub struct SerFunction {
     pub hash: String,
@@ -10,12 +10,24 @@ pub struct SerFunction {
     /// Attributes are attached the function, but it seems that attributes
     /// and function must be separated to query.
     pub attrs: Vec<String>,
+    /// Proof kind
+    pub kind: Kind,
     /// Raw function string, including name, signature, and body.
     pub func: SourceCode,
     /// Count of callees.
     pub callees_len: usize,
     /// Recursive function calls inside the body.
     pub callees: Vec<Callee>,
+}
+
+/// kani proof kind
+#[derive(Debug, Default, Serialize, Deserialize, Clone, Copy)]
+pub enum Kind {
+    /// `#[kani::proof]` (actually `kanitool::proof`)
+    #[default]
+    Standard,
+    /// `#[kani::proof_for_contract]` (actually `kanitool::proof_for_contract`)
+    Contract,
 }
 
 #[derive(Debug, Default, Serialize, Deserialize, Clone)]
