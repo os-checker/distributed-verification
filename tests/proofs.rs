@@ -70,6 +70,7 @@ fn test_proofs() -> Result<()> {
     let mut v_macro = vec![];
     for (idx, path) in proofs.iter().enumerate() {
         let file_stem = file_stem(path);
+        // FIXME: no need to construct path
         let text = cmd(&[&format!("tests/proofs/{file_stem}.rs")]);
         expect_file![format!("./snapshots/{file_stem}.json")].assert_eq(&text);
         v_json.push(serde_json::from_str(&text).unwrap());
@@ -110,6 +111,7 @@ fn test_compare_unique_hash() -> Result<()> {
     let mut v_json = Vec::<Vec<SerFunction>>::with_capacity(proofs.len());
     for path in &proofs {
         let file_stem = path.file_stem().and_then(|f| f.to_str()).unwrap();
+        // FIXME: no need to construct path
         let text = cmd(&[&format!("tests/compare/{file_stem}.rs")]);
         // NOTE: don't write text to json file, since compare.rs write it in a different way
         v_json.push(serde_json::from_str(&text).unwrap());
