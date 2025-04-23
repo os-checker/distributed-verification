@@ -5,6 +5,7 @@
     "attrs": [
       "#[kanitool::proof]"
     ],
+    "kind": "Standard",
     "func": {
       "name": "adhoc::callee_defined_in_proof",
       "mangled_name": "_ZN6ad_hoc5adhoc23callee_defined_in_proof17h9b15884d9d9d9404E",
@@ -57,6 +58,7 @@
     "attrs": [
       "#[kanitool::proof]"
     ],
+    "kind": "Standard",
     "func": {
       "name": "adhoc::closure_in_proof",
       "mangled_name": "_ZN6ad_hoc5adhoc16closure_in_proof17h4b84872472ae10c5E",
@@ -109,6 +111,7 @@
     "attrs": [
       "#[kanitool::proof]"
     ],
+    "kind": "Standard",
     "func": {
       "name": "adhoc::proof_in_fn_item::proof",
       "mangled_name": "_ZN6ad_hoc5adhoc16proof_in_fn_item5proof17h897129ce606edafeE",

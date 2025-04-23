@@ -5,6 +5,7 @@
     "attrs": [
       "#[kanitool::proof]"
     ],
+    "kind": "Standard",
     "func": {
       "name": "verify::proof1",
       "mangled_name": "_ZN27gen_proofs_by_nested_macros6verify6proof117h4d153120b87a21d4E",

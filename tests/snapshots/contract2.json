@@ -5,6 +5,7 @@
     "attrs": [
       "#[kanitool::proof]"
     ],
+    "kind": "Standard",
     "func": {
       "name": "verify::f",
       "mangled_name": "_ZN8contract6verify1f17hbb7ab8fa785d99dfE",

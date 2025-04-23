@@ -5,6 +5,7 @@
     "attrs": [
       "#[kanitool::proof_for_contract = \"contract1\"]"
     ],
+    "kind": "Contract",
     "func": {
       "name": "verify::proof1",
       "mangled_name": "_ZN23gen_contracts_by_macros6verify6proof117h9828d0e50eee99deE",
@@ -151,6 +152,7 @@
     "attrs": [
       "#[kanitool::proof_for_contract = \"contract2\"]"
     ],
+    "kind": "Contract",
     "func": {
       "name": "verify::proof2",
       "mangled_name": "_ZN23gen_contracts_by_macros6verify6proof217h2843955b7716bef5E",
@@ -297,6 +299,7 @@
     "attrs": [
       "#[kanitool::proof_for_contract = \"contract3\"]"
     ],
+    "kind": "Contract",
     "func": {
       "name": "verify::proof3",
       "mangled_name": "_ZN23gen_contracts_by_macros6verify6proof317h2d7e1f5e5fbd0d23E",

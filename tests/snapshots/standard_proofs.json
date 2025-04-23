@@ -5,6 +5,7 @@
     "attrs": [
       "#[kanitool::proof]"
     ],
+    "kind": "Standard",
     "func": {
       "name": "verify::recursive_callees",
       "mangled_name": "_ZN15standard_proofs6verify17recursive_callees17h33367a780be3c5aeE",
@@ -1470,6 +1471,7 @@
     "attrs": [
       "#[kanitool::proof]"
     ],
+    "kind": "Standard",
     "func": {
       "name": "verify::standard_proof",
       "mangled_name": "_ZN15standard_proofs6verify14standard_proof17hd9befd5acb4cad0dE",
@@ -1619,6 +1621,7 @@
     "attrs": [
       "#[kanitool::proof]"
     ],
+    "kind": "Standard",
     "func": {
       "name": "verify::standard_proof_empty",
       "mangled_name": "_ZN15standard_proofs6verify20standard_proof_empty17h813b795817f2ca59E",

@@ -5,6 +5,7 @@
     "attrs": [
       "#[kanitool::proof]"
     ],
+    "kind": "Standard",
     "func": {
       "name": "verify::proof1",
       "mangled_name": "_ZN20gen_proofs_by_macros6verify6proof117hc4255bc4f41f2540E",
@@ -159,6 +160,7 @@
     "attrs": [
       "#[kanitool::proof]"
     ],
+    "kind": "Standard",
     "func": {
       "name": "verify::proof2",
       "mangled_name": "_ZN20gen_proofs_by_macros6verify6proof217h7837bdff9d68a0f1E",
@@ -313,6 +315,7 @@
     "attrs": [
       "#[kanitool::proof]"
     ],
+    "kind": "Standard",
     "func": {
       "name": "verify::proof3",
       "mangled_name": "_ZN20gen_proofs_by_macros6verify6proof317h628c936d75d70951E",
