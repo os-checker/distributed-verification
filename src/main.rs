@@ -14,6 +14,7 @@ extern crate stable_mir;
 
 use distributed_verification::kani_path;
 use functions::{clear_rustc_ctx, set_rustc_ctx};
+use rustc_middle::ty::TyCtxt;
 // FIXME: this is a bug for rustc_smir, because rustc_interface is used by
 // run_with_tcx! without being imported inside.
 use rustc_smir::rustc_internal;
@@ -78,10 +79,18 @@ fn main() {
         };
 
         res().unwrap();
+        check_kani_list(output, tcx);
 
         // Stop emitting artifact for the source code being compiled.
         ControlFlow::<(), ()>::Break(())
     });
     // rustc_smir uses `Err(CompilerError::Interrupted)` to represent ControlFlow::Break.
     assert!(res == Err(stable_mir::CompilerError::Interrupted(())), "Unexpected {res:?}");
+}
+
+fn check_kani_list(output: Vec<functions::SerFunction>, tcx: TyCtxt) {
+    let output: Vec<distributed_verification::SerFunction> = functions::vec_convertion(output);
+    let crate_file = tcx.sess.local_crate_source_file().expect("No real crate root file.");
+    let crate_file = crate_file.local_path().unwrap().to_str().unwrap();
+    distributed_verification::kani_list::check(crate_file, &output);
 }

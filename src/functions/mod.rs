@@ -11,7 +11,9 @@ mod cache;
 pub use cache::{clear_rustc_ctx, set_rustc_ctx};
 
 mod kani;
+
 mod utils;
+pub use utils::vec_convertion;
 
 mod serialization;
 pub use serialization::SerFunction;

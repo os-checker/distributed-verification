@@ -5,6 +5,7 @@
     "attrs": [
       "#[kanitool::proof]"
     ],
+    "kind": "Standard",
     "func": {
       "name": "verify::f",
       "mangled_name": "_ZN5proof6verify1f17h452f3f200e19af70E",
@@ -45,6 +46,7 @@
     "attrs": [
       "#[kanitool::proof]"
     ],
+    "kind": "Standard",
     "func": {
       "name": "verify::g",
       "mangled_name": "_ZN5proof6verify1g17h5fcfac3fd6095cd2E",

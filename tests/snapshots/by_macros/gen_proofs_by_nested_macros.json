@@ -5,6 +5,7 @@
     "attrs": [
       "#[kanitool::proof]"
     ],
+    "kind": "Standard",
     "func": {
       "name": "verify::proof1",
       "mangled_name": "_ZN27gen_proofs_by_nested_macros6verify6proof117h4d153120b87a21d4E",
@@ -32,6 +33,7 @@
     "attrs": [
       "#[kanitool::proof]"
     ],
+    "kind": "Standard",
     "func": {
       "name": "verify::proof2",
       "mangled_name": "_ZN27gen_proofs_by_nested_macros6verify6proof217hea16056619071673E",
@@ -59,6 +61,7 @@
     "attrs": [
       "#[kanitool::proof]"
     ],
+    "kind": "Standard",
     "func": {
       "name": "verify::proof3",
       "mangled_name": "_ZN27gen_proofs_by_nested_macros6verify6proof317h4f8f69e505b12d59E",

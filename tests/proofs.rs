@@ -41,6 +41,7 @@ fn extract_macros_items(json: &[SerFunction]) -> Vec<SerFunction> {
                 hash: j.hash.clone(),
                 def_id: j.def_id.clone(),
                 attrs: j.attrs.clone(),
+                kind: j.kind,
                 func: j.func.clone(),
                 callees_len: callees.len(),
                 callees,
@@ -70,7 +71,7 @@ fn test_proofs() -> Result<()> {
     let mut v_macro = vec![];
     for (idx, path) in proofs.iter().enumerate() {
         let file_stem = file_stem(path);
-        let text = cmd(&[&format!("tests/proofs/{file_stem}.rs")]);
+        let text = cmd(&[path.to_str().unwrap()]);
         expect_file![format!("./snapshots/{file_stem}.json")].assert_eq(&text);
         v_json.push(serde_json::from_str(&text).unwrap());
         // collect macro generated proofs
@@ -109,8 +110,8 @@ fn test_compare_unique_hash() -> Result<()> {
 
     let mut v_json = Vec::<Vec<SerFunction>>::with_capacity(proofs.len());
     for path in &proofs {
-        let file_stem = path.file_stem().and_then(|f| f.to_str()).unwrap();
-        let text = cmd(&[&format!("tests/compare/{file_stem}.rs")]);
+        // let file_stem = path.file_stem().and_then(|f| f.to_str()).unwrap();
+        let text = cmd(&[path.to_str().unwrap()]);
         // NOTE: don't write text to json file, since compare.rs write it in a different way
         v_json.push(serde_json::from_str(&text).unwrap());
     }
