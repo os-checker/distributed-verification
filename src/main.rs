@@ -14,7 +14,6 @@ extern crate stable_mir;
 
 use functions::{clear_rustc_ctx, set_rustc_ctx};
 use rustc_middle::ty::TyCtxt;
-use stable_mir::CrateDef;
 
 mod cli;
 mod functions;
@@ -27,7 +26,7 @@ fn main() {
     logger::init();
     let run = cli::parse();
 
-    let res = run_with_tcx!(run.args, |tcx| {
+    let res = run_with_tcx!(run.rustc_args, |tcx| {
         use eyre::{Context, Ok};
 
         // let crates = stable_mir::external_crates();

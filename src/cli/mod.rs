@@ -22,7 +22,7 @@ struct Args {
     #[arg(long, default_value_t = false)]
     no_kani_args: bool,
 
-    /// Args for rustc. `distributed_verification -- [rustc_args]`
+    /// Args for rustc. `distributed-verification -- [rustc_args]`
     /// No need to pass rustc as the first argument.
     rustc_args: Vec<String>,
 }
