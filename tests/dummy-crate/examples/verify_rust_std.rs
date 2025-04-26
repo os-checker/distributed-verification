@@ -1,5 +1,17 @@
 //! `VERIFY_RUST_STD_LIBRARY=path/to/verify-rust-std/library` and
 //! `KANI_DIR=path/to/kani` should be set beforehand.
+#![feature(rustc_private)]
+
+extern crate rustc_driver;
+extern crate rustc_interface;
+extern crate rustc_middle;
+
+#[macro_use]
+extern crate rustc_smir;
+extern crate stable_mir;
+
+use stable_mir::CrateDef;
+
 use std::{
     env::var,
     path::PathBuf,
@@ -21,14 +33,14 @@ fn main() {
         run("rustc", &["-vV".to_owned()], &[]);
     } else if std::env::var("WRAPPER").as_deref() == Ok("1") {
         // then cargo invokes `rustc - --crate-name ___ --print=file-names`
-        let mut rustc_args = args.split_off(1);
-        drop(args);
-        if rustc_args[0] == "-" {
+        if args[1] == "-" {
             // `rustc -` is a substitute file name from stdin
             // see https://rust-lang.zulipchat.com/#narrow/channel/182449-t-compiler.2Fhelp/topic/.E2.9C.94.20What.20does.20.60rustc.20-.60do.3F/with/514494493
-            rustc_args[0] = "src/lib.rs".to_owned();
+            args[1] = "src/lib.rs".to_owned();
         }
-        if rustc_args.iter().any(|arg| arg == "core") {
+
+        let rustc_args = &args[1..];
+        if args.iter().any(|arg| arg == "core") {
             println!("[build core] rustc_args={rustc_args:?}");
             let writer = std::fs::File::create(JSON_FILE).unwrap();
             let json = serde_json::json!({
@@ -38,8 +50,11 @@ fn main() {
             serde_json::to_writer_pretty(writer, &json).unwrap();
             let path = PathBuf::from(JSON_FILE).canonicalize().unwrap();
             println!("{path:?} is written.");
+            build_core(args);
+        } else {
+            // build non-core crates
+            run("rustc", rustc_args, &[]);
         }
-        run("rustc", &rustc_args, &[]);
     } else {
         run(
             "cargo",
@@ -52,7 +67,8 @@ fn main() {
 fn run(cmd: &str, args: &[String], vars: &[(&str, &str)]) {
     let library = var("VERIFY_RUST_STD_LIBRARY").unwrap();
     // CARGO_ENCODED_RUSTFLAGS takes a string that separte arguments by 0x1f
-    let rustflags = rustc_flags().join("\u{1f}");
+    let rustc_flags = rustc_flags();
+    let rustflags = rustc_flags.join("\u{1f}");
     let status = Command::new(cmd)
         .args(args)
         .env("__CARGO_TESTS_ONLY_SRC_ROOT", library)
@@ -65,7 +81,7 @@ fn run(cmd: &str, args: &[String], vars: &[(&str, &str)]) {
         .wait()
         .unwrap();
     if !status.success() {
-        eprintln!("[error] {cmd}: args={args:?} vars={vars:?}");
+        eprintln!("[error] {cmd}: args={args:?} vars={vars:?} rustc_flags={rustc_flags:?}");
     }
 }
 
@@ -115,4 +131,24 @@ fn rustc_flags() -> Vec<String> {
 #[test]
 fn test_rustc_flags() {
     dbg!(rustc_flags());
+}
+
+fn build_core(args: Vec<String>) {
+    rustc_smir::run_with_tcx!(args, |_tcx| {
+        let crates = stable_mir::external_crates();
+        dbg!(crates.len(), crates);
+        for krate in stable_mir::find_crates("core") {
+            let fn_defs = krate.fn_defs();
+            dbg!(fn_defs.len());
+            for fn_def in fn_defs {
+                let name = fn_def.name();
+                let attrs = fn_def.all_tool_attrs();
+                // let attrs = fn_def.tool_attrs(&["kanitool".into(), "proof".into()]);
+                // if attrs.is_empty() { continue; }
+                let attrs = attrs.iter().map(|attr| attr.as_str()).collect::<Vec<_>>().join(" ");
+                println!("{name}: {attrs:?}");
+            }
+        }
+        ControlFlow::<(), ()>::Continue(())
+    });
 }
