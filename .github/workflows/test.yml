@@ -49,6 +49,7 @@ jobs:
         working-directory: tests/dummy-crate
         env:
           COMMIT: 5cf80a84afdeceec0d85e790a5cc585ff2e513ed
+          KANI_DIR: ${{ github.workspace }}/kani/target/kani
           VERIFY_RUST_STD_LIBRARY: ${{ github.workspace }}/tests/dummy-crate/verify-rust-std/library
         run: |
           git clone https://github.com/model-checking/verify-rust-std.git --recursive

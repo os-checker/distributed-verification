@@ -6,10 +6,14 @@ use std::{
     process::{Command, Stdio},
 };
 
+const RUSTC: &str = env!("CARGO_CRATE_NAME");
+
 fn main() {
+    let rustc_wrapper = &*format!("target/debug/examples/{RUSTC}");
+    // dbg!(RUSTC, rustc_wrapper);
+
     let mut args = std::env::args().collect::<Vec<_>>();
     rustc_flags();
-    // dbg!(&args);
 
     if args.len() == 2 && args[1].as_str() == "-vV" {
         // cargo invokes `rustc -vV` first
@@ -31,7 +35,7 @@ fn main() {
         run(
             "cargo",
             &["build", "-Zbuild-std=core"].map(String::from),
-            &[("RUSTC", "tmp"), ("WRAPPER", "1")],
+            &[("RUSTC", rustc_wrapper), ("WRAPPER", "1")],
         );
     }
 }
@@ -91,7 +95,8 @@ fn rustc_flags() -> Vec<String> {
     // inject kani_core dependency to recognize kani module in core
     let kani_dir = var("KANI_DIR").unwrap();
     // -Lpath must be an absolute path
-    let kani_lib = PathBuf::from(kani_dir).join("no_core").join("lib").canonicalize().unwrap();
+    let kani_lib = PathBuf::from(kani_dir).join("no_core").join("lib");
+    let kani_lib = kani_lib.canonicalize().unwrap_or_else(|err| panic!("{kani_lib:?}: {err}"));
     assert!(std::fs::exists(&kani_lib).unwrap());
     let kani_core = ["-L", kani_lib.to_str().unwrap(), "--extern=kani_core"];
 
