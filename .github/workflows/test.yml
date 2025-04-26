@@ -27,3 +27,17 @@ jobs:
 
       - name: Run tests
         run: cargo test -- --nocapture
+
+  verify-rust-std:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify Rust Std
+        working-directory: tests/dummy-crate
+        env:
+          COMMIT: 5cf80a84afdeceec0d85e790a5cc585ff2e513ed
+          VERIFY_RUST_STD_LIBRARY: ${{ github.workspace }}/tests/dummy-crate/verify-rust-std/library
+        run: |
+          git clone https://github.com/model-checking/verify-rust-std.git --recursive
+          cd verify-rust-std && git checkout 5cf80a84afdeceec0d85e790a5cc585ff2e513ed && cd ..
+          ls -alh ${{ env.VERIFY_RUST_STD_LIBRARY }}
+          cargo r --example verify_rust_std
