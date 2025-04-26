@@ -67,7 +67,10 @@ fn main() {
         };
 
         res().unwrap();
-        check_kani_list(output, tcx);
+
+        if run.check_kani_list {
+            check_kani_list(output, tcx);
+        }
 
         // Stop emitting artifact for the source code being compiled.
         ControlFlow::<(), ()>::Break(())

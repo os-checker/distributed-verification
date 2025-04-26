@@ -22,6 +22,11 @@ struct Args {
     #[arg(long, default_value_t = false)]
     no_kani_args: bool,
 
+    /// Run `kani list` after the analysis, and compare proofs to ensure
+    /// analyzed proofs are identical to ones from kani list.
+    #[arg(long, default_value_t = false)]
+    check_kani_list: bool,
+
     /// Args for rustc. `distributed-verification -- [rustc_args]`
     /// No need to pass rustc as the first argument.
     rustc_args: Vec<String>,
@@ -59,11 +64,12 @@ impl Args {
         };
         args.extend(self.rustc_args);
 
-        Run { json: self.json, rustc_args: args }
+        Run { json: self.json, check_kani_list: self.check_kani_list, rustc_args: args }
     }
 }
 
 pub struct Run {
     pub json: Option<String>,
+    pub check_kani_list: bool,
     pub rustc_args: Vec<String>,
 }
