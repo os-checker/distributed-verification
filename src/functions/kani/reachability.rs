@@ -199,7 +199,7 @@ impl<'tcx> MonoItemsCollector<'tcx> {
     /// Visit a function and collect all mono-items reachable from its instructions.
     fn visit_fn(&mut self, instance: Instance) -> Vec<CollectedItem> {
         let _guard = debug_span!("visit_fn", function=?instance).entered();
-        let body = instance.body().unwrap();
+        let Some(body) = instance.body() else { return Vec::new() };
         let mut collector =
             MonoItemsFnCollector { tcx: self.tcx, collected: FxHashSet::default(), body: &body };
         collector.visit_body(&body);
@@ -422,7 +422,9 @@ impl MirVisitor for MonoItemsFnCollector<'_, '_> {
         let allocation = match constant.const_.kind() {
             ConstantKind::Allocated(allocation) => allocation,
             ConstantKind::Unevaluated(_) => {
-                unreachable!("Instance with polymorphic constant: `{constant:?}`")
+                // See: https://github.com/os-checker/distributed-verification/issues/55
+                // unreachable!("Instance with polymorphic constant: `{constant:?}`")
+                return;
             }
             ConstantKind::Param(_) => unreachable!("Unexpected parameter constant: {constant:?}"),
             ConstantKind::ZeroSized => {
