@@ -1,6 +1,6 @@
 [
   {
-    "hash": "1399750479570041979215775816393145646123",
+    "hash": "231371728546000426415569688603538432620",
     "def_id": "DefId { id: 0, name: \"adhoc::callee_defined_in_proof\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -8,7 +8,7 @@
     "kind": "Standard",
     "func": {
       "name": "adhoc::callee_defined_in_proof",
-      "mangled_name": "_ZN6ad_hoc5adhoc23callee_defined_in_proof17h9b15884d9d9d9404E",
+      "mangled_name": "_ZN6ad_hoc5adhoc23callee_defined_in_proof17h04faf672d1be046dE",
       "kind": "Item",
       "file": "tests/proofs/ad_hoc.rs",
       "src": "fn callee_defined_in_proof() {\n        fn f() -> u8 {\n            1\n        }\n        assert!(f() == 1);\n    }",
@@ -21,7 +21,7 @@
         "def_id": "DefId { id: 1, name: \"adhoc::callee_defined_in_proof::f\" }",
         "func": {
           "name": "adhoc::callee_defined_in_proof::f",
-          "mangled_name": "_ZN6ad_hoc5adhoc23callee_defined_in_proof1f17h0abef16a51e1e181E",
+          "mangled_name": "_ZN6ad_hoc5adhoc23callee_defined_in_proof1f17hd15f7063bd2fbd85E",
           "kind": "Item",
           "file": "tests/proofs/ad_hoc.rs",
           "src": "fn f() -> u8 {\n            1\n        }",
@@ -33,7 +33,7 @@
         "def_id": "DefId { id: 6, name: \"kani::assert\" }",
         "func": {
           "name": "kani::assert",
-          "mangled_name": "_ZN4kani6assert17hcc89e8c2e0f13823E",
+          "mangled_name": "_ZN4kani6assert17h914a947307b610ddE",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
@@ -53,7 +53,7 @@
     ]
   },
   {
-    "hash": "865811375693261858618344779187018167127",
+    "hash": "61932375823549408104071622445676960413",
     "def_id": "DefId { id: 2, name: \"adhoc::closure_in_proof\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -61,7 +61,7 @@
     "kind": "Standard",
     "func": {
       "name": "adhoc::closure_in_proof",
-      "mangled_name": "_ZN6ad_hoc5adhoc16closure_in_proof17h4b84872472ae10c5E",
+      "mangled_name": "_ZN6ad_hoc5adhoc16closure_in_proof17hc3a9b3580daf319eE",
       "kind": "Item",
       "file": "tests/proofs/ad_hoc.rs",
       "src": "fn closure_in_proof() {\n        let f = || 1;\n        assert!(f() == 1);\n    }",
@@ -74,7 +74,7 @@
         "def_id": "DefId { id: 3, name: \"adhoc::closure_in_proof::{closure#0}\" }",
         "func": {
           "name": "adhoc::closure_in_proof::{closure#0}",
-          "mangled_name": "_ZN6ad_hoc5adhoc16closure_in_proof28_$u7b$$u7b$closure$u7d$$u7d$17h92b80c5c3414e3eaE",
+          "mangled_name": "_ZN6ad_hoc5adhoc16closure_in_proof28_$u7b$$u7b$closure$u7d$$u7d$17h8e2b1954b6850f14E",
           "kind": "Item",
           "file": "tests/proofs/ad_hoc.rs",
           "src": "|| 1",
@@ -86,7 +86,7 @@
         "def_id": "DefId { id: 6, name: \"kani::assert\" }",
         "func": {
           "name": "kani::assert",
-          "mangled_name": "_ZN4kani6assert17hcc89e8c2e0f13823E",
+          "mangled_name": "_ZN4kani6assert17h914a947307b610ddE",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
@@ -106,7 +106,7 @@
     ]
   },
   {
-    "hash": "60735437944941787725246177079802085936",
+    "hash": "6925603377655101244643534194235942800",
     "def_id": "DefId { id: 5, name: \"adhoc::proof_in_fn_item::proof\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -114,7 +114,7 @@
     "kind": "Standard",
     "func": {
       "name": "adhoc::proof_in_fn_item::proof",
-      "mangled_name": "_ZN6ad_hoc5adhoc16proof_in_fn_item5proof17h897129ce606edafeE",
+      "mangled_name": "_ZN6ad_hoc5adhoc16proof_in_fn_item5proof17h81a8c21d61ba53baE",
       "kind": "Item",
       "file": "tests/proofs/ad_hoc.rs",
       "src": "fn proof() {\n            assert!(kani::any::<u8>() == 1);\n        }",
@@ -127,7 +127,7 @@
         "def_id": "DefId { id: 10, name: \"<u8 as kani::Arbitrary>::any\" }",
         "func": {
           "name": "<u8 as kani::Arbitrary>::any",
-          "mangled_name": "_ZN38_$LT$u8$u20$as$u20$kani..Arbitrary$GT$3any17hfd29445e7b2cdd95E",
+          "mangled_name": "_ZN38_$LT$u8$u20$as$u20$kani..Arbitrary$GT$3any17h3483b75e4834d09bE",
           "kind": "Item",
           "file": "kani/library/kani_core/src/arbitrary.rs",
           "src": "fn any() -> Self {\n                        // This size_of call does not use generic_const_exprs feature. It's inside a macro, and Self isn't generic.\n                        unsafe { crate::kani::any_raw_internal::<Self>() }\n                    }",
@@ -152,7 +152,7 @@
         "def_id": "DefId { id: 8, name: \"kani::any\" }",
         "func": {
           "name": "kani::any::<u8>",
-          "mangled_name": "_ZN4kani3any17hbb3849d6db385d2bE",
+          "mangled_name": "_ZN4kani3any17h7217be7c338580daE",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub fn any<T: Arbitrary>() -> T {\n            T::any()\n        }",
@@ -173,7 +173,7 @@
         "def_id": "DefId { id: 12, name: \"kani::any_raw\" }",
         "func": {
           "name": "kani::any_raw::<u8>",
-          "mangled_name": "_ZN4kani7any_raw17he1d5f207e37d9300E",
+          "mangled_name": "_ZN4kani7any_raw17h6f2c310bb965b927E",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "fn any_raw<T: Copy>() -> T {\n            kani_intrinsic()\n        }",
@@ -194,7 +194,7 @@
         "def_id": "DefId { id: 11, name: \"kani::any_raw_internal\" }",
         "func": {
           "name": "kani::any_raw_internal::<u8>",
-          "mangled_name": "_ZN4kani16any_raw_internal17h7b9f8f23c4240680E",
+          "mangled_name": "_ZN4kani16any_raw_internal17hb5d39ecee2d8e6baE",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "unsafe fn any_raw_internal<T: Copy>() -> T {\n            any_raw::<T>()\n        }",
@@ -215,7 +215,7 @@
         "def_id": "DefId { id: 6, name: \"kani::assert\" }",
         "func": {
           "name": "kani::assert",
-          "mangled_name": "_ZN4kani6assert17hcc89e8c2e0f13823E",
+          "mangled_name": "_ZN4kani6assert17h914a947307b610ddE",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
@@ -236,7 +236,7 @@
         "def_id": "DefId { id: 13, name: \"kani::kani_intrinsic\" }",
         "func": {
           "name": "kani::kani_intrinsic::<u8>",
-          "mangled_name": "_ZN4kani14kani_intrinsic17h5075915a9093bedeE",
+          "mangled_name": "_ZN4kani14kani_intrinsic17hf4854f9a2e67b614E",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "fn kani_intrinsic<T>() -> T {\n            #[allow(clippy::empty_loop)]\n            loop {}\n        }",
