@@ -15,9 +15,7 @@ extern crate stable_mir;
 use distributed_verification::kani_path;
 use functions::{clear_rustc_ctx, set_rustc_ctx};
 use rustc_middle::ty::TyCtxt;
-// FIXME: this is a bug for rustc_smir, because rustc_interface is used by
-// run_with_tcx! without being imported inside.
-use rustc_smir::rustc_internal;
+use stable_mir::CrateDef;
 
 mod cli;
 mod functions;
@@ -30,7 +28,7 @@ fn main() {
     logger::init();
     let cli = cli::parse();
     let kani_path = kani_path();
-    info!(kani_path);
+    info!(kani_path, ?cli);
     let mut args = Vec::from(
         [
             // the first argument to rustc is unimportant
@@ -57,6 +55,21 @@ fn main() {
 
     let res = run_with_tcx!(args, |tcx| {
         use eyre::{Context, Ok};
+
+        let crates = stable_mir::external_crates();
+        dbg!(crates.len(), crates);
+        for krate in stable_mir::find_crates("core") {
+            let fn_defs = krate.fn_defs();
+            dbg!(fn_defs.len());
+            for fn_def in fn_defs {
+                let name = fn_def.name();
+                let attrs = fn_def.all_tool_attrs();
+                // let attrs = fn_def.tool_attrs(&["kanitool".into(), "proof".into()]);
+                if attrs.is_empty() { continue; }
+                let attrs = attrs.iter().map(|attr| attr.as_str()).collect::<Vec<_>>().join(" ");
+                println!("{name}: {attrs:?}");
+            }
+        }
 
         set_rustc_ctx(tcx);
 
