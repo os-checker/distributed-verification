@@ -45,9 +45,13 @@ jobs:
       - name: Check kani folder
         run: kani --version
 
+      - name: Install distributed-verification
+        run: cargo install --path . --locked
+
       - name: Verify Rust Std
         working-directory: tests/dummy-crate
         env:
+          CORE_JSON: ${{ github.workspace }}/core.json
           COMMIT: 5cf80a84afdeceec0d85e790a5cc585ff2e513ed
           KANI_DIR: ${{ github.workspace }}/kani/target/kani
           VERIFY_RUST_STD_LIBRARY: ${{ github.workspace }}/tests/dummy-crate/verify-rust-std/library
@@ -56,3 +60,4 @@ jobs:
           cd verify-rust-std && git checkout 5cf80a84afdeceec0d85e790a5cc585ff2e513ed && cd ..
           ls -alh ${{ env.VERIFY_RUST_STD_LIBRARY }}
           cargo r --example verify_rust_std
+          cat ${{ env.CORE_JSON }}

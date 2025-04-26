@@ -52,7 +52,7 @@ fn main() {
             serde_json::to_writer_pretty(writer, &json).unwrap();
             let path = PathBuf::from(JSON_FILE).canonicalize().unwrap();
             println!("{path:?} is written.");
-            build_core(args);
+            build_core(args.split_off(1));
         } else {
             // build non-core crates
             run("rustc", rustc_args, &[]);
@@ -135,8 +135,21 @@ fn test_rustc_flags() {
     dbg!(rustc_flags());
 }
 
-#[allow(unused_must_use)]
 fn build_core(args: Vec<String>) {
+    const CORE_JSON: &str = "/home/zjp/rust/distributed-verification/core.json";
+    let mut new_args = Vec::with_capacity(args.len() + 2);
+    let core_json = var("CORE_JSON");
+    new_args.extend(
+        ["--no-kani-args", "--json", core_json.as_deref().unwrap_or(CORE_JSON), "--"]
+            .map(String::from),
+    );
+    new_args.extend(args);
+    run("distributed-verification", &new_args, &[]);
+}
+
+#[allow(dead_code)]
+#[allow(unused_must_use)]
+fn build_core_old(args: Vec<String>) {
     rustc_smir::run_with_tcx!(args, |_tcx| {
         let external_crates = stable_mir::external_crates();
         dbg!(external_crates.len(), external_crates);
