@@ -7,6 +7,7 @@ use std::{
 };
 
 const RUSTC: &str = env!("CARGO_CRATE_NAME");
+const JSON_FILE: &str = "rustflags.json";
 
 fn main() {
     let rustc_wrapper = &*format!("target/debug/examples/{RUSTC}");
@@ -29,6 +30,14 @@ fn main() {
         }
         if rustc_args.iter().any(|arg| arg == "core") {
             println!("[build core] rustc_args={rustc_args:?}");
+            let writer = std::fs::File::create(JSON_FILE).unwrap();
+            let json = serde_json::json!({
+                "rustflags": &rustc_args,
+                "rustc": format!("rustc {}", rustc_args.join(" "))
+            });
+            serde_json::to_writer_pretty(writer, &json).unwrap();
+            let path = PathBuf::from(JSON_FILE).canonicalize().unwrap();
+            println!("{path:?} is written.");
         }
         run("rustc", &rustc_args, &[]);
     } else {
