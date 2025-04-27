@@ -66,5 +66,11 @@ jobs:
       - name: Print core.json
         run: |
           ls -alh core.json
-          # head -n 5000 core.json
-          cat core.json
+          head -n 5000 core.json
+
+      - name: Upload core.json
+        use: actions/upload-artifact@v4
+        with:
+          name: artifact-libcore
+          path: core.json
+          compression-level: 9
