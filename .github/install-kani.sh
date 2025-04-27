@@ -1,10 +1,14 @@
+set -x
+
 COMMIT=5cf80a84afdeceec0d85e790a5cc585ff2e513ed
 
 # Install kani
 pushd kani
 ./scripts/setup/ubuntu/install_deps.sh
 cargo build-dev
-echo PATH=$(pwd)/scripts:$PATH >>$GITHUB_ENV
+
+PATH=$(pwd)/scripts:$PATH
+echo $PATH >>$GITHUB_ENV
 kani --version
 
 popd
