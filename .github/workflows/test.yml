@@ -17,9 +17,7 @@ jobs:
           submodules: 'recursive'
 
       - name: Install kani
-        uses: ./.github/actions/install-kani
-        with:
-          verify-rust-std-commit: ${{ env.VERIFY_RUST_STD_COMMIT }}
+        uses: sh ./.github/install-kani.sh
 
       - name: Run tests
         run: cargo test -- --nocapture
@@ -32,9 +30,7 @@ jobs:
           submodules: 'recursive'
 
       - name: Install kani
-        uses: ./.github/actions/install-kani
-        with:
-          verify-rust-std-commit: ${{ env.VERIFY_RUST_STD_COMMIT }}
+        uses: sh ./.github/install-kani.sh
 
       - name: Install distributed-verification
         run: cargo install --path . --locked
@@ -71,9 +67,7 @@ jobs:
           submodules: 'recursive'
 
       - name: Install kani
-        uses: ./.github/actions/install-kani
-        with:
-          verify-rust-std-commit: ${{ env.VERIFY_RUST_STD_COMMIT }}
+        uses: sh ./.github/install-kani.sh
 
       - name: Kani list
         working-directory: tests/dummy-crate/verify-rust-std
