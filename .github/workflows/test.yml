@@ -16,7 +16,7 @@ jobs:
           submodules: 'recursive'
 
       - name: Install kani
-        run: sh ./.github/install-kani.sh
+        run: bash ./.github/install-kani.sh
 
       - name: Run tests
         run: cargo test -- --nocapture
@@ -29,7 +29,7 @@ jobs:
           submodules: 'recursive'
 
       - name: Install kani
-        run: sh ./.github/install-kani.sh
+        run: bash ./.github/install-kani.sh
 
       - name: Install distributed-verification
         run: cargo install --path . --locked
@@ -66,7 +66,7 @@ jobs:
           submodules: 'recursive'
 
       - name: Install kani
-        run: sh ./.github/install-kani.sh
+        run: bash ./.github/install-kani.sh
 
       - name: Kani list
         working-directory: tests/dummy-crate/verify-rust-std
