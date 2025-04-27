@@ -6,6 +6,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  VERIFY_RUST_STD_COMMIT: 5cf80a84afdeceec0d85e790a5cc585ff2e513ed
 
 jobs:
   test:
@@ -17,6 +18,8 @@ jobs:
 
       - name: Install kani
         uses: ./.github/actions/install-kani
+        with:
+          verify-rust-std-commit: ${{ env.VERIFY_RUST_STD_COMMIT }}
 
       - name: Run tests
         run: cargo test -- --nocapture
@@ -30,6 +33,8 @@ jobs:
 
       - name: Install kani
         uses: ./.github/actions/install-kani
+        with:
+          verify-rust-std-commit: ${{ env.VERIFY_RUST_STD_COMMIT }}
 
       - name: Install distributed-verification
         run: cargo install --path . --locked
@@ -67,6 +72,8 @@ jobs:
 
       - name: Install kani
         uses: ./.github/actions/install-kani
+        with:
+          verify-rust-std-commit: ${{ env.VERIFY_RUST_STD_COMMIT }}
 
       - name: Kani list
         working-directory: tests/dummy-crate/verify-rust-std
