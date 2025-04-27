@@ -17,7 +17,7 @@ fn validate_kani_list_json() -> Result<()> {
         let kani_list = get_kani_list(path);
         expect_file![list_path].assert_debug_eq(&kani_list);
 
-        // run `distributed_verification`
+        // run `distributed-verification`
         let text = cmd(&[path]);
         let v_ser_function: Vec<SerFunction> = serde_json::from_str(&text).unwrap();
         check_proofs(&kani_list, &v_ser_function);

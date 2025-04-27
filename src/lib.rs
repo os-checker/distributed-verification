@@ -97,3 +97,26 @@ pub fn kani_path() -> String {
     assert!(std::fs::exists(&path).unwrap());
     path
 }
+
+#[derive(Debug, Default, Serialize, Deserialize, Clone)]
+pub struct SimplifiedSerFunction {
+    pub hash: String,
+    pub attrs: Vec<String>,
+    pub name: String,
+    pub file: String,
+    pub callees_len: usize,
+    pub callees: Vec<String>,
+}
+
+impl From<&SerFunction> for SimplifiedSerFunction {
+    fn from(val: &SerFunction) -> Self {
+        SimplifiedSerFunction {
+            hash: val.hash.clone(),
+            attrs: val.attrs.clone(),
+            name: val.func.name.clone(),
+            file: val.func.file.clone(),
+            callees_len: val.callees_len,
+            callees: val.callees.iter().map(|c| c.func.name.clone()).collect(),
+        }
+    }
+}

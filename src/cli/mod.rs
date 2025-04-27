@@ -27,6 +27,10 @@ struct Args {
     #[arg(long, default_value_t = false)]
     check_kani_list: bool,
 
+    /// Only emit def_id for callees in JSON.
+    #[arg(long, default_value_t = false)]
+    simplify_json: bool,
+
     /// Args for rustc. `distributed-verification -- [rustc_args]`
     /// No need to pass rustc as the first argument.
     rustc_args: Vec<String>,
@@ -64,12 +68,18 @@ impl Args {
         };
         args.extend(self.rustc_args);
 
-        Run { json: self.json, check_kani_list: self.check_kani_list, rustc_args: args }
+        Run {
+            json: self.json,
+            check_kani_list: self.check_kani_list,
+            simplify_json: self.simplify_json,
+            rustc_args: args,
+        }
     }
 }
 
 pub struct Run {
     pub json: Option<String>,
     pub check_kani_list: bool,
+    pub simplify_json: bool,
     pub rustc_args: Vec<String>,
 }

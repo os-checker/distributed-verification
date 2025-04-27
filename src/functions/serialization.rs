@@ -160,4 +160,17 @@ mod conversion {
             Self { callsite, defsite }
         }
     }
+
+    impl From<&SerFunction> for lib::SimplifiedSerFunction {
+        fn from(val: &SerFunction) -> Self {
+            Self {
+                hash: val.hash.clone(),
+                attrs: val.attrs.clone(),
+                name: val.func.name.clone(),
+                file: val.func.file.clone(),
+                callees_len: val.callees_len,
+                callees: val.callees.iter().map(|c| c.func.name.clone()).collect(),
+            }
+        }
+    }
 }

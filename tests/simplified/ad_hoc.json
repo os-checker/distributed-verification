@@ -1,0 +1,45 @@
+[
+  {
+    "hash": "231371728546000426415569688603538432620",
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
+    "name": "adhoc::callee_defined_in_proof",
+    "file": "tests/proofs/ad_hoc.rs",
+    "callees_len": 2,
+    "callees": [
+      "adhoc::callee_defined_in_proof::f",
+      "kani::assert"
+    ]
+  },
+  {
+    "hash": "61932375823549408104071622445676960413",
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
+    "name": "adhoc::closure_in_proof",
+    "file": "tests/proofs/ad_hoc.rs",
+    "callees_len": 2,
+    "callees": [
+      "adhoc::closure_in_proof::{closure#0}",
+      "kani::assert"
+    ]
+  },
+  {
+    "hash": "6925603377655101244643534194235942800",
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
+    "name": "adhoc::proof_in_fn_item::proof",
+    "file": "tests/proofs/ad_hoc.rs",
+    "callees_len": 6,
+    "callees": [
+      "<u8 as kani::Arbitrary>::any",
+      "kani::any::<u8>",
+      "kani::any_raw::<u8>",
+      "kani::any_raw_internal::<u8>",
+      "kani::assert",
+      "kani::kani_intrinsic::<u8>"
+    ]
+  }
+]

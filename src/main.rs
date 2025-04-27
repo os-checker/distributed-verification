@@ -12,6 +12,7 @@ extern crate rustc_span;
 extern crate rustc_stable_hash;
 extern crate stable_mir;
 
+use distributed_verification::SimplifiedSerFunction;
 use functions::{clear_rustc_ctx, set_rustc_ctx};
 use rustc_middle::ty::TyCtxt;
 
@@ -52,18 +53,27 @@ fn main() {
 
         clear_rustc_ctx();
 
-        let res = || match &run.json {
-            Some(path) => {
-                if path == "false" {
-                    return Ok(());
+        let res = || {
+            let writer: Box<dyn std::io::Write>;
+            match &run.json {
+                Some(path) => {
+                    if path == "false" {
+                        return Ok(());
+                    }
+                    let _span = error_span!("write_json", path).entered();
+                    let file = std::fs::File::create(path)?;
+                    writer = Box::new(file);
                 }
-                let _span = error_span!("write_json", path).entered();
-                let file = std::fs::File::create(path)?;
-                serde_json::to_writer_pretty(file, &output)
-                    .with_context(|| "Failed to write functions to json")
+                None => writer = Box::new(std::io::stdout()),
             }
-            None => serde_json::to_writer_pretty(std::io::stdout(), &output)
-                .with_context(|| "Failed to write functions to stdout"),
+
+            if run.simplify_json {
+                let simplified: Vec<_> = output.iter().map(SimplifiedSerFunction::from).collect();
+                serde_json::to_writer_pretty(writer, &simplified)
+            } else {
+                serde_json::to_writer_pretty(writer, &output)
+            }
+            .with_context(|| "Failed to write proof json")
         };
 
         res().unwrap();

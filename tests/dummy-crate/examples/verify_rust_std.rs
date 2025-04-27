@@ -140,8 +140,14 @@ fn build_core(args: Vec<String>) {
     let mut new_args = Vec::with_capacity(args.len() + 2);
     let core_json = var("CORE_JSON");
     new_args.extend(
-        ["--no-kani-args", "--json", core_json.as_deref().unwrap_or(CORE_JSON), "--"]
-            .map(String::from),
+        [
+            "--no-kani-args",
+            "--simplify-json",
+            "--json",
+            core_json.as_deref().unwrap_or(CORE_JSON),
+            "--",
+        ]
+        .map(String::from),
     );
     new_args.extend(args);
     run("distributed-verification", &new_args, &[]);

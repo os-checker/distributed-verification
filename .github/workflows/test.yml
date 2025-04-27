@@ -64,4 +64,7 @@ jobs:
           cat ${{ env.CORE_JSON }}
 
       - name: Print core.json
-        run: ls -alh core.json && head -n 5000 core.json # core.json is large
+        run: |
+          ls -alh core.json
+          # head -n 5000 core.json
+          cat core.json
