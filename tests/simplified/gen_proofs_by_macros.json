@@ -1,0 +1,131 @@
+[
+  {
+    "hash": "45672845279674531917747866704305470621",
+    "def_id": "DefId { id: 0, name: \"verify::proof1\" }",
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
+    "kind": "Standard",
+    "func": {
+      "name": "verify::proof1",
+      "mangled_name": "_ZN20gen_proofs_by_macros6verify6proof117h43b17e3623e88509E",
+      "kind": "Item",
+      "file": "tests/proofs/gen_proofs_by_macros.rs",
+      "src": "fn $name() $block",
+      "macro_backtrace_len": 1,
+      "macro_backtrace": [
+        {
+          "callsite": "gen! { proof1, { assert_eq!(kani::any::<u8>(), 0) }}",
+          "defsite": "macro_rules! gen {\n    ($name:ident, $block:block) => {\n        #[kani::proof]\n        fn $name() $block\n    }\n}"
+        }
+      ]
+    },
+    "callees_len": 6,
+    "callees": [
+      {
+        "def_id": "DefId { id: 6, name: \"<u8 as kani::Arbitrary>::any\" }"
+      },
+      {
+        "def_id": "DefId { id: 3, name: \"kani::any\" }"
+      },
+      {
+        "def_id": "DefId { id: 8, name: \"kani::any_raw\" }"
+      },
+      {
+        "def_id": "DefId { id: 7, name: \"kani::any_raw_internal\" }"
+      },
+      {
+        "def_id": "DefId { id: 4, name: \"kani::assert\" }"
+      },
+      {
+        "def_id": "DefId { id: 9, name: \"kani::kani_intrinsic\" }"
+      }
+    ]
+  },
+  {
+    "hash": "16769813219805389697085801977882300332",
+    "def_id": "DefId { id: 1, name: \"verify::proof2\" }",
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
+    "kind": "Standard",
+    "func": {
+      "name": "verify::proof2",
+      "mangled_name": "_ZN20gen_proofs_by_macros6verify6proof217hb475ce00f7715816E",
+      "kind": "Item",
+      "file": "tests/proofs/gen_proofs_by_macros.rs",
+      "src": "fn $name() $block",
+      "macro_backtrace_len": 1,
+      "macro_backtrace": [
+        {
+          "callsite": "gen! { proof2, { assert_eq!(kani::any::<u8>(), 0) }}",
+          "defsite": "macro_rules! gen {\n    ($name:ident, $block:block) => {\n        #[kani::proof]\n        fn $name() $block\n    }\n}"
+        }
+      ]
+    },
+    "callees_len": 6,
+    "callees": [
+      {
+        "def_id": "DefId { id: 6, name: \"<u8 as kani::Arbitrary>::any\" }"
+      },
+      {
+        "def_id": "DefId { id: 3, name: \"kani::any\" }"
+      },
+      {
+        "def_id": "DefId { id: 8, name: \"kani::any_raw\" }"
+      },
+      {
+        "def_id": "DefId { id: 7, name: \"kani::any_raw_internal\" }"
+      },
+      {
+        "def_id": "DefId { id: 4, name: \"kani::assert\" }"
+      },
+      {
+        "def_id": "DefId { id: 9, name: \"kani::kani_intrinsic\" }"
+      }
+    ]
+  },
+  {
+    "hash": "172717196120001941861626194128140056205",
+    "def_id": "DefId { id: 2, name: \"verify::proof3\" }",
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
+    "kind": "Standard",
+    "func": {
+      "name": "verify::proof3",
+      "mangled_name": "_ZN20gen_proofs_by_macros6verify6proof317hccc39c57871c9d43E",
+      "kind": "Item",
+      "file": "tests/proofs/gen_proofs_by_macros.rs",
+      "src": "fn $name() $block",
+      "macro_backtrace_len": 1,
+      "macro_backtrace": [
+        {
+          "callsite": "gen! { proof3, { assert_eq!(kani::any::<u8>(), 1) }}",
+          "defsite": "macro_rules! gen {\n    ($name:ident, $block:block) => {\n        #[kani::proof]\n        fn $name() $block\n    }\n}"
+        }
+      ]
+    },
+    "callees_len": 6,
+    "callees": [
+      {
+        "def_id": "DefId { id: 6, name: \"<u8 as kani::Arbitrary>::any\" }"
+      },
+      {
+        "def_id": "DefId { id: 3, name: \"kani::any\" }"
+      },
+      {
+        "def_id": "DefId { id: 8, name: \"kani::any_raw\" }"
+      },
+      {
+        "def_id": "DefId { id: 7, name: \"kani::any_raw_internal\" }"
+      },
+      {
+        "def_id": "DefId { id: 4, name: \"kani::assert\" }"
+      },
+      {
+        "def_id": "DefId { id: 9, name: \"kani::kani_intrinsic\" }"
+      }
+    ]
+  }
+]

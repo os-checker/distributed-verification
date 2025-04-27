@@ -1,7 +1,7 @@
 use crate::functions::SourceCode;
 use clap::Parser;
 use distributed_verification::kani_path;
-use std::cell::Cell;
+use std::sync::{LazyLock, Mutex};
 
 /// Parse cli arguments.
 pub fn parse() -> Run {
@@ -71,7 +71,7 @@ impl Args {
         args.extend(self.rustc_args);
 
         // set SIMPLIFY_JSON
-        SIMPLIFY_JSON.with(|val| val.set(self.simplify_json));
+        STATE.lock().unwrap().simplify_json = self.simplify_json;
 
         Run { json: self.json, check_kani_list: self.check_kani_list, rustc_args: args }
     }
@@ -83,12 +83,17 @@ pub struct Run {
     pub rustc_args: Vec<String>,
 }
 
-thread_local! {
-    static SIMPLIFY_JSON: Cell<bool> = const { Cell::new(false) };
+static STATE: LazyLock<Mutex<GlobalState>> =
+    LazyLock::new(|| Mutex::new(GlobalState { simplify_json: false }));
+
+struct GlobalState {
+    simplify_json: bool,
 }
 
+/// simplify_json = false => don't skip
+/// simplify_json = true => skip
 pub fn skip_serialize_callee_souce_code(_: &SourceCode) -> bool {
-    // simplify_json = false => don't skip
-    // simplify_json = true => skip
-    SIMPLIFY_JSON.with(|val| val.get())
+    // NOTE: Stable MIR is run on another thread, which is not the same as main thread.
+    // So this function need a synchronous global state.
+    STATE.lock().unwrap().simplify_json
 }

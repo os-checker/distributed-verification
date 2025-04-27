@@ -1,0 +1,92 @@
+[
+  {
+    "hash": "231371728546000426415569688603538432620",
+    "def_id": "DefId { id: 0, name: \"adhoc::callee_defined_in_proof\" }",
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
+    "kind": "Standard",
+    "func": {
+      "name": "adhoc::callee_defined_in_proof",
+      "mangled_name": "_ZN6ad_hoc5adhoc23callee_defined_in_proof17h04faf672d1be046dE",
+      "kind": "Item",
+      "file": "tests/proofs/ad_hoc.rs",
+      "src": "fn callee_defined_in_proof() {\n        fn f() -> u8 {\n            1\n        }\n        assert!(f() == 1);\n    }",
+      "macro_backtrace_len": 0,
+      "macro_backtrace": []
+    },
+    "callees_len": 2,
+    "callees": [
+      {
+        "def_id": "DefId { id: 1, name: \"adhoc::callee_defined_in_proof::f\" }"
+      },
+      {
+        "def_id": "DefId { id: 6, name: \"kani::assert\" }"
+      }
+    ]
+  },
+  {
+    "hash": "61932375823549408104071622445676960413",
+    "def_id": "DefId { id: 2, name: \"adhoc::closure_in_proof\" }",
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
+    "kind": "Standard",
+    "func": {
+      "name": "adhoc::closure_in_proof",
+      "mangled_name": "_ZN6ad_hoc5adhoc16closure_in_proof17hc3a9b3580daf319eE",
+      "kind": "Item",
+      "file": "tests/proofs/ad_hoc.rs",
+      "src": "fn closure_in_proof() {\n        let f = || 1;\n        assert!(f() == 1);\n    }",
+      "macro_backtrace_len": 0,
+      "macro_backtrace": []
+    },
+    "callees_len": 2,
+    "callees": [
+      {
+        "def_id": "DefId { id: 3, name: \"adhoc::closure_in_proof::{closure#0}\" }"
+      },
+      {
+        "def_id": "DefId { id: 6, name: \"kani::assert\" }"
+      }
+    ]
+  },
+  {
+    "hash": "6925603377655101244643534194235942800",
+    "def_id": "DefId { id: 5, name: \"adhoc::proof_in_fn_item::proof\" }",
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
+    "kind": "Standard",
+    "func": {
+      "name": "adhoc::proof_in_fn_item::proof",
+      "mangled_name": "_ZN6ad_hoc5adhoc16proof_in_fn_item5proof17h81a8c21d61ba53baE",
+      "kind": "Item",
+      "file": "tests/proofs/ad_hoc.rs",
+      "src": "fn proof() {\n            assert!(kani::any::<u8>() == 1);\n        }",
+      "macro_backtrace_len": 0,
+      "macro_backtrace": []
+    },
+    "callees_len": 6,
+    "callees": [
+      {
+        "def_id": "DefId { id: 10, name: \"<u8 as kani::Arbitrary>::any\" }"
+      },
+      {
+        "def_id": "DefId { id: 8, name: \"kani::any\" }"
+      },
+      {
+        "def_id": "DefId { id: 12, name: \"kani::any_raw\" }"
+      },
+      {
+        "def_id": "DefId { id: 11, name: \"kani::any_raw_internal\" }"
+      },
+      {
+        "def_id": "DefId { id: 6, name: \"kani::assert\" }"
+      },
+      {
+        "def_id": "DefId { id: 13, name: \"kani::kani_intrinsic\" }"
+      }
+    ]
+  }
+]
