@@ -1,399 +1,146 @@
 [
   {
     "hash": "407797103376261238612495655534918835712",
-    "def_id": "DefId { id: 2, name: \"verify::recursive_callees\" }",
     "attrs": [
       "#[kanitool::proof]"
     ],
-    "kind": "Standard",
-    "func": {
-      "name": "verify::recursive_callees",
-      "mangled_name": "_ZN15standard_proofs6verify17recursive_callees17h27fada5ffc99c85cE",
-      "kind": "Item",
-      "file": "tests/proofs/standard_proofs.rs",
-      "src": "fn recursive_callees() {\n        crate::top_level();\n    }",
-      "macro_backtrace_len": 0,
-      "macro_backtrace": []
-    },
+    "name": "verify::recursive_callees",
+    "file": "tests/proofs/standard_proofs.rs",
     "callees_len": 107,
     "callees": [
-      {
-        "def_id": "DefId { id: 81, name: \"<std::option::Option<T> as std::ops::Try>::branch\" }"
-      },
-      {
-        "def_id": "DefId { id: 83, name: \"<std::option::Option<T> as std::ops::FromResidual<std::option::Option<std::convert::Infallible>>>::from_residual\" }"
-      },
-      {
-        "def_id": "DefId { id: 92, name: \"<std::ptr::NonNull<T> as std::cmp::PartialEq>::eq\" }"
-      },
-      {
-        "def_id": "DefId { id: 79, name: \"<std::slice::Iter<'a, T> as std::iter::DoubleEndedIterator>::next_back\" }"
-      },
-      {
-        "def_id": "DefId { id: 34, name: \"<std::slice::Iter<'_, T> as std::iter::ExactSizeIterator>::len\" }"
-      },
-      {
-        "def_id": "DefId { id: 136, name: \"<std::slice::Iter<'a, T> as std::iter::Iterator>::next\" }"
-      },
-      {
-        "def_id": "DefId { id: 36, name: \"<std::str::CharIndices<'a> as std::iter::DoubleEndedIterator>::next_back\" }"
-      },
-      {
-        "def_id": "DefId { id: 39, name: \"<std::str::CharIndices<'a> as std::iter::DoubleEndedIterator>::next_back::{closure#0}\" }"
-      },
-      {
-        "def_id": "DefId { id: 133, name: \"<std::str::CharIndices<'a> as std::iter::Iterator>::next\" }"
-      },
-      {
-        "def_id": "DefId { id: 40, name: \"<std::str::Chars<'a> as std::iter::DoubleEndedIterator>::next_back\" }"
-      },
-      {
-        "def_id": "DefId { id: 71, name: \"<std::str::Chars<'a> as std::iter::DoubleEndedIterator>::next_back::{closure#0}\" }"
-      },
-      {
-        "def_id": "DefId { id: 134, name: \"<std::str::Chars<'a> as std::iter::Iterator>::next\" }"
-      },
-      {
-        "def_id": "DefId { id: 141, name: \"<std::str::Chars<'a> as std::iter::Iterator>::next::{closure#0}\" }"
-      },
-      {
-        "def_id": "DefId { id: 20, name: \"<std::str::pattern::CharPredicateSearcher<'a, F> as std::str::pattern::ReverseSearcher<'a>>::next_reject_back\" }"
-      },
-      {
-        "def_id": "DefId { id: 18, name: \"<std::str::pattern::CharPredicateSearcher<'a, F> as std::str::pattern::Searcher<'a>>::next_reject\" }"
-      },
-      {
-        "def_id": "DefId { id: 110, name: \"<std::str::pattern::MultiCharEqPattern<C> as std::str::pattern::Pattern>::into_searcher\" }"
-      },
-      {
-        "def_id": "DefId { id: 28, name: \"<std::str::pattern::MultiCharEqSearcher<'a, C> as std::str::pattern::ReverseSearcher<'a>>::next_back\" }"
-      },
-      {
-        "def_id": "DefId { id: 19, name: \"std::str::pattern::ReverseSearcher::next_reject_back\" }"
-      },
-      {
-        "def_id": "DefId { id: 131, name: \"<std::str::pattern::MultiCharEqSearcher<'a, C> as std::str::pattern::Searcher<'a>>::next\" }"
-      },
-      {
-        "def_id": "DefId { id: 17, name: \"std::str::pattern::Searcher::next_reject\" }"
-      },
-      {
-        "def_id": "DefId { id: 38, name: \"<F as std::str::pattern::MultiCharEq>::matches\" }"
-      },
-      {
-        "def_id": "DefId { id: 16, name: \"<F as std::str::pattern::Pattern>::into_searcher\" }"
-      },
-      {
-        "def_id": "DefId { id: 102, name: \"core::num::<impl isize>::overflowing_neg\" }"
-      },
-      {
-        "def_id": "DefId { id: 99, name: \"core::num::<impl isize>::unchecked_neg\" }"
-      },
-      {
-        "def_id": "DefId { id: 101, name: \"core::num::<impl isize>::unchecked_neg::precondition_check\" }"
-      },
-      {
-        "def_id": "DefId { id: 78, name: \"core::num::<impl u32>::wrapping_sub\" }"
-      },
-      {
-        "def_id": "DefId { id: 140, name: \"core::num::<impl usize>::overflowing_sub\" }"
-      },
-      {
-        "def_id": "DefId { id: 137, name: \"core::num::<impl usize>::unchecked_sub\" }"
-      },
-      {
-        "def_id": "DefId { id: 139, name: \"core::num::<impl usize>::unchecked_sub::precondition_check\" }"
-      },
-      {
-        "def_id": "DefId { id: 59, name: \"core::panic::panic_info::PanicInfo::<'a>::new\" }"
-      },
-      {
-        "def_id": "DefId { id: 54, name: \"core::panicking::panic\" }"
-      },
-      {
-        "def_id": "DefId { id: 65, name: \"core::panicking::panic_nounwind\" }"
-      },
-      {
-        "def_id": "DefId { id: 67, name: \"core::panicking::panic_nounwind_fmt\" }"
-      },
-      {
-        "def_id": "DefId { id: 68, name: \"core::panicking::panic_nounwind_fmt::runtime\" }"
-      },
-      {
-        "def_id": "DefId { id: 114, name: \"core::slice::<impl [T]>::iter\" }"
-      },
-      {
-        "def_id": "DefId { id: 113, name: \"core::str::<impl str>::as_bytes\" }"
-      },
-      {
-        "def_id": "DefId { id: 111, name: \"core::str::<impl str>::char_indices\" }"
-      },
-      {
-        "def_id": "DefId { id: 112, name: \"core::str::<impl str>::chars\" }"
-      },
-      {
-        "def_id": "DefId { id: 21, name: \"core::str::<impl str>::get_unchecked\" }"
-      },
-      {
-        "def_id": "DefId { id: 12, name: \"core::str::<impl str>::trim\" }"
-      },
-      {
-        "def_id": "DefId { id: 23, name: \"core::str::<impl str>::trim::{closure#0}\" }"
-      },
-      {
-        "def_id": "DefId { id: 13, name: \"core::str::<impl str>::trim_matches\" }"
-      },
-      {
-        "def_id": "DefId { id: 122, name: \"core::str::traits::<impl std::slice::SliceIndex<str> for std::ops::Range<usize>>::get_unchecked\" }"
-      },
-      {
-        "def_id": "DefId { id: 124, name: \"core::str::traits::<impl std::slice::SliceIndex<str> for std::ops::Range<usize>>::get_unchecked::precondition_check\" }"
-      },
-      {
-        "def_id": "DefId { id: 135, name: \"core::str::validations::next_code_point\" }"
-      },
-      {
-        "def_id": "DefId { id: 70, name: \"core::str::validations::next_code_point_reverse\" }"
-      },
-      {
-        "def_id": "DefId { id: 87, name: \"core::str::validations::utf8_acc_cont_byte\" }"
-      },
-      {
-        "def_id": "DefId { id: 85, name: \"core::str::validations::utf8_first_byte\" }"
-      },
-      {
-        "def_id": "DefId { id: 86, name: \"core::str::validations::utf8_is_cont_byte\" }"
-      },
-      {
-        "def_id": "DefId { id: 50, name: \"core::ub_checks::check_language_ub\" }"
-      },
-      {
-        "def_id": "DefId { id: 63, name: \"core::ub_checks::check_language_ub::runtime\" }"
-      },
-      {
-        "def_id": "DefId { id: 107, name: \"core::unicode::unicode_data::white_space::lookup\" }"
-      },
-      {
-        "def_id": "DefId { id: 4, name: \"m::func1\" }"
-      },
-      {
-        "def_id": "DefId { id: 75, name: \"std::char::convert::char_try_from_u32\" }"
-      },
-      {
-        "def_id": "DefId { id: 73, name: \"std::char::convert::from_u32_unchecked\" }"
-      },
-      {
-        "def_id": "DefId { id: 74, name: \"std::char::convert::from_u32_unchecked::precondition_check\" }"
-      },
-      {
-        "def_id": "DefId { id: 72, name: \"std::char::methods::<impl char>::from_u32_unchecked\" }"
-      },
-      {
-        "def_id": "DefId { id: 106, name: \"std::char::methods::<impl char>::is_whitespace\" }"
-      },
-      {
-        "def_id": "DefId { id: 55, name: \"std::fmt::Arguments::<'a>::new_const\" }"
-      },
-      {
-        "def_id": "DefId { id: 89, name: \"std::hint::unreachable_unchecked\" }"
-      },
-      {
-        "def_id": "DefId { id: 90, name: \"std::hint::unreachable_unchecked::precondition_check\" }"
-      },
-      {
-        "def_id": "DefId { id: 104, name: \"std::intrinsics::cold_path\" }"
-      },
-      {
-        "def_id": "DefId { id: 103, name: \"std::intrinsics::unlikely\" }"
-      },
-      {
-        "def_id": "DefId { id: 52, name: \"std::mem::size_of\" }"
-      },
-      {
-        "def_id": "DefId { id: 84, name: \"std::option::Option::<T>::unwrap_unchecked\" }"
-      },
-      {
-        "def_id": "DefId { id: 41, name: \"std::option::Option::<T>::map\" }"
-      },
-      {
-        "def_id": "DefId { id: 41, name: \"std::option::Option::<T>::map\" }"
-      },
-      {
-        "def_id": "DefId { id: 41, name: \"std::option::Option::<T>::map\" }"
-      },
-      {
-        "def_id": "DefId { id: 58, name: \"std::panic::Location::<'a>::caller\" }"
-      },
-      {
-        "def_id": "DefId { id: 47, name: \"std::ptr::NonNull::<T>::as_ptr\" }"
-      },
-      {
-        "def_id": "DefId { id: 117, name: \"std::ptr::NonNull::<T>::cast\" }"
-      },
-      {
-        "def_id": "DefId { id: 116, name: \"std::ptr::NonNull::<T>::from_ref\" }"
-      },
-      {
-        "def_id": "DefId { id: 138, name: \"std::ptr::NonNull::<T>::add\" }"
-      },
-      {
-        "def_id": "DefId { id: 47, name: \"std::ptr::NonNull::<T>::as_ptr\" }"
-      },
-      {
-        "def_id": "DefId { id: 95, name: \"std::ptr::NonNull::<T>::as_ref\" }"
-      },
-      {
-        "def_id": "DefId { id: 100, name: \"std::ptr::NonNull::<T>::offset\" }"
-      },
-      {
-        "def_id": "DefId { id: 45, name: \"std::ptr::NonNull::<T>::offset_from_unsigned\" }"
-      },
-      {
-        "def_id": "DefId { id: 98, name: \"std::ptr::NonNull::<T>::sub\" }"
-      },
-      {
-        "def_id": "DefId { id: 51, name: \"std::ptr::const_ptr::<impl *const T>::offset_from_unsigned::precondition_check\" }"
-      },
-      {
-        "def_id": "DefId { id: 64, name: \"std::ptr::const_ptr::<impl *const T>::offset_from_unsigned::runtime_ptr_ge\" }"
-      },
-      {
-        "def_id": "DefId { id: 66, name: \"std::ptr::const_ptr::<impl *const T>::offset_from_unsigned::runtime_ptr_ge::runtime\" }"
-      },
-      {
-        "def_id": "DefId { id: 125, name: \"std::ptr::const_ptr::<impl *const [T]>::as_ptr\" }"
-      },
-      {
-        "def_id": "DefId { id: 123, name: \"std::ptr::const_ptr::<impl *const [T]>::len\" }"
-      },
-      {
-        "def_id": "DefId { id: 126, name: \"std::ptr::const_ptr::<impl *const T>::add\" }"
-      },
-      {
-        "def_id": "DefId { id: 43, name: \"std::ptr::const_ptr::<impl *const T>::addr\" }"
-      },
-      {
-        "def_id": "DefId { id: 46, name: \"std::ptr::const_ptr::<impl *const T>::cast\" }"
-      },
-      {
-        "def_id": "DefId { id: 49, name: \"std::ptr::const_ptr::<impl *const T>::offset_from_unsigned\" }"
-      },
-      {
-        "def_id": "DefId { id: 22, name: \"std::ptr::drop_in_place\" }"
-      },
-      {
-        "def_id": "DefId { id: 22, name: \"std::ptr::drop_in_place\" }"
-      },
-      {
-        "def_id": "DefId { id: 22, name: \"std::ptr::drop_in_place\" }"
-      },
-      {
-        "def_id": "DefId { id: 22, name: \"std::ptr::drop_in_place\" }"
-      },
-      {
-        "def_id": "DefId { id: 128, name: \"std::ptr::from_raw_parts\" }"
-      },
-      {
-        "def_id": "DefId { id: 129, name: \"std::ptr::metadata\" }"
-      },
-      {
-        "def_id": "DefId { id: 97, name: \"std::ptr::mut_ptr::<impl *mut T>::cast\" }"
-      },
-      {
-        "def_id": "DefId { id: 97, name: \"std::ptr::mut_ptr::<impl *mut T>::cast\" }"
-      },
-      {
-        "def_id": "DefId { id: 119, name: \"std::ptr::mut_ptr::<impl *mut T>::add\" }"
-      },
-      {
-        "def_id": "DefId { id: 96, name: \"std::ptr::mut_ptr::<impl *mut T>::cast_const\" }"
-      },
-      {
-        "def_id": "DefId { id: 48, name: \"std::ptr::mut_ptr::<impl *mut T>::offset_from_unsigned\" }"
-      },
-      {
-        "def_id": "DefId { id: 127, name: \"std::ptr::slice_from_raw_parts\" }"
-      },
-      {
-        "def_id": "DefId { id: 118, name: \"std::ptr::without_provenance\" }"
-      },
-      {
-        "def_id": "DefId { id: 120, name: \"std::ptr::without_provenance_mut\" }"
-      },
-      {
-        "def_id": "DefId { id: 76, name: \"std::result::Result::<T, E>::is_ok\" }"
-      },
-      {
-        "def_id": "DefId { id: 56, name: \"std::rt::panic_fmt\" }"
-      },
-      {
-        "def_id": "DefId { id: 115, name: \"std::slice::Iter::<'a, T>::new\" }"
-      },
-      {
-        "def_id": "DefId { id: 93, name: \"std::slice::Iter::<'a, T>::next_back_unchecked\" }"
-      },
-      {
-        "def_id": "DefId { id: 94, name: \"std::slice::Iter::<'a, T>::pre_dec_end\" }"
-      },
-      {
-        "def_id": "DefId { id: 3, name: \"top_level\" }"
-      }
+      "<std::option::Option<&u8> as std::ops::Try>::branch",
+      "<std::option::Option<u32> as std::ops::FromResidual<std::option::Option<std::convert::Infallible>>>::from_residual",
+      "<std::ptr::NonNull<u8> as std::cmp::PartialEq>::eq",
+      "<std::slice::Iter<'_, u8> as std::iter::DoubleEndedIterator>::next_back",
+      "<std::slice::Iter<'_, u8> as std::iter::ExactSizeIterator>::len",
+      "<std::slice::Iter<'_, u8> as std::iter::Iterator>::next",
+      "<std::str::CharIndices<'_> as std::iter::DoubleEndedIterator>::next_back",
+      "<std::str::CharIndices<'_> as std::iter::DoubleEndedIterator>::next_back::{closure#0}",
+      "<std::str::CharIndices<'_> as std::iter::Iterator>::next",
+      "<std::str::Chars<'_> as std::iter::DoubleEndedIterator>::next_back",
+      "<std::str::Chars<'_> as std::iter::DoubleEndedIterator>::next_back::{closure#0}",
+      "<std::str::Chars<'_> as std::iter::Iterator>::next",
+      "<std::str::Chars<'_> as std::iter::Iterator>::next::{closure#0}",
+      "<std::str::pattern::CharPredicateSearcher<'_, {closure@core::str::<impl str>::trim::{closure#0}}> as std::str::pattern::ReverseSearcher<'_>>::next_reject_back",
+      "<std::str::pattern::CharPredicateSearcher<'_, {closure@core::str::<impl str>::trim::{closure#0}}> as std::str::pattern::Searcher<'_>>::next_reject",
+      "<std::str::pattern::MultiCharEqPattern<{closure@core::str::<impl str>::trim::{closure#0}}> as std::str::pattern::Pattern>::into_searcher",
+      "<std::str::pattern::MultiCharEqSearcher<'_, {closure@core::str::<impl str>::trim::{closure#0}}> as std::str::pattern::ReverseSearcher<'_>>::next_back",
+      "<std::str::pattern::MultiCharEqSearcher<'_, {closure@core::str::<impl str>::trim::{closure#0}}> as std::str::pattern::ReverseSearcher<'_>>::next_reject_back",
+      "<std::str::pattern::MultiCharEqSearcher<'_, {closure@core::str::<impl str>::trim::{closure#0}}> as std::str::pattern::Searcher<'_>>::next",
+      "<std::str::pattern::MultiCharEqSearcher<'_, {closure@core::str::<impl str>::trim::{closure#0}}> as std::str::pattern::Searcher<'_>>::next_reject",
+      "<{closure@core::str::<impl str>::trim::{closure#0}} as std::str::pattern::MultiCharEq>::matches",
+      "<{closure@core::str::<impl str>::trim::{closure#0}} as std::str::pattern::Pattern>::into_searcher",
+      "core::num::<impl isize>::overflowing_neg",
+      "core::num::<impl isize>::unchecked_neg",
+      "core::num::<impl isize>::unchecked_neg::precondition_check",
+      "core::num::<impl u32>::wrapping_sub",
+      "core::num::<impl usize>::overflowing_sub",
+      "core::num::<impl usize>::unchecked_sub",
+      "core::num::<impl usize>::unchecked_sub::precondition_check",
+      "core::panic::panic_info::PanicInfo::<'_>::new",
+      "core::panicking::panic",
+      "core::panicking::panic_nounwind",
+      "core::panicking::panic_nounwind_fmt",
+      "core::panicking::panic_nounwind_fmt::runtime",
+      "core::slice::<impl [u8]>::iter",
+      "core::str::<impl str>::as_bytes",
+      "core::str::<impl str>::char_indices",
+      "core::str::<impl str>::chars",
+      "core::str::<impl str>::get_unchecked::<std::ops::Range<usize>>",
+      "core::str::<impl str>::trim",
+      "core::str::<impl str>::trim::{closure#0}",
+      "core::str::<impl str>::trim_matches::<{closure@core::str::<impl str>::trim::{closure#0}}>",
+      "core::str::traits::<impl std::slice::SliceIndex<str> for std::ops::Range<usize>>::get_unchecked",
+      "core::str::traits::<impl std::slice::SliceIndex<str> for std::ops::Range<usize>>::get_unchecked::precondition_check",
+      "core::str::validations::next_code_point::<'_, std::slice::Iter<'_, u8>>",
+      "core::str::validations::next_code_point_reverse::<'_, std::slice::Iter<'_, u8>>",
+      "core::str::validations::utf8_acc_cont_byte",
+      "core::str::validations::utf8_first_byte",
+      "core::str::validations::utf8_is_cont_byte",
+      "core::ub_checks::check_language_ub",
+      "core::ub_checks::check_language_ub::runtime",
+      "core::unicode::unicode_data::white_space::lookup",
+      "m::func1",
+      "std::char::convert::char_try_from_u32",
+      "std::char::convert::from_u32_unchecked",
+      "std::char::convert::from_u32_unchecked::precondition_check",
+      "std::char::methods::<impl char>::from_u32_unchecked",
+      "std::char::methods::<impl char>::is_whitespace",
+      "std::fmt::Arguments::<'_>::new_const::<1>",
+      "std::hint::unreachable_unchecked",
+      "std::hint::unreachable_unchecked::precondition_check",
+      "std::intrinsics::cold_path",
+      "std::intrinsics::unlikely",
+      "std::mem::size_of::<u8>",
+      "std::option::Option::<&u8>::unwrap_unchecked",
+      "std::option::Option::<char>::map::<(usize, char), {closure@<std::str::CharIndices<'_> as std::iter::DoubleEndedIterator>::next_back::{closure#0}}>",
+      "std::option::Option::<u32>::map::<char, {closure@<std::str::Chars<'_> as std::iter::DoubleEndedIterator>::next_back::{closure#0}}>",
+      "std::option::Option::<u32>::map::<char, {closure@<std::str::Chars<'_> as std::iter::Iterator>::next::{closure#0}}>",
+      "std::panic::Location::<'_>::caller",
+      "std::ptr::NonNull::<[u8]>::as_ptr",
+      "std::ptr::NonNull::<[u8]>::cast::<u8>",
+      "std::ptr::NonNull::<[u8]>::from_ref",
+      "std::ptr::NonNull::<u8>::add",
+      "std::ptr::NonNull::<u8>::as_ptr",
+      "std::ptr::NonNull::<u8>::as_ref::<'_>",
+      "std::ptr::NonNull::<u8>::offset",
+      "std::ptr::NonNull::<u8>::offset_from_unsigned",
+      "std::ptr::NonNull::<u8>::sub",
+      "std::ptr::const_ptr::<impl *const T>::offset_from_unsigned::precondition_check",
+      "std::ptr::const_ptr::<impl *const T>::offset_from_unsigned::runtime_ptr_ge",
+      "std::ptr::const_ptr::<impl *const T>::offset_from_unsigned::runtime_ptr_ge::runtime",
+      "std::ptr::const_ptr::<impl *const [u8]>::as_ptr",
+      "std::ptr::const_ptr::<impl *const [u8]>::len",
+      "std::ptr::const_ptr::<impl *const u8>::add",
+      "std::ptr::const_ptr::<impl *const u8>::addr",
+      "std::ptr::const_ptr::<impl *const u8>::cast::<()>",
+      "std::ptr::const_ptr::<impl *const u8>::offset_from_unsigned",
+      "std::ptr::drop_in_place::<std::str::pattern::CharPredicateSearcher<'_, {closure@core::str::<impl str>::trim::{closure#0}}>>",
+      "std::ptr::drop_in_place::<{closure@<std::str::CharIndices<'_> as std::iter::DoubleEndedIterator>::next_back::{closure#0}}>",
+      "std::ptr::drop_in_place::<{closure@<std::str::Chars<'_> as std::iter::DoubleEndedIterator>::next_back::{closure#0}}>",
+      "std::ptr::drop_in_place::<{closure@<std::str::Chars<'_> as std::iter::Iterator>::next::{closure#0}}>",
+      "std::ptr::from_raw_parts::<[u8], u8>",
+      "std::ptr::metadata::<[u8]>",
+      "std::ptr::mut_ptr::<impl *mut *const u8>::cast::<std::ptr::NonNull<u8>>",
+      "std::ptr::mut_ptr::<impl *mut *const u8>::cast::<usize>",
+      "std::ptr::mut_ptr::<impl *mut u8>::add",
+      "std::ptr::mut_ptr::<impl *mut u8>::cast_const",
+      "std::ptr::mut_ptr::<impl *mut u8>::offset_from_unsigned",
+      "std::ptr::slice_from_raw_parts::<u8>",
+      "std::ptr::without_provenance::<u8>",
+      "std::ptr::without_provenance_mut::<u8>",
+      "std::result::Result::<char, std::char::CharTryFromError>::is_ok",
+      "std::rt::panic_fmt",
+      "std::slice::Iter::<'_, u8>::new",
+      "std::slice::Iter::<'_, u8>::next_back_unchecked",
+      "std::slice::Iter::<'_, u8>::pre_dec_end",
+      "top_level"
     ]
   },
   {
     "hash": "130593389360887046121730487531425257701",
-    "def_id": "DefId { id: 0, name: \"verify::standard_proof\" }",
     "attrs": [
       "#[kanitool::proof]"
     ],
-    "kind": "Standard",
-    "func": {
-      "name": "verify::standard_proof",
-      "mangled_name": "_ZN15standard_proofs6verify14standard_proof17h755badced94c944aE",
-      "kind": "Item",
-      "file": "tests/proofs/standard_proofs.rs",
-      "src": "fn standard_proof() {\n        let val: u8 = kani::any();\n        assert_eq!(val, 1, \"Not eq to 1.\");\n    }",
-      "macro_backtrace_len": 0,
-      "macro_backtrace": []
-    },
+    "name": "verify::standard_proof",
+    "file": "tests/proofs/standard_proofs.rs",
     "callees_len": 6,
     "callees": [
-      {
-        "def_id": "DefId { id: 8, name: \"<u8 as kani::Arbitrary>::any\" }"
-      },
-      {
-        "def_id": "DefId { id: 5, name: \"kani::any\" }"
-      },
-      {
-        "def_id": "DefId { id: 10, name: \"kani::any_raw\" }"
-      },
-      {
-        "def_id": "DefId { id: 9, name: \"kani::any_raw_internal\" }"
-      },
-      {
-        "def_id": "DefId { id: 6, name: \"kani::assert\" }"
-      },
-      {
-        "def_id": "DefId { id: 11, name: \"kani::kani_intrinsic\" }"
-      }
+      "<u8 as kani::Arbitrary>::any",
+      "kani::any::<u8>",
+      "kani::any_raw::<u8>",
+      "kani::any_raw_internal::<u8>",
+      "kani::assert",
+      "kani::kani_intrinsic::<u8>"
     ]
   },
   {
     "hash": "14450731345693588624745887593183259349",
-    "def_id": "DefId { id: 1, name: \"verify::standard_proof_empty\" }",
     "attrs": [
       "#[kanitool::proof]"
     ],
-    "kind": "Standard",
-    "func": {
-      "name": "verify::standard_proof_empty",
-      "mangled_name": "_ZN15standard_proofs6verify20standard_proof_empty17he1ce2465bbad64d2E",
-      "kind": "Item",
-      "file": "tests/proofs/standard_proofs.rs",
-      "src": "fn standard_proof_empty() {}",
-      "macro_backtrace_len": 0,
-      "macro_backtrace": []
-    },
+    "name": "verify::standard_proof_empty",
+    "file": "tests/proofs/standard_proofs.rs",
     "callees_len": 0,
     "callees": []
   }

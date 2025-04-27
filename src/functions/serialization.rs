@@ -1,5 +1,4 @@
 use super::{cache, utils::SourceCode};
-use crate::cli::skip_serialize_callee_souce_code;
 use rustc_stable_hash::{FromStableHash, SipHasher128Hash, StableHasher, hashers::SipHasher128};
 use serde::Serialize;
 use stable_mir::{CrateDef, mir::mono::Instance};
@@ -72,7 +71,6 @@ fn format_def_id(inst: &Instance) -> String {
 #[derive(Debug, Serialize)]
 pub struct Callee {
     def_id: String,
-    #[serde(skip_serializing_if = "skip_serialize_callee_souce_code")]
     func: SourceCode,
 }
 
@@ -160,6 +158,19 @@ mod conversion {
     impl From<MacroBacktrace> for lib::MacroBacktrace {
         fn from(MacroBacktrace { callsite, defsite }: MacroBacktrace) -> Self {
             Self { callsite, defsite }
+        }
+    }
+
+    impl From<&SerFunction> for lib::SimplifiedSerFunction {
+        fn from(val: &SerFunction) -> Self {
+            Self {
+                hash: val.hash.clone(),
+                attrs: val.attrs.clone(),
+                name: val.func.name.clone(),
+                file: val.func.file.clone(),
+                callees_len: val.callees_len,
+                callees: val.callees.iter().map(|c| c.func.name.clone()).collect(),
+            }
         }
     }
 }
