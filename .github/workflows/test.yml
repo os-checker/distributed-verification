@@ -69,7 +69,7 @@ jobs:
           head -n 5000 core.json
 
       - name: Upload core.json
-        use: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4
         with:
           name: artifact-libcore
           path: core.json
