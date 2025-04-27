@@ -51,6 +51,7 @@ jobs:
       - name: Verify Rust Std
         working-directory: tests/dummy-crate
         env:
+          RUST_LOG: off
           CORE_JSON: ${{ github.workspace }}/core.json
           COMMIT: 5cf80a84afdeceec0d85e790a5cc585ff2e513ed
           KANI_DIR: ${{ github.workspace }}/kani/target/kani
@@ -61,3 +62,6 @@ jobs:
           ls -alh ${{ env.VERIFY_RUST_STD_LIBRARY }}
           cargo r --example verify_rust_std
           cat ${{ env.CORE_JSON }}
+
+      - name: Print core.json
+        run: cat core.json
