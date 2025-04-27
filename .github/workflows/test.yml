@@ -11,6 +11,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+
       - name: Install kani
         uses: .github/workflows/install-kani.yml
 
@@ -20,6 +24,10 @@ jobs:
   verify-rust-std:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+
       - name: Install kani
         uses: .github/workflows/install-kani.yml
 
@@ -53,6 +61,10 @@ jobs:
   kani-list:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+
       - name: Install kani
         uses: .github/workflows/install-kani.yml
 
