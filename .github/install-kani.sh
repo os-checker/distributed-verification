@@ -7,8 +7,8 @@ pushd kani
 ./scripts/setup/ubuntu/install_deps.sh
 cargo build-dev
 
-PATH=$(pwd)/scripts:$PATH
-echo $PATH >>$GITHUB_ENV
+export PATH=$(pwd)/scripts:$PATH
+echo PATH=$PATH >>$GITHUB_ENV
 kani --version
 
 popd
