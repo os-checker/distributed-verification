@@ -1,4 +1,5 @@
 use super::{cache, utils::SourceCode};
+use crate::cli::skip_serialize_callee_souce_code;
 use rustc_stable_hash::{FromStableHash, SipHasher128Hash, StableHasher, hashers::SipHasher128};
 use serde::Serialize;
 use stable_mir::{CrateDef, mir::mono::Instance};
@@ -71,6 +72,7 @@ fn format_def_id(inst: &Instance) -> String {
 #[derive(Debug, Serialize)]
 pub struct Callee {
     def_id: String,
+    #[serde(skip_serializing_if = "skip_serialize_callee_souce_code")]
     func: SourceCode,
 }
 

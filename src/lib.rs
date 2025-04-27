@@ -34,6 +34,7 @@ pub enum Kind {
 #[derive(Debug, Default, Serialize, Deserialize, Clone)]
 pub struct Callee {
     pub def_id: String,
+    #[serde(default)]
     pub func: SourceCode,
 }
 
