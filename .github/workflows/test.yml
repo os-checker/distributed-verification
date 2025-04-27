@@ -11,19 +11,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: 'recursive'
-
       - name: Install kani
-        working-directory: kani
-        run: |
-          ./scripts/setup/ubuntu/install_deps.sh
-          cargo build-dev
-          echo PATH=$(pwd)/scripts:$PATH >> $GITHUB_ENV
-
-      - name: Check kani folder
-        run: kani --version
+        uses: .github/workflows/install-kani.yml
 
       - name: Run tests
         run: cargo test -- --nocapture
@@ -31,19 +20,8 @@ jobs:
   verify-rust-std:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: 'recursive'
-
       - name: Install kani
-        working-directory: kani
-        run: |
-          ./scripts/setup/ubuntu/install_deps.sh
-          cargo build-dev
-          echo PATH=$(pwd)/scripts:$PATH >> $GITHUB_ENV
-
-      - name: Check kani folder
-        run: kani --version
+        uses: .github/workflows/install-kani.yml
 
       - name: Install distributed-verification
         run: cargo install --path . --locked
@@ -53,12 +31,9 @@ jobs:
         env:
           RUST_LOG: off
           CORE_JSON: ${{ github.workspace }}/core.json
-          COMMIT: 5cf80a84afdeceec0d85e790a5cc585ff2e513ed
           KANI_DIR: ${{ github.workspace }}/kani/target/kani
           VERIFY_RUST_STD_LIBRARY: ${{ github.workspace }}/tests/dummy-crate/verify-rust-std/library
         run: |
-          git clone https://github.com/model-checking/verify-rust-std.git --recursive
-          cd verify-rust-std && git checkout 5cf80a84afdeceec0d85e790a5cc585ff2e513ed && cd ..
           ls -alh ${{ env.VERIFY_RUST_STD_LIBRARY }}
           cargo r --example verify_rust_std
           cat ${{ env.CORE_JSON }}
@@ -74,3 +49,27 @@ jobs:
           name: artifact-libcore
           path: core.json
           compression-level: 9
+
+  kani-list:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install kani
+        uses: .github/workflows/install-kani.yml
+
+      - name: Kani list
+        working-directory: tests/dummy-crate/verify-rust-std
+        env:
+          UNSTABLE_ARGS: -Z function-contracts -Z mem-predicates -Z float-lib -Z c-ffi -Z loop-contracts
+        run: kani list -Zlist ${{ env.UNSTABLE_ARGS }} --std ./library --format=json
+
+      - name: View list
+        working-directory: tests/dummy-crate/verify-rust-std
+        run: ls -alh kani-list.json && cat kani-list.json
+
+      - name: Upload kani-list.json
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifact-kani-list
+          path: kani-list.json
+          compression-level: 9
+

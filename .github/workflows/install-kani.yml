@@ -1,0 +1,30 @@
+name: Install kani
+
+on:
+  workflow_call:
+
+jobs:
+  install-kani:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+
+      - name: Install kani
+        working-directory: kani
+        run: |
+          ./scripts/setup/ubuntu/install_deps.sh
+          cargo build-dev
+          echo PATH=$(pwd)/scripts:$PATH >> $GITHUB_ENV
+
+      - name: Check kani folder
+        run: kani --version
+
+      - name: Clone verify-rust-std
+        working-directory: tests/dummy-crate
+        env:
+          COMMIT: 5cf80a84afdeceec0d85e790a5cc585ff2e513ed
+        run: |
+          git clone https://github.com/model-checking/verify-rust-std.git --recursive
+          cd verify-rust-std && git checkout ${{ env.COMMIT }}
