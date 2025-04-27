@@ -6,7 +6,6 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
-  VERIFY_RUST_STD_COMMIT: 5cf80a84afdeceec0d85e790a5cc585ff2e513ed
 
 jobs:
   test:
@@ -17,7 +16,7 @@ jobs:
           submodules: 'recursive'
 
       - name: Install kani
-        uses: sh ./.github/install-kani.sh
+        run: sh ./.github/install-kani.sh
 
       - name: Run tests
         run: cargo test -- --nocapture
@@ -30,7 +29,7 @@ jobs:
           submodules: 'recursive'
 
       - name: Install kani
-        uses: sh ./.github/install-kani.sh
+        run: sh ./.github/install-kani.sh
 
       - name: Install distributed-verification
         run: cargo install --path . --locked
@@ -67,7 +66,7 @@ jobs:
           submodules: 'recursive'
 
       - name: Install kani
-        uses: sh ./.github/install-kani.sh
+        run: sh ./.github/install-kani.sh
 
       - name: Kani list
         working-directory: tests/dummy-crate/verify-rust-std
