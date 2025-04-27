@@ -1,6 +1,6 @@
 [
   {
-    "hash": "304736074877460803410466733508053236623",
+    "hash": "21303131552843976110301461263347593874",
     "def_id": "DefId { id: 0, name: \"verify::f\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -8,7 +8,7 @@
     "kind": "Standard",
     "func": {
       "name": "verify::f",
-      "mangled_name": "_ZN5proof6verify1f17h452f3f200e19af70E",
+      "mangled_name": "_ZN5proof6verify1f17h3b3f982dedcbabb5E",
       "kind": "Item",
       "file": "tests/compare/proof.rs",
       "src": "pub fn f() {\n        let a = 1;\n        assert_eq!(a + 1, 2);\n    }",
@@ -21,7 +21,7 @@
         "def_id": "DefId { id: 2, name: \"kani::assert\" }",
         "func": {
           "name": "kani::assert",
-          "mangled_name": "_ZN4kani6assert17hcc89e8c2e0f13823E",
+          "mangled_name": "_ZN4kani6assert17h914a947307b610ddE",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
@@ -41,7 +41,7 @@
     ]
   },
   {
-    "hash": "1823733440499849890817331837198684894215",
+    "hash": "114858755609795824612269758117585426409",
     "def_id": "DefId { id: 1, name: \"verify::g\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -49,7 +49,7 @@
     "kind": "Standard",
     "func": {
       "name": "verify::g",
-      "mangled_name": "_ZN5proof6verify1g17h5fcfac3fd6095cd2E",
+      "mangled_name": "_ZN5proof6verify1g17heddc692da7f98ab5E",
       "kind": "Item",
       "file": "tests/compare/proof.rs",
       "src": "pub fn g() {\n        let a = 1;\n        assert_eq!(a + 1, 2);\n    }",
@@ -62,7 +62,7 @@
         "def_id": "DefId { id: 2, name: \"kani::assert\" }",
         "func": {
           "name": "kani::assert",
-          "mangled_name": "_ZN4kani6assert17hcc89e8c2e0f13823E",
+          "mangled_name": "_ZN4kani6assert17h914a947307b610ddE",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",

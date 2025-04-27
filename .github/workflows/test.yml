@@ -27,3 +27,41 @@ jobs:
 
       - name: Run tests
         run: cargo test -- --nocapture
+
+  verify-rust-std:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+
+      - name: Install kani
+        working-directory: kani
+        run: |
+          ./scripts/setup/ubuntu/install_deps.sh
+          cargo build-dev
+          echo PATH=$(pwd)/scripts:$PATH >> $GITHUB_ENV
+
+      - name: Check kani folder
+        run: kani --version
+
+      - name: Install distributed-verification
+        run: cargo install --path . --locked
+
+      - name: Verify Rust Std
+        working-directory: tests/dummy-crate
+        env:
+          RUST_LOG: off
+          CORE_JSON: ${{ github.workspace }}/core.json
+          COMMIT: 5cf80a84afdeceec0d85e790a5cc585ff2e513ed
+          KANI_DIR: ${{ github.workspace }}/kani/target/kani
+          VERIFY_RUST_STD_LIBRARY: ${{ github.workspace }}/tests/dummy-crate/verify-rust-std/library
+        run: |
+          git clone https://github.com/model-checking/verify-rust-std.git --recursive
+          cd verify-rust-std && git checkout 5cf80a84afdeceec0d85e790a5cc585ff2e513ed && cd ..
+          ls -alh ${{ env.VERIFY_RUST_STD_LIBRARY }}
+          cargo r --example verify_rust_std
+          cat ${{ env.CORE_JSON }}
+
+      - name: Print core.json
+        run: ls -alh core.json && head -n 5000 core.json # core.json is large

@@ -1,6 +1,6 @@
 [
   {
-    "hash": "295561461510446177213120456631745124929",
+    "hash": "41582986283704132878062549597684826483",
     "def_id": "DefId { id: 0, name: \"verify::proof1\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -8,7 +8,7 @@
     "kind": "Standard",
     "func": {
       "name": "verify::proof1",
-      "mangled_name": "_ZN27gen_proofs_by_nested_macros6verify6proof117h4d153120b87a21d4E",
+      "mangled_name": "_ZN27gen_proofs_by_nested_macros6verify6proof117h03f220c2c919c810E",
       "kind": "Item",
       "file": "tests/proofs/gen_proofs_by_nested_macros.rs",
       "src": "fn",
@@ -28,7 +28,7 @@
     "callees": []
   },
   {
-    "hash": "38059499240303640127038416526214138642",
+    "hash": "3715710769455654796682612876069204290",
     "def_id": "DefId { id: 1, name: \"verify::proof2\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -36,7 +36,7 @@
     "kind": "Standard",
     "func": {
       "name": "verify::proof2",
-      "mangled_name": "_ZN27gen_proofs_by_nested_macros6verify6proof217hea16056619071673E",
+      "mangled_name": "_ZN27gen_proofs_by_nested_macros6verify6proof217h7e38d46e6d527c44E",
       "kind": "Item",
       "file": "tests/proofs/gen_proofs_by_nested_macros.rs",
       "src": "fn",
@@ -56,7 +56,7 @@
     "callees": []
   },
   {
-    "hash": "1751087824328261531911599757593258663101",
+    "hash": "467879827405170862511365878159558907664",
     "def_id": "DefId { id: 2, name: \"verify::proof3\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -64,7 +64,7 @@
     "kind": "Standard",
     "func": {
       "name": "verify::proof3",
-      "mangled_name": "_ZN27gen_proofs_by_nested_macros6verify6proof317h4f8f69e505b12d59E",
+      "mangled_name": "_ZN27gen_proofs_by_nested_macros6verify6proof317he5d9440688aebe97E",
       "kind": "Item",
       "file": "tests/proofs/gen_proofs_by_nested_macros.rs",
       "src": "fn",

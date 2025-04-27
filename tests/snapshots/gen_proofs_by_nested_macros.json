@@ -1,6 +1,6 @@
 [
   {
-    "hash": "295561461510446177213120456631745124929",
+    "hash": "41582986283704132878062549597684826483",
     "def_id": "DefId { id: 0, name: \"verify::proof1\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -8,7 +8,7 @@
     "kind": "Standard",
     "func": {
       "name": "verify::proof1",
-      "mangled_name": "_ZN27gen_proofs_by_nested_macros6verify6proof117h4d153120b87a21d4E",
+      "mangled_name": "_ZN27gen_proofs_by_nested_macros6verify6proof117h03f220c2c919c810E",
       "kind": "Item",
       "file": "tests/proofs/gen_proofs_by_nested_macros.rs",
       "src": "fn",
@@ -30,7 +30,7 @@
         "def_id": "DefId { id: 6, name: \"<u8 as kani::Arbitrary>::any\" }",
         "func": {
           "name": "<u8 as kani::Arbitrary>::any",
-          "mangled_name": "_ZN38_$LT$u8$u20$as$u20$kani..Arbitrary$GT$3any17hfd29445e7b2cdd95E",
+          "mangled_name": "_ZN38_$LT$u8$u20$as$u20$kani..Arbitrary$GT$3any17h3483b75e4834d09bE",
           "kind": "Item",
           "file": "kani/library/kani_core/src/arbitrary.rs",
           "src": "fn any() -> Self {\n                        // This size_of call does not use generic_const_exprs feature. It's inside a macro, and Self isn't generic.\n                        unsafe { crate::kani::any_raw_internal::<Self>() }\n                    }",
@@ -55,7 +55,7 @@
         "def_id": "DefId { id: 3, name: \"kani::any\" }",
         "func": {
           "name": "kani::any::<u8>",
-          "mangled_name": "_ZN4kani3any17h800d752a2e66bb13E",
+          "mangled_name": "_ZN4kani3any17h3ad0fa861975ea1eE",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub fn any<T: Arbitrary>() -> T {\n            T::any()\n        }",
@@ -76,7 +76,7 @@
         "def_id": "DefId { id: 8, name: \"kani::any_raw\" }",
         "func": {
           "name": "kani::any_raw::<u8>",
-          "mangled_name": "_ZN4kani7any_raw17hef764f0401a0f588E",
+          "mangled_name": "_ZN4kani7any_raw17h8d5be491a279ce95E",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "fn any_raw<T: Copy>() -> T {\n            kani_intrinsic()\n        }",
@@ -97,7 +97,7 @@
         "def_id": "DefId { id: 7, name: \"kani::any_raw_internal\" }",
         "func": {
           "name": "kani::any_raw_internal::<u8>",
-          "mangled_name": "_ZN4kani16any_raw_internal17h86fbfff4755b5586E",
+          "mangled_name": "_ZN4kani16any_raw_internal17hb61b2b7694b0c241E",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "unsafe fn any_raw_internal<T: Copy>() -> T {\n            any_raw::<T>()\n        }",
@@ -118,7 +118,7 @@
         "def_id": "DefId { id: 4, name: \"kani::assert\" }",
         "func": {
           "name": "kani::assert",
-          "mangled_name": "_ZN4kani6assert17hcc89e8c2e0f13823E",
+          "mangled_name": "_ZN4kani6assert17h914a947307b610ddE",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
@@ -139,7 +139,7 @@
         "def_id": "DefId { id: 9, name: \"kani::kani_intrinsic\" }",
         "func": {
           "name": "kani::kani_intrinsic::<u8>",
-          "mangled_name": "_ZN4kani14kani_intrinsic17h4c94b2d1e6f52b91E",
+          "mangled_name": "_ZN4kani14kani_intrinsic17h0a1afc021956ed9fE",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "fn kani_intrinsic<T>() -> T {\n            #[allow(clippy::empty_loop)]\n            loop {}\n        }",
@@ -159,7 +159,7 @@
     ]
   },
   {
-    "hash": "38059499240303640127038416526214138642",
+    "hash": "3715710769455654796682612876069204290",
     "def_id": "DefId { id: 1, name: \"verify::proof2\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -167,7 +167,7 @@
     "kind": "Standard",
     "func": {
       "name": "verify::proof2",
-      "mangled_name": "_ZN27gen_proofs_by_nested_macros6verify6proof217hea16056619071673E",
+      "mangled_name": "_ZN27gen_proofs_by_nested_macros6verify6proof217h7e38d46e6d527c44E",
       "kind": "Item",
       "file": "tests/proofs/gen_proofs_by_nested_macros.rs",
       "src": "fn",
@@ -189,7 +189,7 @@
         "def_id": "DefId { id: 6, name: \"<u8 as kani::Arbitrary>::any\" }",
         "func": {
           "name": "<u8 as kani::Arbitrary>::any",
-          "mangled_name": "_ZN38_$LT$u8$u20$as$u20$kani..Arbitrary$GT$3any17hfd29445e7b2cdd95E",
+          "mangled_name": "_ZN38_$LT$u8$u20$as$u20$kani..Arbitrary$GT$3any17h3483b75e4834d09bE",
           "kind": "Item",
           "file": "kani/library/kani_core/src/arbitrary.rs",
           "src": "fn any() -> Self {\n                        // This size_of call does not use generic_const_exprs feature. It's inside a macro, and Self isn't generic.\n                        unsafe { crate::kani::any_raw_internal::<Self>() }\n                    }",
@@ -214,7 +214,7 @@
         "def_id": "DefId { id: 3, name: \"kani::any\" }",
         "func": {
           "name": "kani::any::<u8>",
-          "mangled_name": "_ZN4kani3any17h800d752a2e66bb13E",
+          "mangled_name": "_ZN4kani3any17h3ad0fa861975ea1eE",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub fn any<T: Arbitrary>() -> T {\n            T::any()\n        }",
@@ -235,7 +235,7 @@
         "def_id": "DefId { id: 8, name: \"kani::any_raw\" }",
         "func": {
           "name": "kani::any_raw::<u8>",
-          "mangled_name": "_ZN4kani7any_raw17hef764f0401a0f588E",
+          "mangled_name": "_ZN4kani7any_raw17h8d5be491a279ce95E",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "fn any_raw<T: Copy>() -> T {\n            kani_intrinsic()\n        }",
@@ -256,7 +256,7 @@
         "def_id": "DefId { id: 7, name: \"kani::any_raw_internal\" }",
         "func": {
           "name": "kani::any_raw_internal::<u8>",
-          "mangled_name": "_ZN4kani16any_raw_internal17h86fbfff4755b5586E",
+          "mangled_name": "_ZN4kani16any_raw_internal17hb61b2b7694b0c241E",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "unsafe fn any_raw_internal<T: Copy>() -> T {\n            any_raw::<T>()\n        }",
@@ -277,7 +277,7 @@
         "def_id": "DefId { id: 4, name: \"kani::assert\" }",
         "func": {
           "name": "kani::assert",
-          "mangled_name": "_ZN4kani6assert17hcc89e8c2e0f13823E",
+          "mangled_name": "_ZN4kani6assert17h914a947307b610ddE",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
@@ -298,7 +298,7 @@
         "def_id": "DefId { id: 9, name: \"kani::kani_intrinsic\" }",
         "func": {
           "name": "kani::kani_intrinsic::<u8>",
-          "mangled_name": "_ZN4kani14kani_intrinsic17h4c94b2d1e6f52b91E",
+          "mangled_name": "_ZN4kani14kani_intrinsic17h0a1afc021956ed9fE",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "fn kani_intrinsic<T>() -> T {\n            #[allow(clippy::empty_loop)]\n            loop {}\n        }",
@@ -318,7 +318,7 @@
     ]
   },
   {
-    "hash": "1751087824328261531911599757593258663101",
+    "hash": "467879827405170862511365878159558907664",
     "def_id": "DefId { id: 2, name: \"verify::proof3\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -326,7 +326,7 @@
     "kind": "Standard",
     "func": {
       "name": "verify::proof3",
-      "mangled_name": "_ZN27gen_proofs_by_nested_macros6verify6proof317h4f8f69e505b12d59E",
+      "mangled_name": "_ZN27gen_proofs_by_nested_macros6verify6proof317he5d9440688aebe97E",
       "kind": "Item",
       "file": "tests/proofs/gen_proofs_by_nested_macros.rs",
       "src": "fn",
@@ -348,7 +348,7 @@
         "def_id": "DefId { id: 6, name: \"<u8 as kani::Arbitrary>::any\" }",
         "func": {
           "name": "<u8 as kani::Arbitrary>::any",
-          "mangled_name": "_ZN38_$LT$u8$u20$as$u20$kani..Arbitrary$GT$3any17hfd29445e7b2cdd95E",
+          "mangled_name": "_ZN38_$LT$u8$u20$as$u20$kani..Arbitrary$GT$3any17h3483b75e4834d09bE",
           "kind": "Item",
           "file": "kani/library/kani_core/src/arbitrary.rs",
           "src": "fn any() -> Self {\n                        // This size_of call does not use generic_const_exprs feature. It's inside a macro, and Self isn't generic.\n                        unsafe { crate::kani::any_raw_internal::<Self>() }\n                    }",
@@ -373,7 +373,7 @@
         "def_id": "DefId { id: 3, name: \"kani::any\" }",
         "func": {
           "name": "kani::any::<u8>",
-          "mangled_name": "_ZN4kani3any17h800d752a2e66bb13E",
+          "mangled_name": "_ZN4kani3any17h3ad0fa861975ea1eE",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub fn any<T: Arbitrary>() -> T {\n            T::any()\n        }",
@@ -394,7 +394,7 @@
         "def_id": "DefId { id: 8, name: \"kani::any_raw\" }",
         "func": {
           "name": "kani::any_raw::<u8>",
-          "mangled_name": "_ZN4kani7any_raw17hef764f0401a0f588E",
+          "mangled_name": "_ZN4kani7any_raw17h8d5be491a279ce95E",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "fn any_raw<T: Copy>() -> T {\n            kani_intrinsic()\n        }",
@@ -415,7 +415,7 @@
         "def_id": "DefId { id: 7, name: \"kani::any_raw_internal\" }",
         "func": {
           "name": "kani::any_raw_internal::<u8>",
-          "mangled_name": "_ZN4kani16any_raw_internal17h86fbfff4755b5586E",
+          "mangled_name": "_ZN4kani16any_raw_internal17hb61b2b7694b0c241E",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "unsafe fn any_raw_internal<T: Copy>() -> T {\n            any_raw::<T>()\n        }",
@@ -436,7 +436,7 @@
         "def_id": "DefId { id: 4, name: \"kani::assert\" }",
         "func": {
           "name": "kani::assert",
-          "mangled_name": "_ZN4kani6assert17hcc89e8c2e0f13823E",
+          "mangled_name": "_ZN4kani6assert17h914a947307b610ddE",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
@@ -457,7 +457,7 @@
         "def_id": "DefId { id: 9, name: \"kani::kani_intrinsic\" }",
         "func": {
           "name": "kani::kani_intrinsic::<u8>",
-          "mangled_name": "_ZN4kani14kani_intrinsic17h4c94b2d1e6f52b91E",
+          "mangled_name": "_ZN4kani14kani_intrinsic17h0a1afc021956ed9fE",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "fn kani_intrinsic<T>() -> T {\n            #[allow(clippy::empty_loop)]\n            loop {}\n        }",
