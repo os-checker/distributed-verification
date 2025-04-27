@@ -583,13 +583,17 @@ impl CallGraph {
         for node in nodes {
             let item = &node.0.item;
             match item {
-                MonoItem::Fn(inst) => _ = callees.insert(*inst),
+                MonoItem::Fn(inst) => {
+                    if callees.insert(*inst) {
+                        // first insert the function instance
+                        self.recursive_callees(item, callees);
+                    }
+                }
                 // TODO: only consider functions items.
                 // Functions may be in statics, but need testing to comfirm.
                 MonoItem::Static(_) => (),
-                _ => continue,
+                _ => (),
             }
-            self.recursive_callees(item, callees);
         }
     }
 }
