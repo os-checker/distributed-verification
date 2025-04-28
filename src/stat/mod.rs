@@ -1,119 +1,72 @@
+use distributed_verification::statistics::*;
 use indexmap::IndexMap;
-use serde::{Deserialize, Serialize};
 use stable_mir::CrateDef;
 
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
-pub struct Stat {
-    local: LocalCrateFnDefs,
-    external: ExternalCrates,
+fn new_stat() -> Stat {
+    Stat { local: new_local_crate(), external: new_external_crates() }
 }
 
-impl Stat {
-    pub fn new() -> Self {
-        Stat { local: LocalCrateFnDefs::new(), external: ExternalCrates::new() }
-    }
+fn new_external_crates() -> ExternalCrates {
+    let external_crates = stable_mir::external_crates();
+    let count = external_crates.len();
+    // // NOTE: crate name may duplicate, like std will appear twice
+    // let crates = external_crates.into_iter().map(|krate| krate.name).sorted().collect();
+    ExternalCrates { count }
 }
 
-/// External crates excluding the local one.
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
-struct ExternalCrates {
-    /// Count of external crates.
-    count: usize,
-    // /// Sorted by name.
-    // crates: Vec<String>,
-}
+fn new_local_crate() -> LocalCrateFnDefs {
+    let mut this = LocalCrateFnDefs::default();
 
-impl ExternalCrates {
-    fn new() -> Self {
-        let external_crates = stable_mir::external_crates();
-        let count = external_crates.len();
-        // // NOTE: crate name may duplicate, like std will appear twice
-        // let crates = external_crates.into_iter().map(|krate| krate.name).sorted().collect();
-        ExternalCrates { count }
-    }
-}
+    // for krate in stable_mir::find_crates("core") {
+    let krate = stable_mir::local_crate();
+    let fn_defs = krate.fn_defs();
+    this.count.total = fn_defs.len();
 
-/// Metrics based on `Vec<FnDef>`.
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
-struct LocalCrateFnDefs {
-    count: CountFunctions,
-    kanitools: KaniTools,
-}
+    for fn_def in fn_defs {
+        let name = fn_def.name();
+        let attrs = fn_def.all_tool_attrs();
+        if attrs.is_empty() {
+            continue;
+        }
+        this.count.all_tool_attrs += 1;
 
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
-struct KaniTools {
-    /// The FnDef count in each attribute from annotated_functions.
-    count: IndexMap<String, usize>,
-    /// FnDefs that are annotated with `#[kanitools]`, group by attributes.
-    /// A function may appear under multiple attributes.
-    annotated_functions: IndexMap<String, Vec<String>>,
-}
+        // Need robust tokens to recognize attributes
+        // cc https://github.com/rust-lang/project-stable-mir/issues/83
+        let kanitools_attrs = attrs
+            .iter()
+            .filter_map(|attr| {
+                let attr = attr.as_str();
+                attr.starts_with("#[kanitool::").then_some(attr)
+            })
+            .collect::<Vec<_>>();
+        if kanitools_attrs.is_empty() {
+            continue;
+        }
+        this.count.kanitools += 1;
 
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
-struct CountFunctions {
-    /// Count of FnDefs. A FnDef is from like a normal function, method, or that in a trait.
-    total: usize,
-    /// FnDefs that annotated with tool attributes, including kanitools, clippy, and others.
-    all_tool_attrs: usize,
-    /// FnDefs annotated with `#[kanitools::*]`.
-    kanitools: usize,
-}
-
-impl LocalCrateFnDefs {
-    fn new() -> Self {
-        let mut this = Self::default();
-
-        // for krate in stable_mir::find_crates("core") {
-        let krate = stable_mir::local_crate();
-        let fn_defs = krate.fn_defs();
-        this.count.total = fn_defs.len();
-
-        for fn_def in fn_defs {
-            let name = fn_def.name();
-            let attrs = fn_def.all_tool_attrs();
-            if attrs.is_empty() {
-                continue;
-            }
-            this.count.all_tool_attrs += 1;
-
-            // Need robust tokens to recognize attributes
-            // cc https://github.com/rust-lang/project-stable-mir/issues/83
-            let kanitools_attrs = attrs
-                .iter()
-                .filter_map(|attr| {
-                    let attr = attr.as_str();
-                    attr.starts_with("#[kanitool::").then_some(attr)
-                })
-                .collect::<Vec<_>>();
-            if kanitools_attrs.is_empty() {
-                continue;
-            }
-            this.count.kanitools += 1;
-
-            for attr in &kanitools_attrs {
-                let attr = parse_kanitool(attr);
-                if let Some(v) = this.kanitools.annotated_functions.get_mut(attr) {
-                    v.push(name.clone());
-                } else {
-                    this.kanitools.annotated_functions.insert(attr.to_owned(), vec![name.clone()]);
-                }
+        for attr in &kanitools_attrs {
+            let attr = parse_kanitool(attr);
+            if let Some(v) = this.kanitools.annotated_functions.get_mut(attr) {
+                v.push(name.clone());
+            } else {
+                this.kanitools.annotated_functions.insert(attr.to_owned(), vec![name.clone()]);
             }
         }
-
-        this.kanitools.annotated_functions.sort_unstable_keys();
-        this.kanitools.annotated_functions.values_mut().for_each(|v| v.sort_unstable());
-        this.kanitools.count = this
-            .kanitools
-            .annotated_functions
-            .iter()
-            .map(|(k, v)| (k.to_owned(), v.len()))
-            .collect::<IndexMap<_, _>>();
-        this
     }
+
+    this.kanitools.annotated_functions.sort_unstable_keys();
+    this.kanitools.annotated_functions.values_mut().for_each(|v| v.sort_unstable());
+    this.kanitools.count = this
+        .kanitools
+        .annotated_functions
+        .iter()
+        .map(|(k, v)| (k.to_owned(), v.len()))
+        .collect::<IndexMap<_, _>>();
+    this
 }
 
 pub fn analyze() -> crate::Result<()> {
-    let stat = Stat::new();
+    let stat = new_stat();
     dbg!(&stat);
     Ok(())
 }

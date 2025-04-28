@@ -7,6 +7,7 @@ extern crate tracing;
 extern crate eyre;
 
 pub mod kani_list;
+pub mod statistics;
 
 /// A kani proof with its file source, attributes, and raw function content.
 #[derive(Debug, Default, Serialize, Deserialize, Clone)]
