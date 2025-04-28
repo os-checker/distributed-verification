@@ -40,6 +40,10 @@ struct Args {
     #[arg(long, default_value_t = false)]
     continue_compilation: bool,
 
+    /// Emit statistics for proofs as an alternative JSON.
+    #[arg(long, default_value_t = false)]
+    stat: bool,
+
     /// Args for rustc. `distributed-verification -- [rustc_args]`
     /// No need to pass rustc as the first argument.
     rustc_args: Vec<String>,
@@ -84,6 +88,7 @@ impl Args {
             kani_list,
             simplify_json: self.simplify_json,
             continue_compilation: self.continue_compilation,
+            stat: self.stat,
             rustc_args,
         })
     }
@@ -94,5 +99,6 @@ pub struct Run {
     pub kani_list: Option<KaniList>,
     pub simplify_json: bool,
     pub continue_compilation: bool,
+    pub stat: bool,
     pub rustc_args: Vec<String>,
 }
