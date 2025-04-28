@@ -31,11 +31,12 @@ fn main() -> Result<()> {
     logger::init();
     let mut run = cli::parse()?;
     let rustc_args = std::mem::take(&mut run.rustc_args);
+    let stat = std::mem::take(&mut run.stat);
     let run = run;
 
     let res = run_with_tcx!(rustc_args, move |tcx| {
         let continue_compilation = run.continue_compilation;
-        let res = if run.stat { stat::analyze() } else { analyze_proofs(tcx, run) };
+        let res = if let Some(out) = stat { stat::analyze(&out) } else { analyze_proofs(tcx, run) };
 
         if continue_compilation {
             ControlFlow::<Result<()>, Result<()>>::Continue(res)

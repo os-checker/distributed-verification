@@ -41,8 +41,9 @@ struct Args {
     continue_compilation: bool,
 
     /// Emit statistics for proofs as an alternative JSON.
-    #[arg(long, default_value_t = false)]
-    stat: bool,
+    /// No normal JSON is emitted.
+    #[arg(long)]
+    stat: Option<String>,
 
     /// Args for rustc. `distributed-verification -- [rustc_args]`
     /// No need to pass rustc as the first argument.
@@ -99,6 +100,6 @@ pub struct Run {
     pub kani_list: Option<KaniList>,
     pub simplify_json: bool,
     pub continue_compilation: bool,
-    pub stat: bool,
+    pub stat: Option<String>,
     pub rustc_args: Vec<String>,
 }

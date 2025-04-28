@@ -1,4 +1,5 @@
 use distributed_verification::statistics::*;
+use eyre::Context;
 use indexmap::IndexMap;
 use stable_mir::CrateDef;
 
@@ -65,10 +66,11 @@ fn new_local_crate() -> LocalCrateFnDefs {
     this
 }
 
-pub fn analyze() -> crate::Result<()> {
+pub fn analyze(out: &str) -> crate::Result<()> {
     let stat = new_stat();
-    dbg!(&stat);
-    Ok(())
+    let file = std::fs::File::create(out)?;
+    serde_json::to_writer_pretty(file, &stat)
+        .with_context(|| format!("Failed to write Stat to {out} file."))
 }
 
 // From verify-rust-std CI:
