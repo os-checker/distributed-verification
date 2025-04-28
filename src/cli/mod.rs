@@ -1,8 +1,12 @@
+use crate::Result;
 use clap::Parser;
-use distributed_verification::kani_path;
+use distributed_verification::{
+    kani_list::{KaniList, read_kani_list},
+    kani_path,
+};
 
 /// Parse cli arguments.
-pub fn parse() -> Run {
+pub fn parse() -> Result<Run> {
     Args::parse().into_args()
 }
 
@@ -24,8 +28,8 @@ struct Args {
 
     /// Run `kani list` after the analysis, and compare proofs to ensure
     /// analyzed proofs are identical to ones from kani list.
-    #[arg(long, default_value_t = false)]
-    check_kani_list: bool,
+    #[arg(long)]
+    check_kani_list: Option<String>,
 
     /// Only emit def_id for callees in JSON.
     #[arg(long, default_value_t = false)]
@@ -37,8 +41,8 @@ struct Args {
 }
 
 impl Args {
-    pub fn into_args(self) -> Run {
-        let mut args = if self.no_kani_args {
+    pub fn into_args(self) -> Result<Run> {
+        let mut rustc_args = if self.no_kani_args {
             vec!["rustc".to_owned()]
         } else {
             let kani_path = kani_path();
@@ -66,20 +70,17 @@ impl Args {
                 .map(String::from),
             )
         };
-        args.extend(self.rustc_args);
+        rustc_args.extend(self.rustc_args);
 
-        Run {
-            json: self.json,
-            check_kani_list: self.check_kani_list,
-            simplify_json: self.simplify_json,
-            rustc_args: args,
-        }
+        let kani_list = self.check_kani_list.map(|path| read_kani_list(&path)).transpose()?;
+
+        Ok(Run { json: self.json, kani_list, simplify_json: self.simplify_json, rustc_args })
     }
 }
 
 pub struct Run {
     pub json: Option<String>,
-    pub check_kani_list: bool,
+    pub kani_list: Option<KaniList>,
     pub simplify_json: bool,
     pub rustc_args: Vec<String>,
 }

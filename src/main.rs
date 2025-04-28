@@ -12,9 +12,9 @@ extern crate rustc_span;
 extern crate rustc_stable_hash;
 extern crate stable_mir;
 
-use distributed_verification::SimplifiedSerFunction;
+use distributed_verification::{SimplifiedSerFunction, kani_list::check_proofs};
+use eyre::Result;
 use functions::{clear_rustc_ctx, set_rustc_ctx};
-use rustc_middle::ty::TyCtxt;
 
 mod cli;
 mod functions;
@@ -23,9 +23,9 @@ mod logger;
 #[macro_use]
 extern crate tracing;
 
-fn main() {
+fn main() -> Result<()> {
     logger::init();
-    let run = cli::parse();
+    let run = cli::parse()?;
 
     let res = run_with_tcx!(run.rustc_args, |tcx| {
         use eyre::{Context, Ok};
@@ -53,6 +53,12 @@ fn main() {
 
         clear_rustc_ctx();
 
+        let output = functions::vec_convertion(output);
+        let mut check_kani_list = Ok(());
+        if let Some(kani_list) = run.kani_list {
+            check_kani_list = check_proofs(&kani_list, &output);
+        }
+
         let res = || {
             let writer: Box<dyn std::io::Write>;
             match &run.json {
@@ -76,22 +82,15 @@ fn main() {
             .with_context(|| "Failed to write proof json")
         };
 
+        // FIXME: Break with error
         res().unwrap();
-
-        if run.check_kani_list {
-            check_kani_list(output, tcx);
-        }
+        check_kani_list.unwrap();
 
         // Stop emitting artifact for the source code being compiled.
         ControlFlow::<(), ()>::Break(())
     });
     // rustc_smir uses `Err(CompilerError::Interrupted)` to represent ControlFlow::Break.
     assert!(res == Err(stable_mir::CompilerError::Interrupted(())), "Unexpected {res:?}");
-}
 
-fn check_kani_list(output: Vec<functions::SerFunction>, tcx: TyCtxt) {
-    let output: Vec<distributed_verification::SerFunction> = functions::vec_convertion(output);
-    let crate_file = tcx.sess.local_crate_source_file().expect("No real crate root file.");
-    let crate_file = crate_file.local_path().unwrap().to_str().unwrap();
-    distributed_verification::kani_list::check(crate_file, &output);
+    Ok(())
 }
