@@ -21,6 +21,9 @@ fn validate_kani_list_json() -> Result<()> {
         let text = cmd(&[path]);
         let v_ser_function: Vec<SerFunction> = serde_json::from_str(&text).unwrap();
         check_proofs(&kani_list, &v_ser_function).unwrap();
+
+        // test `distributed-verification --check-kani-list`
+        _ = cmd(&[path, "--check-kani-list=kani-list.json"]);
     }
 
     Ok(())
