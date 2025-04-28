@@ -35,6 +35,11 @@ struct Args {
     #[arg(long, default_value_t = false)]
     simplify_json: bool,
 
+    /// Continue compilation. Default to false, meaning compilation stops
+    /// once proofs are analyzed.
+    #[arg(long, default_value_t = false)]
+    continue_compilation: bool,
+
     /// Args for rustc. `distributed-verification -- [rustc_args]`
     /// No need to pass rustc as the first argument.
     rustc_args: Vec<String>,
@@ -74,7 +79,13 @@ impl Args {
 
         let kani_list = self.check_kani_list.map(|path| read_kani_list(&path)).transpose()?;
 
-        Ok(Run { json: self.json, kani_list, simplify_json: self.simplify_json, rustc_args })
+        Ok(Run {
+            json: self.json,
+            kani_list,
+            simplify_json: self.simplify_json,
+            continue_compilation: self.continue_compilation,
+            rustc_args,
+        })
     }
 }
 
@@ -82,5 +93,6 @@ pub struct Run {
     pub json: Option<String>,
     pub kani_list: Option<KaniList>,
     pub simplify_json: bool,
+    pub continue_compilation: bool,
     pub rustc_args: Vec<String>,
 }

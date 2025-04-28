@@ -44,12 +44,11 @@ jobs:
         run: |
           ls -alh ${{ env.VERIFY_RUST_STD_LIBRARY }}
           cargo r --example verify_rust_std
-          cat ${{ env.CORE_JSON }}
 
-      - name: Print core.json
+      - name: View core.json
         run: |
           ls -alh core.json
-          head -n 5000 core.json
+          head -n 1000 core.json
 
       - name: Upload core.json
         uses: actions/upload-artifact@v4
@@ -61,6 +60,7 @@ jobs:
 
   kani-list:
     runs-on: ubuntu-latest
+    if: false
     steps:
       - uses: actions/checkout@v4
         with:

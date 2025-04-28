@@ -143,6 +143,7 @@ fn build_core(args: Vec<String>) {
         [
             "--no-kani-args",
             "--simplify-json",
+            "--continue-compilation",
             "--json",
             core_json.as_deref().unwrap_or(CORE_JSON),
             "--",

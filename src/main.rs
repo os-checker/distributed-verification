@@ -13,7 +13,7 @@ extern crate rustc_stable_hash;
 extern crate stable_mir;
 
 use distributed_verification::{SimplifiedSerFunction, kani_list::check_proofs};
-use eyre::Result;
+use eyre::{Context, Result};
 use functions::{clear_rustc_ctx, set_rustc_ctx};
 
 mod cli;
@@ -22,14 +22,14 @@ mod logger;
 
 #[macro_use]
 extern crate tracing;
+#[macro_use]
+extern crate eyre;
 
 fn main() -> Result<()> {
     logger::init();
     let run = cli::parse()?;
 
     let res = run_with_tcx!(run.rustc_args, |tcx| {
-        use eyre::{Context, Ok};
-
         // let crates = stable_mir::external_crates();
         // dbg!(crates.len(), crates);
         // for krate in stable_mir::find_crates("core") {
@@ -54,17 +54,17 @@ fn main() -> Result<()> {
         clear_rustc_ctx();
 
         let output = functions::vec_convertion(output);
-        let mut check_kani_list = Ok(());
+        let mut res_check_kani_list = Ok(());
         if let Some(kani_list) = run.kani_list {
-            check_kani_list = check_proofs(&kani_list, &output);
+            res_check_kani_list = check_proofs(&kani_list, &output);
         }
 
-        let res = || {
+        let res_json = (|| {
             let writer: Box<dyn std::io::Write>;
             match &run.json {
                 Some(path) => {
                     if path == "false" {
-                        return Ok(());
+                        return eyre::Ok(());
                     }
                     let _span = error_span!("write_json", path).entered();
                     let file = std::fs::File::create(path)?;
@@ -79,18 +79,27 @@ fn main() -> Result<()> {
             } else {
                 serde_json::to_writer_pretty(writer, &output)
             }
-            .with_context(|| "Failed to write proof json")
+            .context("Failed to write proof json")
+        })();
+
+        let res = match (res_check_kani_list, res_json) {
+            (Ok(_), Ok(_)) => Ok(()),
+            (Err(err), Ok(_)) | (Ok(_), Err(err)) => Err(err),
+            (Err(err1), Err(err2)) => Err(eyre!(
+                "1. Failed to match kani list:\n{err1:?}\n\n2. No json emitted:\n{err2:?}"
+            )),
         };
 
-        // FIXME: Break with error
-        res().unwrap();
-        check_kani_list.unwrap();
-
-        // Stop emitting artifact for the source code being compiled.
-        ControlFlow::<(), ()>::Break(())
+        if run.continue_compilation {
+            ControlFlow::<Result<()>, Result<()>>::Continue(res)
+        } else {
+            // Stop emitting artifact for the source code being compiled.
+            ControlFlow::<Result<()>, Result<()>>::Break(res)
+        }
     });
-    // rustc_smir uses `Err(CompilerError::Interrupted)` to represent ControlFlow::Break.
-    assert!(res == Err(stable_mir::CompilerError::Interrupted(())), "Unexpected {res:?}");
 
-    Ok(())
+    match res {
+        Ok(res_inner) | Err(stable_mir::CompilerError::Interrupted(res_inner)) => res_inner,
+        Err(err) => Err(eyre!("Unexpected error {err:?}")),
+    }
 }
