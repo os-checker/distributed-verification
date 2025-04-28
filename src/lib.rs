@@ -1,4 +1,10 @@
+use eyre::Result;
 use serde::{Deserialize, Serialize};
+
+#[macro_use]
+extern crate tracing;
+#[macro_use]
+extern crate eyre;
 
 pub mod kani_list;
 

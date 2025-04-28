@@ -57,6 +57,7 @@ jobs:
           name: artifact-libcore
           path: core.json
           compression-level: 9
+          if-no-files-found: error
 
   kani-list:
     runs-on: ubuntu-latest
