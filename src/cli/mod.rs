@@ -18,9 +18,12 @@ pub fn parse() -> Result<Run> {
 struct Args {
     /// Possible one of these values:
     /// * `--json false`: skip serializing to json
-    /// * `--json path/to/file.json`
-    /// * print to stdout if not set
-    #[arg(long, default_missing_value = Output::Stdout, default_value = Output::False, num_args= 0..=1)]
+    /// * `--json path/to/file.json`: serlialize into a file
+    /// * `--json` or `--json stdout`: print to stdout
+    ///
+    /// NOTE: the default value is stdout, so if no other output is specified,
+    /// the bahavior is `--json`. To skip all analyses, set `--json false`.
+    #[arg(long, default_missing_value = Output::Stdout, default_value = Output::Stdout, num_args= 0..=1, long_help, verbatim_doc_comment)]
     json: Output,
 
     /// Rustc args for kani. Default to true, especially auto emitting
@@ -42,12 +45,14 @@ struct Args {
     #[arg(long, default_value_t = false)]
     continue_compilation: bool,
 
-    /// Emit statistics for proofs as an alternative JSON.
-    /// No normal JSON is emitted.
+    /// Emit statistics for proofs as an alternative JSON. No normal JSON is emitted.
+    ///
+    /// The option value is just like `--json`. If both `--json` and `--stat` are set, prefer this.
     #[arg(long, default_missing_value = Output::Stdout, default_value = Output::False, num_args= 0..=1)]
     stat: Output,
 
-    /// Args for rustc. `distributed-verification -- [rustc_args]`
+    /// Args for rustc. Usage: `distributed-verification -- [rustc_args]`
+    ///
     /// No need to pass rustc as the first argument.
     rustc_args: Vec<String>,
 }
