@@ -7,3 +7,4 @@ kani-list.json
 # kani
 
 core.json
+/artifact-*
