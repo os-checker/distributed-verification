@@ -16,7 +16,7 @@ use stable_mir::CrateDef;
 
 use std::{
     env::var,
-    path::PathBuf,
+    path::{Path, PathBuf},
     process::{Command, Stdio},
 };
 
@@ -136,16 +136,18 @@ fn test_rustc_flags() {
 }
 
 fn build_core(args: Vec<String>) {
-    const CORE_JSON: &str = "/home/zjp/rust/distributed-verification/core.json";
+    const OUTPUT_DIR: &str = "/home/zjp/rust/distributed-verification";
     let mut new_args = Vec::with_capacity(args.len() + 2);
-    let core_json = var("CORE_JSON");
+    let output_dir = var("OUTPUT_DIR");
+    let output_dir: &Path = output_dir.as_deref().unwrap_or(OUTPUT_DIR).as_ref();
+    let core_json = output_dir.join("core.json");
     new_args.extend(
         [
             "--no-kani-args",
             "--simplify-json",
             "--continue-compilation",
             "--json",
-            core_json.as_deref().unwrap_or(CORE_JSON),
+            core_json.to_str().unwrap(),
             "--",
         ]
         .map(String::from),
