@@ -36,12 +36,22 @@ fn main() -> Result<()> {
 
     let res = run_with_tcx!(rustc_args, move |tcx| {
         let continue_compilation = run.continue_compilation;
-        let res = if stat.should_emit() {
-            stat::analyze(stat)
-        } else if run.json.should_emit() {
-            analyze_proofs(tcx, run)
-        } else {
-            Ok(())
+        let res = match (stat.should_emit(), run.json.should_emit()) {
+            (true, false) => stat::analyze(stat),
+            (false, true) => analyze_proofs(tcx, run),
+            (true, true) => {
+                let res_stat = stat::analyze(stat);
+                let res_proofs = analyze_proofs(tcx, run);
+                match (res_stat, res_proofs) {
+                    (Ok(()), Ok(())) => Ok(()),
+                    (Err(err), Ok(())) | (Ok(()), Err(err)) => Err(err),
+                    (Err(err1), Err(err2)) => Err(eyre!(
+                        "Failed to get stat:\n{err1:?}\n\n\
+                         Failed to get proofs:\n{err2:?}"
+                    )),
+                }
+            }
+            (false, false) => Ok(()),
         };
 
         if continue_compilation {
