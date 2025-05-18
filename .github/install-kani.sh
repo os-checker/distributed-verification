@@ -9,7 +9,7 @@ COMMIT_KANI=d6853436382d876e574fb8a3fdef5b798a6e7d0d
 
 # Install kani
 pushd kani
-git pull origin main
+git pull origin main --rebase
 git log -1
 git checkout $COMMIT_KANI
 ./scripts/setup/ubuntu/install_deps.sh
