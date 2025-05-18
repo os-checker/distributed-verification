@@ -34,7 +34,7 @@ fn main() -> Result<()> {
     let stat = run.stat.clone();
     let run = run;
 
-    let res = run_with_tcx!(rustc_args, move |tcx| {
+    let res = run_with_tcx!(&rustc_args, move |tcx| {
         let continue_compilation = run.continue_compilation;
         let res = match (stat.should_emit(), run.json.should_emit()) {
             (true, false) => stat::analyze(stat),
