@@ -5,13 +5,13 @@ set -ex
 # So this means for verify-rust-std jobs,
 # distributed-verification may be broken to compile.
 COMMIT_VERIFY_RUST_STD=571c8ac
-COMMIT_KANI=d6853436382d876e574fb8a3fdef5b798a6e7d0d
+# COMMIT_KANI=d6853436382d876e574fb8a3fdef5b798a6e7d0d
 
 # Install kani
 pushd kani
-git pull origin main --rebase
-git log -1
-git checkout $COMMIT_KANI
+# git pull origin main --rebase
+# git log -1
+# git checkout $COMMIT_KANI
 ./scripts/setup/ubuntu/install_deps.sh
 cargo build-dev
 
