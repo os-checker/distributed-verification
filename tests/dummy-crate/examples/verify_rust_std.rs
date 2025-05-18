@@ -159,7 +159,7 @@ fn build_core(args: Vec<String>) {
 #[allow(dead_code)]
 #[allow(unused_must_use)]
 fn build_core_old(args: Vec<String>) {
-    rustc_smir::run_with_tcx!(args, |_tcx| {
+    rustc_smir::run_with_tcx!(&args, |_tcx| {
         let external_crates = stable_mir::external_crates();
         dbg!(external_crates.len(), external_crates);
 
