@@ -8,6 +8,7 @@ extern crate rustc_middle;
 extern crate rustc_session;
 #[macro_use]
 extern crate rustc_smir;
+extern crate itertools;
 extern crate rustc_span;
 extern crate rustc_stable_hash;
 extern crate stable_mir;

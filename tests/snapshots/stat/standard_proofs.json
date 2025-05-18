@@ -7,8 +7,6 @@
     "fn_defs": {
       "total": 5,
       "names": [
-        "m::func1",
-        "top_level",
         "verify::recursive_callees",
         "verify::standard_proof",
         "verify::standard_proof_empty"

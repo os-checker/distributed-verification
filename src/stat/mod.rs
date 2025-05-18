@@ -1,6 +1,7 @@
 use crate::{cli::Output, functions::TOOL};
 use distributed_verification::statistics::*;
 use indexmap::IndexMap;
+use itertools::Itertools;
 use rustc_middle::ty::TyCtxt;
 use rustc_smir::rustc_internal::internal;
 use stable_mir::CrateDef;
@@ -27,31 +28,34 @@ fn new_local_crate(tcx: TyCtxt) -> LocalCrateFnDefs {
 
     for fn_def in fn_defs {
         let name = fn_def.name();
+        let mut kanitool_fn = false;
 
         let did = internal(tcx, fn_def.def_id());
         // cc https://github.com/rust-lang/project-stable-mir/issues/83
-        let kanitools_attrs: Vec<Vec<_>> = tcx
-            .get_all_attrs(did)
-            .filter_map(|attr| {
-                if let rustc_hir::Attribute::Unparsed(attr) = attr {
-                    this.attrs.all_tool_attrs += 1;
-                    let paths = &attr.path.segments;
-                    if paths.first().map(|ident| ident.as_str() == TOOL).unwrap_or(false) {
-                        this.attrs.kanitools += 1;
-                        return Some(paths.iter().map(|ident| ident.as_str()).collect());
-                    }
+        let kanitools_attrs = tcx.get_all_attrs(did).filter_map(|attr| {
+            if let rustc_hir::Attribute::Unparsed(attr) = attr {
+                this.attrs.all_tool_attrs += 1;
+                let paths = &attr.path.segments;
+                if paths.first().map(|ident| ident.as_str() == TOOL).unwrap_or(false) {
+                    kanitool_fn = true;
+                    this.attrs.kanitools += 1;
+                    return Some(paths.iter().map(|ident| ident.as_str()).join("::"));
                 }
-                None
-            })
-            .collect();
+            }
+            None
+        });
 
-        for attr in &kanitools_attrs {
-            let attr_str = attr.join("::");
+        for attr_str in kanitools_attrs {
             if let Some(v) = this.kanitools.annotated_functions.get_mut(&attr_str) {
                 v.push(name.clone());
             } else {
                 this.kanitools.annotated_functions.insert(attr_str, vec![name.clone()]);
             }
+        }
+
+        // Only metric on fns annotated with kani.
+        if !kanitool_fn {
+            continue;
         }
 
         this.fn_defs.names.push(name);

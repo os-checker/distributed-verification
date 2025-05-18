@@ -1,6 +1,7 @@
 use indexmap::IndexMap;
 use serde::{Deserialize, Serialize};
 
+/// Kani tool function metrics.
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct Stat {
     pub local: LocalCrateFnDefs,

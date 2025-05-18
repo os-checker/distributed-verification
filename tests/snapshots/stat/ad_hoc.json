@@ -8,9 +8,7 @@
       "total": 5,
       "names": [
         "adhoc::callee_defined_in_proof",
-        "adhoc::callee_defined_in_proof::f",
         "adhoc::closure_in_proof",
-        "adhoc::proof_in_fn_item",
         "adhoc::proof_in_fn_item::proof"
       ]
     },
