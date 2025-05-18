@@ -1,13 +1,16 @@
 [
   {
-    "hash": "407797103376261238612495655534918835712",
+    "hash": "144395511941586929151010429962703469548",
     "attrs": [
-      "#[kanitool::proof]"
+      "#[kanitool::proof]\n"
     ],
     "name": "verify::recursive_callees",
     "file": "tests/proofs/standard_proofs.rs",
     "callees_len": 107,
     "callees": [
+      "<fn(char) -> bool {std::char::methods::<impl char>::is_whitespace} as std::ops::FnMut<(char,)>>::call_mut",
+      "<fn(char) -> bool {std::char::methods::<impl char>::is_whitespace} as std::str::pattern::MultiCharEq>::matches",
+      "<fn(char) -> bool {std::char::methods::<impl char>::is_whitespace} as std::str::pattern::Pattern>::into_searcher",
       "<std::option::Option<&u8> as std::ops::Try>::branch",
       "<std::option::Option<u32> as std::ops::FromResidual<std::option::Option<std::convert::Infallible>>>::from_residual",
       "<std::ptr::NonNull<u8> as std::cmp::PartialEq>::eq",
@@ -21,15 +24,14 @@
       "<std::str::Chars<'_> as std::iter::DoubleEndedIterator>::next_back::{closure#0}",
       "<std::str::Chars<'_> as std::iter::Iterator>::next",
       "<std::str::Chars<'_> as std::iter::Iterator>::next::{closure#0}",
-      "<std::str::pattern::CharPredicateSearcher<'_, {closure@core::str::<impl str>::trim::{closure#0}}> as std::str::pattern::ReverseSearcher<'_>>::next_reject_back",
-      "<std::str::pattern::CharPredicateSearcher<'_, {closure@core::str::<impl str>::trim::{closure#0}}> as std::str::pattern::Searcher<'_>>::next_reject",
-      "<std::str::pattern::MultiCharEqPattern<{closure@core::str::<impl str>::trim::{closure#0}}> as std::str::pattern::Pattern>::into_searcher",
-      "<std::str::pattern::MultiCharEqSearcher<'_, {closure@core::str::<impl str>::trim::{closure#0}}> as std::str::pattern::ReverseSearcher<'_>>::next_back",
-      "<std::str::pattern::MultiCharEqSearcher<'_, {closure@core::str::<impl str>::trim::{closure#0}}> as std::str::pattern::ReverseSearcher<'_>>::next_reject_back",
-      "<std::str::pattern::MultiCharEqSearcher<'_, {closure@core::str::<impl str>::trim::{closure#0}}> as std::str::pattern::Searcher<'_>>::next",
-      "<std::str::pattern::MultiCharEqSearcher<'_, {closure@core::str::<impl str>::trim::{closure#0}}> as std::str::pattern::Searcher<'_>>::next_reject",
-      "<{closure@core::str::<impl str>::trim::{closure#0}} as std::str::pattern::MultiCharEq>::matches",
-      "<{closure@core::str::<impl str>::trim::{closure#0}} as std::str::pattern::Pattern>::into_searcher",
+      "<std::str::pattern::CharPredicateSearcher<'_, fn(char) -> bool {std::char::methods::<impl char>::is_whitespace}> as std::str::pattern::ReverseSearcher<'_>>::next_reject_back",
+      "<std::str::pattern::CharPredicateSearcher<'_, fn(char) -> bool {std::char::methods::<impl char>::is_whitespace}> as std::str::pattern::Searcher<'_>>::next_reject",
+      "<std::str::pattern::MultiCharEqPattern<fn(char) -> bool {std::char::methods::<impl char>::is_whitespace}> as std::str::pattern::Pattern>::into_searcher",
+      "<std::str::pattern::MultiCharEqSearcher<'_, fn(char) -> bool {std::char::methods::<impl char>::is_whitespace}> as std::str::pattern::ReverseSearcher<'_>>::next_back",
+      "<std::str::pattern::MultiCharEqSearcher<'_, fn(char) -> bool {std::char::methods::<impl char>::is_whitespace}> as std::str::pattern::ReverseSearcher<'_>>::next_reject_back",
+      "<std::str::pattern::MultiCharEqSearcher<'_, fn(char) -> bool {std::char::methods::<impl char>::is_whitespace}> as std::str::pattern::Searcher<'_>>::next",
+      "<std::str::pattern::MultiCharEqSearcher<'_, fn(char) -> bool {std::char::methods::<impl char>::is_whitespace}> as std::str::pattern::Searcher<'_>>::next_reject",
+      "core::fmt::rt::<impl std::fmt::Arguments<'_>>::new_const::<1>",
       "core::num::<impl isize>::overflowing_neg",
       "core::num::<impl isize>::unchecked_neg",
       "core::num::<impl isize>::unchecked_neg::precondition_check",
@@ -48,8 +50,7 @@
       "core::str::<impl str>::chars",
       "core::str::<impl str>::get_unchecked::<std::ops::Range<usize>>",
       "core::str::<impl str>::trim",
-      "core::str::<impl str>::trim::{closure#0}",
-      "core::str::<impl str>::trim_matches::<{closure@core::str::<impl str>::trim::{closure#0}}>",
+      "core::str::<impl str>::trim_matches::<fn(char) -> bool {std::char::methods::<impl char>::is_whitespace}>",
       "core::str::traits::<impl std::slice::SliceIndex<str> for std::ops::Range<usize>>::get_unchecked",
       "core::str::traits::<impl std::slice::SliceIndex<str> for std::ops::Range<usize>>::get_unchecked::precondition_check",
       "core::str::validations::next_code_point::<'_, std::slice::Iter<'_, u8>>",
@@ -66,7 +67,6 @@
       "std::char::convert::from_u32_unchecked::precondition_check",
       "std::char::methods::<impl char>::from_u32_unchecked",
       "std::char::methods::<impl char>::is_whitespace",
-      "std::fmt::Arguments::<'_>::new_const::<1>",
       "std::hint::unreachable_unchecked",
       "std::hint::unreachable_unchecked::precondition_check",
       "std::intrinsics::cold_path",
@@ -95,7 +95,7 @@
       "std::ptr::const_ptr::<impl *const u8>::addr",
       "std::ptr::const_ptr::<impl *const u8>::cast::<()>",
       "std::ptr::const_ptr::<impl *const u8>::offset_from_unsigned",
-      "std::ptr::drop_in_place::<std::str::pattern::CharPredicateSearcher<'_, {closure@core::str::<impl str>::trim::{closure#0}}>>",
+      "std::ptr::drop_in_place::<std::str::pattern::CharPredicateSearcher<'_, fn(char) -> bool {std::char::methods::<impl char>::is_whitespace}>>",
       "std::ptr::drop_in_place::<{closure@<std::str::CharIndices<'_> as std::iter::DoubleEndedIterator>::next_back::{closure#0}}>",
       "std::ptr::drop_in_place::<{closure@<std::str::Chars<'_> as std::iter::DoubleEndedIterator>::next_back::{closure#0}}>",
       "std::ptr::drop_in_place::<{closure@<std::str::Chars<'_> as std::iter::Iterator>::next::{closure#0}}>",
@@ -118,9 +118,9 @@
     ]
   },
   {
-    "hash": "130593389360887046121730487531425257701",
+    "hash": "1669482096648313876110327135750958490805",
     "attrs": [
-      "#[kanitool::proof]"
+      "#[kanitool::proof]\n"
     ],
     "name": "verify::standard_proof",
     "file": "tests/proofs/standard_proofs.rs",
@@ -135,9 +135,9 @@
     ]
   },
   {
-    "hash": "14450731345693588624745887593183259349",
+    "hash": "60301832969373045482782897484755767177",
     "attrs": [
-      "#[kanitool::proof]"
+      "#[kanitool::proof]\n"
     ],
     "name": "verify::standard_proof_empty",
     "file": "tests/proofs/standard_proofs.rs",

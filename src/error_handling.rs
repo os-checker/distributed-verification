@@ -52,7 +52,7 @@ mod tests {
             ERROR1
 
             Location:
-                src/error_handling.rs:43:61
+                src/error_handling.rs:49:61
         "#]].assert_eq(&res.unwrap_err().to_string());
     }
 
@@ -68,7 +68,7 @@ mod tests {
             ERROR1
 
             Location:
-                src/error_handling.rs:51:18
+                src/error_handling.rs:63:18
 
 
             Location:

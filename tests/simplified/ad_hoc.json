@@ -1,8 +1,8 @@
 [
   {
-    "hash": "231371728546000426415569688603538432620",
+    "hash": "1169127772433107051910762480258862721704",
     "attrs": [
-      "#[kanitool::proof]"
+      "#[kanitool::proof]\n"
     ],
     "name": "adhoc::callee_defined_in_proof",
     "file": "tests/proofs/ad_hoc.rs",
@@ -13,9 +13,9 @@
     ]
   },
   {
-    "hash": "61932375823549408104071622445676960413",
+    "hash": "45356353433292067411028081932824047592",
     "attrs": [
-      "#[kanitool::proof]"
+      "#[kanitool::proof]\n"
     ],
     "name": "adhoc::closure_in_proof",
     "file": "tests/proofs/ad_hoc.rs",
@@ -26,9 +26,9 @@
     ]
   },
   {
-    "hash": "6925603377655101244643534194235942800",
+    "hash": "376713398218856890112497690805164100930",
     "attrs": [
-      "#[kanitool::proof]"
+      "#[kanitool::proof]\n"
     ],
     "name": "adhoc::proof_in_fn_item::proof",
     "file": "tests/proofs/ad_hoc.rs",

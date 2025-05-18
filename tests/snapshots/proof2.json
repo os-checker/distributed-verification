@@ -1,14 +1,14 @@
 [
   {
-    "hash": "21303131552843976110301461263347593874",
+    "hash": "138373792623381978261484551770783996496",
     "def_id": "DefId { id: 0, name: \"verify::f\" }",
     "attrs": [
-      "#[kanitool::proof]"
+      "#[kanitool::proof]\n"
     ],
     "kind": "Standard",
     "func": {
       "name": "verify::f",
-      "mangled_name": "_ZN5proof6verify1f17h3b3f982dedcbabb5E",
+      "mangled_name": "_ZN5proof6verify1f17h576b6361cab45888E",
       "kind": "Item",
       "file": "tests/compare/proof.rs",
       "src": "pub fn f() {\n        let a = 1;\n        assert_eq!(a + 1, 2);\n    }",
@@ -21,14 +21,14 @@
         "def_id": "DefId { id: 2, name: \"kani::assert\" }",
         "func": {
           "name": "kani::assert",
-          "mangled_name": "_ZN4kani6assert17h914a947307b610ddE",
+          "mangled_name": "_ZN4kani6assert17hc02e0d64f0708d30E",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
           "macro_backtrace_len": 2,
           "macro_backtrace": [
             {
-              "callsite": "kani_core::kani_intrinsics!(std)",
+              "callsite": "kani_core::kani_intrinsics!()",
               "defsite": "macro_rules! kani_intrinsics"
             },
             {
@@ -41,15 +41,15 @@
     ]
   },
   {
-    "hash": "114858755609795824612269758117585426409",
+    "hash": "805867976699742594011648373771264176282",
     "def_id": "DefId { id: 1, name: \"verify::g\" }",
     "attrs": [
-      "#[kanitool::proof]"
+      "#[kanitool::proof]\n"
     ],
     "kind": "Standard",
     "func": {
       "name": "verify::g",
-      "mangled_name": "_ZN5proof6verify1g17heddc692da7f98ab5E",
+      "mangled_name": "_ZN5proof6verify1g17h1d8fb82c04cc3297E",
       "kind": "Item",
       "file": "tests/compare/proof.rs",
       "src": "pub fn g() {\n        let a = 1;\n        assert_eq!(a + 1, 2);\n    }",
@@ -62,14 +62,14 @@
         "def_id": "DefId { id: 2, name: \"kani::assert\" }",
         "func": {
           "name": "kani::assert",
-          "mangled_name": "_ZN4kani6assert17h914a947307b610ddE",
+          "mangled_name": "_ZN4kani6assert17hc02e0d64f0708d30E",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
           "macro_backtrace_len": 2,
           "macro_backtrace": [
             {
-              "callsite": "kani_core::kani_intrinsics!(std)",
+              "callsite": "kani_core::kani_intrinsics!()",
               "defsite": "macro_rules! kani_intrinsics"
             },
             {

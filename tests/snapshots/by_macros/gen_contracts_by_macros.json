@@ -1,14 +1,14 @@
 [
   {
-    "hash": "1689096496237791355510770873012758110496",
+    "hash": "1464226525610256308612646858567537187198",
     "def_id": "DefId { id: 13, name: \"verify::proof1\" }",
     "attrs": [
-      "#[kanitool::proof_for_contract = \"contract1\"]"
+      "#[kanitool::proof_for_contract = \"contract1\"]\n"
     ],
     "kind": "Contract",
     "func": {
       "name": "verify::proof1",
-      "mangled_name": "_ZN23gen_contracts_by_macros6verify6proof117he3754be12d716b06E",
+      "mangled_name": "_ZN23gen_contracts_by_macros6verify6proof117h386e72f70be12f4eE",
       "kind": "Item",
       "file": "tests/proofs/gen_contracts_by_macros.rs",
       "src": "fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }",
@@ -26,7 +26,7 @@
         "def_id": "DefId { id: 0, name: \"verify::contract1\" }",
         "func": {
           "name": "verify::contract1",
-          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract117h754ea586978d3c68E",
+          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract117h01c3765c3a6e9b25E",
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "fn",
@@ -43,7 +43,7 @@
         "def_id": "DefId { id: 2, name: \"verify::contract1::kani_contract_mode\" }",
         "func": {
           "name": "verify::contract1::kani_contract_mode",
-          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract118kani_contract_mode17h386394b22ba70ab7E",
+          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract118kani_contract_mode17h437c042c4138bc96E",
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
@@ -64,7 +64,7 @@
         "def_id": "DefId { id: 1, name: \"verify::contract1::kani_register_contract\" }",
         "func": {
           "name": "verify::contract1::kani_register_contract::<u8, {closure@tests/proofs/gen_contracts_by_macros.rs:3:9: 3:30}>",
-          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract122kani_register_contract17h5912c38fa6252f5cE",
+          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract122kani_register_contract17h07b14dacf443547bE",
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
@@ -85,7 +85,7 @@
         "def_id": "DefId { id: 1, name: \"verify::contract1::kani_register_contract\" }",
         "func": {
           "name": "verify::contract1::kani_register_contract::<u8, {closure@tests/proofs/gen_contracts_by_macros.rs:3:9: 3:30}>",
-          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract122kani_register_contract17h618fcb2807a630fbE",
+          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract122kani_register_contract17h79dedd4b07950cc4E",
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
@@ -106,7 +106,7 @@
         "def_id": "DefId { id: 1, name: \"verify::contract1::kani_register_contract\" }",
         "func": {
           "name": "verify::contract1::kani_register_contract::<u8, {closure@tests/proofs/gen_contracts_by_macros.rs:3:9: 3:30}>",
-          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract122kani_register_contract17hbae05054cddbb17cE",
+          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract122kani_register_contract17h980e79bcd4496702E",
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
@@ -127,7 +127,7 @@
         "def_id": "DefId { id: 1, name: \"verify::contract1::kani_register_contract\" }",
         "func": {
           "name": "verify::contract1::kani_register_contract::<u8, {closure@tests/proofs/gen_contracts_by_macros.rs:3:9: 3:30}>",
-          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract122kani_register_contract17hbd51bc178847493cE",
+          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract122kani_register_contract17hd92a277c84470babE",
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
@@ -147,15 +147,15 @@
     ]
   },
   {
-    "hash": "68469033701256472383683903298250524375",
+    "hash": "1102522625469360326811087974940169982141",
     "def_id": "DefId { id: 27, name: \"verify::proof2\" }",
     "attrs": [
-      "#[kanitool::proof_for_contract = \"contract2\"]"
+      "#[kanitool::proof_for_contract = \"contract2\"]\n"
     ],
     "kind": "Contract",
     "func": {
       "name": "verify::proof2",
-      "mangled_name": "_ZN23gen_contracts_by_macros6verify6proof217hedb9389a247d4c11E",
+      "mangled_name": "_ZN23gen_contracts_by_macros6verify6proof217haf85301356fbc567E",
       "kind": "Item",
       "file": "tests/proofs/gen_contracts_by_macros.rs",
       "src": "fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }",
@@ -173,7 +173,7 @@
         "def_id": "DefId { id: 14, name: \"verify::contract2\" }",
         "func": {
           "name": "verify::contract2",
-          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract217h17bcce2e89c6610fE",
+          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract217hdd910e69ebf6c6aaE",
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "fn",
@@ -190,7 +190,7 @@
         "def_id": "DefId { id: 16, name: \"verify::contract2::kani_contract_mode\" }",
         "func": {
           "name": "verify::contract2::kani_contract_mode",
-          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract218kani_contract_mode17h4010aedde8602902E",
+          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract218kani_contract_mode17h8be6386b11e752d2E",
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
@@ -211,7 +211,7 @@
         "def_id": "DefId { id: 15, name: \"verify::contract2::kani_register_contract\" }",
         "func": {
           "name": "verify::contract2::kani_register_contract::<u8, {closure@tests/proofs/gen_contracts_by_macros.rs:3:9: 3:30}>",
-          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract222kani_register_contract17h27db34aec93ef54fE",
+          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract222kani_register_contract17h0c5a13bb56beb6fdE",
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
@@ -232,7 +232,7 @@
         "def_id": "DefId { id: 15, name: \"verify::contract2::kani_register_contract\" }",
         "func": {
           "name": "verify::contract2::kani_register_contract::<u8, {closure@tests/proofs/gen_contracts_by_macros.rs:3:9: 3:30}>",
-          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract222kani_register_contract17h3e9533fc77c8d613E",
+          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract222kani_register_contract17ha072d4cc0e80b454E",
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
@@ -253,7 +253,7 @@
         "def_id": "DefId { id: 15, name: \"verify::contract2::kani_register_contract\" }",
         "func": {
           "name": "verify::contract2::kani_register_contract::<u8, {closure@tests/proofs/gen_contracts_by_macros.rs:3:9: 3:30}>",
-          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract222kani_register_contract17hd109f949fd3727d1E",
+          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract222kani_register_contract17hcde0622ec92c1cefE",
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
@@ -274,7 +274,7 @@
         "def_id": "DefId { id: 15, name: \"verify::contract2::kani_register_contract\" }",
         "func": {
           "name": "verify::contract2::kani_register_contract::<u8, {closure@tests/proofs/gen_contracts_by_macros.rs:3:9: 3:30}>",
-          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract222kani_register_contract17he8c0fa4b2217e21fE",
+          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract222kani_register_contract17hdf397daa11bce35eE",
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
@@ -294,15 +294,15 @@
     ]
   },
   {
-    "hash": "541738454925646440912281930290055954593",
+    "hash": "1775778566579290701410350421249473944550",
     "def_id": "DefId { id: 41, name: \"verify::proof3\" }",
     "attrs": [
-      "#[kanitool::proof_for_contract = \"contract3\"]"
+      "#[kanitool::proof_for_contract = \"contract3\"]\n"
     ],
     "kind": "Contract",
     "func": {
       "name": "verify::proof3",
-      "mangled_name": "_ZN23gen_contracts_by_macros6verify6proof317hae65fadbc9bef89cE",
+      "mangled_name": "_ZN23gen_contracts_by_macros6verify6proof317hfd971740301d5affE",
       "kind": "Item",
       "file": "tests/proofs/gen_contracts_by_macros.rs",
       "src": "fn $proof() {\n            $contract_name(kani::any::<u8>());\n        }",
@@ -320,7 +320,7 @@
         "def_id": "DefId { id: 28, name: \"verify::contract3\" }",
         "func": {
           "name": "verify::contract3",
-          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract317h64b4fa06acb54c12E",
+          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract317h88911dfc9cbf9958E",
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "fn",
@@ -337,7 +337,7 @@
         "def_id": "DefId { id: 30, name: \"verify::contract3::kani_contract_mode\" }",
         "func": {
           "name": "verify::contract3::kani_contract_mode",
-          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract318kani_contract_mode17h38bf4d56ff570dc7E",
+          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract318kani_contract_mode17hf85d92c3d9134c95E",
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
@@ -358,7 +358,7 @@
         "def_id": "DefId { id: 29, name: \"verify::contract3::kani_register_contract\" }",
         "func": {
           "name": "verify::contract3::kani_register_contract::<u8, {closure@tests/proofs/gen_contracts_by_macros.rs:3:9: 3:30}>",
-          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract322kani_register_contract17h3a521ba4888bde22E",
+          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract322kani_register_contract17h132dace0e54370e8E",
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
@@ -379,7 +379,7 @@
         "def_id": "DefId { id: 29, name: \"verify::contract3::kani_register_contract\" }",
         "func": {
           "name": "verify::contract3::kani_register_contract::<u8, {closure@tests/proofs/gen_contracts_by_macros.rs:3:9: 3:30}>",
-          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract322kani_register_contract17h6af339adec4a6605E",
+          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract322kani_register_contract17h4434c1d80c952599E",
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
@@ -400,7 +400,7 @@
         "def_id": "DefId { id: 29, name: \"verify::contract3::kani_register_contract\" }",
         "func": {
           "name": "verify::contract3::kani_register_contract::<u8, {closure@tests/proofs/gen_contracts_by_macros.rs:3:9: 3:30}>",
-          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract322kani_register_contract17h86983373f7e221e3E",
+          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract322kani_register_contract17h748dfb7e3f288c9bE",
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",
@@ -421,7 +421,7 @@
         "def_id": "DefId { id: 29, name: \"verify::contract3::kani_register_contract\" }",
         "func": {
           "name": "verify::contract3::kani_register_contract::<u8, {closure@tests/proofs/gen_contracts_by_macros.rs:3:9: 3:30}>",
-          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract322kani_register_contract17hc0d63afb6a6f7228E",
+          "mangled_name": "_ZN23gen_contracts_by_macros6verify9contract322kani_register_contract17h8314f541090b9a51E",
           "kind": "Item",
           "file": "tests/proofs/gen_contracts_by_macros.rs",
           "src": "#[kani::requires($e)]",

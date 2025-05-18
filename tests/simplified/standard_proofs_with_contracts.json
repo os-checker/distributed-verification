@@ -1,8 +1,8 @@
 [
   {
-    "hash": "1676262618701481246211841339249437203190",
+    "hash": "180058511827000187034931936121000158434",
     "attrs": [
-      "#[kanitool::proof]"
+      "#[kanitool::proof]\n"
     ],
     "name": "verify::single_contract",
     "file": "tests/proofs/standard_proofs_with_contracts.rs",
@@ -50,6 +50,8 @@
       "<usize as std::iter::Sum>::sum::<std::iter::Map<std::slice::Iter<'_, u8>, {closure@<std::iter::Filter<I, P> as std::iter::Iterator>::count::to_usize<&u8, {closure@core::str::count::char_count_general_case::{closure#0}}>::{closure#0}}>>::{closure#0}",
       "core::fmt::PostPadding::new",
       "core::fmt::PostPadding::write",
+      "core::fmt::rt::<impl std::fmt::Arguments<'_>>::new_const::<1>",
+      "core::fmt::rt::<impl std::fmt::Arguments<'_>>::new_v1::<1, 1>",
       "core::fmt::rt::Argument::<'_>::new_display::<&str>",
       "core::num::<impl u16>::overflowing_add",
       "core::num::<impl u16>::unchecked_add",
@@ -125,8 +127,6 @@
       "std::cmp::impls::<impl std::cmp::PartialOrd for usize>::lt",
       "std::cmp::min::<usize>",
       "std::convert::num::<impl std::convert::From<u16> for usize>::from",
-      "std::fmt::Arguments::<'_>::new_const::<1>",
-      "std::fmt::Arguments::<'_>::new_v1::<1, 1>",
       "std::fmt::Formatter::<'_>::pad",
       "std::fmt::Formatter::<'_>::padding",
       "std::fmt::FormattingOptions::get_align",
@@ -257,9 +257,9 @@
     ]
   },
   {
-    "hash": "5630215822409612035601738689308321273",
+    "hash": "1557490122580475452217724025495173148638",
     "attrs": [
-      "#[kanitool::proof]"
+      "#[kanitool::proof]\n"
     ],
     "name": "verify::single_contract_requires",
     "file": "tests/proofs/standard_proofs_with_contracts.rs",
@@ -307,6 +307,8 @@
       "<usize as std::iter::Sum>::sum::<std::iter::Map<std::slice::Iter<'_, u8>, {closure@<std::iter::Filter<I, P> as std::iter::Iterator>::count::to_usize<&u8, {closure@core::str::count::char_count_general_case::{closure#0}}>::{closure#0}}>>::{closure#0}",
       "core::fmt::PostPadding::new",
       "core::fmt::PostPadding::write",
+      "core::fmt::rt::<impl std::fmt::Arguments<'_>>::new_const::<1>",
+      "core::fmt::rt::<impl std::fmt::Arguments<'_>>::new_v1::<1, 1>",
       "core::fmt::rt::Argument::<'_>::new_display::<&str>",
       "core::num::<impl u16>::overflowing_add",
       "core::num::<impl u16>::unchecked_add",
@@ -381,8 +383,6 @@
       "std::cmp::impls::<impl std::cmp::PartialOrd for usize>::lt",
       "std::cmp::min::<usize>",
       "std::convert::num::<impl std::convert::From<u16> for usize>::from",
-      "std::fmt::Arguments::<'_>::new_const::<1>",
-      "std::fmt::Arguments::<'_>::new_v1::<1, 1>",
       "std::fmt::Formatter::<'_>::pad",
       "std::fmt::Formatter::<'_>::padding",
       "std::fmt::FormattingOptions::get_align",
@@ -513,9 +513,9 @@
     ]
   },
   {
-    "hash": "71159678709398506361037444045517209506",
+    "hash": "23933860994661289136622421249446475486",
     "attrs": [
-      "#[kanitool::proof]"
+      "#[kanitool::proof]\n"
     ],
     "name": "verify::single_with_contract_ensures",
     "file": "tests/proofs/standard_proofs_with_contracts.rs",
@@ -563,6 +563,8 @@
       "<usize as std::iter::Sum>::sum::<std::iter::Map<std::slice::Iter<'_, u8>, {closure@<std::iter::Filter<I, P> as std::iter::Iterator>::count::to_usize<&u8, {closure@core::str::count::char_count_general_case::{closure#0}}>::{closure#0}}>>::{closure#0}",
       "core::fmt::PostPadding::new",
       "core::fmt::PostPadding::write",
+      "core::fmt::rt::<impl std::fmt::Arguments<'_>>::new_const::<1>",
+      "core::fmt::rt::<impl std::fmt::Arguments<'_>>::new_v1::<1, 1>",
       "core::fmt::rt::Argument::<'_>::new_display::<&str>",
       "core::num::<impl u16>::overflowing_add",
       "core::num::<impl u16>::unchecked_add",
@@ -637,8 +639,6 @@
       "std::cmp::impls::<impl std::cmp::PartialOrd for usize>::lt",
       "std::cmp::min::<usize>",
       "std::convert::num::<impl std::convert::From<u16> for usize>::from",
-      "std::fmt::Arguments::<'_>::new_const::<1>",
-      "std::fmt::Arguments::<'_>::new_v1::<1, 1>",
       "std::fmt::Formatter::<'_>::pad",
       "std::fmt::Formatter::<'_>::padding",
       "std::fmt::FormattingOptions::get_align",
@@ -769,9 +769,9 @@
     ]
   },
   {
-    "hash": "53237701649618771521648312975277163615",
+    "hash": "1524815006725202329516601815563923580160",
     "attrs": [
-      "#[kanitool::proof]"
+      "#[kanitool::proof]\n"
     ],
     "name": "verify::two_contracts_requires_and_ensures",
     "file": "tests/proofs/standard_proofs_with_contracts.rs",
@@ -819,6 +819,8 @@
       "<usize as std::iter::Sum>::sum::<std::iter::Map<std::slice::Iter<'_, u8>, {closure@<std::iter::Filter<I, P> as std::iter::Iterator>::count::to_usize<&u8, {closure@core::str::count::char_count_general_case::{closure#0}}>::{closure#0}}>>::{closure#0}",
       "core::fmt::PostPadding::new",
       "core::fmt::PostPadding::write",
+      "core::fmt::rt::<impl std::fmt::Arguments<'_>>::new_const::<1>",
+      "core::fmt::rt::<impl std::fmt::Arguments<'_>>::new_v1::<1, 1>",
       "core::fmt::rt::Argument::<'_>::new_display::<&str>",
       "core::num::<impl u16>::overflowing_add",
       "core::num::<impl u16>::unchecked_add",
@@ -893,8 +895,6 @@
       "std::cmp::impls::<impl std::cmp::PartialOrd for usize>::lt",
       "std::cmp::min::<usize>",
       "std::convert::num::<impl std::convert::From<u16> for usize>::from",
-      "std::fmt::Arguments::<'_>::new_const::<1>",
-      "std::fmt::Arguments::<'_>::new_v1::<1, 1>",
       "std::fmt::Formatter::<'_>::pad",
       "std::fmt::Formatter::<'_>::padding",
       "std::fmt::FormattingOptions::get_align",
