@@ -1,6 +1,6 @@
 set -x
 
-COMMIT=5cf80a84afdeceec0d85e790a5cc585ff2e513ed
+COMMIT=8b586cd8983ad6ce7ad5611814209842ecf0bf47
 
 # Install kani
 pushd kani
