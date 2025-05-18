@@ -1,4 +1,4 @@
-set -x
+set -ex
 
 # NOTE: verify-rust-std pins its kani commit, and
 # distributed-verification pins another.
