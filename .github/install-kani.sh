@@ -1,6 +1,6 @@
 set -x
 
-COMMIT=8b586cd8983ad6ce7ad5611814209842ecf0bf47
+VERIFY_RUST_STD_COMMIT=571c8ac
 
 # Install kani
 pushd kani
@@ -15,4 +15,4 @@ popd
 
 pushd tests/dummy-crate
 git clone https://github.com/model-checking/verify-rust-std.git --recursive
-cd verify-rust-std && git checkout $COMMIT
+cd verify-rust-std && git checkout $VERIFY_RUST_STD_COMMIT
