@@ -111,6 +111,12 @@ pub struct Run {
     pub rustc_args: Vec<String>,
 }
 
+impl Run {
+    pub fn take_rustc_args(&mut self) -> Vec<String> {
+        std::mem::take(&mut self.rustc_args)
+    }
+}
+
 /// Emit an output, usually a JSON.
 #[derive(Debug, Clone)]
 pub enum Output {

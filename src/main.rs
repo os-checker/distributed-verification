@@ -30,11 +30,11 @@ extern crate eyre;
 fn main() -> Result<()> {
     logger::init();
     let mut run = cli::parse()?;
-    let rustc_args = std::mem::take(&mut run.rustc_args);
-    let stat = run.stat.clone();
+    let rustc_args = run.take_rustc_args();
     let run = run;
 
     let res = run_with_tcx!(&rustc_args, move |tcx| {
+        let stat = run.stat.clone();
         let continue_compilation = run.continue_compilation;
         let res = match (stat.should_emit(), run.json.should_emit()) {
             (true, false) => stat::analyze(stat),
