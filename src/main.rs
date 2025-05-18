@@ -37,10 +37,10 @@ fn main() -> Result<()> {
         let stat = run.stat.clone();
         let continue_compilation = run.continue_compilation;
         let res = match (stat.should_emit(), run.json.should_emit()) {
-            (true, false) => stat::analyze(stat),
+            (true, false) => stat::analyze(stat, tcx),
             (false, true) => analyze_proofs(tcx, run),
             (true, true) => {
-                let res_stat = stat::analyze(stat);
+                let res_stat = stat::analyze(stat, tcx);
                 let res_proofs = analyze_proofs(tcx, run);
                 match (res_stat, res_proofs) {
                     (Ok(()), Ok(())) => Ok(()),

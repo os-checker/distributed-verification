@@ -8,10 +8,13 @@ use std::sync::LazyLock;
 /// `#[kanitool::xxx]` attributes.
 pub static KANI_TOOL_ATTRS: LazyLock<Vec<[String; 2]>> = LazyLock::new(|| {
     vec![
-        ["kanitool".into(), "proof".into()],
-        ["kanitool".into(), "proof_for_contract".into()],
+        [TOOL.into(), "proof".into()],
+        [TOOL.into(), "proof_for_contract".into()],
         // attrs for contracts
-        ["kanitool".into(), "requires".into()],
-        ["kanitool".into(), "ensures".into()],
+        [TOOL.into(), "requires".into()],
+        [TOOL.into(), "ensures".into()],
     ]
 });
+
+/// Tool attribute #[kani] expands.
+pub const TOOL: &str = "kanitool";

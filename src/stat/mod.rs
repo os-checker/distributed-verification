@@ -1,11 +1,12 @@
+use crate::{cli::Output, functions::TOOL};
 use distributed_verification::statistics::*;
 use indexmap::IndexMap;
+use rustc_middle::ty::TyCtxt;
+use rustc_smir::rustc_internal::internal;
 use stable_mir::CrateDef;
 
-use crate::cli::Output;
-
-fn new_stat() -> Stat {
-    Stat { local: new_local_crate(), external: new_external_crates() }
+fn new_stat(tcx: TyCtxt) -> Stat {
+    Stat { local: new_local_crate(tcx), external: new_external_crates() }
 }
 
 fn new_external_crates() -> ExternalCrates {
@@ -16,7 +17,7 @@ fn new_external_crates() -> ExternalCrates {
     ExternalCrates { count }
 }
 
-fn new_local_crate() -> LocalCrateFnDefs {
+fn new_local_crate(tcx: TyCtxt) -> LocalCrateFnDefs {
     let mut this = LocalCrateFnDefs::default();
 
     // for krate in stable_mir::find_crates("core") {
@@ -26,32 +27,30 @@ fn new_local_crate() -> LocalCrateFnDefs {
 
     for fn_def in fn_defs {
         let name = fn_def.name();
-        let attrs = fn_def.all_tool_attrs();
-        if attrs.is_empty() {
-            continue;
-        }
-        this.count.all_tool_attrs += 1;
 
-        // Need robust tokens to recognize attributes
+        let did = internal(tcx, fn_def.def_id());
         // cc https://github.com/rust-lang/project-stable-mir/issues/83
-        let kanitools_attrs = attrs
-            .iter()
+        let kanitools_attrs: Vec<Vec<_>> = tcx
+            .get_all_attrs(did)
             .filter_map(|attr| {
-                let attr = attr.as_str();
-                attr.starts_with("#[kanitool::").then_some(attr)
+                if let rustc_hir::Attribute::Unparsed(attr) = attr {
+                    this.count.all_tool_attrs += 1;
+                    let paths = &attr.path.segments;
+                    if paths.first().map(|ident| ident.as_str() == TOOL).unwrap_or(false) {
+                        this.count.kanitools += 1;
+                        return Some(paths.iter().map(|ident| ident.as_str()).collect());
+                    }
+                }
+                None
             })
-            .collect::<Vec<_>>();
-        if kanitools_attrs.is_empty() {
-            continue;
-        }
-        this.count.kanitools += 1;
+            .collect();
 
         for attr in &kanitools_attrs {
-            let attr = parse_kanitool(attr);
-            if let Some(v) = this.kanitools.annotated_functions.get_mut(attr) {
+            let attr_str = attr.join("::");
+            if let Some(v) = this.kanitools.annotated_functions.get_mut(&attr_str) {
                 v.push(name.clone());
             } else {
-                this.kanitools.annotated_functions.insert(attr.to_owned(), vec![name.clone()]);
+                this.kanitools.annotated_functions.insert(attr_str, vec![name.clone()]);
             }
         }
     }
@@ -67,8 +66,8 @@ fn new_local_crate() -> LocalCrateFnDefs {
     this
 }
 
-pub fn analyze(out: Output) -> crate::Result<()> {
-    let stat = new_stat();
+pub fn analyze(out: Output, tcx: TyCtxt) -> crate::Result<()> {
+    let stat = new_stat(tcx);
     out.emit(&stat)
 }
 
@@ -98,14 +97,3 @@ pub fn analyze(out: Output) -> crate::Result<()> {
 // `#[kanitool::recursion_check = ...]`
 // `#[kanitool::disable_checks(pointer)]`
 // `#[kanitool::unstable(feature = \"ghost-state\", issue = 3946, reason =...]`
-fn parse_kanitool(attr: &str) -> &str {
-    // start from `#[`
-    let end = match attr[2..].find(' ') {
-        Some(pos) => 2 + pos,
-        None => match attr[2..].find('(') {
-            Some(pos) => 2 + pos,
-            None => attr.len() - 1, // ignore `]`
-        },
-    };
-    &attr[2..end]
-}
