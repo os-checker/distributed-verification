@@ -58,10 +58,11 @@ fn new_local_crate(tcx: TyCtxt) -> LocalCrateFnDefs {
             continue;
         }
 
-        this.fn_defs.names.push(name);
+        this.fn_defs.kanitools.count += 1;
+        this.fn_defs.kanitools.names.push(name);
     }
 
-    this.fn_defs.names.sort_unstable();
+    this.fn_defs.kanitools.names.sort_unstable();
 
     this.kanitools.annotated_functions.sort_unstable_keys();
     this.kanitools.annotated_functions.values_mut().for_each(|v| v.sort_unstable());

@@ -6,11 +6,14 @@
     },
     "fn_defs": {
       "total": 5,
-      "names": [
-        "verify::recursive_callees",
-        "verify::standard_proof",
-        "verify::standard_proof_empty"
-      ]
+      "kanitools": {
+        "count": 3,
+        "names": [
+          "verify::recursive_callees",
+          "verify::standard_proof",
+          "verify::standard_proof_empty"
+        ]
+      }
     },
     "kanitools": {
       "count": {

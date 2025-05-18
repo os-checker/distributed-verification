@@ -6,21 +6,24 @@
     },
     "fn_defs": {
       "total": 13,
-      "names": [
-        "verify::contract",
-        "verify::contract::kani_contract_mode",
-        "verify::contract::kani_register_contract",
-        "verify::contract_ensures",
-        "verify::contract_ensures::kani_contract_mode",
-        "verify::contract_ensures::kani_register_contract",
-        "verify::contract_requires",
-        "verify::contract_requires::kani_contract_mode",
-        "verify::contract_requires::kani_register_contract",
-        "verify::single_contract",
-        "verify::single_contract_requires",
-        "verify::single_with_contract_ensures",
-        "verify::two_contracts_requires_and_ensures"
-      ]
+      "kanitools": {
+        "count": 13,
+        "names": [
+          "verify::contract",
+          "verify::contract::kani_contract_mode",
+          "verify::contract::kani_register_contract",
+          "verify::contract_ensures",
+          "verify::contract_ensures::kani_contract_mode",
+          "verify::contract_ensures::kani_register_contract",
+          "verify::contract_requires",
+          "verify::contract_requires::kani_contract_mode",
+          "verify::contract_requires::kani_register_contract",
+          "verify::single_contract",
+          "verify::single_contract_requires",
+          "verify::single_with_contract_ensures",
+          "verify::two_contracts_requires_and_ensures"
+        ]
+      }
     },
     "kanitools": {
       "count": {

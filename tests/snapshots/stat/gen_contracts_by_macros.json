@@ -6,20 +6,23 @@
     },
     "fn_defs": {
       "total": 12,
-      "names": [
-        "verify::contract1",
-        "verify::contract1::kani_contract_mode",
-        "verify::contract1::kani_register_contract",
-        "verify::contract2",
-        "verify::contract2::kani_contract_mode",
-        "verify::contract2::kani_register_contract",
-        "verify::contract3",
-        "verify::contract3::kani_contract_mode",
-        "verify::contract3::kani_register_contract",
-        "verify::proof1",
-        "verify::proof2",
-        "verify::proof3"
-      ]
+      "kanitools": {
+        "count": 12,
+        "names": [
+          "verify::contract1",
+          "verify::contract1::kani_contract_mode",
+          "verify::contract1::kani_register_contract",
+          "verify::contract2",
+          "verify::contract2::kani_contract_mode",
+          "verify::contract2::kani_register_contract",
+          "verify::contract3",
+          "verify::contract3::kani_contract_mode",
+          "verify::contract3::kani_register_contract",
+          "verify::proof1",
+          "verify::proof2",
+          "verify::proof3"
+        ]
+      }
     },
     "kanitools": {
       "count": {

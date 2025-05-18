@@ -6,11 +6,14 @@
     },
     "fn_defs": {
       "total": 5,
-      "names": [
-        "adhoc::callee_defined_in_proof",
-        "adhoc::closure_in_proof",
-        "adhoc::proof_in_fn_item::proof"
-      ]
+      "kanitools": {
+        "count": 3,
+        "names": [
+          "adhoc::callee_defined_in_proof",
+          "adhoc::closure_in_proof",
+          "adhoc::proof_in_fn_item::proof"
+        ]
+      }
     },
     "kanitools": {
       "count": {

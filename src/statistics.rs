@@ -1,7 +1,6 @@
 use indexmap::IndexMap;
 use serde::{Deserialize, Serialize};
 
-/// Kani tool function metrics.
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct Stat {
     pub local: LocalCrateFnDefs,
@@ -42,10 +41,17 @@ pub struct CountAttrs {
     pub kanitools: usize,
 }
 
+// A FnDef is from like a normal function, method, or that in a trait.
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct FnDefs {
-    /// Count of FnDefs. A FnDef is from like a normal function, method, or that in a trait.
+    /// Count of all FnDefs.
     pub total: usize,
-    /// All fn names.
+    /// FnDefs annotated with kanitool.
+    pub kanitools: KaniToolsFnDefs,
+}
+
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+pub struct KaniToolsFnDefs {
+    pub count: usize,
     pub names: Vec<String>,
 }
