@@ -1,9 +1,9 @@
 [
   {
-    "hash": "144395511941586929151010429962703469548",
+    "hash": "133522091698482324913445025389957424582",
     "def_id": "DefId { id: 2, name: \"verify::recursive_callees\" }",
     "attrs": [
-      "#[kanitool::proof]\n"
+      "#[kanitool::proof]"
     ],
     "kind": "Standard",
     "func": {
@@ -1442,10 +1442,10 @@
     ]
   },
   {
-    "hash": "1669482096648313876110327135750958490805",
+    "hash": "840119249342052595317999269538187253072",
     "def_id": "DefId { id: 0, name: \"verify::standard_proof\" }",
     "attrs": [
-      "#[kanitool::proof]\n"
+      "#[kanitool::proof]"
     ],
     "kind": "Standard",
     "func": {
@@ -1592,10 +1592,10 @@
     ]
   },
   {
-    "hash": "60301832969373045482782897484755767177",
+    "hash": "12955202483297788019685504065104068987",
     "def_id": "DefId { id: 1, name: \"verify::standard_proof_empty\" }",
     "attrs": [
-      "#[kanitool::proof]\n"
+      "#[kanitool::proof]"
     ],
     "kind": "Standard",
     "func": {

@@ -1,9 +1,9 @@
 [
   {
-    "hash": "1169127772433107051910762480258862721704",
+    "hash": "1229614748721749766913964449194572207950",
     "def_id": "DefId { id: 0, name: \"adhoc::callee_defined_in_proof\" }",
     "attrs": [
-      "#[kanitool::proof]\n"
+      "#[kanitool::proof]"
     ],
     "kind": "Standard",
     "func": {
@@ -53,10 +53,10 @@
     ]
   },
   {
-    "hash": "45356353433292067411028081932824047592",
+    "hash": "16071192516234258013908867822141086841",
     "def_id": "DefId { id: 2, name: \"adhoc::closure_in_proof\" }",
     "attrs": [
-      "#[kanitool::proof]\n"
+      "#[kanitool::proof]"
     ],
     "kind": "Standard",
     "func": {
@@ -106,10 +106,10 @@
     ]
   },
   {
-    "hash": "376713398218856890112497690805164100930",
+    "hash": "1315335617907881608515688324687253173446",
     "def_id": "DefId { id: 5, name: \"adhoc::proof_in_fn_item::proof\" }",
     "attrs": [
-      "#[kanitool::proof]\n"
+      "#[kanitool::proof]"
     ],
     "kind": "Standard",
     "func": {

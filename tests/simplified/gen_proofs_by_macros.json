@@ -1,8 +1,8 @@
 [
   {
-    "hash": "1062562354670908564515699502517567470958",
+    "hash": "621627085399168861817335896579039857609",
     "attrs": [
-      "#[kanitool::proof]\n"
+      "#[kanitool::proof]"
     ],
     "name": "verify::proof1",
     "file": "tests/proofs/gen_proofs_by_macros.rs",
@@ -17,9 +17,9 @@
     ]
   },
   {
-    "hash": "164719725483480922244888053500348595462",
+    "hash": "1057391189656170612910810424020292617315",
     "attrs": [
-      "#[kanitool::proof]\n"
+      "#[kanitool::proof]"
     ],
     "name": "verify::proof2",
     "file": "tests/proofs/gen_proofs_by_macros.rs",
@@ -34,9 +34,9 @@
     ]
   },
   {
-    "hash": "534107120703765166610302713019419672799",
+    "hash": "833388606508419100814630708153653821669",
     "attrs": [
-      "#[kanitool::proof]\n"
+      "#[kanitool::proof]"
     ],
     "name": "verify::proof3",
     "file": "tests/proofs/gen_proofs_by_macros.rs",

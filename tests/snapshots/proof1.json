@@ -1,9 +1,9 @@
 [
   {
-    "hash": "138373792623381978261484551770783996496",
+    "hash": "1824411335332117281510636350737184155378",
     "def_id": "DefId { id: 0, name: \"verify::f\" }",
     "attrs": [
-      "#[kanitool::proof]\n"
+      "#[kanitool::proof]"
     ],
     "kind": "Standard",
     "func": {

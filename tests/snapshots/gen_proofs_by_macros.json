@@ -1,9 +1,9 @@
 [
   {
-    "hash": "1062562354670908564515699502517567470958",
+    "hash": "621627085399168861817335896579039857609",
     "def_id": "DefId { id: 0, name: \"verify::proof1\" }",
     "attrs": [
-      "#[kanitool::proof]\n"
+      "#[kanitool::proof]"
     ],
     "kind": "Standard",
     "func": {
@@ -155,10 +155,10 @@
     ]
   },
   {
-    "hash": "164719725483480922244888053500348595462",
+    "hash": "1057391189656170612910810424020292617315",
     "def_id": "DefId { id: 1, name: \"verify::proof2\" }",
     "attrs": [
-      "#[kanitool::proof]\n"
+      "#[kanitool::proof]"
     ],
     "kind": "Standard",
     "func": {
@@ -310,10 +310,10 @@
     ]
   },
   {
-    "hash": "534107120703765166610302713019419672799",
+    "hash": "833388606508419100814630708153653821669",
     "def_id": "DefId { id: 2, name: \"verify::proof3\" }",
     "attrs": [
-      "#[kanitool::proof]\n"
+      "#[kanitool::proof]"
     ],
     "kind": "Standard",
     "func": {

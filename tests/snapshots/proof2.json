@@ -1,9 +1,9 @@
 [
   {
-    "hash": "138373792623381978261484551770783996496",
+    "hash": "1824411335332117281510636350737184155378",
     "def_id": "DefId { id: 0, name: \"verify::f\" }",
     "attrs": [
-      "#[kanitool::proof]\n"
+      "#[kanitool::proof]"
     ],
     "kind": "Standard",
     "func": {
@@ -41,10 +41,10 @@
     ]
   },
   {
-    "hash": "805867976699742594011648373771264176282",
+    "hash": "169430193215139512983686708607334360558",
     "def_id": "DefId { id: 1, name: \"verify::g\" }",
     "attrs": [
-      "#[kanitool::proof]\n"
+      "#[kanitool::proof]"
     ],
     "kind": "Standard",
     "func": {

@@ -27,7 +27,7 @@ impl SerFunction {
     pub fn new(fun: super::Function) -> Self {
         let inst = fun.instance;
         let def_id = format_def_id(&inst);
-        let attrs: Vec<_> = fun.attrs.iter().map(|a| a.as_str().to_owned()).collect();
+        let attrs: Vec<_> = fun.attrs.iter().map(|a| a.as_str().trim().to_owned()).collect();
         let kind = Kind::new(&attrs);
         // Though this is from body span, fn name and signature are included.
         let func = cache::get_source_code(&inst).unwrap_or_default();

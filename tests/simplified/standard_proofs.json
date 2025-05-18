@@ -1,8 +1,8 @@
 [
   {
-    "hash": "144395511941586929151010429962703469548",
+    "hash": "133522091698482324913445025389957424582",
     "attrs": [
-      "#[kanitool::proof]\n"
+      "#[kanitool::proof]"
     ],
     "name": "verify::recursive_callees",
     "file": "tests/proofs/standard_proofs.rs",
@@ -118,9 +118,9 @@
     ]
   },
   {
-    "hash": "1669482096648313876110327135750958490805",
+    "hash": "840119249342052595317999269538187253072",
     "attrs": [
-      "#[kanitool::proof]\n"
+      "#[kanitool::proof]"
     ],
     "name": "verify::standard_proof",
     "file": "tests/proofs/standard_proofs.rs",
@@ -135,9 +135,9 @@
     ]
   },
   {
-    "hash": "60301832969373045482782897484755767177",
+    "hash": "12955202483297788019685504065104068987",
     "attrs": [
-      "#[kanitool::proof]\n"
+      "#[kanitool::proof]"
     ],
     "name": "verify::standard_proof_empty",
     "file": "tests/proofs/standard_proofs.rs",

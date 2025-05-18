@@ -1,9 +1,9 @@
 [
   {
-    "hash": "180058511827000187034931936121000158434",
+    "hash": "1675321767144373605018067837826152892819",
     "def_id": "DefId { id: 52, name: \"verify::single_contract\" }",
     "attrs": [
-      "#[kanitool::proof]\n"
+      "#[kanitool::proof]"
     ],
     "kind": "Standard",
     "func": {
@@ -3313,10 +3313,10 @@
     ]
   },
   {
-    "hash": "1557490122580475452217724025495173148638",
+    "hash": "101835639787005562175359912759350554059",
     "def_id": "DefId { id: 13, name: \"verify::single_contract_requires\" }",
     "attrs": [
-      "#[kanitool::proof]\n"
+      "#[kanitool::proof]"
     ],
     "kind": "Standard",
     "func": {
@@ -6605,10 +6605,10 @@
     ]
   },
   {
-    "hash": "23933860994661289136622421249446475486",
+    "hash": "110616922198289136304184217911503407204",
     "def_id": "DefId { id: 32, name: \"verify::single_with_contract_ensures\" }",
     "attrs": [
-      "#[kanitool::proof]\n"
+      "#[kanitool::proof]"
     ],
     "kind": "Standard",
     "func": {
@@ -9897,10 +9897,10 @@
     ]
   },
   {
-    "hash": "1524815006725202329516601815563923580160",
+    "hash": "89199870224850649846734611610114102642",
     "def_id": "DefId { id: 33, name: \"verify::two_contracts_requires_and_ensures\" }",
     "attrs": [
-      "#[kanitool::proof]\n"
+      "#[kanitool::proof]"
     ],
     "kind": "Standard",
     "func": {

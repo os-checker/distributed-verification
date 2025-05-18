@@ -1,8 +1,8 @@
 [
   {
-    "hash": "3073259831460681588375589925778396300",
+    "hash": "726324090505156787311996482945835624445",
     "attrs": [
-      "#[kanitool::proof]\n"
+      "#[kanitool::proof]"
     ],
     "name": "verify::proof1",
     "file": "tests/proofs/gen_proofs_by_nested_macros.rs",
@@ -17,9 +17,9 @@
     ]
   },
   {
-    "hash": "152878430041654804275051652568797552311",
+    "hash": "43377569323293982678258661144821303728",
     "attrs": [
-      "#[kanitool::proof]\n"
+      "#[kanitool::proof]"
     ],
     "name": "verify::proof2",
     "file": "tests/proofs/gen_proofs_by_nested_macros.rs",
@@ -34,9 +34,9 @@
     ]
   },
   {
-    "hash": "6758469002032171839668434863697666109",
+    "hash": "79822416331020354410869048540304473445",
     "attrs": [
-      "#[kanitool::proof]\n"
+      "#[kanitool::proof]"
     ],
     "name": "verify::proof3",
     "file": "tests/proofs/gen_proofs_by_nested_macros.rs",
