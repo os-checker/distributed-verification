@@ -1,0 +1,81 @@
+{
+  "local": {
+    "attrs": {
+      "all_tool_attrs": 35,
+      "kanitools": 25
+    },
+    "fn_defs": {
+      "total": 13,
+      "names": [
+        "verify::contract",
+        "verify::contract::kani_contract_mode",
+        "verify::contract::kani_register_contract",
+        "verify::contract_ensures",
+        "verify::contract_ensures::kani_contract_mode",
+        "verify::contract_ensures::kani_register_contract",
+        "verify::contract_requires",
+        "verify::contract_requires::kani_contract_mode",
+        "verify::contract_requires::kani_register_contract",
+        "verify::single_contract",
+        "verify::single_contract_requires",
+        "verify::single_with_contract_ensures",
+        "verify::two_contracts_requires_and_ensures"
+      ]
+    },
+    "kanitools": {
+      "count": {
+        "kanitool::asserted_with": 3,
+        "kanitool::checked_with": 3,
+        "kanitool::fn_marker": 6,
+        "kanitool::modifies_wrapper": 3,
+        "kanitool::proof": 4,
+        "kanitool::recursion_check": 3,
+        "kanitool::replaced_with": 3
+      },
+      "annotated_functions": {
+        "kanitool::asserted_with": [
+          "verify::contract",
+          "verify::contract_ensures",
+          "verify::contract_requires"
+        ],
+        "kanitool::checked_with": [
+          "verify::contract",
+          "verify::contract_ensures",
+          "verify::contract_requires"
+        ],
+        "kanitool::fn_marker": [
+          "verify::contract::kani_contract_mode",
+          "verify::contract::kani_register_contract",
+          "verify::contract_ensures::kani_contract_mode",
+          "verify::contract_ensures::kani_register_contract",
+          "verify::contract_requires::kani_contract_mode",
+          "verify::contract_requires::kani_register_contract"
+        ],
+        "kanitool::modifies_wrapper": [
+          "verify::contract",
+          "verify::contract_ensures",
+          "verify::contract_requires"
+        ],
+        "kanitool::proof": [
+          "verify::single_contract",
+          "verify::single_contract_requires",
+          "verify::single_with_contract_ensures",
+          "verify::two_contracts_requires_and_ensures"
+        ],
+        "kanitool::recursion_check": [
+          "verify::contract",
+          "verify::contract_ensures",
+          "verify::contract_requires"
+        ],
+        "kanitool::replaced_with": [
+          "verify::contract",
+          "verify::contract_ensures",
+          "verify::contract_requires"
+        ]
+      }
+    }
+  },
+  "external": {
+    "count": 22
+  }
+}

@@ -72,11 +72,12 @@ fn test_proofs() -> Result<()> {
     for (idx, path) in proofs.iter().enumerate() {
         let file_stem = file_stem(path);
         let text = cmd(&[path.to_str().unwrap()]);
-        expect_file![format!("./snapshots/{file_stem}.json")].assert_eq(&text);
         v_json.push(serde_json::from_str(&text).unwrap());
         // collect macro generated proofs
         if file_stem.ends_with("by_macros") || file_stem.ends_with("by_nested_macros") {
             v_macro.push((idx, file_stem));
+        } else {
+            expect_file![format!("./snapshots/proofs/{file_stem}.json")].assert_eq(&text);
         }
     }
 
@@ -86,7 +87,7 @@ fn test_proofs() -> Result<()> {
     for (idx, file_stem) in v_macro {
         let json = extract_macros_items(&v_json[idx]);
         let text = serde_json::to_string_pretty(&json).unwrap();
-        expect_file![format!("./snapshots/by_macros/{file_stem}.json")].assert_eq(&text);
+        expect_file![format!("./snapshots/proofs/by_macros/{file_stem}.json")].assert_eq(&text);
     }
 
     Ok(())

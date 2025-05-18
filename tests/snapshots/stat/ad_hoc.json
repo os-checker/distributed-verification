@@ -1,0 +1,33 @@
+{
+  "local": {
+    "attrs": {
+      "all_tool_attrs": 6,
+      "kanitools": 3
+    },
+    "fn_defs": {
+      "total": 5,
+      "names": [
+        "adhoc::callee_defined_in_proof",
+        "adhoc::callee_defined_in_proof::f",
+        "adhoc::closure_in_proof",
+        "adhoc::proof_in_fn_item",
+        "adhoc::proof_in_fn_item::proof"
+      ]
+    },
+    "kanitools": {
+      "count": {
+        "kanitool::proof": 3
+      },
+      "annotated_functions": {
+        "kanitool::proof": [
+          "adhoc::callee_defined_in_proof",
+          "adhoc::closure_in_proof",
+          "adhoc::proof_in_fn_item::proof"
+        ]
+      }
+    }
+  },
+  "external": {
+    "count": 22
+  }
+}
