@@ -19,7 +19,8 @@ pub struct ExternalCrates {
 /// Metrics based on `Vec<FnDef>`.
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct LocalCrateFnDefs {
-    pub count: CountFunctions,
+    pub attrs: CountAttrs,
+    pub fn_defs: FnDefs,
     pub kanitools: KaniTools,
 }
 
@@ -33,11 +34,17 @@ pub struct KaniTools {
 }
 
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
-pub struct CountFunctions {
-    /// Count of FnDefs. A FnDef is from like a normal function, method, or that in a trait.
-    pub total: usize,
+pub struct CountAttrs {
     /// FnDefs that annotated with tool attributes, including kanitools, clippy, and others.
     pub all_tool_attrs: usize,
     /// FnDefs annotated with `#[kanitools::*]`.
     pub kanitools: usize,
+}
+
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+pub struct FnDefs {
+    /// Count of FnDefs. A FnDef is from like a normal function, method, or that in a trait.
+    pub total: usize,
+    /// All fn names.
+    pub names: Vec<String>,
 }

@@ -23,7 +23,7 @@ fn new_local_crate(tcx: TyCtxt) -> LocalCrateFnDefs {
     // for krate in stable_mir::find_crates("core") {
     let krate = stable_mir::local_crate();
     let fn_defs = krate.fn_defs();
-    this.count.total = fn_defs.len();
+    this.fn_defs.total = fn_defs.len();
 
     for fn_def in fn_defs {
         let name = fn_def.name();
@@ -34,10 +34,10 @@ fn new_local_crate(tcx: TyCtxt) -> LocalCrateFnDefs {
             .get_all_attrs(did)
             .filter_map(|attr| {
                 if let rustc_hir::Attribute::Unparsed(attr) = attr {
-                    this.count.all_tool_attrs += 1;
+                    this.attrs.all_tool_attrs += 1;
                     let paths = &attr.path.segments;
                     if paths.first().map(|ident| ident.as_str() == TOOL).unwrap_or(false) {
-                        this.count.kanitools += 1;
+                        this.attrs.kanitools += 1;
                         return Some(paths.iter().map(|ident| ident.as_str()).collect());
                     }
                 }
@@ -53,7 +53,11 @@ fn new_local_crate(tcx: TyCtxt) -> LocalCrateFnDefs {
                 this.kanitools.annotated_functions.insert(attr_str, vec![name.clone()]);
             }
         }
+
+        this.fn_defs.names.push(name);
     }
+
+    this.fn_defs.names.sort_unstable();
 
     this.kanitools.annotated_functions.sort_unstable_keys();
     this.kanitools.annotated_functions.values_mut().for_each(|v| v.sort_unstable());
