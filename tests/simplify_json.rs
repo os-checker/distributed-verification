@@ -7,7 +7,7 @@ fn ensure_identical_hash() -> Result<()> {
     let proofs = get_proofs("tests/proofs")?;
 
     for path in &proofs {
-        let snapshot = format!("simplified/{}.json", file_stem(path));
+        let snapshot = format!("snapshots/simplified/{}.json", file_stem(path));
         dbg!(&snapshot);
 
         let path = path.to_str().unwrap();

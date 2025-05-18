@@ -1,0 +1,34 @@
+{
+  "local": {
+    "attrs": {
+      "all_tool_attrs": 6,
+      "kanitools": 3
+    },
+    "fn_defs": {
+      "total": 3,
+      "kanitools": {
+        "count": 3,
+        "names": [
+          "verify::proof1",
+          "verify::proof2",
+          "verify::proof3"
+        ]
+      }
+    },
+    "kanitools": {
+      "count": {
+        "kanitool::proof": 3
+      },
+      "annotated_functions": {
+        "kanitool::proof": [
+          "verify::proof1",
+          "verify::proof2",
+          "verify::proof3"
+        ]
+      }
+    }
+  },
+  "external": {
+    "count": 22
+  }
+}

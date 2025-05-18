@@ -1,0 +1,74 @@
+[
+  {
+    "hash": "621627085399168861817335896579039857609",
+    "def_id": "DefId { id: 0, name: \"verify::proof1\" }",
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
+    "kind": "Standard",
+    "func": {
+      "name": "verify::proof1",
+      "mangled_name": "_ZN20gen_proofs_by_macros6verify6proof117ha47409312272547cE",
+      "kind": "Item",
+      "file": "tests/proofs/gen_proofs_by_macros.rs",
+      "src": "fn $name() $block",
+      "macro_backtrace_len": 1,
+      "macro_backtrace": [
+        {
+          "callsite": "gen! { proof1, { assert_eq!(kani::any::<u8>(), 0) }}",
+          "defsite": "macro_rules! gen {\n    ($name:ident, $block:block) => {\n        #[kani::proof]\n        fn $name() $block\n    }\n}"
+        }
+      ]
+    },
+    "callees_len": 0,
+    "callees": []
+  },
+  {
+    "hash": "1057391189656170612910810424020292617315",
+    "def_id": "DefId { id: 1, name: \"verify::proof2\" }",
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
+    "kind": "Standard",
+    "func": {
+      "name": "verify::proof2",
+      "mangled_name": "_ZN20gen_proofs_by_macros6verify6proof217hd682c7a14c1c239dE",
+      "kind": "Item",
+      "file": "tests/proofs/gen_proofs_by_macros.rs",
+      "src": "fn $name() $block",
+      "macro_backtrace_len": 1,
+      "macro_backtrace": [
+        {
+          "callsite": "gen! { proof2, { assert_eq!(kani::any::<u8>(), 0) }}",
+          "defsite": "macro_rules! gen {\n    ($name:ident, $block:block) => {\n        #[kani::proof]\n        fn $name() $block\n    }\n}"
+        }
+      ]
+    },
+    "callees_len": 0,
+    "callees": []
+  },
+  {
+    "hash": "833388606508419100814630708153653821669",
+    "def_id": "DefId { id: 2, name: \"verify::proof3\" }",
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
+    "kind": "Standard",
+    "func": {
+      "name": "verify::proof3",
+      "mangled_name": "_ZN20gen_proofs_by_macros6verify6proof317h6e1628105670a135E",
+      "kind": "Item",
+      "file": "tests/proofs/gen_proofs_by_macros.rs",
+      "src": "fn $name() $block",
+      "macro_backtrace_len": 1,
+      "macro_backtrace": [
+        {
+          "callsite": "gen! { proof3, { assert_eq!(kani::any::<u8>(), 1) }}",
+          "defsite": "macro_rules! gen {\n    ($name:ident, $block:block) => {\n        #[kani::proof]\n        fn $name() $block\n    }\n}"
+        }
+      ]
+    },
+    "callees_len": 0,
+    "callees": []
+  }
+]

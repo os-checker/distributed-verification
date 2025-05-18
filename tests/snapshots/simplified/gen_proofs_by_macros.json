@@ -1,0 +1,53 @@
+[
+  {
+    "hash": "621627085399168861817335896579039857609",
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
+    "name": "verify::proof1",
+    "file": "tests/proofs/gen_proofs_by_macros.rs",
+    "callees_len": 6,
+    "callees": [
+      "<u8 as kani::Arbitrary>::any",
+      "kani::any::<u8>",
+      "kani::any_raw::<u8>",
+      "kani::any_raw_internal::<u8>",
+      "kani::assert",
+      "kani::kani_intrinsic::<u8>"
+    ]
+  },
+  {
+    "hash": "1057391189656170612910810424020292617315",
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
+    "name": "verify::proof2",
+    "file": "tests/proofs/gen_proofs_by_macros.rs",
+    "callees_len": 6,
+    "callees": [
+      "<u8 as kani::Arbitrary>::any",
+      "kani::any::<u8>",
+      "kani::any_raw::<u8>",
+      "kani::any_raw_internal::<u8>",
+      "kani::assert",
+      "kani::kani_intrinsic::<u8>"
+    ]
+  },
+  {
+    "hash": "833388606508419100814630708153653821669",
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
+    "name": "verify::proof3",
+    "file": "tests/proofs/gen_proofs_by_macros.rs",
+    "callees_len": 6,
+    "callees": [
+      "<u8 as kani::Arbitrary>::any",
+      "kani::any::<u8>",
+      "kani::any_raw::<u8>",
+      "kani::any_raw_internal::<u8>",
+      "kani::assert",
+      "kani::kani_intrinsic::<u8>"
+    ]
+  }
+]

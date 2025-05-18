@@ -11,6 +11,7 @@ mod cache;
 pub use cache::{clear_rustc_ctx, set_rustc_ctx};
 
 mod kani;
+pub use kani::TOOL;
 
 mod utils;
 pub use utils::vec_convertion;

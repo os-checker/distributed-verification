@@ -1,9 +1,11 @@
 use crate::Result;
-use clap::Parser;
+use clap::{Parser, builder::OsStr};
 use distributed_verification::{
     kani_list::{KaniList, read_kani_list},
     kani_path,
 };
+use eyre::Context;
+use std::fmt;
 
 /// Parse cli arguments.
 pub fn parse() -> Result<Run> {
@@ -16,10 +18,13 @@ pub fn parse() -> Result<Run> {
 struct Args {
     /// Possible one of these values:
     /// * `--json false`: skip serializing to json
-    /// * `--json path/to/file.json`
-    /// * print to stdout if not set
-    #[arg(long)]
-    json: Option<String>,
+    /// * `--json path/to/file.json`: serlialize into a file
+    /// * `--json` or `--json stdout`: print to stdout
+    ///
+    /// NOTE: the default value is stdout, so if no other output is specified,
+    /// the bahavior is `--json`. To skip all analyses, set `--json false`.
+    #[arg(long, default_missing_value = Output::Stdout, default_value = Output::Stdout, num_args= 0..=1, long_help, verbatim_doc_comment)]
+    json: Output,
 
     /// Rustc args for kani. Default to true, especially auto emitting
     /// kani args for rustc on single rs file.
@@ -40,7 +45,14 @@ struct Args {
     #[arg(long, default_value_t = false)]
     continue_compilation: bool,
 
-    /// Args for rustc. `distributed-verification -- [rustc_args]`
+    /// Emit statistics for proofs as an alternative JSON. No normal JSON is emitted.
+    ///
+    /// The option value is just like `--json`. If both `--json` and `--stat` are set, prefer this.
+    #[arg(long, default_missing_value = Output::Stdout, default_value = Output::False, num_args= 0..=1)]
+    stat: Output,
+
+    /// Args for rustc. Usage: `distributed-verification -- [rustc_args]`
+    ///
     /// No need to pass rustc as the first argument.
     rustc_args: Vec<String>,
 }
@@ -84,15 +96,82 @@ impl Args {
             kani_list,
             simplify_json: self.simplify_json,
             continue_compilation: self.continue_compilation,
+            stat: self.stat,
             rustc_args,
         })
     }
 }
 
 pub struct Run {
-    pub json: Option<String>,
+    pub json: Output,
     pub kani_list: Option<KaniList>,
     pub simplify_json: bool,
     pub continue_compilation: bool,
+    pub stat: Output,
     pub rustc_args: Vec<String>,
+}
+
+impl Run {
+    pub fn take_rustc_args(&mut self) -> Vec<String> {
+        std::mem::take(&mut self.rustc_args)
+    }
+}
+
+/// Emit an output, usually a JSON.
+#[derive(Debug, Clone)]
+pub enum Output {
+    /// Don't emit any output.
+    False,
+    /// Write to stdout.
+    Stdout,
+    /// Write to a local file.
+    Path(String),
+}
+
+impl Output {
+    pub fn emit<T: serde::Serialize>(self, val: &T) -> Result<()> {
+        let _span = error_span!("emit", ?self).entered();
+
+        let writer: Box<dyn std::io::Write> = match self {
+            Output::False => return Ok(()),
+            Output::Stdout => Box::new(std::io::stdout()),
+            Output::Path(path) => {
+                let file = std::fs::File::create(path)?;
+                Box::new(file)
+            }
+        };
+
+        serde_json::to_writer_pretty(writer, val).context("Failed to write proof json")
+    }
+
+    /// Should emit an output?
+    pub fn should_emit(&self) -> bool {
+        !matches!(self, Output::False)
+    }
+}
+
+impl From<String> for Output {
+    fn from(s: String) -> Output {
+        match &*s.to_ascii_lowercase() {
+            "false" => Self::False,
+            "" | "stdout" => Self::Stdout,
+            _ => Self::Path(s),
+        }
+    }
+}
+
+impl fmt::Display for Output {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(match self {
+            Output::False => "false",
+            Output::Stdout => "stdout",
+            Output::Path(path) => path,
+        })
+    }
+}
+
+impl From<Output> for OsStr {
+    fn from(value: Output) -> Self {
+        value.to_string().into()
+    }
 }

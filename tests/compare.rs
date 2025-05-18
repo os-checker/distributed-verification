@@ -20,7 +20,7 @@ fn compare(tmp: &str, v_file: &[&str], f: &str, assert: impl Fn(&SerFunction, &S
     for ele in v_file {
         copy(format!("{COMPARE}/{ele}.rs"), &tmp).unwrap();
         let text = cmd(&[&tmp]);
-        expect_file![format!("./snapshots/{ele}.json")].assert_eq(&text);
+        expect_file![format!("./snapshots/compare/{ele}.json")].assert_eq(&text);
         v_func.push(get(&text, f));
     }
 

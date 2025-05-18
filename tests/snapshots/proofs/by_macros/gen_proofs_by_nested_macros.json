@@ -1,0 +1,86 @@
+[
+  {
+    "hash": "726324090505156787311996482945835624445",
+    "def_id": "DefId { id: 0, name: \"verify::proof1\" }",
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
+    "kind": "Standard",
+    "func": {
+      "name": "verify::proof1",
+      "mangled_name": "_ZN27gen_proofs_by_nested_macros6verify6proof117h0e1b640e3b7158c6E",
+      "kind": "Item",
+      "file": "tests/proofs/gen_proofs_by_nested_macros.rs",
+      "src": "fn",
+      "macro_backtrace_len": 2,
+      "macro_backtrace": [
+        {
+          "callsite": "inner!($name, $block)",
+          "defsite": "macro_rules! inner {\n    ($name:ident, $block:block) => {\n        #[kani::proof]\n        fn $name() $block\n    }\n}"
+        },
+        {
+          "callsite": "outer! { proof1, { assert_eq!(kani::any::<u8>(), 0) }}",
+          "defsite": "macro_rules! outer {\n    ($name:ident, $block:block) => {\n        inner!($name, $block);\n    };\n}"
+        }
+      ]
+    },
+    "callees_len": 0,
+    "callees": []
+  },
+  {
+    "hash": "43377569323293982678258661144821303728",
+    "def_id": "DefId { id: 1, name: \"verify::proof2\" }",
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
+    "kind": "Standard",
+    "func": {
+      "name": "verify::proof2",
+      "mangled_name": "_ZN27gen_proofs_by_nested_macros6verify6proof217h549c13846a59d02cE",
+      "kind": "Item",
+      "file": "tests/proofs/gen_proofs_by_nested_macros.rs",
+      "src": "fn",
+      "macro_backtrace_len": 2,
+      "macro_backtrace": [
+        {
+          "callsite": "inner!($name, $block)",
+          "defsite": "macro_rules! inner {\n    ($name:ident, $block:block) => {\n        #[kani::proof]\n        fn $name() $block\n    }\n}"
+        },
+        {
+          "callsite": "outer! { proof2, { assert_eq!(kani::any::<u8>(), 0) }}",
+          "defsite": "macro_rules! outer {\n    ($name:ident, $block:block) => {\n        inner!($name, $block);\n    };\n}"
+        }
+      ]
+    },
+    "callees_len": 0,
+    "callees": []
+  },
+  {
+    "hash": "79822416331020354410869048540304473445",
+    "def_id": "DefId { id: 2, name: \"verify::proof3\" }",
+    "attrs": [
+      "#[kanitool::proof]"
+    ],
+    "kind": "Standard",
+    "func": {
+      "name": "verify::proof3",
+      "mangled_name": "_ZN27gen_proofs_by_nested_macros6verify6proof317h9514b17fd5169cfbE",
+      "kind": "Item",
+      "file": "tests/proofs/gen_proofs_by_nested_macros.rs",
+      "src": "fn",
+      "macro_backtrace_len": 2,
+      "macro_backtrace": [
+        {
+          "callsite": "inner!($name, $block)",
+          "defsite": "macro_rules! inner {\n    ($name:ident, $block:block) => {\n        #[kani::proof]\n        fn $name() $block\n    }\n}"
+        },
+        {
+          "callsite": "outer! { proof3, { assert_eq!(kani::any::<u8>(), 1) }}",
+          "defsite": "macro_rules! outer {\n    ($name:ident, $block:block) => {\n        inner!($name, $block);\n    };\n}"
+        }
+      ]
+    },
+    "callees_len": 0,
+    "callees": []
+  }
+]

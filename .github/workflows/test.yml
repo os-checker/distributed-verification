@@ -38,11 +38,12 @@ jobs:
         working-directory: tests/dummy-crate
         env:
           RUST_LOG: off
-          CORE_JSON: ${{ github.workspace }}/core.json
+          OUTPUT_DIR: ${{ github.workspace }}
           KANI_DIR: ${{ github.workspace }}/kani/target/kani
           VERIFY_RUST_STD_LIBRARY: ${{ github.workspace }}/tests/dummy-crate/verify-rust-std/library
         run: |
           ls -alh ${{ env.VERIFY_RUST_STD_LIBRARY }}
+          # generate core.json
           cargo r --example verify_rust_std
 
       - name: View core.json

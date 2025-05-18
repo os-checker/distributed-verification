@@ -9,7 +9,7 @@ fn validate_kani_list_json() -> Result<()> {
 
     for path in &proofs {
         let file_stem = file_stem(path);
-        let list_path = format!("kani_list/{file_stem}.txt");
+        let list_path = format!("snapshots/kani_list/{file_stem}.txt");
         dbg!(&list_path);
 
         let path = path.to_str().unwrap();
