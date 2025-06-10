@@ -33,15 +33,15 @@ pub struct Total {
 
 /// Get kani list and check if it complies with Vec<SerFunction>.
 pub fn check(file: &str, v_ser_fun: &[SerFunction]) {
-    let list = get_kani_list(file);
+    let list = get_kani_list(file).unwrap();
     check_proofs(&list, v_ser_fun).unwrap();
 }
 
 /// Run `kani list` on single rust file.
-pub fn get_kani_list(rs_file_path: &str) -> KaniList {
+pub fn get_kani_list(rs_file_path: &str) -> Result<KaniList> {
     // kani list -Zlist -Zfunction-contracts --format=json file.rs
     let args = ["list", "-Zlist", "-Zfunction-contracts", "--format=json", rs_file_path];
-    let output = Command::new("kani").args(args).output().unwrap();
+    let output = Command::new("kani").args(args).output()?;
     assert!(
         output.status.success(),
         "Failed to run `kani list -Zlist -Zfunction-contracts --format=json {rs_file_path}`:\n{}",
@@ -49,7 +49,7 @@ pub fn get_kani_list(rs_file_path: &str) -> KaniList {
     );
 
     // read kani-list.json
-    read_kani_list("kani-list.json").unwrap()
+    read_kani_list("kani-list.json")
 }
 
 /// Read a kani-list.json

@@ -8,6 +8,7 @@ extern crate eyre;
 
 pub mod error_handling;
 pub mod kani_list;
+pub mod logger;
 pub mod statistics;
 
 /// A kani proof with its file source, attributes, and raw function content.
