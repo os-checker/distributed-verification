@@ -1,6 +1,6 @@
 [
   {
-    "hash": "415125890088201744017331302334846730335",
+    "hash": "1199054345737169152412317427450168300472",
     "def_id": "DefId { id: 0, name: \"verify::f\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -21,7 +21,7 @@
         "def_id": "DefId { id: 1, name: \"kani::assert\" }",
         "func": {
           "name": "kani::assert",
-          "mangled_name": "_ZN4kani6assert17h3de9c47ee2fed388E",
+          "mangled_name": "_ZN4kani6assert17h16fc3aebcf69514fE",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
