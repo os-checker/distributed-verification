@@ -1,6 +1,6 @@
 [
   {
-    "hash": "35743151276277611793517084653165109977",
+    "hash": "621401686617088517614099690995577419895",
     "def_id": "DefId { id: 13, name: \"verify::proof1\" }",
     "attrs": [
       "#[kanitool::proof_for_contract = \"contract1\"]"
@@ -147,7 +147,7 @@
     ]
   },
   {
-    "hash": "6595889749642739853320466240270009307",
+    "hash": "1590977407923643568616942313446570303465",
     "def_id": "DefId { id: 27, name: \"verify::proof2\" }",
     "attrs": [
       "#[kanitool::proof_for_contract = \"contract2\"]"
@@ -294,7 +294,7 @@
     ]
   },
   {
-    "hash": "592238342046250217315133068834005835571",
+    "hash": "244652015228172855313594745366458506448",
     "def_id": "DefId { id: 41, name: \"verify::proof3\" }",
     "attrs": [
       "#[kanitool::proof_for_contract = \"contract3\"]"

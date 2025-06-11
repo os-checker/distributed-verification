@@ -1,6 +1,6 @@
 [
   {
-    "hash": "144714976277872983928471512534521783174",
+    "hash": "607344420376676028815081268342388546771",
     "def_id": "DefId { id: 0, name: \"verify::proof1\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -30,7 +30,7 @@
         "def_id": "DefId { id: 4, name: \"<u8 as kani::Arbitrary>::any\" }",
         "func": {
           "name": "<u8 as kani::Arbitrary>::any",
-          "def_path_hash": "5b564342d02e8e12-2be988b95354635",
+          "def_path_hash": "e3efc4c8288d68cf-be900b3797337f8d",
           "kind": "Item",
           "file": "kani/library/kani_core/src/arbitrary.rs",
           "src": "fn any() -> Self {\n                        // This size_of call does not use generic_const_exprs feature. It's inside a macro, and Self isn't generic.\n                        unsafe { crate::kani::any_raw_internal::<Self>() }\n                    }",
@@ -55,7 +55,7 @@
         "def_id": "DefId { id: 1, name: \"kani::any\" }",
         "func": {
           "name": "kani::any::<u8>",
-          "def_path_hash": "5b564342d02e8e12-5464863fa792f7c",
+          "def_path_hash": "e3efc4c8288d68cf-87fcef33961b7a8a",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub fn any<T: Arbitrary>() -> T {\n            T::any()\n        }",
@@ -76,7 +76,7 @@
         "def_id": "DefId { id: 6, name: \"kani::any_raw\" }",
         "func": {
           "name": "kani::any_raw::<u8>",
-          "def_path_hash": "5b564342d02e8e12-ec375681c75463d4",
+          "def_path_hash": "e3efc4c8288d68cf-b38ea104a0b477a2",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "fn any_raw<T: Copy>() -> T {\n            kani_intrinsic()\n        }",
@@ -97,7 +97,7 @@
         "def_id": "DefId { id: 5, name: \"kani::any_raw_internal\" }",
         "func": {
           "name": "kani::any_raw_internal::<u8>",
-          "def_path_hash": "5b564342d02e8e12-cc892bc5f994e220",
+          "def_path_hash": "e3efc4c8288d68cf-ffec524032ccd35a",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "unsafe fn any_raw_internal<T: Copy>() -> T {\n            any_raw::<T>()\n        }",
@@ -118,7 +118,7 @@
         "def_id": "DefId { id: 2, name: \"kani::assert\" }",
         "func": {
           "name": "kani::assert",
-          "def_path_hash": "5b564342d02e8e12-21becb4b4994f64",
+          "def_path_hash": "e3efc4c8288d68cf-8b3c6850f4505876",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
@@ -139,7 +139,7 @@
         "def_id": "DefId { id: 7, name: \"kani::kani_intrinsic\" }",
         "func": {
           "name": "kani::kani_intrinsic::<u8>",
-          "def_path_hash": "5b564342d02e8e12-3df5cb815610be7d",
+          "def_path_hash": "e3efc4c8288d68cf-71b1864c6d5b6014",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "fn kani_intrinsic<T>() -> T {\n            #[allow(clippy::empty_loop)]\n            loop {}\n        }",
