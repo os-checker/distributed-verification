@@ -1,6 +1,6 @@
 [
   {
-    "hash": "1474064186071418523215498936685479235593",
+    "hash": "131865662377704484254122375675634845604",
     "def_id": "DefId { id: 3, name: \"verify::recursive_callees\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -8,7 +8,7 @@
     "kind": "Standard",
     "func": {
       "name": "verify::recursive_callees",
-      "mangled_name": "_ZN15standard_proofs6verify17recursive_callees17h7e5d0e766cf82818E",
+      "def_path_hash": "5b0a196ea78c1174-fcc3853f5c42fd09",
       "kind": "Item",
       "file": "tests/proofs/standard_proofs.rs",
       "src": "fn recursive_callees() {\n        crate::top_level();\n    }",
@@ -21,7 +21,7 @@
         "def_id": "DefId { id: 107, name: \"std::ops::FnMut::call_mut\" }",
         "func": {
           "name": "<fn(char) -> bool {std::char::methods::<impl char>::is_whitespace} as std::ops::FnMut<(char,)>>::call_mut",
-          "mangled_name": "_ZN4core3ops8function5FnMut8call_mut17hb4cb550215d85213E",
+          "def_path_hash": "ce965f13283d578c-83f86376688eaba",
           "kind": "Shim",
           "file": "library/core/src/ops/function.rs",
           "src": "extern \"rust-call\" fn call_mut(&mut self, args: Args) -> Self::Output;",
@@ -33,7 +33,7 @@
         "def_id": "DefId { id: 41, name: \"<F as std::str::pattern::MultiCharEq>::matches\" }",
         "func": {
           "name": "<fn(char) -> bool {std::char::methods::<impl char>::is_whitespace} as std::str::pattern::MultiCharEq>::matches",
-          "mangled_name": "_ZN53_$LT$F$u20$as$u20$core..str..pattern..MultiCharEq$GT$7matches17h109ee9f16e960947E",
+          "def_path_hash": "ce965f13283d578c-773e2d5d58af54f0",
           "kind": "Item",
           "file": "library/core/src/str/pattern.rs",
           "src": "fn matches(&mut self, c: char) -> bool {\n        (*self)(c)\n    }",
@@ -45,7 +45,7 @@
         "def_id": "DefId { id: 17, name: \"<F as std::str::pattern::Pattern>::into_searcher\" }",
         "func": {
           "name": "<fn(char) -> bool {std::char::methods::<impl char>::is_whitespace} as std::str::pattern::Pattern>::into_searcher",
-          "mangled_name": "_ZN49_$LT$F$u20$as$u20$core..str..pattern..Pattern$GT$13into_searcher17h40c0cae004234c69E",
+          "def_path_hash": "ce965f13283d578c-3da8ef7aa975a2d5",
           "kind": "Item",
           "file": "library/core/src/str/pattern.rs",
           "src": "fn into_searcher<$a>(self, haystack: &$a str) -> $t {\n            ($smap)(($pmap)(self).into_searcher(haystack))\n        }",
@@ -62,7 +62,7 @@
         "def_id": "DefId { id: 68, name: \"<std::option::Option<T> as std::ops::Try>::branch\" }",
         "func": {
           "name": "<std::option::Option<&u8> as std::ops::Try>::branch",
-          "mangled_name": "_ZN75_$LT$core..option..Option$LT$T$GT$$u20$as$u20$core..ops..try_trait..Try$GT$6branch17h5375d6019891342dE",
+          "def_path_hash": "ce965f13283d578c-e670cc4477ca3c47",
           "kind": "Item",
           "file": "library/core/src/option.rs",
           "src": "fn branch(self) -> ControlFlow<Self::Residual, Self::Output> {\n        match self {\n            Some(v) => ControlFlow::Continue(v),\n            None => ControlFlow::Break(None),\n        }\n    }",
@@ -74,7 +74,7 @@
         "def_id": "DefId { id: 70, name: \"<std::option::Option<T> as std::ops::FromResidual<std::option::Option<std::convert::Infallible>>>::from_residual\" }",
         "func": {
           "name": "<std::option::Option<u32> as std::ops::FromResidual<std::option::Option<std::convert::Infallible>>>::from_residual",
-          "mangled_name": "_ZN145_$LT$core..option..Option$LT$T$GT$$u20$as$u20$core..ops..try_trait..FromResidual$LT$core..option..Option$LT$core..convert..Infallible$GT$$GT$$GT$13from_residual17hdeea97661092b069E",
+          "def_path_hash": "ce965f13283d578c-e3a67c52d124fcc",
           "kind": "Item",
           "file": "library/core/src/option.rs",
           "src": "fn from_residual(residual: Option<convert::Infallible>) -> Self {\n        match residual {\n            None => None,\n        }\n    }",
@@ -86,7 +86,7 @@
         "def_id": "DefId { id: 81, name: \"<std::ptr::NonNull<T> as std::cmp::PartialEq>::eq\" }",
         "func": {
           "name": "<std::ptr::NonNull<u8> as std::cmp::PartialEq>::eq",
-          "mangled_name": "_ZN78_$LT$core..ptr..non_null..NonNull$LT$T$GT$$u20$as$u20$core..cmp..PartialEq$GT$2eq17h87706b824bbf3b04E",
+          "def_path_hash": "ce965f13283d578c-860fcc9e4eec25ed",
           "kind": "Item",
           "file": "library/core/src/ptr/non_null.rs",
           "src": "fn eq(&self, other: &Self) -> bool {\n        self.as_ptr() == other.as_ptr()\n    }",
@@ -98,7 +98,7 @@
         "def_id": "DefId { id: 66, name: \"<std::slice::Iter<'a, T> as std::iter::DoubleEndedIterator>::next_back\" }",
         "func": {
           "name": "<std::slice::Iter<'_, u8> as std::iter::DoubleEndedIterator>::next_back",
-          "mangled_name": "_ZN106_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..double_ended..DoubleEndedIterator$GT$9next_back17h6c53ccb54297525aE",
+          "def_path_hash": "ce965f13283d578c-dbf4872e8cb783c8",
           "kind": "Item",
           "file": "library/core/src/slice/iter/macros.rs",
           "src": "fn next_back(&mut self) -> Option<$elem> {\n                // could be implemented with slices, but this avoids bounds checks\n\n                // SAFETY: The call to `next_back_unchecked`\n                // is safe since we check if the iterator is empty first.\n                unsafe {\n                    if is_empty!(self) {\n                        None\n                    } else {\n                        Some(self.next_back_unchecked())\n                    }\n                }\n            }",
@@ -115,7 +115,7 @@
         "def_id": "DefId { id: 37, name: \"<std::slice::Iter<'_, T> as std::iter::ExactSizeIterator>::len\" }",
         "func": {
           "name": "<std::slice::Iter<'_, u8> as std::iter::ExactSizeIterator>::len",
-          "mangled_name": "_ZN102_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..exact_size..ExactSizeIterator$GT$3len17h1f916288e1a1bdffE",
+          "def_path_hash": "ce965f13283d578c-7fdadef40c1edc60",
           "kind": "Item",
           "file": "library/core/src/slice/iter/macros.rs",
           "src": "fn len(&self) -> usize {\n                len!(self)\n            }",
@@ -132,7 +132,7 @@
         "def_id": "DefId { id: 135, name: \"<std::slice::Iter<'a, T> as std::iter::Iterator>::next\" }",
         "func": {
           "name": "<std::slice::Iter<'_, u8> as std::iter::Iterator>::next",
-          "mangled_name": "_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hbddff6151cd65d51E",
+          "def_path_hash": "ce965f13283d578c-b5a51287fbc1f90f",
           "kind": "Item",
           "file": "library/core/src/slice/iter/macros.rs",
           "src": "fn next(&mut self) -> Option<$elem> {\n                // intentionally not using the helpers because this is\n                // one of the most mono'd things in the library.\n\n                let ptr = self.ptr;\n                let end_or_len = self.end_or_len;\n                // SAFETY: See inner comments. (For some reason having multiple\n                // block breaks inlining this -- if you can fix that please do!)\n                unsafe {\n                    if T::IS_ZST {\n                        let len = end_or_len.addr();\n                        if len == 0 {\n                            return None;\n                        }\n                        // SAFETY: just checked that it's not zero, so subtracting one\n                        // cannot wrap.  (Ideally this would be `checked_sub`, which\n                        // does the same thing internally, but as of 2025-02 that\n                        // doesn't optimize quite as small in MIR.)\n                        self.end_or_len = without_provenance_mut(len.unchecked_sub(1));\n                    } else {\n                        // SAFETY: by type invariant, the `end_or_len` field is always\n                        // non-null for a non-ZST pointee.  (This transmute ensures we\n                        // get `!nonnull` metadata on the load of the field.)\n                        if ptr == crate::intrinsics::transmute::<$ptr, NonNull<T>>(end_or_len) {\n                            return None;\n                        }\n                        // SAFETY: since it's not empty, per the check above, moving\n                        // forward one keeps us inside the slice, and this is valid.\n                        self.ptr = ptr.add(1);\n                    }\n                    // SAFETY: Now that we know it wasn't empty and we've moved past\n                    // the first one (to avoid giving a duplicate `&mut` next time),\n                    // we can give out a reference to it.\n                    Some({ptr}.$into_ref())\n                }\n            }",
@@ -149,7 +149,7 @@
         "def_id": "DefId { id: 39, name: \"<std::str::CharIndices<'a> as std::iter::DoubleEndedIterator>::next_back\" }",
         "func": {
           "name": "<std::str::CharIndices<'_> as std::iter::DoubleEndedIterator>::next_back",
-          "mangled_name": "_ZN102_$LT$core..str..iter..CharIndices$u20$as$u20$core..iter..traits..double_ended..DoubleEndedIterator$GT$9next_back17he6e8604cbc17a463E",
+          "def_path_hash": "ce965f13283d578c-d8015f4d735406f7",
           "kind": "Item",
           "file": "library/core/src/str/iter.rs",
           "src": "fn next_back(&mut self) -> Option<(usize, char)> {\n        self.iter.next_back().map(|ch| {\n            let index = self.front_offset + self.iter.iter.len();\n            (index, ch)\n        })\n    }",
@@ -161,7 +161,7 @@
         "def_id": "DefId { id: 42, name: \"<std::str::CharIndices<'a> as std::iter::DoubleEndedIterator>::next_back::{closure#0}\" }",
         "func": {
           "name": "<std::str::CharIndices<'_> as std::iter::DoubleEndedIterator>::next_back::{closure#0}",
-          "mangled_name": "_ZN102_$LT$core..str..iter..CharIndices$u20$as$u20$core..iter..traits..double_ended..DoubleEndedIterator$GT$9next_back28_$u7b$$u7b$closure$u7d$$u7d$17h4e7d5367a0a50b65E",
+          "def_path_hash": "ce965f13283d578c-3d94d05e1dd9b8d9",
           "kind": "Item",
           "file": "library/core/src/str/iter.rs",
           "src": "|ch| {\n            let index = self.front_offset + self.iter.iter.len();\n            (index, ch)\n        }",
@@ -173,7 +173,7 @@
         "def_id": "DefId { id: 132, name: \"<std::str::CharIndices<'a> as std::iter::Iterator>::next\" }",
         "func": {
           "name": "<std::str::CharIndices<'_> as std::iter::Iterator>::next",
-          "mangled_name": "_ZN87_$LT$core..str..iter..CharIndices$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h5cc2ec05736cfd95E",
+          "def_path_hash": "ce965f13283d578c-c27950870621764d",
           "kind": "Item",
           "file": "library/core/src/str/iter.rs",
           "src": "fn next(&mut self) -> Option<(usize, char)> {\n        let pre_len = self.iter.iter.len();\n        match self.iter.next() {\n            None => None,\n            Some(ch) => {\n                let index = self.front_offset;\n                let len = self.iter.iter.len();\n                self.front_offset += pre_len - len;\n                Some((index, ch))\n            }\n        }\n    }",
@@ -185,7 +185,7 @@
         "def_id": "DefId { id: 43, name: \"<std::str::Chars<'a> as std::iter::DoubleEndedIterator>::next_back\" }",
         "func": {
           "name": "<std::str::Chars<'_> as std::iter::DoubleEndedIterator>::next_back",
-          "mangled_name": "_ZN96_$LT$core..str..iter..Chars$u20$as$u20$core..iter..traits..double_ended..DoubleEndedIterator$GT$9next_back17h19826c4b9322318fE",
+          "def_path_hash": "ce965f13283d578c-cb8402f11f5f4ba1",
           "kind": "Item",
           "file": "library/core/src/str/iter.rs",
           "src": "fn next_back(&mut self) -> Option<char> {\n        // SAFETY: `str` invariant says `self.iter` is a valid UTF-8 string and\n        // the resulting `ch` is a valid Unicode Scalar Value.\n        unsafe { next_code_point_reverse(&mut self.iter).map(|ch| char::from_u32_unchecked(ch)) }\n    }",
@@ -197,7 +197,7 @@
         "def_id": "DefId { id: 47, name: \"<std::str::Chars<'a> as std::iter::DoubleEndedIterator>::next_back::{closure#0}\" }",
         "func": {
           "name": "<std::str::Chars<'_> as std::iter::DoubleEndedIterator>::next_back::{closure#0}",
-          "mangled_name": "_ZN96_$LT$core..str..iter..Chars$u20$as$u20$core..iter..traits..double_ended..DoubleEndedIterator$GT$9next_back28_$u7b$$u7b$closure$u7d$$u7d$17ha6ad7dffe70645deE",
+          "def_path_hash": "ce965f13283d578c-2e9dabdf81458b9b",
           "kind": "Item",
           "file": "library/core/src/str/iter.rs",
           "src": "|ch| char::from_u32_unchecked(ch)",
@@ -209,7 +209,7 @@
         "def_id": "DefId { id: 133, name: \"<std::str::Chars<'a> as std::iter::Iterator>::next\" }",
         "func": {
           "name": "<std::str::Chars<'_> as std::iter::Iterator>::next",
-          "mangled_name": "_ZN81_$LT$core..str..iter..Chars$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h6d4213776599c3aaE",
+          "def_path_hash": "ce965f13283d578c-391db3e418d5a966",
           "kind": "Item",
           "file": "library/core/src/str/iter.rs",
           "src": "fn next(&mut self) -> Option<char> {\n        // SAFETY: `str` invariant says `self.iter` is a valid UTF-8 string and\n        // the resulting `ch` is a valid Unicode Scalar Value.\n        unsafe { next_code_point(&mut self.iter).map(|ch| char::from_u32_unchecked(ch)) }\n    }",
@@ -221,7 +221,7 @@
         "def_id": "DefId { id: 140, name: \"<std::str::Chars<'a> as std::iter::Iterator>::next::{closure#0}\" }",
         "func": {
           "name": "<std::str::Chars<'_> as std::iter::Iterator>::next::{closure#0}",
-          "mangled_name": "_ZN81_$LT$core..str..iter..Chars$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next28_$u7b$$u7b$closure$u7d$$u7d$17h5e1176c82f9fa18eE",
+          "def_path_hash": "ce965f13283d578c-d6b9f1bc6bc5230e",
           "kind": "Item",
           "file": "library/core/src/str/iter.rs",
           "src": "|ch| char::from_u32_unchecked(ch)",
@@ -233,7 +233,7 @@
         "def_id": "DefId { id: 21, name: \"<std::str::pattern::CharPredicateSearcher<'a, F> as std::str::pattern::ReverseSearcher<'a>>::next_reject_back\" }",
         "func": {
           "name": "<std::str::pattern::CharPredicateSearcher<'_, fn(char) -> bool {std::char::methods::<impl char>::is_whitespace}> as std::str::pattern::ReverseSearcher<'_>>::next_reject_back",
-          "mangled_name": "_ZN106_$LT$core..str..pattern..CharPredicateSearcher$LT$F$GT$$u20$as$u20$core..str..pattern..ReverseSearcher$GT$16next_reject_back17h0ffdfff76260d20aE",
+          "def_path_hash": "ce965f13283d578c-597d5d229c97f12f",
           "kind": "Item",
           "file": "library/core/src/str/pattern.rs",
           "src": "fn next_reject_back(&mut self) -> Option<(usize, usize)> {\n            self.0.next_reject_back()\n        }",
@@ -250,7 +250,7 @@
         "def_id": "DefId { id: 19, name: \"<std::str::pattern::CharPredicateSearcher<'a, F> as std::str::pattern::Searcher<'a>>::next_reject\" }",
         "func": {
           "name": "<std::str::pattern::CharPredicateSearcher<'_, fn(char) -> bool {std::char::methods::<impl char>::is_whitespace}> as std::str::pattern::Searcher<'_>>::next_reject",
-          "mangled_name": "_ZN99_$LT$core..str..pattern..CharPredicateSearcher$LT$F$GT$$u20$as$u20$core..str..pattern..Searcher$GT$11next_reject17hb6d10925b14bf75fE",
+          "def_path_hash": "ce965f13283d578c-1e3f5bb113c0cf74",
           "kind": "Item",
           "file": "library/core/src/str/pattern.rs",
           "src": "fn next_reject(&mut self) -> Option<(usize, usize)> {\n            self.0.next_reject()\n        }",
@@ -267,7 +267,7 @@
         "def_id": "DefId { id: 109, name: \"<std::str::pattern::MultiCharEqPattern<C> as std::str::pattern::Pattern>::into_searcher\" }",
         "func": {
           "name": "<std::str::pattern::MultiCharEqPattern<fn(char) -> bool {std::char::methods::<impl char>::is_whitespace}> as std::str::pattern::Pattern>::into_searcher",
-          "mangled_name": "_ZN95_$LT$core..str..pattern..MultiCharEqPattern$LT$C$GT$$u20$as$u20$core..str..pattern..Pattern$GT$13into_searcher17h765ffd5166d5b227E",
+          "def_path_hash": "ce965f13283d578c-3f8e26d6710a9e34",
           "kind": "Item",
           "file": "library/core/src/str/pattern.rs",
           "src": "fn into_searcher(self, haystack: &str) -> MultiCharEqSearcher<'_, C> {\n        MultiCharEqSearcher { haystack, char_eq: self.0, char_indices: haystack.char_indices() }\n    }",
@@ -279,7 +279,7 @@
         "def_id": "DefId { id: 31, name: \"<std::str::pattern::MultiCharEqSearcher<'a, C> as std::str::pattern::ReverseSearcher<'a>>::next_back\" }",
         "func": {
           "name": "<std::str::pattern::MultiCharEqSearcher<'_, fn(char) -> bool {std::char::methods::<impl char>::is_whitespace}> as std::str::pattern::ReverseSearcher<'_>>::next_back",
-          "mangled_name": "_ZN104_$LT$core..str..pattern..MultiCharEqSearcher$LT$C$GT$$u20$as$u20$core..str..pattern..ReverseSearcher$GT$9next_back17h2a2499ee42f6fe83E",
+          "def_path_hash": "ce965f13283d578c-286066231e5df2b6",
           "kind": "Item",
           "file": "library/core/src/str/pattern.rs",
           "src": "fn next_back(&mut self) -> SearchStep {\n        let s = &mut self.char_indices;\n        // Compare lengths of the internal byte slice iterator\n        // to find length of current char\n        let pre_len = s.iter.iter.len();\n        if let Some((i, c)) = s.next_back() {\n            let len = s.iter.iter.len();\n            let char_len = pre_len - len;\n            if self.char_eq.matches(c) {\n                return SearchStep::Match(i, i + char_len);\n            } else {\n                return SearchStep::Reject(i, i + char_len);\n            }\n        }\n        SearchStep::Done\n    }",
@@ -291,7 +291,7 @@
         "def_id": "DefId { id: 20, name: \"std::str::pattern::ReverseSearcher::next_reject_back\" }",
         "func": {
           "name": "<std::str::pattern::MultiCharEqSearcher<'_, fn(char) -> bool {std::char::methods::<impl char>::is_whitespace}> as std::str::pattern::ReverseSearcher<'_>>::next_reject_back",
-          "mangled_name": "_ZN4core3str7pattern15ReverseSearcher16next_reject_back17h51b7cc196636379aE",
+          "def_path_hash": "ce965f13283d578c-fcc2f53bc1852eb4",
           "kind": "Item",
           "file": "library/core/src/str/pattern.rs",
           "src": "fn next_reject_back(&mut self) -> Option<(usize, usize)> {\n        loop {\n            match self.next_back() {\n                SearchStep::Reject(a, b) => return Some((a, b)),\n                SearchStep::Done => return None,\n                _ => continue,\n            }\n        }\n    }",
@@ -303,7 +303,7 @@
         "def_id": "DefId { id: 130, name: \"<std::str::pattern::MultiCharEqSearcher<'a, C> as std::str::pattern::Searcher<'a>>::next\" }",
         "func": {
           "name": "<std::str::pattern::MultiCharEqSearcher<'_, fn(char) -> bool {std::char::methods::<impl char>::is_whitespace}> as std::str::pattern::Searcher<'_>>::next",
-          "mangled_name": "_ZN97_$LT$core..str..pattern..MultiCharEqSearcher$LT$C$GT$$u20$as$u20$core..str..pattern..Searcher$GT$4next17he2858a43b7864270E",
+          "def_path_hash": "ce965f13283d578c-830b152a89c3ac40",
           "kind": "Item",
           "file": "library/core/src/str/pattern.rs",
           "src": "fn next(&mut self) -> SearchStep {\n        let s = &mut self.char_indices;\n        // Compare lengths of the internal byte slice iterator\n        // to find length of current char\n        let pre_len = s.iter.iter.len();\n        if let Some((i, c)) = s.next() {\n            let len = s.iter.iter.len();\n            let char_len = pre_len - len;\n            if self.char_eq.matches(c) {\n                return SearchStep::Match(i, i + char_len);\n            } else {\n                return SearchStep::Reject(i, i + char_len);\n            }\n        }\n        SearchStep::Done\n    }",
@@ -315,7 +315,7 @@
         "def_id": "DefId { id: 18, name: \"std::str::pattern::Searcher::next_reject\" }",
         "func": {
           "name": "<std::str::pattern::MultiCharEqSearcher<'_, fn(char) -> bool {std::char::methods::<impl char>::is_whitespace}> as std::str::pattern::Searcher<'_>>::next_reject",
-          "mangled_name": "_ZN4core3str7pattern8Searcher11next_reject17h1ede388973368d32E",
+          "def_path_hash": "ce965f13283d578c-1549fb1acf408d62",
           "kind": "Item",
           "file": "library/core/src/str/pattern.rs",
           "src": "fn next_reject(&mut self) -> Option<(usize, usize)> {\n        loop {\n            match self.next() {\n                SearchStep::Reject(a, b) => return Some((a, b)),\n                SearchStep::Done => return None,\n                _ => continue,\n            }\n        }\n    }",
@@ -327,7 +327,7 @@
         "def_id": "DefId { id: 54, name: \"core::fmt::rt::<impl std::fmt::Arguments<'a>>::new_const\" }",
         "func": {
           "name": "core::fmt::rt::<impl std::fmt::Arguments<'_>>::new_const::<1>",
-          "mangled_name": "_ZN4core3fmt2rt38_$LT$impl$u20$core..fmt..Arguments$GT$9new_const17h1b72ca15b91ecd3aE",
+          "def_path_hash": "ce965f13283d578c-885a743506366d39",
           "kind": "Item",
           "file": "library/core/src/fmt/rt.rs",
           "src": "pub const fn new_const<const N: usize>(pieces: &'a [&'static str; N]) -> Self {\n        const { assert!(N <= 1) };\n        Arguments { pieces, fmt: None, args: &[] }\n    }",
@@ -339,7 +339,7 @@
         "def_id": "DefId { id: 92, name: \"core::num::<impl isize>::overflowing_neg\" }",
         "func": {
           "name": "core::num::<impl isize>::overflowing_neg",
-          "mangled_name": "_ZN4core3num23_$LT$impl$u20$isize$GT$15overflowing_neg17hd6e247edd07eaa87E",
+          "def_path_hash": "ce965f13283d578c-cd14ab3457e23418",
           "kind": "Item",
           "file": "library/core/src/num/int_macros.rs",
           "src": "pub const fn overflowing_neg(self) -> (Self, bool) {\n            if intrinsics::unlikely(self == Self::MIN) {\n                (Self::MIN, true)\n            } else {\n                (-self, false)\n            }\n        }",
@@ -356,7 +356,7 @@
         "def_id": "DefId { id: 89, name: \"core::num::<impl isize>::unchecked_neg\" }",
         "func": {
           "name": "core::num::<impl isize>::unchecked_neg",
-          "mangled_name": "_ZN4core3num23_$LT$impl$u20$isize$GT$13unchecked_neg17hcf809580c041deceE",
+          "def_path_hash": "ce965f13283d578c-1154390e2c14174b",
           "kind": "Item",
           "file": "library/core/src/num/int_macros.rs",
           "src": "pub const unsafe fn unchecked_neg(self) -> Self {\n            assert_unsafe_precondition!(\n                check_language_ub,\n                concat!(stringify!($SelfT), \"::unchecked_neg cannot overflow\"),\n                (\n                    lhs: $SelfT = self,\n                ) => !lhs.overflowing_neg().1,\n            );\n\n            // SAFETY: this is guaranteed to be safe by the caller.\n            unsafe {\n                intrinsics::unchecked_sub(0, self)\n            }\n        }",
@@ -373,7 +373,7 @@
         "def_id": "DefId { id: 91, name: \"core::num::<impl isize>::unchecked_neg::precondition_check\" }",
         "func": {
           "name": "core::num::<impl isize>::unchecked_neg::precondition_check",
-          "mangled_name": "_ZN4core3num23_$LT$impl$u20$isize$GT$13unchecked_neg18precondition_check17hae3c1ef66d29edd0E",
+          "def_path_hash": "ce965f13283d578c-9d16b593edf4b89d",
           "kind": "Item",
           "file": "library/core/src/ub_checks.rs",
           "src": "const fn precondition_check($($name:$ty),*) {\n                if !$e {\n                    let msg = concat!(\"unsafe precondition(s) violated: \", $message,\n                        \"\\n\\nThis indicates a bug in the program. \\\n                        This Undefined Behavior check is optional, and cannot be relied on for safety.\");\n                    ::core::panicking::panic_nounwind_fmt(::core::fmt::Arguments::new_const(&[msg]), false);\n                }\n            }",
@@ -394,7 +394,7 @@
         "def_id": "DefId { id: 58, name: \"core::num::<impl u32>::wrapping_sub\" }",
         "func": {
           "name": "core::num::<impl u32>::wrapping_sub",
-          "mangled_name": "_ZN4core3num21_$LT$impl$u20$u32$GT$12wrapping_sub17h6b4fbec0fae9944aE",
+          "def_path_hash": "ce965f13283d578c-320b4fb251f3d7cd",
           "kind": "Item",
           "file": "library/core/src/num/uint_macros.rs",
           "src": "pub const fn wrapping_sub(self, rhs: Self) -> Self {\n            intrinsics::wrapping_sub(self, rhs)\n        }",
@@ -411,7 +411,7 @@
         "def_id": "DefId { id: 139, name: \"core::num::<impl usize>::overflowing_sub\" }",
         "func": {
           "name": "core::num::<impl usize>::overflowing_sub",
-          "mangled_name": "_ZN4core3num23_$LT$impl$u20$usize$GT$15overflowing_sub17hdc353cdef05afcafE",
+          "def_path_hash": "ce965f13283d578c-42064e49daae5738",
           "kind": "Item",
           "file": "library/core/src/num/uint_macros.rs",
           "src": "pub const fn overflowing_sub(self, rhs: Self) -> (Self, bool) {\n            let (a, b) = intrinsics::sub_with_overflow(self as $ActualT, rhs as $ActualT);\n            (a as Self, b)\n        }",
@@ -428,7 +428,7 @@
         "def_id": "DefId { id: 136, name: \"core::num::<impl usize>::unchecked_sub\" }",
         "func": {
           "name": "core::num::<impl usize>::unchecked_sub",
-          "mangled_name": "_ZN4core3num23_$LT$impl$u20$usize$GT$13unchecked_sub17hed176272bfd5d144E",
+          "def_path_hash": "ce965f13283d578c-90dd3d1454e23297",
           "kind": "Item",
           "file": "library/core/src/num/uint_macros.rs",
           "src": "pub const unsafe fn unchecked_sub(self, rhs: Self) -> Self {\n            assert_unsafe_precondition!(\n                check_language_ub,\n                concat!(stringify!($SelfT), \"::unchecked_sub cannot overflow\"),\n                (\n                    lhs: $SelfT = self,\n                    rhs: $SelfT = rhs,\n                ) => !lhs.overflowing_sub(rhs).1,\n            );\n\n            // SAFETY: this is guaranteed to be safe by the caller.\n            unsafe {\n                intrinsics::unchecked_sub(self, rhs)\n            }\n        }",
@@ -445,7 +445,7 @@
         "def_id": "DefId { id: 138, name: \"core::num::<impl usize>::unchecked_sub::precondition_check\" }",
         "func": {
           "name": "core::num::<impl usize>::unchecked_sub::precondition_check",
-          "mangled_name": "_ZN4core3num23_$LT$impl$u20$usize$GT$13unchecked_sub18precondition_check17hf01b1b93776cb06eE",
+          "def_path_hash": "ce965f13283d578c-f7ff877e5610003e",
           "kind": "Item",
           "file": "library/core/src/ub_checks.rs",
           "src": "const fn precondition_check($($name:$ty),*) {\n                if !$e {\n                    let msg = concat!(\"unsafe precondition(s) violated: \", $message,\n                        \"\\n\\nThis indicates a bug in the program. \\\n                        This Undefined Behavior check is optional, and cannot be relied on for safety.\");\n                    ::core::panicking::panic_nounwind_fmt(::core::fmt::Arguments::new_const(&[msg]), false);\n                }\n            }",
@@ -466,7 +466,7 @@
         "def_id": "DefId { id: 61, name: \"core::panic::panic_info::PanicInfo::<'a>::new\" }",
         "func": {
           "name": "core::panic::panic_info::PanicInfo::<'_>::new",
-          "mangled_name": "_ZN4core5panic10panic_info9PanicInfo3new17hd4d1e56b7db2f7bfE",
+          "def_path_hash": "ce965f13283d578c-2986ff70ab7fee92",
           "kind": "Item",
           "file": "library/core/src/panic/panic_info.rs",
           "src": "pub(crate) fn new(\n        message: &'a fmt::Arguments<'a>,\n        location: &'a Location<'a>,\n        can_unwind: bool,\n        force_no_backtrace: bool,\n    ) -> Self {\n        PanicInfo { location, message, can_unwind, force_no_backtrace }\n    }",
@@ -478,7 +478,7 @@
         "def_id": "DefId { id: 102, name: \"core::panicking::panic\" }",
         "func": {
           "name": "core::panicking::panic",
-          "mangled_name": "_ZN4core9panicking5panic17h890aa38aaf741432E",
+          "def_path_hash": "ce965f13283d578c-bd97a948023fe010",
           "kind": "Item",
           "file": "library/core/src/panicking.rs",
           "src": "pub const fn panic(expr: &'static str) -> ! {\n    // Use Arguments::new_const instead of format_args!(\"{expr}\") to potentially\n    // reduce size overhead. The format_args! macro uses str's Display trait to\n    // write expr, which calls Formatter::pad, which must accommodate string\n    // truncation and padding (even though none is used here). Using\n    // Arguments::new_const may allow the compiler to omit Formatter::pad from the\n    // output binary, saving up to a few kilobytes.\n    // However, this optimization only works for `'static` strings: `new_const` also makes this\n    // message return `Some` from `Arguments::as_str`, which means it can become part of the panic\n    // payload without any allocation or copying. Shorter-lived strings would become invalid as\n    // stack frames get popped during unwinding, and couldn't be directly referenced from the\n    // payload.\n    panic_fmt(fmt::Arguments::new_const(&[expr]));\n}",
@@ -490,7 +490,7 @@
         "def_id": "DefId { id: 55, name: \"core::panicking::panic_nounwind_fmt\" }",
         "func": {
           "name": "core::panicking::panic_nounwind_fmt",
-          "mangled_name": "_ZN4core9panicking18panic_nounwind_fmt17h46e64dd3d1bf2b7aE",
+          "def_path_hash": "ce965f13283d578c-99dc91c064081584",
           "kind": "Item",
           "file": "library/core/src/panicking.rs",
           "src": "pub const fn panic_nounwind_fmt(fmt: fmt::Arguments<'_>, force_no_backtrace: bool) -> ! {\n    const_eval_select!(\n        @capture { fmt: fmt::Arguments<'_>, force_no_backtrace: bool } -> !:\n        if const #[track_caller] {\n            // We don't unwind anyway at compile-time so we can call the regular `panic_fmt`.\n            panic_fmt(fmt)\n        } else #[track_caller] {\n            if cfg!(feature = \"panic_immediate_abort\") {\n                super::intrinsics::abort()\n            }\n\n            // NOTE This function never crosses the FFI boundary; it's a Rust-to-Rust call\n            // that gets resolved to the `#[panic_handler]` function.\n            unsafe extern \"Rust\" {\n                #[lang = \"panic_impl\"]\n                fn panic_impl(pi: &PanicInfo<'_>) -> !;\n            }\n\n            // PanicInfo with the `can_unwind` flag set to false forces an abort.\n            let pi = PanicInfo::new(\n                &fmt,\n                Location::caller(),\n                /* can_unwind */ false,\n                force_no_backtrace,\n            );\n\n            // SAFETY: `panic_impl` is defined in safe Rust code and thus is safe to call.\n            unsafe { panic_impl(&pi) }\n        }\n    )\n}",
@@ -502,7 +502,7 @@
         "def_id": "DefId { id: 59, name: \"core::panicking::panic_nounwind_fmt::runtime\" }",
         "func": {
           "name": "core::panicking::panic_nounwind_fmt::runtime",
-          "mangled_name": "_ZN4core9panicking18panic_nounwind_fmt7runtime17h7e267ff72e65bbe2E",
+          "def_path_hash": "ce965f13283d578c-c9a8816f910fc8b0",
           "kind": "Item",
           "file": "library/core/src/intrinsics/mod.rs",
           "src": "fn runtime$(<$($binders)*>)?($($arg: $ty),*) $( -> $ret )? {\n            $runtime\n        }",
@@ -527,7 +527,7 @@
         "def_id": "DefId { id: 113, name: \"core::slice::<impl [T]>::iter\" }",
         "func": {
           "name": "core::slice::<impl [u8]>::iter",
-          "mangled_name": "_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$4iter17h7be2b3af458ce771E",
+          "def_path_hash": "ce965f13283d578c-f0d7dcaa129c2279",
           "kind": "Item",
           "file": "library/core/src/slice/mod.rs",
           "src": "pub const fn iter(&self) -> Iter<'_, T> {\n        Iter::new(self)\n    }",
@@ -539,7 +539,7 @@
         "def_id": "DefId { id: 112, name: \"core::str::<impl str>::as_bytes\" }",
         "func": {
           "name": "core::str::<impl str>::as_bytes",
-          "mangled_name": "_ZN4core3str21_$LT$impl$u20$str$GT$8as_bytes17h280c167c641eb71dE",
+          "def_path_hash": "ce965f13283d578c-dcb6d4d99a94685d",
           "kind": "Item",
           "file": "library/core/src/str/mod.rs",
           "src": "pub const fn as_bytes(&self) -> &[u8] {\n        // SAFETY: const sound because we transmute two types with the same layout\n        unsafe { mem::transmute(self) }\n    }",
@@ -551,7 +551,7 @@
         "def_id": "DefId { id: 110, name: \"core::str::<impl str>::char_indices\" }",
         "func": {
           "name": "core::str::<impl str>::char_indices",
-          "mangled_name": "_ZN4core3str21_$LT$impl$u20$str$GT$12char_indices17h7e1f67a4f2b686e8E",
+          "def_path_hash": "ce965f13283d578c-d6a5d6352e18b64f",
           "kind": "Item",
           "file": "library/core/src/str/mod.rs",
           "src": "pub fn char_indices(&self) -> CharIndices<'_> {\n        CharIndices { front_offset: 0, iter: self.chars() }\n    }",
@@ -563,7 +563,7 @@
         "def_id": "DefId { id: 111, name: \"core::str::<impl str>::chars\" }",
         "func": {
           "name": "core::str::<impl str>::chars",
-          "mangled_name": "_ZN4core3str21_$LT$impl$u20$str$GT$5chars17h01ecbb6509675b58E",
+          "def_path_hash": "ce965f13283d578c-7ec5da4daad3235",
           "kind": "Item",
           "file": "library/core/src/str/mod.rs",
           "src": "pub fn chars(&self) -> Chars<'_> {\n        Chars { iter: self.as_bytes().iter() }\n    }",
@@ -575,7 +575,7 @@
         "def_id": "DefId { id: 22, name: \"core::str::<impl str>::get_unchecked\" }",
         "func": {
           "name": "core::str::<impl str>::get_unchecked::<std::ops::Range<usize>>",
-          "mangled_name": "_ZN4core3str21_$LT$impl$u20$str$GT$13get_unchecked17h4f08a2749e33154aE",
+          "def_path_hash": "ce965f13283d578c-3dac93169fcb36f6",
           "kind": "Item",
           "file": "library/core/src/str/mod.rs",
           "src": "pub unsafe fn get_unchecked<I: SliceIndex<str>>(&self, i: I) -> &I::Output {\n        // SAFETY: the caller must uphold the safety contract for `get_unchecked`;\n        // the slice is dereferenceable because `self` is a safe reference.\n        // The returned pointer is safe because impls of `SliceIndex` have to guarantee that it is.\n        unsafe { &*i.get_unchecked(self) }\n    }",
@@ -587,7 +587,7 @@
         "def_id": "DefId { id: 13, name: \"core::str::<impl str>::trim\" }",
         "func": {
           "name": "core::str::<impl str>::trim",
-          "mangled_name": "_ZN4core3str21_$LT$impl$u20$str$GT$4trim17h5db5f27eeb1776b5E",
+          "def_path_hash": "ce965f13283d578c-76f36a9200ff2d7d",
           "kind": "Item",
           "file": "library/core/src/str/mod.rs",
           "src": "pub fn trim(&self) -> &str {\n        self.trim_matches(char::is_whitespace)\n    }",
@@ -599,7 +599,7 @@
         "def_id": "DefId { id: 14, name: \"core::str::<impl str>::trim_matches\" }",
         "func": {
           "name": "core::str::<impl str>::trim_matches::<fn(char) -> bool {std::char::methods::<impl char>::is_whitespace}>",
-          "mangled_name": "_ZN4core3str21_$LT$impl$u20$str$GT$12trim_matches17h4f31338c998db3cfE",
+          "def_path_hash": "ce965f13283d578c-1e986a0024404345",
           "kind": "Item",
           "file": "library/core/src/str/mod.rs",
           "src": "pub fn trim_matches<P: Pattern>(&self, pat: P) -> &str\n    where\n        for<'a> P::Searcher<'a>: DoubleEndedSearcher<'a>,\n    {\n        let mut i = 0;\n        let mut j = 0;\n        let mut matcher = pat.into_searcher(self);\n        if let Some((a, b)) = matcher.next_reject() {\n            i = a;\n            j = b; // Remember earliest known match, correct it below if\n            // last match is different\n        }\n        if let Some((_, b)) = matcher.next_reject_back() {\n            j = b;\n        }\n        // SAFETY: `Searcher` is known to return valid indices.\n        unsafe { self.get_unchecked(i..j) }\n    }",
@@ -611,7 +611,7 @@
         "def_id": "DefId { id: 121, name: \"core::str::traits::<impl std::slice::SliceIndex<str> for std::ops::Range<usize>>::get_unchecked\" }",
         "func": {
           "name": "core::str::traits::<impl std::slice::SliceIndex<str> for std::ops::Range<usize>>::get_unchecked",
-          "mangled_name": "_ZN4core3str6traits108_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..Range$LT$usize$GT$$GT$13get_unchecked17hd5a68a9196b29283E",
+          "def_path_hash": "ce965f13283d578c-dda4c732ad246af7",
           "kind": "Item",
           "file": "library/core/src/str/traits.rs",
           "src": "unsafe fn get_unchecked(self, slice: *const str) -> *const Self::Output {\n        let slice = slice as *const [u8];\n\n        assert_unsafe_precondition!(\n            // We'd like to check that the bounds are on char boundaries,\n            // but there's not really a way to do so without reading\n            // behind the pointer, which has aliasing implications.\n            // It's also not possible to move this check up to\n            // `str::get_unchecked` without adding a special function\n            // to `SliceIndex` just for this.\n            check_library_ub,\n            \"str::get_unchecked requires that the range is within the string slice\",\n            (\n                start: usize = self.start,\n                end: usize = self.end,\n                len: usize = slice.len()\n            ) => end >= start && end <= len,\n        );\n\n        // SAFETY: the caller guarantees that `self` is in bounds of `slice`\n        // which satisfies all the conditions for `add`.\n        unsafe {\n            let new_len = unchecked_sub(self.end, self.start);\n            ptr::slice_from_raw_parts(slice.as_ptr().add(self.start), new_len) as *const str\n        }\n    }",
@@ -623,7 +623,7 @@
         "def_id": "DefId { id: 123, name: \"core::str::traits::<impl std::slice::SliceIndex<str> for std::ops::Range<usize>>::get_unchecked::precondition_check\" }",
         "func": {
           "name": "core::str::traits::<impl std::slice::SliceIndex<str> for std::ops::Range<usize>>::get_unchecked::precondition_check",
-          "mangled_name": "_ZN4core3str6traits108_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..Range$LT$usize$GT$$GT$13get_unchecked18precondition_check17h4cce8dee219df3e7E",
+          "def_path_hash": "ce965f13283d578c-fd115713c76d4b8d",
           "kind": "Item",
           "file": "library/core/src/ub_checks.rs",
           "src": "const fn precondition_check($($name:$ty),*) {\n                if !$e {\n                    let msg = concat!(\"unsafe precondition(s) violated: \", $message,\n                        \"\\n\\nThis indicates a bug in the program. \\\n                        This Undefined Behavior check is optional, and cannot be relied on for safety.\");\n                    ::core::panicking::panic_nounwind_fmt(::core::fmt::Arguments::new_const(&[msg]), false);\n                }\n            }",
@@ -640,7 +640,7 @@
         "def_id": "DefId { id: 134, name: \"core::str::validations::next_code_point\" }",
         "func": {
           "name": "core::str::validations::next_code_point::<'_, std::slice::Iter<'_, u8>>",
-          "mangled_name": "_ZN4core3str11validations15next_code_point17hc86a78b76b05e152E",
+          "def_path_hash": "ce965f13283d578c-af58bd49a8edf1a3",
           "kind": "Item",
           "file": "library/core/src/str/validations.rs",
           "src": "pub unsafe fn next_code_point<'a, I: Iterator<Item = &'a u8>>(bytes: &mut I) -> Option<u32> {\n    // Decode UTF-8\n    let x = *bytes.next()?;\n    if x < 128 {\n        return Some(x as u32);\n    }\n\n    // Multibyte case follows\n    // Decode from a byte combination out of: [[[x y] z] w]\n    // NOTE: Performance is sensitive to the exact formulation here\n    let init = utf8_first_byte(x, 2);\n    // SAFETY: `bytes` produces an UTF-8-like string,\n    // so the iterator must produce a value here.\n    let y = unsafe { *bytes.next().unwrap_unchecked() };\n    let mut ch = utf8_acc_cont_byte(init, y);\n    if x >= 0xE0 {\n        // [[x y z] w] case\n        // 5th bit in 0xE0 .. 0xEF is always clear, so `init` is still valid\n        // SAFETY: `bytes` produces an UTF-8-like string,\n        // so the iterator must produce a value here.\n        let z = unsafe { *bytes.next().unwrap_unchecked() };\n        let y_z = utf8_acc_cont_byte((y & CONT_MASK) as u32, z);\n        ch = init << 12 | y_z;\n        if x >= 0xF0 {\n            // [x y z w] case\n            // use only the lower 3 bits of `init`\n            // SAFETY: `bytes` produces an UTF-8-like string,\n            // so the iterator must produce a value here.\n            let w = unsafe { *bytes.next().unwrap_unchecked() };\n            ch = (init & 7) << 18 | utf8_acc_cont_byte(y_z, w);\n        }\n    }\n\n    Some(ch)\n}",
@@ -652,7 +652,7 @@
         "def_id": "DefId { id: 45, name: \"core::str::validations::next_code_point_reverse\" }",
         "func": {
           "name": "core::str::validations::next_code_point_reverse::<'_, std::slice::Iter<'_, u8>>",
-          "mangled_name": "_ZN4core3str11validations23next_code_point_reverse17ha6d3d1543e8a0e10E",
+          "def_path_hash": "ce965f13283d578c-f49b372c980cbc07",
           "kind": "Item",
           "file": "library/core/src/str/validations.rs",
           "src": "pub(super) unsafe fn next_code_point_reverse<'a, I>(bytes: &mut I) -> Option<u32>\nwhere\n    I: DoubleEndedIterator<Item = &'a u8>,\n{\n    // Decode UTF-8\n    let w = match *bytes.next_back()? {\n        next_byte if next_byte < 128 => return Some(next_byte as u32),\n        back_byte => back_byte,\n    };\n\n    // Multibyte case follows\n    // Decode from a byte combination out of: [x [y [z w]]]\n    let mut ch;\n    // SAFETY: `bytes` produces an UTF-8-like string,\n    // so the iterator must produce a value here.\n    let z = unsafe { *bytes.next_back().unwrap_unchecked() };\n    ch = utf8_first_byte(z, 2);\n    if utf8_is_cont_byte(z) {\n        // SAFETY: `bytes` produces an UTF-8-like string,\n        // so the iterator must produce a value here.\n        let y = unsafe { *bytes.next_back().unwrap_unchecked() };\n        ch = utf8_first_byte(y, 3);\n        if utf8_is_cont_byte(y) {\n            // SAFETY: `bytes` produces an UTF-8-like string,\n            // so the iterator must produce a value here.\n            let x = unsafe { *bytes.next_back().unwrap_unchecked() };\n            ch = utf8_first_byte(x, 4);\n            ch = utf8_acc_cont_byte(ch, y);\n        }\n        ch = utf8_acc_cont_byte(ch, z);\n    }\n    ch = utf8_acc_cont_byte(ch, w);\n\n    Some(ch)\n}",
@@ -664,7 +664,7 @@
         "def_id": "DefId { id: 74, name: \"core::str::validations::utf8_acc_cont_byte\" }",
         "func": {
           "name": "core::str::validations::utf8_acc_cont_byte",
-          "mangled_name": "_ZN4core3str11validations18utf8_acc_cont_byte17hdb14e796381b36caE",
+          "def_path_hash": "ce965f13283d578c-d0bbc84427fe710b",
           "kind": "Item",
           "file": "library/core/src/str/validations.rs",
           "src": "const fn utf8_acc_cont_byte(ch: u32, byte: u8) -> u32 {\n    (ch << 6) | (byte & CONT_MASK) as u32\n}",
@@ -676,7 +676,7 @@
         "def_id": "DefId { id: 72, name: \"core::str::validations::utf8_first_byte\" }",
         "func": {
           "name": "core::str::validations::utf8_first_byte",
-          "mangled_name": "_ZN4core3str11validations15utf8_first_byte17hc95f1531a55602bfE",
+          "def_path_hash": "ce965f13283d578c-2b6beb08059483eb",
           "kind": "Item",
           "file": "library/core/src/str/validations.rs",
           "src": "const fn utf8_first_byte(byte: u8, width: u32) -> u32 {\n    (byte & (0x7F >> width)) as u32\n}",
@@ -688,7 +688,7 @@
         "def_id": "DefId { id: 73, name: \"core::str::validations::utf8_is_cont_byte\" }",
         "func": {
           "name": "core::str::validations::utf8_is_cont_byte",
-          "mangled_name": "_ZN4core3str11validations17utf8_is_cont_byte17h9fa752abccef5c5cE",
+          "def_path_hash": "ce965f13283d578c-cd69eaae53a33fa3",
           "kind": "Item",
           "file": "library/core/src/str/validations.rs",
           "src": "pub(super) const fn utf8_is_cont_byte(byte: u8) -> bool {\n    (byte as i8) < -64\n}",
@@ -700,7 +700,7 @@
         "def_id": "DefId { id: 50, name: \"core::ub_checks::check_language_ub\" }",
         "func": {
           "name": "core::ub_checks::check_language_ub",
-          "mangled_name": "_ZN4core9ub_checks17check_language_ub17h704970e0f271382aE",
+          "def_path_hash": "ce965f13283d578c-699609d44f2ae3f1",
           "kind": "Item",
           "file": "library/core/src/ub_checks.rs",
           "src": "pub(crate) const fn check_language_ub() -> bool {\n    // Only used for UB checks so we may const_eval_select.\n    intrinsics::ub_checks()\n        && const_eval_select!(\n            @capture { } -> bool:\n            if const {\n                // Always disable UB checks.\n                false\n            } else {\n                // Disable UB checks in Miri.\n                !cfg!(miri)\n            }\n        )\n}",
@@ -712,7 +712,7 @@
         "def_id": "DefId { id: 65, name: \"core::ub_checks::check_language_ub::runtime\" }",
         "func": {
           "name": "core::ub_checks::check_language_ub::runtime",
-          "mangled_name": "_ZN4core9ub_checks17check_language_ub7runtime17hba3adb00e26360eaE",
+          "def_path_hash": "ce965f13283d578c-a8ee38a659562ab5",
           "kind": "Item",
           "file": "library/core/src/intrinsics/mod.rs",
           "src": "fn runtime$(<$($binders)*>)?($($arg: $ty),*) $( -> $ret )? {\n            $runtime\n        }",
@@ -733,7 +733,7 @@
         "def_id": "DefId { id: 27, name: \"core::unicode::unicode_data::white_space::lookup\" }",
         "func": {
           "name": "core::unicode::unicode_data::white_space::lookup",
-          "mangled_name": "_ZN4core7unicode12unicode_data11white_space6lookup17hcc02da9cc8c41353E",
+          "def_path_hash": "ce965f13283d578c-67790a93b5fffb3a",
           "kind": "Item",
           "file": "library/core/src/unicode/unicode_data.rs",
           "src": "pub const fn lookup(c: char) -> bool {\n        match c as u32 >> 8 {\n            0 => WHITESPACE_MAP[c as usize & 0xff] & 1 != 0,\n            22 => c as u32 == 0x1680,\n            32 => WHITESPACE_MAP[c as usize & 0xff] & 2 != 0,\n            48 => c as u32 == 0x3000,\n            _ => false,\n        }\n    }",
@@ -745,7 +745,7 @@
         "def_id": "DefId { id: 5, name: \"m::func1\" }",
         "func": {
           "name": "m::func1",
-          "mangled_name": "_ZN15standard_proofs1m5func117h6b436da224d6110bE",
+          "def_path_hash": "5b0a196ea78c1174-756189d3f2c51628",
           "kind": "Item",
           "file": "tests/proofs/standard_proofs.rs",
           "src": "pub fn func1() {\n        let _a = \"\".trim();\n    }",
@@ -757,7 +757,7 @@
         "def_id": "DefId { id: 52, name: \"std::char::convert::char_try_from_u32\" }",
         "func": {
           "name": "std::char::convert::char_try_from_u32",
-          "mangled_name": "_ZN4core4char7convert17char_try_from_u3217h8faf48397a1ddbb8E",
+          "def_path_hash": "ce965f13283d578c-5c25eb8993ef3674",
           "kind": "Item",
           "file": "library/core/src/char/convert.rs",
           "src": "const fn char_try_from_u32(i: u32) -> Result<char, CharTryFromError> {\n    // This is an optimized version of the check\n    // (i > MAX as u32) || (i >= 0xD800 && i <= 0xDFFF),\n    // which can also be written as\n    // i >= 0x110000 || (i >= 0xD800 && i < 0xE000).\n    //\n    // The XOR with 0xD800 permutes the ranges such that 0xD800..0xE000 is\n    // mapped to 0x0000..0x0800, while keeping all the high bits outside 0xFFFF the same.\n    // In particular, numbers >= 0x110000 stay in this range.\n    //\n    // Subtracting 0x800 causes 0x0000..0x0800 to wrap, meaning that a single\n    // unsigned comparison against 0x110000 - 0x800 will detect both the wrapped\n    // surrogate range as well as the numbers originally larger than 0x110000.\n    //\n    if (i ^ 0xD800).wrapping_sub(0x800) >= 0x110000 - 0x800 {\n        Err(CharTryFromError(()))\n    } else {\n        // SAFETY: checked that it's a legal unicode value\n        Ok(unsafe { transmute(i) })\n    }\n}",
@@ -769,7 +769,7 @@
         "def_id": "DefId { id: 49, name: \"std::char::convert::from_u32_unchecked\" }",
         "func": {
           "name": "std::char::convert::from_u32_unchecked",
-          "mangled_name": "_ZN4core4char7convert18from_u32_unchecked17hd753047b6fdc5b82E",
+          "def_path_hash": "ce965f13283d578c-7d029fc78a1a6bf5",
           "kind": "Item",
           "file": "library/core/src/char/convert.rs",
           "src": "pub(super) const unsafe fn from_u32_unchecked(i: u32) -> char {\n    // SAFETY: the caller must guarantee that `i` is a valid char value.\n    unsafe {\n        assert_unsafe_precondition!(\n            check_language_ub,\n            \"invalid value for `char`\",\n            (i: u32 = i) => char_try_from_u32(i).is_ok()\n        );\n        transmute(i)\n    }\n}",
@@ -781,7 +781,7 @@
         "def_id": "DefId { id: 51, name: \"std::char::convert::from_u32_unchecked::precondition_check\" }",
         "func": {
           "name": "std::char::convert::from_u32_unchecked::precondition_check",
-          "mangled_name": "_ZN4core4char7convert18from_u32_unchecked18precondition_check17hcfff643c81b75c4bE",
+          "def_path_hash": "ce965f13283d578c-f94277c4bdb25b71",
           "kind": "Item",
           "file": "library/core/src/ub_checks.rs",
           "src": "const fn precondition_check($($name:$ty),*) {\n                if !$e {\n                    let msg = concat!(\"unsafe precondition(s) violated: \", $message,\n                        \"\\n\\nThis indicates a bug in the program. \\\n                        This Undefined Behavior check is optional, and cannot be relied on for safety.\");\n                    ::core::panicking::panic_nounwind_fmt(::core::fmt::Arguments::new_const(&[msg]), false);\n                }\n            }",
@@ -798,7 +798,7 @@
         "def_id": "DefId { id: 48, name: \"std::char::methods::<impl char>::from_u32_unchecked\" }",
         "func": {
           "name": "std::char::methods::<impl char>::from_u32_unchecked",
-          "mangled_name": "_ZN4core4char7methods22_$LT$impl$u20$char$GT$18from_u32_unchecked17h86dd65de1f5699d5E",
+          "def_path_hash": "ce965f13283d578c-307ebda5b72c965d",
           "kind": "Item",
           "file": "library/core/src/char/methods.rs",
           "src": "pub const unsafe fn from_u32_unchecked(i: u32) -> char {\n        // SAFETY: the safety contract must be upheld by the caller.\n        unsafe { super::convert::from_u32_unchecked(i) }\n    }",
@@ -810,7 +810,7 @@
         "def_id": "DefId { id: 24, name: \"std::char::methods::<impl char>::is_whitespace\" }",
         "func": {
           "name": "std::char::methods::<impl char>::is_whitespace",
-          "mangled_name": "_ZN4core4char7methods22_$LT$impl$u20$char$GT$13is_whitespace17h23c442d2fc4b510eE",
+          "def_path_hash": "ce965f13283d578c-e83257b6cf19e072",
           "kind": "Item",
           "file": "library/core/src/char/methods.rs",
           "src": "pub const fn is_whitespace(self) -> bool {\n        match self {\n            ' ' | '\\x09'..='\\x0d' => true,\n            c => c > '\\x7f' && unicode::White_Space(c),\n        }\n    }",
@@ -822,7 +822,7 @@
         "def_id": "DefId { id: 76, name: \"std::hint::unreachable_unchecked\" }",
         "func": {
           "name": "std::hint::unreachable_unchecked",
-          "mangled_name": "_ZN4core4hint21unreachable_unchecked17h1ea18497a7fa6243E",
+          "def_path_hash": "ce965f13283d578c-ebcc69746867082f",
           "kind": "Item",
           "file": "library/core/src/hint.rs",
           "src": "pub const unsafe fn unreachable_unchecked() -> ! {\n    ub_checks::assert_unsafe_precondition!(\n        check_language_ub,\n        \"hint::unreachable_unchecked must never be reached\",\n        () => false\n    );\n    // SAFETY: the safety contract for `intrinsics::unreachable` must\n    // be upheld by the caller.\n    unsafe { intrinsics::unreachable() }\n}",
@@ -834,7 +834,7 @@
         "def_id": "DefId { id: 77, name: \"std::hint::unreachable_unchecked::precondition_check\" }",
         "func": {
           "name": "std::hint::unreachable_unchecked::precondition_check",
-          "mangled_name": "_ZN4core4hint21unreachable_unchecked18precondition_check17h1ee5a6e47edc3d38E",
+          "def_path_hash": "ce965f13283d578c-9a08cbac0a8beb26",
           "kind": "Item",
           "file": "library/core/src/ub_checks.rs",
           "src": "const fn precondition_check($($name:$ty),*) {\n                if !$e {\n                    let msg = concat!(\"unsafe precondition(s) violated: \", $message,\n                        \"\\n\\nThis indicates a bug in the program. \\\n                        This Undefined Behavior check is optional, and cannot be relied on for safety.\");\n                    ::core::panicking::panic_nounwind_fmt(::core::fmt::Arguments::new_const(&[msg]), false);\n                }\n            }",
@@ -851,7 +851,7 @@
         "def_id": "DefId { id: 94, name: \"std::intrinsics::cold_path\" }",
         "func": {
           "name": "std::intrinsics::cold_path",
-          "mangled_name": "_ZN4core10intrinsics9cold_path17hc2c13edffab5e0ddE",
+          "def_path_hash": "ce965f13283d578c-65074e36cdbec449",
           "kind": "Intrinsic",
           "file": "library/core/src/intrinsics/mod.rs",
           "src": "pub const fn cold_path() {}",
@@ -863,7 +863,7 @@
         "def_id": "DefId { id: 93, name: \"std::intrinsics::unlikely\" }",
         "func": {
           "name": "std::intrinsics::unlikely",
-          "mangled_name": "_ZN4core10intrinsics8unlikely17hfcc75e81c33f0e4eE",
+          "def_path_hash": "ce965f13283d578c-e164eca81a108817",
           "kind": "Item",
           "file": "library/core/src/intrinsics/mod.rs",
           "src": "pub const fn unlikely(b: bool) -> bool {\n    if b {\n        cold_path();\n        true\n    } else {\n        false\n    }\n}",
@@ -875,7 +875,7 @@
         "def_id": "DefId { id: 100, name: \"std::mem::size_of\" }",
         "func": {
           "name": "std::mem::size_of::<u8>",
-          "mangled_name": "_ZN4core3mem7size_of17h5d708fc382469e9aE",
+          "def_path_hash": "ce965f13283d578c-37f0a86b8bdb5b70",
           "kind": "Item",
           "file": "library/core/src/mem/mod.rs",
           "src": "pub const fn size_of<T>() -> usize {\n    intrinsics::size_of::<T>()\n}",
@@ -887,7 +887,7 @@
         "def_id": "DefId { id: 71, name: \"std::option::Option::<T>::unwrap_unchecked\" }",
         "func": {
           "name": "std::option::Option::<&u8>::unwrap_unchecked",
-          "mangled_name": "_ZN4core6option15Option$LT$T$GT$16unwrap_unchecked17ha74a73b793d73524E",
+          "def_path_hash": "ce965f13283d578c-4cf5c1f706ed1d4d",
           "kind": "Item",
           "file": "library/core/src/option.rs",
           "src": "pub const unsafe fn unwrap_unchecked(self) -> T {\n        match self {\n            Some(val) => val,\n            // SAFETY: the safety contract must be upheld by the caller.\n            None => unsafe { hint::unreachable_unchecked() },\n        }\n    }",
@@ -899,7 +899,7 @@
         "def_id": "DefId { id: 44, name: \"std::option::Option::<T>::map\" }",
         "func": {
           "name": "std::option::Option::<char>::map::<(usize, char), {closure@<std::str::CharIndices<'_> as std::iter::DoubleEndedIterator>::next_back::{closure#0}}>",
-          "mangled_name": "_ZN4core6option15Option$LT$T$GT$3map17h5fed981429eb9ba4E",
+          "def_path_hash": "ce965f13283d578c-f106cd776f29f9d7",
           "kind": "Item",
           "file": "library/core/src/option.rs",
           "src": "pub fn map<U, F>(self, f: F) -> Option<U>\n    where\n        F: FnOnce(T) -> U,\n    {\n        match self {\n            Some(x) => Some(f(x)),\n            None => None,\n        }\n    }",
@@ -911,7 +911,7 @@
         "def_id": "DefId { id: 44, name: \"std::option::Option::<T>::map\" }",
         "func": {
           "name": "std::option::Option::<u32>::map::<char, {closure@<std::str::Chars<'_> as std::iter::DoubleEndedIterator>::next_back::{closure#0}}>",
-          "mangled_name": "_ZN4core6option15Option$LT$T$GT$3map17h999d7787290621b4E",
+          "def_path_hash": "ce965f13283d578c-f106cd776f29f9d7",
           "kind": "Item",
           "file": "library/core/src/option.rs",
           "src": "pub fn map<U, F>(self, f: F) -> Option<U>\n    where\n        F: FnOnce(T) -> U,\n    {\n        match self {\n            Some(x) => Some(f(x)),\n            None => None,\n        }\n    }",
@@ -923,7 +923,7 @@
         "def_id": "DefId { id: 44, name: \"std::option::Option::<T>::map\" }",
         "func": {
           "name": "std::option::Option::<u32>::map::<char, {closure@<std::str::Chars<'_> as std::iter::Iterator>::next::{closure#0}}>",
-          "mangled_name": "_ZN4core6option15Option$LT$T$GT$3map17h415c3406582c60efE",
+          "def_path_hash": "ce965f13283d578c-f106cd776f29f9d7",
           "kind": "Item",
           "file": "library/core/src/option.rs",
           "src": "pub fn map<U, F>(self, f: F) -> Option<U>\n    where\n        F: FnOnce(T) -> U,\n    {\n        match self {\n            Some(x) => Some(f(x)),\n            None => None,\n        }\n    }",
@@ -935,7 +935,7 @@
         "def_id": "DefId { id: 60, name: \"std::panic::Location::<'a>::caller\" }",
         "func": {
           "name": "std::panic::Location::<'_>::caller",
-          "mangled_name": "_ZN4core5panic8location8Location6caller17hf0a491ea8022844eE",
+          "def_path_hash": "ce965f13283d578c-8b756ebcce145650",
           "kind": "Item",
           "file": "library/core/src/panic/location.rs",
           "src": "pub const fn caller() -> &'static Location<'static> {\n        crate::intrinsics::caller_location()\n    }",
@@ -947,7 +947,7 @@
         "def_id": "DefId { id: 85, name: \"std::ptr::NonNull::<T>::as_ptr\" }",
         "func": {
           "name": "std::ptr::NonNull::<[u8]>::as_ptr",
-          "mangled_name": "_ZN4core3ptr8non_null16NonNull$LT$T$GT$6as_ptr17h0dec701b3e30f13dE",
+          "def_path_hash": "ce965f13283d578c-a32dd91674a9c846",
           "kind": "Item",
           "file": "library/core/src/ptr/non_null.rs",
           "src": "pub const fn as_ptr(self) -> *mut T {\n        // This is a transmute for the same reasons as `NonZero::get`.\n\n        // SAFETY: `NonNull` is `transparent` over a `*const T`, and `*const T`\n        // and `*mut T` have the same layout, so transitively we can transmute\n        // our `NonNull` to a `*mut T` directly.\n        unsafe { mem::transmute::<Self, *mut T>(self) }\n    }",
@@ -959,7 +959,7 @@
         "def_id": "DefId { id: 116, name: \"std::ptr::NonNull::<T>::cast\" }",
         "func": {
           "name": "std::ptr::NonNull::<[u8]>::cast::<u8>",
-          "mangled_name": "_ZN4core3ptr8non_null16NonNull$LT$T$GT$4cast17hd1c74c0066ce5496E",
+          "def_path_hash": "ce965f13283d578c-d8ec404eaacfdf63",
           "kind": "Item",
           "file": "library/core/src/ptr/non_null.rs",
           "src": "pub const fn cast<U>(self) -> NonNull<U> {\n        // SAFETY: `self` is a `NonNull` pointer which is necessarily non-null\n        unsafe { NonNull { pointer: self.as_ptr() as *mut U } }\n    }",
@@ -971,7 +971,7 @@
         "def_id": "DefId { id: 115, name: \"std::ptr::NonNull::<T>::from_ref\" }",
         "func": {
           "name": "std::ptr::NonNull::<[u8]>::from_ref",
-          "mangled_name": "_ZN4core3ptr8non_null16NonNull$LT$T$GT$8from_ref17he12a4c886e0921baE",
+          "def_path_hash": "ce965f13283d578c-5bc98cef8ecd22a",
           "kind": "Item",
           "file": "library/core/src/ptr/non_null.rs",
           "src": "pub const fn from_ref(r: &T) -> Self {\n        // SAFETY: A reference cannot be null.\n        unsafe { NonNull { pointer: r as *const T } }\n    }",
@@ -983,7 +983,7 @@
         "def_id": "DefId { id: 137, name: \"std::ptr::NonNull::<T>::add\" }",
         "func": {
           "name": "std::ptr::NonNull::<u8>::add",
-          "mangled_name": "_ZN4core3ptr8non_null16NonNull$LT$T$GT$3add17h4a9f25b27afb9144E",
+          "def_path_hash": "ce965f13283d578c-6a3c42ef87bef95c",
           "kind": "Item",
           "file": "library/core/src/ptr/non_null.rs",
           "src": "pub const unsafe fn add(self, count: usize) -> Self\n    where\n        T: Sized,\n    {\n        // SAFETY: the caller must uphold the safety contract for `offset`.\n        // Additionally safety contract of `offset` guarantees that the resulting pointer is\n        // pointing to an allocation, there can't be an allocation at null, thus it's safe to\n        // construct `NonNull`.\n        unsafe { NonNull { pointer: intrinsics::offset(self.as_ptr(), count) } }\n    }",
@@ -995,7 +995,7 @@
         "def_id": "DefId { id: 85, name: \"std::ptr::NonNull::<T>::as_ptr\" }",
         "func": {
           "name": "std::ptr::NonNull::<u8>::as_ptr",
-          "mangled_name": "_ZN4core3ptr8non_null16NonNull$LT$T$GT$6as_ptr17h8e86e2b7363fb205E",
+          "def_path_hash": "ce965f13283d578c-a32dd91674a9c846",
           "kind": "Item",
           "file": "library/core/src/ptr/non_null.rs",
           "src": "pub const fn as_ptr(self) -> *mut T {\n        // This is a transmute for the same reasons as `NonZero::get`.\n\n        // SAFETY: `NonNull` is `transparent` over a `*const T`, and `*const T`\n        // and `*mut T` have the same layout, so transitively we can transmute\n        // our `NonNull` to a `*mut T` directly.\n        unsafe { mem::transmute::<Self, *mut T>(self) }\n    }",
@@ -1007,7 +1007,7 @@
         "def_id": "DefId { id: 84, name: \"std::ptr::NonNull::<T>::as_ref\" }",
         "func": {
           "name": "std::ptr::NonNull::<u8>::as_ref::<'_>",
-          "mangled_name": "_ZN4core3ptr8non_null16NonNull$LT$T$GT$6as_ref17hce119b0973f935b4E",
+          "def_path_hash": "ce965f13283d578c-3acbc13f93445078",
           "kind": "Item",
           "file": "library/core/src/ptr/non_null.rs",
           "src": "pub const unsafe fn as_ref<'a>(&self) -> &'a T {\n        // SAFETY: the caller must guarantee that `self` meets all the\n        // requirements for a reference.\n        // `cast_const` avoids a mutable raw pointer deref.\n        unsafe { &*self.as_ptr().cast_const() }\n    }",
@@ -1019,7 +1019,7 @@
         "def_id": "DefId { id: 90, name: \"std::ptr::NonNull::<T>::offset\" }",
         "func": {
           "name": "std::ptr::NonNull::<u8>::offset",
-          "mangled_name": "_ZN4core3ptr8non_null16NonNull$LT$T$GT$6offset17h8255e47139ece8d4E",
+          "def_path_hash": "ce965f13283d578c-eb28d3ca0a9ca252",
           "kind": "Item",
           "file": "library/core/src/ptr/non_null.rs",
           "src": "pub const unsafe fn offset(self, count: isize) -> Self\n    where\n        T: Sized,\n    {\n        // SAFETY: the caller must uphold the safety contract for `offset`.\n        // Additionally safety contract of `offset` guarantees that the resulting pointer is\n        // pointing to an allocation, there can't be an allocation at null, thus it's safe to\n        // construct `NonNull`.\n        unsafe { NonNull { pointer: intrinsics::offset(self.as_ptr(), count) } }\n    }",
@@ -1031,7 +1031,7 @@
         "def_id": "DefId { id: 96, name: \"std::ptr::NonNull::<T>::offset_from_unsigned\" }",
         "func": {
           "name": "std::ptr::NonNull::<u8>::offset_from_unsigned",
-          "mangled_name": "_ZN4core3ptr8non_null16NonNull$LT$T$GT$20offset_from_unsigned17h59d071704966d9e7E",
+          "def_path_hash": "ce965f13283d578c-65fd2f98f27025b9",
           "kind": "Item",
           "file": "library/core/src/ptr/non_null.rs",
           "src": "pub const unsafe fn offset_from_unsigned(self, subtracted: NonNull<T>) -> usize\n    where\n        T: Sized,\n    {\n        // SAFETY: the caller must uphold the safety contract for `offset_from_unsigned`.\n        unsafe { self.as_ptr().offset_from_unsigned(subtracted.as_ptr()) }\n    }",
@@ -1043,7 +1043,7 @@
         "def_id": "DefId { id: 88, name: \"std::ptr::NonNull::<T>::sub\" }",
         "func": {
           "name": "std::ptr::NonNull::<u8>::sub",
-          "mangled_name": "_ZN4core3ptr8non_null16NonNull$LT$T$GT$3sub17h72f223d02bcc478eE",
+          "def_path_hash": "ce965f13283d578c-cc8cc33bc74abefa",
           "kind": "Item",
           "file": "library/core/src/ptr/non_null.rs",
           "src": "pub const unsafe fn sub(self, count: usize) -> Self\n    where\n        T: Sized,\n    {\n        if T::IS_ZST {\n            // Pointer arithmetic does nothing when the pointee is a ZST.\n            self\n        } else {\n            // SAFETY: the caller must uphold the safety contract for `offset`.\n            // Because the pointee is *not* a ZST, that means that `count` is\n            // at most `isize::MAX`, and thus the negation cannot overflow.\n            unsafe { self.offset((count as isize).unchecked_neg()) }\n        }\n    }",
@@ -1055,7 +1055,7 @@
         "def_id": "DefId { id: 99, name: \"std::ptr::const_ptr::<impl *const T>::offset_from_unsigned::precondition_check\" }",
         "func": {
           "name": "std::ptr::const_ptr::<impl *const T>::offset_from_unsigned::precondition_check",
-          "mangled_name": "_ZN4core3ptr9const_ptr33_$LT$impl$u20$$BP$const$u20$T$GT$20offset_from_unsigned18precondition_check17h0eee0010be561434E",
+          "def_path_hash": "ce965f13283d578c-82cda548e1c84a81",
           "kind": "Item",
           "file": "library/core/src/ub_checks.rs",
           "src": "const fn precondition_check($($name:$ty),*) {\n                if !$e {\n                    let msg = concat!(\"unsafe precondition(s) violated: \", $message,\n                        \"\\n\\nThis indicates a bug in the program. \\\n                        This Undefined Behavior check is optional, and cannot be relied on for safety.\");\n                    ::core::panicking::panic_nounwind_fmt(::core::fmt::Arguments::new_const(&[msg]), false);\n                }\n            }",
@@ -1072,7 +1072,7 @@
         "def_id": "DefId { id: 103, name: \"std::ptr::const_ptr::<impl *const T>::offset_from_unsigned::runtime_ptr_ge\" }",
         "func": {
           "name": "std::ptr::const_ptr::<impl *const T>::offset_from_unsigned::runtime_ptr_ge",
-          "mangled_name": "_ZN4core3ptr9const_ptr33_$LT$impl$u20$$BP$const$u20$T$GT$20offset_from_unsigned14runtime_ptr_ge17h939b850a5ccb4cf4E",
+          "def_path_hash": "ce965f13283d578c-1ab406418e0526ca",
           "kind": "Item",
           "file": "library/core/src/ptr/const_ptr.rs",
           "src": "const fn runtime_ptr_ge(this: *const (), origin: *const ()) -> bool {\n            const_eval_select!(\n                @capture { this: *const (), origin: *const () } -> bool:\n                if const {\n                    true\n                } else {\n                    this >= origin\n                }\n            )\n        }",
@@ -1084,7 +1084,7 @@
         "def_id": "DefId { id: 104, name: \"std::ptr::const_ptr::<impl *const T>::offset_from_unsigned::runtime_ptr_ge::runtime\" }",
         "func": {
           "name": "std::ptr::const_ptr::<impl *const T>::offset_from_unsigned::runtime_ptr_ge::runtime",
-          "mangled_name": "_ZN4core3ptr9const_ptr33_$LT$impl$u20$$BP$const$u20$T$GT$20offset_from_unsigned14runtime_ptr_ge7runtime17h3c201eeb065c155aE",
+          "def_path_hash": "ce965f13283d578c-7578e94099aef6cd",
           "kind": "Item",
           "file": "library/core/src/intrinsics/mod.rs",
           "src": "fn runtime$(<$($binders)*>)?($($arg: $ty),*) $( -> $ret )? {\n            $runtime\n        }",
@@ -1109,7 +1109,7 @@
         "def_id": "DefId { id: 124, name: \"std::ptr::const_ptr::<impl *const [T]>::as_ptr\" }",
         "func": {
           "name": "std::ptr::const_ptr::<impl *const [u8]>::as_ptr",
-          "mangled_name": "_ZN4core3ptr9const_ptr43_$LT$impl$u20$$BP$const$u20$$u5b$T$u5d$$GT$6as_ptr17h4bfb94fdacd22653E",
+          "def_path_hash": "ce965f13283d578c-57e28411b684ebc9",
           "kind": "Item",
           "file": "library/core/src/ptr/const_ptr.rs",
           "src": "pub const fn as_ptr(self) -> *const T {\n        self as *const T\n    }",
@@ -1121,7 +1121,7 @@
         "def_id": "DefId { id: 122, name: \"std::ptr::const_ptr::<impl *const [T]>::len\" }",
         "func": {
           "name": "std::ptr::const_ptr::<impl *const [u8]>::len",
-          "mangled_name": "_ZN4core3ptr9const_ptr43_$LT$impl$u20$$BP$const$u20$$u5b$T$u5d$$GT$3len17hcfa64c9c3aabc4e7E",
+          "def_path_hash": "ce965f13283d578c-44ed152ddfbfcd8",
           "kind": "Item",
           "file": "library/core/src/ptr/const_ptr.rs",
           "src": "pub const fn len(self) -> usize {\n        metadata(self)\n    }",
@@ -1133,7 +1133,7 @@
         "def_id": "DefId { id: 125, name: \"std::ptr::const_ptr::<impl *const T>::add\" }",
         "func": {
           "name": "std::ptr::const_ptr::<impl *const u8>::add",
-          "mangled_name": "_ZN4core3ptr9const_ptr33_$LT$impl$u20$$BP$const$u20$T$GT$3add17h8c6cb68890962eeaE",
+          "def_path_hash": "ce965f13283d578c-e4dd568ae8c7971c",
           "kind": "Item",
           "file": "library/core/src/ptr/const_ptr.rs",
           "src": "pub const unsafe fn add(self, count: usize) -> Self\n    where\n        T: Sized,\n    {\n        #[cfg(debug_assertions)]\n        #[inline]\n        #[rustc_allow_const_fn_unstable(const_eval_select)]\n        const fn runtime_add_nowrap(this: *const (), count: usize, size: usize) -> bool {\n            const_eval_select!(\n                @capture { this: *const (), count: usize, size: usize } -> bool:\n                if const {\n                    true\n                } else {\n                    let Some(byte_offset) = count.checked_mul(size) else {\n                        return false;\n                    };\n                    let (_, overflow) = this.addr().overflowing_add(byte_offset);\n                    byte_offset <= (isize::MAX as usize) && !overflow\n                }\n            )\n        }\n\n        #[cfg(debug_assertions)] // Expensive, and doesn't catch much in the wild.\n        ub_checks::assert_unsafe_precondition!(\n            check_language_ub,\n            \"ptr::add requires that the address calculation does not overflow\",\n            (\n                this: *const () = self as *const (),\n                count: usize = count,\n                size: usize = size_of::<T>(),\n            ) => runtime_add_nowrap(this, count, size)\n        );\n\n        // SAFETY: the caller must uphold the safety contract for `offset`.\n        unsafe { intrinsics::offset(self, count) }\n    }",
@@ -1145,7 +1145,7 @@
         "def_id": "DefId { id: 78, name: \"std::ptr::const_ptr::<impl *const T>::addr\" }",
         "func": {
           "name": "std::ptr::const_ptr::<impl *const u8>::addr",
-          "mangled_name": "_ZN4core3ptr9const_ptr33_$LT$impl$u20$$BP$const$u20$T$GT$4addr17hb5a51123bb5f0c07E",
+          "def_path_hash": "ce965f13283d578c-a5a09d9236219811",
           "kind": "Item",
           "file": "library/core/src/ptr/const_ptr.rs",
           "src": "pub fn addr(self) -> usize {\n        // A pointer-to-integer transmute currently has exactly the right semantics: it returns the\n        // address without exposing the provenance. Note that this is *not* a stable guarantee about\n        // transmute semantics, it relies on sysroot crates having special status.\n        // SAFETY: Pointer-to-integer transmutes are valid (if you are okay with losing the\n        // provenance).\n        unsafe { mem::transmute(self.cast::<()>()) }\n    }",
@@ -1157,7 +1157,7 @@
         "def_id": "DefId { id: 95, name: \"std::ptr::const_ptr::<impl *const T>::cast\" }",
         "func": {
           "name": "std::ptr::const_ptr::<impl *const u8>::cast::<()>",
-          "mangled_name": "_ZN4core3ptr9const_ptr33_$LT$impl$u20$$BP$const$u20$T$GT$4cast17hb46155eabb4067e5E",
+          "def_path_hash": "ce965f13283d578c-fd560b3136bfe95b",
           "kind": "Item",
           "file": "library/core/src/ptr/const_ptr.rs",
           "src": "pub const fn cast<U>(self) -> *const U {\n        self as _\n    }",
@@ -1169,7 +1169,7 @@
         "def_id": "DefId { id: 98, name: \"std::ptr::const_ptr::<impl *const T>::offset_from_unsigned\" }",
         "func": {
           "name": "std::ptr::const_ptr::<impl *const u8>::offset_from_unsigned",
-          "mangled_name": "_ZN4core3ptr9const_ptr33_$LT$impl$u20$$BP$const$u20$T$GT$20offset_from_unsigned17hf5132555c3085fc7E",
+          "def_path_hash": "ce965f13283d578c-fd3a2d300be8175b",
           "kind": "Item",
           "file": "library/core/src/ptr/const_ptr.rs",
           "src": "pub const unsafe fn offset_from_unsigned(self, origin: *const T) -> usize\n    where\n        T: Sized,\n    {\n        #[rustc_allow_const_fn_unstable(const_eval_select)]\n        const fn runtime_ptr_ge(this: *const (), origin: *const ()) -> bool {\n            const_eval_select!(\n                @capture { this: *const (), origin: *const () } -> bool:\n                if const {\n                    true\n                } else {\n                    this >= origin\n                }\n            )\n        }\n\n        ub_checks::assert_unsafe_precondition!(\n            check_language_ub,\n            \"ptr::offset_from_unsigned requires `self >= origin`\",\n            (\n                this: *const () = self as *const (),\n                origin: *const () = origin as *const (),\n            ) => runtime_ptr_ge(this, origin)\n        );\n\n        let pointee_size = size_of::<T>();\n        assert!(0 < pointee_size && pointee_size <= isize::MAX as usize);\n        // SAFETY: the caller must uphold the safety contract for `ptr_offset_from_unsigned`.\n        unsafe { intrinsics::ptr_offset_from_unsigned(self, origin) }\n    }",
@@ -1181,7 +1181,7 @@
         "def_id": "DefId { id: 23, name: \"std::ptr::drop_in_place\" }",
         "func": {
           "name": "std::ptr::drop_in_place::<std::str::pattern::CharPredicateSearcher<'_, fn(char) -> bool {std::char::methods::<impl char>::is_whitespace}>>",
-          "mangled_name": "_ZN4core3ptr127drop_in_place$LT$core..str..pattern..CharPredicateSearcher$LT$core..char..methods..$LT$impl$u20$char$GT$..is_whitespace$GT$$GT$17h1b41e91499958607E",
+          "def_path_hash": "ce965f13283d578c-bea7da444628e3fc",
           "kind": "Shim",
           "file": "library/core/src/ptr/mod.rs",
           "src": "pub unsafe fn drop_in_place<T: ?Sized>(to_drop: *mut T)",
@@ -1193,7 +1193,7 @@
         "def_id": "DefId { id: 23, name: \"std::ptr::drop_in_place\" }",
         "func": {
           "name": "std::ptr::drop_in_place::<{closure@<std::str::CharIndices<'_> as std::iter::DoubleEndedIterator>::next_back::{closure#0}}>",
-          "mangled_name": "_ZN4core3ptr162drop_in_place$LT$$LT$core..str..iter..CharIndices$u20$as$u20$core..iter..traits..double_ended..DoubleEndedIterator$GT$..next_back..$u7b$$u7b$closure$u7d$$u7d$$GT$17h96cae3192dfcf8fbE",
+          "def_path_hash": "ce965f13283d578c-bea7da444628e3fc",
           "kind": "Shim",
           "file": "library/core/src/ptr/mod.rs",
           "src": "pub unsafe fn drop_in_place<T: ?Sized>(to_drop: *mut T)",
@@ -1205,7 +1205,7 @@
         "def_id": "DefId { id: 23, name: \"std::ptr::drop_in_place\" }",
         "func": {
           "name": "std::ptr::drop_in_place::<{closure@<std::str::Chars<'_> as std::iter::DoubleEndedIterator>::next_back::{closure#0}}>",
-          "mangled_name": "_ZN4core3ptr156drop_in_place$LT$$LT$core..str..iter..Chars$u20$as$u20$core..iter..traits..double_ended..DoubleEndedIterator$GT$..next_back..$u7b$$u7b$closure$u7d$$u7d$$GT$17h65835ee401b83ff4E",
+          "def_path_hash": "ce965f13283d578c-bea7da444628e3fc",
           "kind": "Shim",
           "file": "library/core/src/ptr/mod.rs",
           "src": "pub unsafe fn drop_in_place<T: ?Sized>(to_drop: *mut T)",
@@ -1217,7 +1217,7 @@
         "def_id": "DefId { id: 23, name: \"std::ptr::drop_in_place\" }",
         "func": {
           "name": "std::ptr::drop_in_place::<{closure@<std::str::Chars<'_> as std::iter::Iterator>::next::{closure#0}}>",
-          "mangled_name": "_ZN4core3ptr136drop_in_place$LT$$LT$core..str..iter..Chars$u20$as$u20$core..iter..traits..iterator..Iterator$GT$..next..$u7b$$u7b$closure$u7d$$u7d$$GT$17h910859628354bcb7E",
+          "def_path_hash": "ce965f13283d578c-bea7da444628e3fc",
           "kind": "Shim",
           "file": "library/core/src/ptr/mod.rs",
           "src": "pub unsafe fn drop_in_place<T: ?Sized>(to_drop: *mut T)",
@@ -1229,7 +1229,7 @@
         "def_id": "DefId { id: 127, name: \"std::ptr::from_raw_parts\" }",
         "func": {
           "name": "std::ptr::from_raw_parts::<[u8], u8>",
-          "mangled_name": "_ZN4core3ptr8metadata14from_raw_parts17h7441a3adcfd94e79E",
+          "def_path_hash": "ce965f13283d578c-af27a604cc1f70a4",
           "kind": "Item",
           "file": "library/core/src/ptr/metadata.rs",
           "src": "pub const fn from_raw_parts<T: ?Sized>(\n    data_pointer: *const impl Thin,\n    metadata: <T as Pointee>::Metadata,\n) -> *const T {\n    aggregate_raw_ptr(data_pointer, metadata)\n}",
@@ -1241,7 +1241,7 @@
         "def_id": "DefId { id: 128, name: \"std::ptr::metadata\" }",
         "func": {
           "name": "std::ptr::metadata::<[u8]>",
-          "mangled_name": "_ZN4core3ptr8metadata8metadata17h3d04c15824147f55E",
+          "def_path_hash": "ce965f13283d578c-d1ecb629841f0b19",
           "kind": "Item",
           "file": "library/core/src/ptr/metadata.rs",
           "src": "pub const fn metadata<T: ?Sized>(ptr: *const T) -> <T as Pointee>::Metadata {\n    ptr_metadata(ptr)\n}",
@@ -1253,7 +1253,7 @@
         "def_id": "DefId { id: 87, name: \"std::ptr::mut_ptr::<impl *mut T>::cast\" }",
         "func": {
           "name": "std::ptr::mut_ptr::<impl *mut *const u8>::cast::<std::ptr::NonNull<u8>>",
-          "mangled_name": "_ZN4core3ptr7mut_ptr31_$LT$impl$u20$$BP$mut$u20$T$GT$4cast17hdecde2dc5068d249E",
+          "def_path_hash": "ce965f13283d578c-1cf18d68099db4d7",
           "kind": "Item",
           "file": "library/core/src/ptr/mut_ptr.rs",
           "src": "pub const fn cast<U>(self) -> *mut U {\n        self as _\n    }",
@@ -1265,7 +1265,7 @@
         "def_id": "DefId { id: 87, name: \"std::ptr::mut_ptr::<impl *mut T>::cast\" }",
         "func": {
           "name": "std::ptr::mut_ptr::<impl *mut *const u8>::cast::<usize>",
-          "mangled_name": "_ZN4core3ptr7mut_ptr31_$LT$impl$u20$$BP$mut$u20$T$GT$4cast17h06adb3a366746bc5E",
+          "def_path_hash": "ce965f13283d578c-1cf18d68099db4d7",
           "kind": "Item",
           "file": "library/core/src/ptr/mut_ptr.rs",
           "src": "pub const fn cast<U>(self) -> *mut U {\n        self as _\n    }",
@@ -1277,7 +1277,7 @@
         "def_id": "DefId { id: 118, name: \"std::ptr::mut_ptr::<impl *mut T>::add\" }",
         "func": {
           "name": "std::ptr::mut_ptr::<impl *mut u8>::add",
-          "mangled_name": "_ZN4core3ptr7mut_ptr31_$LT$impl$u20$$BP$mut$u20$T$GT$3add17ha7a8e3686446e602E",
+          "def_path_hash": "ce965f13283d578c-3a537f95df561935",
           "kind": "Item",
           "file": "library/core/src/ptr/mut_ptr.rs",
           "src": "pub const unsafe fn add(self, count: usize) -> Self\n    where\n        T: Sized,\n    {\n        #[cfg(debug_assertions)]\n        #[inline]\n        #[rustc_allow_const_fn_unstable(const_eval_select)]\n        const fn runtime_add_nowrap(this: *const (), count: usize, size: usize) -> bool {\n            const_eval_select!(\n                @capture { this: *const (), count: usize, size: usize } -> bool:\n                if const {\n                    true\n                } else {\n                    let Some(byte_offset) = count.checked_mul(size) else {\n                        return false;\n                    };\n                    let (_, overflow) = this.addr().overflowing_add(byte_offset);\n                    byte_offset <= (isize::MAX as usize) && !overflow\n                }\n            )\n        }\n\n        #[cfg(debug_assertions)] // Expensive, and doesn't catch much in the wild.\n        ub_checks::assert_unsafe_precondition!(\n            check_language_ub,\n            \"ptr::add requires that the address calculation does not overflow\",\n            (\n                this: *const () = self as *const (),\n                count: usize = count,\n                size: usize = size_of::<T>(),\n            ) => runtime_add_nowrap(this, count, size)\n        );\n\n        // SAFETY: the caller must uphold the safety contract for `offset`.\n        unsafe { intrinsics::offset(self, count) }\n    }",
@@ -1289,7 +1289,7 @@
         "def_id": "DefId { id: 86, name: \"std::ptr::mut_ptr::<impl *mut T>::cast_const\" }",
         "func": {
           "name": "std::ptr::mut_ptr::<impl *mut u8>::cast_const",
-          "mangled_name": "_ZN4core3ptr7mut_ptr31_$LT$impl$u20$$BP$mut$u20$T$GT$10cast_const17he6ab871fc6d6bc6dE",
+          "def_path_hash": "ce965f13283d578c-9af8ddabee874f70",
           "kind": "Item",
           "file": "library/core/src/ptr/mut_ptr.rs",
           "src": "pub const fn cast_const(self) -> *const T {\n        self as _\n    }",
@@ -1301,7 +1301,7 @@
         "def_id": "DefId { id: 97, name: \"std::ptr::mut_ptr::<impl *mut T>::offset_from_unsigned\" }",
         "func": {
           "name": "std::ptr::mut_ptr::<impl *mut u8>::offset_from_unsigned",
-          "mangled_name": "_ZN4core3ptr7mut_ptr31_$LT$impl$u20$$BP$mut$u20$T$GT$20offset_from_unsigned17h82d0db91649911daE",
+          "def_path_hash": "ce965f13283d578c-69b0a4de3ef2b658",
           "kind": "Item",
           "file": "library/core/src/ptr/mut_ptr.rs",
           "src": "pub const unsafe fn offset_from_unsigned(self, origin: *const T) -> usize\n    where\n        T: Sized,\n    {\n        // SAFETY: the caller must uphold the safety contract for `offset_from_unsigned`.\n        unsafe { (self as *const T).offset_from_unsigned(origin) }\n    }",
@@ -1313,7 +1313,7 @@
         "def_id": "DefId { id: 126, name: \"std::ptr::slice_from_raw_parts\" }",
         "func": {
           "name": "std::ptr::slice_from_raw_parts::<u8>",
-          "mangled_name": "_ZN4core3ptr20slice_from_raw_parts17h0e161f58ca959f66E",
+          "def_path_hash": "ce965f13283d578c-7d0b9b872cded5fe",
           "kind": "Item",
           "file": "library/core/src/ptr/mod.rs",
           "src": "pub const fn slice_from_raw_parts<T>(data: *const T, len: usize) -> *const [T] {\n    from_raw_parts(data, len)\n}",
@@ -1325,7 +1325,7 @@
         "def_id": "DefId { id: 117, name: \"std::ptr::without_provenance\" }",
         "func": {
           "name": "std::ptr::without_provenance::<u8>",
-          "mangled_name": "_ZN4core3ptr18without_provenance17hb2ef8bba839df734E",
+          "def_path_hash": "ce965f13283d578c-13af8f8ee88c3eb4",
           "kind": "Item",
           "file": "library/core/src/ptr/mod.rs",
           "src": "pub const fn without_provenance<T>(addr: usize) -> *const T {\n    without_provenance_mut(addr)\n}",
@@ -1337,7 +1337,7 @@
         "def_id": "DefId { id: 119, name: \"std::ptr::without_provenance_mut\" }",
         "func": {
           "name": "std::ptr::without_provenance_mut::<u8>",
-          "mangled_name": "_ZN4core3ptr22without_provenance_mut17h1f8322c44d909c60E",
+          "def_path_hash": "ce965f13283d578c-eddfdb4f9ef21207",
           "kind": "Item",
           "file": "library/core/src/ptr/mod.rs",
           "src": "pub const fn without_provenance_mut<T>(addr: usize) -> *mut T {\n    // An int-to-pointer transmute currently has exactly the intended semantics: it creates a\n    // pointer without provenance. Note that this is *not* a stable guarantee about transmute\n    // semantics, it relies on sysroot crates having special status.\n    // SAFETY: every valid integer is also a valid pointer (as long as you don't dereference that\n    // pointer).\n    unsafe { mem::transmute(addr) }\n}",
@@ -1349,7 +1349,7 @@
         "def_id": "DefId { id: 53, name: \"std::result::Result::<T, E>::is_ok\" }",
         "func": {
           "name": "std::result::Result::<char, std::char::CharTryFromError>::is_ok",
-          "mangled_name": "_ZN4core6result19Result$LT$T$C$E$GT$5is_ok17hc481598e31dd6199E",
+          "def_path_hash": "ce965f13283d578c-bbcf72efa6445939",
           "kind": "Item",
           "file": "library/core/src/result.rs",
           "src": "pub const fn is_ok(&self) -> bool {\n        matches!(*self, Ok(_))\n    }",
@@ -1361,7 +1361,7 @@
         "def_id": "DefId { id: 105, name: \"std::rt::panic_fmt\" }",
         "func": {
           "name": "std::rt::panic_fmt",
-          "mangled_name": "_ZN4core9panicking9panic_fmt17h1312df6a1d313019E",
+          "def_path_hash": "ce965f13283d578c-147481e466303deb",
           "kind": "Item",
           "file": "library/core/src/panicking.rs",
           "src": "pub const fn panic_fmt(fmt: fmt::Arguments<'_>) -> ! {\n    if cfg!(feature = \"panic_immediate_abort\") {\n        super::intrinsics::abort()\n    }\n\n    // NOTE This function never crosses the FFI boundary; it's a Rust-to-Rust call\n    // that gets resolved to the `#[panic_handler]` function.\n    unsafe extern \"Rust\" {\n        #[lang = \"panic_impl\"]\n        fn panic_impl(pi: &PanicInfo<'_>) -> !;\n    }\n\n    let pi = PanicInfo::new(\n        &fmt,\n        Location::caller(),\n        /* can_unwind */ true,\n        /* force_no_backtrace */ false,\n    );\n\n    // SAFETY: `panic_impl` is defined in safe Rust code and thus is safe to call.\n    unsafe { panic_impl(&pi) }\n}",
@@ -1373,7 +1373,7 @@
         "def_id": "DefId { id: 114, name: \"std::slice::Iter::<'a, T>::new\" }",
         "func": {
           "name": "std::slice::Iter::<'_, u8>::new",
-          "mangled_name": "_ZN4core5slice4iter13Iter$LT$T$GT$3new17h2b9e24e1b751439cE",
+          "def_path_hash": "ce965f13283d578c-509819ea3032c232",
           "kind": "Item",
           "file": "library/core/src/slice/iter.rs",
           "src": "pub(super) const fn new(slice: &'a [T]) -> Self {\n        let len = slice.len();\n        let ptr: NonNull<T> = NonNull::from_ref(slice).cast();\n        // SAFETY: Similar to `IterMut::new`.\n        unsafe {\n            let end_or_len =\n                if T::IS_ZST { without_provenance(len) } else { ptr.as_ptr().add(len) };\n\n            Self { ptr, end_or_len, _marker: PhantomData }\n        }\n    }",
@@ -1385,7 +1385,7 @@
         "def_id": "DefId { id: 82, name: \"std::slice::Iter::<'a, T>::next_back_unchecked\" }",
         "func": {
           "name": "std::slice::Iter::<'_, u8>::next_back_unchecked",
-          "mangled_name": "_ZN4core5slice4iter13Iter$LT$T$GT$19next_back_unchecked17he315e3e294fe0dbcE",
+          "def_path_hash": "ce965f13283d578c-621cde066a0c2662",
           "kind": "Item",
           "file": "library/core/src/slice/iter/macros.rs",
           "src": "unsafe fn next_back_unchecked(&mut self) -> $elem {\n                // SAFETY: the caller promised it's not empty, so\n                // the offsetting is in-bounds and there's an element to return.\n                unsafe { self.pre_dec_end(1).$into_ref() }\n            }",
@@ -1402,7 +1402,7 @@
         "def_id": "DefId { id: 83, name: \"std::slice::Iter::<'a, T>::pre_dec_end\" }",
         "func": {
           "name": "std::slice::Iter::<'_, u8>::pre_dec_end",
-          "mangled_name": "_ZN4core5slice4iter13Iter$LT$T$GT$11pre_dec_end17h305448ad1a8dcaedE",
+          "def_path_hash": "ce965f13283d578c-655498b94afad5b0",
           "kind": "Item",
           "file": "library/core/src/slice/iter/macros.rs",
           "src": "unsafe fn pre_dec_end(&mut self, offset: usize) -> NonNull<T> {\n                if_zst!(mut self,\n                    // SAFETY: By our precondition, `offset` can be at most the\n                    // current length, so the subtraction can never overflow.\n                    len => unsafe {\n                        // Using the intrinsic directly avoids emitting a UbCheck\n                        *len = crate::intrinsics::unchecked_sub(*len, offset);\n                        self.ptr\n                    },\n                    // SAFETY: the caller guarantees that `offset` doesn't exceed `self.len()`,\n                    // which is guaranteed to not overflow an `isize`. Also, the resulting pointer\n                    // is in bounds of `slice`, which fulfills the other requirements for `offset`.\n                    end => unsafe {\n                        *end = end.sub(offset);\n                        *end\n                    },\n                )\n            }",
@@ -1419,7 +1419,7 @@
         "def_id": "DefId { id: 4, name: \"top_level\" }",
         "func": {
           "name": "top_level",
-          "mangled_name": "_ZN15standard_proofs9top_level17h8d04f7fba87e0e6fE",
+          "def_path_hash": "5b0a196ea78c1174-ecea7bf624b9d868",
           "kind": "Item",
           "file": "tests/proofs/standard_proofs.rs",
           "src": "pub fn top_level() {\n    m::func1();\n}",
@@ -1430,7 +1430,7 @@
     ]
   },
   {
-    "hash": "22833286744245336898670822783759585960",
+    "hash": "300163710669847464618289638635600137509",
     "def_id": "DefId { id: 0, name: \"verify::standard_proof\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -1438,7 +1438,7 @@
     "kind": "Standard",
     "func": {
       "name": "verify::standard_proof",
-      "mangled_name": "_ZN15standard_proofs6verify14standard_proof17hc534883685743672E",
+      "def_path_hash": "5b0a196ea78c1174-be0ff5af00237481",
       "kind": "Item",
       "file": "tests/proofs/standard_proofs.rs",
       "src": "fn standard_proof() {\n        let val: u8 = kani::any();\n        assert_eq!(val, 1, \"Not eq to 1.\");\n    }",
@@ -1451,7 +1451,7 @@
         "def_id": "DefId { id: 9, name: \"<u8 as kani::Arbitrary>::any\" }",
         "func": {
           "name": "<u8 as kani::Arbitrary>::any",
-          "mangled_name": "_ZN38_$LT$u8$u20$as$u20$kani..Arbitrary$GT$3any17h018f46c274d73e20E",
+          "def_path_hash": "5b564342d02e8e12-2be988b95354635",
           "kind": "Item",
           "file": "kani/library/kani_core/src/arbitrary.rs",
           "src": "fn any() -> Self {\n                        // This size_of call does not use generic_const_exprs feature. It's inside a macro, and Self isn't generic.\n                        unsafe { crate::kani::any_raw_internal::<Self>() }\n                    }",
@@ -1476,7 +1476,7 @@
         "def_id": "DefId { id: 6, name: \"kani::any\" }",
         "func": {
           "name": "kani::any::<u8>",
-          "mangled_name": "_ZN4kani3any17h954404e2aeec639cE",
+          "def_path_hash": "5b564342d02e8e12-5464863fa792f7c",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub fn any<T: Arbitrary>() -> T {\n            T::any()\n        }",
@@ -1497,7 +1497,7 @@
         "def_id": "DefId { id: 11, name: \"kani::any_raw\" }",
         "func": {
           "name": "kani::any_raw::<u8>",
-          "mangled_name": "_ZN4kani7any_raw17hd82244e06b499993E",
+          "def_path_hash": "5b564342d02e8e12-ec375681c75463d4",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "fn any_raw<T: Copy>() -> T {\n            kani_intrinsic()\n        }",
@@ -1518,7 +1518,7 @@
         "def_id": "DefId { id: 10, name: \"kani::any_raw_internal\" }",
         "func": {
           "name": "kani::any_raw_internal::<u8>",
-          "mangled_name": "_ZN4kani16any_raw_internal17he77d1da10a47c764E",
+          "def_path_hash": "5b564342d02e8e12-cc892bc5f994e220",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "unsafe fn any_raw_internal<T: Copy>() -> T {\n            any_raw::<T>()\n        }",
@@ -1539,7 +1539,7 @@
         "def_id": "DefId { id: 7, name: \"kani::assert\" }",
         "func": {
           "name": "kani::assert",
-          "mangled_name": "_ZN4kani6assert17h16fc3aebcf69514fE",
+          "def_path_hash": "5b564342d02e8e12-21becb4b4994f64",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
@@ -1560,7 +1560,7 @@
         "def_id": "DefId { id: 12, name: \"kani::kani_intrinsic\" }",
         "func": {
           "name": "kani::kani_intrinsic::<u8>",
-          "mangled_name": "_ZN4kani14kani_intrinsic17h8e70bb5c9d9a95e4E",
+          "def_path_hash": "5b564342d02e8e12-3df5cb815610be7d",
           "kind": "Item",
           "file": "kani/library/kani_core/src/lib.rs",
           "src": "fn kani_intrinsic<T>() -> T {\n            #[allow(clippy::empty_loop)]\n            loop {}\n        }",
@@ -1580,7 +1580,7 @@
     ]
   },
   {
-    "hash": "589787355580357515416868020234799779782",
+    "hash": "787656924840285103816035299958662660625",
     "def_id": "DefId { id: 2, name: \"verify::standard_proof_empty\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -1588,7 +1588,7 @@
     "kind": "Standard",
     "func": {
       "name": "verify::standard_proof_empty",
-      "mangled_name": "_ZN15standard_proofs6verify20standard_proof_empty17h6a0757b69d03df26E",
+      "def_path_hash": "5b0a196ea78c1174-3f615bfea10c1f17",
       "kind": "Item",
       "file": "tests/proofs/standard_proofs.rs",
       "src": "fn standard_proof_empty() {}",
