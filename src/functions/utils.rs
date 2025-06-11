@@ -3,7 +3,7 @@ use rustc_smir::rustc_internal::internal;
 use rustc_span::{Span, source_map::SourceMap};
 use rustc_stable_hash::{StableHasher, hashers::SipHasher128};
 use serde::Serialize;
-use stable_mir::mir::mono::Instance;
+use stable_mir::{CrateDef, mir::mono::Instance};
 use std::hash::Hasher;
 
 /// Source code and potential source code before expansion.
@@ -14,8 +14,12 @@ pub struct SourceCode {
     /// Function name.
     pub name: String,
 
-    /// Mangled function name.
-    pub mangled_name: String,
+    /// Stable hash of [`DefPath`].
+    ///
+    /// Unlike mangled_name, this doesn't depend on host platforms.
+    ///
+    /// [`DefPath`]: https://doc.rust-lang.org/nightly/nightly-rustc/rustc_hir/definitions/struct.DefPath.html
+    pub def_path_hash: String,
 
     /// String of [`InstanceKind`].
     ///
@@ -47,7 +51,7 @@ pub struct SourceCode {
 impl SourceCode {
     pub fn with_hasher(&self, hasher: &mut StableHasher<SipHasher128>) {
         hasher.write_str(&self.name);
-        hasher.write_str(&self.mangled_name);
+        hasher.write_str(&self.def_path_hash);
         hasher.write_str(&self.kind);
         hasher.write_str(&self.file);
         hasher.write_str(&self.src);
@@ -119,9 +123,10 @@ pub fn source_code_with(
     }
 
     let name = inst.name();
-    let mangled_name = inst.mangled_name();
+    let def_id = internal(tcx, inst.def.def_id());
+    let def_path_hash = tcx.def_path_hash(def_id).0.to_string();
     let kind = format!("{:?}", inst.kind);
-    SourceCode { name, mangled_name, kind, file, src, macro_backtrace_len, macro_backtrace }
+    SourceCode { name, def_path_hash, kind, file, src, macro_backtrace_len, macro_backtrace }
 }
 
 pub fn vec_convertion<U, T: From<U>>(vec: Vec<U>) -> Vec<T> {

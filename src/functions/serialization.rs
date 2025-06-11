@@ -143,7 +143,7 @@ mod conversion {
         fn from(value: SourceCode) -> Self {
             let SourceCode {
                 name,
-                mangled_name,
+                def_path_hash,
                 kind,
                 file,
                 src,
@@ -151,7 +151,7 @@ mod conversion {
                 macro_backtrace,
             } = value;
             let macro_backtrace = vec_convertion(macro_backtrace);
-            Self { name, mangled_name, kind, file, src, macro_backtrace_len, macro_backtrace }
+            Self { name, def_path_hash, kind, file, src, macro_backtrace_len, macro_backtrace }
         }
     }
 

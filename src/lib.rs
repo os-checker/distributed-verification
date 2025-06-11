@@ -51,8 +51,12 @@ pub struct SourceCode {
     /// Function name.
     pub name: String,
 
-    /// Mangled function name.
-    pub mangled_name: String,
+    /// Stable hash of [`DefPath`].
+    ///
+    /// Unlike mangled_name, this doesn't depend on host platforms.
+    ///
+    /// [`DefPath`]: https://doc.rust-lang.org/nightly/nightly-rustc/rustc_hir/definitions/struct.DefPath.html
+    pub def_path_hash: String,
 
     /// String of [`InstanceKind`].
     ///
