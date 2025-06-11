@@ -4,7 +4,7 @@ set -ex
 # distributed-verification pins another.
 # So this means for verify-rust-std jobs,
 # distributed-verification may be broken to compile.
-COMMIT_VERIFY_RUST_STD=571c8ac
+COMMIT_VERIFY_RUST_STD=0840b22
 # COMMIT_KANI=d6853436382d876e574fb8a3fdef5b798a6e7d0d
 
 # Install kani

@@ -1,6 +1,6 @@
 [
   {
-    "hash": "621627085399168861817335896579039857609",
+    "hash": "136705708877839242934474722559635926519",
     "def_id": "DefId { id: 0, name: \"verify::proof1\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -8,7 +8,7 @@
     "kind": "Standard",
     "func": {
       "name": "verify::proof1",
-      "mangled_name": "_ZN20gen_proofs_by_macros6verify6proof117ha47409312272547cE",
+      "mangled_name": "_ZN20gen_proofs_by_macros6verify6proof117h7f6e43280915655dE",
       "kind": "Item",
       "file": "tests/proofs/gen_proofs_by_macros.rs",
       "src": "fn $name() $block",
@@ -24,7 +24,7 @@
     "callees": []
   },
   {
-    "hash": "1057391189656170612910810424020292617315",
+    "hash": "181312610665857800012805357170334224675",
     "def_id": "DefId { id: 1, name: \"verify::proof2\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -32,7 +32,7 @@
     "kind": "Standard",
     "func": {
       "name": "verify::proof2",
-      "mangled_name": "_ZN20gen_proofs_by_macros6verify6proof217hd682c7a14c1c239dE",
+      "mangled_name": "_ZN20gen_proofs_by_macros6verify6proof217h159aa947b3630d0dE",
       "kind": "Item",
       "file": "tests/proofs/gen_proofs_by_macros.rs",
       "src": "fn $name() $block",
@@ -48,7 +48,7 @@
     "callees": []
   },
   {
-    "hash": "833388606508419100814630708153653821669",
+    "hash": "99394388627179348599302580618744086500",
     "def_id": "DefId { id: 2, name: \"verify::proof3\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -56,7 +56,7 @@
     "kind": "Standard",
     "func": {
       "name": "verify::proof3",
-      "mangled_name": "_ZN20gen_proofs_by_macros6verify6proof317h6e1628105670a135E",
+      "mangled_name": "_ZN20gen_proofs_by_macros6verify6proof317h226068a6bf58b6f9E",
       "kind": "Item",
       "file": "tests/proofs/gen_proofs_by_macros.rs",
       "src": "fn $name() $block",

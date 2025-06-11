@@ -1,20 +1,23 @@
 use distributed_verification::kani_list::{check_proofs, get_kani_list};
 
 mod utils;
+use tracing::error_span;
 use utils::*;
 
 #[test]
 fn validate_kani_list_json() -> Result<()> {
+    distributed_verification::logger::init();
     let proofs = get_proofs("tests/proofs")?;
 
     for path in &proofs {
         let file_stem = file_stem(path);
         let list_path = format!("snapshots/kani_list/{file_stem}.txt");
-        dbg!(&list_path);
 
         let path = path.to_str().unwrap();
+        let _span = error_span!("validate", list_path, path).entered();
+
         // run `kani list`
-        let kani_list = get_kani_list(path);
+        let kani_list = get_kani_list(path)?;
         expect_file![list_path].assert_debug_eq(&kani_list);
 
         // run `distributed-verification`

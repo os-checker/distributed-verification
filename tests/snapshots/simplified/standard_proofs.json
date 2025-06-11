@@ -1,12 +1,12 @@
 [
   {
-    "hash": "133522091698482324913445025389957424582",
+    "hash": "1474064186071418523215498936685479235593",
     "attrs": [
       "#[kanitool::proof]"
     ],
     "name": "verify::recursive_callees",
     "file": "tests/proofs/standard_proofs.rs",
-    "callees_len": 107,
+    "callees_len": 106,
     "callees": [
       "<fn(char) -> bool {std::char::methods::<impl char>::is_whitespace} as std::ops::FnMut<(char,)>>::call_mut",
       "<fn(char) -> bool {std::char::methods::<impl char>::is_whitespace} as std::str::pattern::MultiCharEq>::matches",
@@ -41,7 +41,6 @@
       "core::num::<impl usize>::unchecked_sub::precondition_check",
       "core::panic::panic_info::PanicInfo::<'_>::new",
       "core::panicking::panic",
-      "core::panicking::panic_nounwind",
       "core::panicking::panic_nounwind_fmt",
       "core::panicking::panic_nounwind_fmt::runtime",
       "core::slice::<impl [u8]>::iter",
@@ -118,7 +117,7 @@
     ]
   },
   {
-    "hash": "840119249342052595317999269538187253072",
+    "hash": "22833286744245336898670822783759585960",
     "attrs": [
       "#[kanitool::proof]"
     ],
@@ -135,7 +134,7 @@
     ]
   },
   {
-    "hash": "12955202483297788019685504065104068987",
+    "hash": "589787355580357515416868020234799779782",
     "attrs": [
       "#[kanitool::proof]"
     ],
