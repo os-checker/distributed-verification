@@ -4,11 +4,11 @@ set -ex
 # distributed-verification pins another.
 # So this means for verify-rust-std jobs,
 # distributed-verification may be broken to compile.
-git submodule update kani --init
+git submodule update --init kani
 
 # Install kani
 pushd kani
-git submodule update charon --init
+git submodule update --init charon
 
 ./scripts/setup/ubuntu/install_deps.sh
 cargo build-dev

@@ -12,8 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: 'recursive'
 
       - name: Install kani
         run: bash ./.github/install-kani.sh
@@ -28,7 +26,7 @@ jobs:
 
       - name: Install kani
         run: |
-          git submodule update verify-rust-std --init
+          git submodule update --init verify-rust-std
           bash ./.github/install-kani.sh
 
       - name: Install distributed-verification
