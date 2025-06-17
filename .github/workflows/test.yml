@@ -26,23 +26,14 @@ jobs:
 
       - name: Install kani
         run: |
-          git submodule update --init verify-rust-std
-          bash ./.github/install-kani.sh
+          git submodule update --init --recursive verify-rust-std
+          ./.github/install-kani.sh
 
       - name: Install distributed-verification
         run: cargo install --path . --locked
 
       - name: Verify Rust Std
-        working-directory: tests/dummy-crate
-        env:
-          RUST_LOG: off
-          OUTPUT_DIR: ${{ github.workspace }}
-          KANI_DIR: ${{ github.workspace }}/kani/target/kani
-          VERIFY_RUST_STD_LIBRARY: ${{ github.workspace }}/verify-rust-std/library
-        run: |
-          ls -alh ${{ env.VERIFY_RUST_STD_LIBRARY }}
-          # generate core.json
-          cargo r --example verify_rust_std
+        run: ./.github/gen_core.json.sh
 
       - name: View core.json
         run: |
