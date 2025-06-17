@@ -17,7 +17,7 @@ use stable_mir::CrateDef;
 use std::{
     env::var,
     path::{Path, PathBuf},
-    process::{Command, Stdio},
+    process::{Command, Stdio, abort},
 };
 
 const RUSTC: &str = env!("CARGO_CRATE_NAME");
@@ -84,6 +84,7 @@ fn run(cmd: &str, args: &[String], vars: &[(&str, &str)]) {
         .unwrap();
     if !status.success() {
         eprintln!("[error] {cmd}: args={args:?} vars={vars:?} rustc_flags={rustc_flags:?}");
+        abort();
     }
 }
 
