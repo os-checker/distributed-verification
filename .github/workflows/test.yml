@@ -12,8 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: 'recursive'
 
       - name: Install kani
         run: bash ./.github/install-kani.sh
@@ -25,26 +23,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: 'recursive'
 
       - name: Install kani
-        run: bash ./.github/install-kani.sh
+        run: |
+          git submodule update --init --recursive verify-rust-std
+          ./.github/install-kani.sh
 
       - name: Install distributed-verification
         run: cargo install --path . --locked
 
       - name: Verify Rust Std
-        working-directory: tests/dummy-crate
-        env:
-          RUST_LOG: off
-          OUTPUT_DIR: ${{ github.workspace }}
-          KANI_DIR: ${{ github.workspace }}/kani/target/kani
-          VERIFY_RUST_STD_LIBRARY: ${{ github.workspace }}/tests/dummy-crate/verify-rust-std/library
-        run: |
-          ls -alh ${{ env.VERIFY_RUST_STD_LIBRARY }}
-          # generate core.json
-          cargo r --example verify_rust_std
+        run: ./.github/gen_core.json.sh
 
       - name: View core.json
         run: |
@@ -71,20 +60,20 @@ jobs:
         run: bash ./.github/install-kani.sh
 
       - name: Kani list
-        working-directory: tests/dummy-crate/verify-rust-std
+        working-directory: verify-rust-std
         env:
           UNSTABLE_ARGS: -Z function-contracts -Z mem-predicates -Z float-lib -Z c-ffi -Z loop-contracts
         run: kani list -Zlist ${{ env.UNSTABLE_ARGS }} --std ./library --format=json
 
       - name: View list
-        working-directory: tests/dummy-crate/verify-rust-std
+        working-directory: verify-rust-std
         run: ls -alh kani-list.json && cat kani-list.json
 
       - name: Upload kani-list.json
         uses: actions/upload-artifact@v4
         with:
           name: artifact-kani-list
-          path: ./tests/dummy-crate/verify-rust-std/kani-list.json
+          path: verify-rust-std/kani-list.json
           compression-level: 9
           if-no-files-found: error
 

@@ -1,3 +1,6 @@
 [submodule "kani"]
 	path = kani
 	url = https://github.com/model-checking/kani.git
+[submodule "verify-rust-std"]
+	path = verify-rust-std
+	url = https://github.com/model-checking/verify-rust-std.git
