@@ -1,18 +1,24 @@
 //! `VERIFY_RUST_STD_LIBRARY=path/to/verify-rust-std/library` and
 //! `KANI_DIR=path/to/kani` should be set beforehand.
 
+use eyre::{Context, Result};
 use std::{
     env::var,
     path::{Path, PathBuf},
     process::{Command, Stdio, abort},
 };
 
+#[macro_use]
+extern crate tracing;
+#[macro_use]
+extern crate eyre;
+
 const JSON_FILE: &str = "rustflags.json";
 
 mod env;
 use env::ENV;
 
-fn main() {
+fn main() -> Result<()> {
     let rustc_wrapper = &ENV.VERIFY_RUST_STD;
 
     let mut args = std::env::args().collect::<Vec<_>>();
@@ -20,7 +26,7 @@ fn main() {
 
     if args.len() == 2 && args[1].as_str() == "-vV" {
         // cargo invokes `rustc -vV` first
-        run("rustc", &["-vV".to_owned()], &[]);
+        run("rustc", &["-vV".to_owned()], &[])?;
     } else if std::env::var("WRAPPER").as_deref() == Ok("1") {
         // then cargo invokes `rustc - --crate-name ___ --print=file-names`
         if args[1] == "-" {
@@ -43,21 +49,25 @@ fn main() {
             build_core(args.split_off(1));
         } else {
             // build non-core crates
-            run("rustc", rustc_args, &[]);
+            run("rustc", rustc_args, &[])?;
         }
     } else {
         run(
             "cargo",
             &["build", "-Zbuild-std=core"].map(String::from),
             &[("RUSTC", rustc_wrapper), ("WRAPPER", "1")],
-        );
+        )?
     }
+    Ok(())
 }
 
-fn run(cmd: &str, args: &[String], vars: &[(&str, &str)]) {
-    let library = var("VERIFY_RUST_STD_LIBRARY").unwrap();
+fn run(cmd: &str, args: &[String], vars: &[(&str, &str)]) -> Result<()> {
+    let library = &*ENV.VERIFY_RUST_STD_LIBRARY;
     // CARGO_ENCODED_RUSTFLAGS takes a string that separte arguments by 0x1f
     let rustc_flags = rustc_flags();
+
+    let _span = debug_span!("run", ?library, ?args, ?vars, ?rustc_flags).entered();
+
     let rustflags = rustc_flags.join("\u{1f}");
     let status = Command::new(cmd)
         .args(args)
@@ -67,13 +77,14 @@ fn run(cmd: &str, args: &[String], vars: &[(&str, &str)]) {
         .stdout(Stdio::inherit())
         .stderr(Stdio::inherit())
         .spawn()
-        .unwrap()
+        .with_context(|| "Failed to spawn a cmd process")?
         .wait()
-        .unwrap();
-    if !status.success() {
-        eprintln!("[error] {cmd}: args={args:?} vars={vars:?} rustc_flags={rustc_flags:?}");
-        abort();
-    }
+        .with_context(|| "Failed to wait a cmd process")?;
+    ensure!(
+        status.success(),
+        "[error] {cmd}: args={args:?} vars={vars:?} rustc_flags={rustc_flags:?}"
+    );
+    Ok(())
 }
 
 const KANI_ARGS: &[&str] = &[
@@ -109,9 +120,9 @@ const KANI_ARGS: &[&str] = &[
 
 fn rustc_flags() -> Vec<String> {
     // inject kani_core dependency to recognize kani module in core
-    let kani_dir = var("KANI_DIR").unwrap();
+    let kani_dir = &*ENV.KANI_DIR;
     // -Lpath must be an absolute path
-    let kani_lib = PathBuf::from(kani_dir).join("no_core").join("lib");
+    let kani_lib = kani_dir.join("no_core").join("lib");
     let kani_lib = kani_lib.canonicalize().unwrap_or_else(|err| panic!("{kani_lib:?}: {err}"));
     assert!(std::fs::exists(&kani_lib).unwrap());
     let kani_core = ["-L", kani_lib.to_str().unwrap(), "--extern=kani_core"];
