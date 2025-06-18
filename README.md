@@ -14,7 +14,18 @@ The list in very incomplete at the moment.
     - [x] Traverse calls starting from proofs and contracts
 - [ ] Generate proofs that need to rerun
     - [ ] Compute difference
-    - [ ] Emit JSON
+    - [x] Emit JSON
 - [ ] CI setup
     - [ ] Run kani
     - [ ] Run ESBMC ??
+
+## Init
+
+```bash
+git submodule update --init --recursive verify-rust-std
+
+git submodule update --init kani
+cd kani
+git submodule update --init charon
+cargo build-dev
+```
