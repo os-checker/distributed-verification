@@ -7,14 +7,13 @@ use std::{
     process::{Command, Stdio, abort},
 };
 
-const RUSTC: &str = env!("CARGO_CRATE_NAME");
 const JSON_FILE: &str = "rustflags.json";
 
 mod env;
+use env::ENV;
 
 fn main() {
-    let rustc_wrapper = &var("VERIFY_RUST_STD").unwrap();
-    // dbg!(RUSTC, rustc_wrapper);
+    let rustc_wrapper = &ENV.VERIFY_RUST_STD;
 
     let mut args = std::env::args().collect::<Vec<_>>();
     rustc_flags();
@@ -143,5 +142,5 @@ fn build_core(args: Vec<String>) {
         .map(String::from),
     );
     new_args.extend(args);
-    run("distributed-verification", &new_args, &[]);
+    run(&ENV.DISTRIBUTED_VERIFICATION, &new_args, &[]);
 }
