@@ -26,7 +26,7 @@ const JSON_FILE: &str = "rustflags.json";
 mod env;
 
 fn main() {
-    let rustc_wrapper = &*format!("target/debug/examples/{RUSTC}");
+    let rustc_wrapper = &*format!("target/debug/{RUSTC}");
     // dbg!(RUSTC, rustc_wrapper);
 
     let mut args = std::env::args().collect::<Vec<_>>();
