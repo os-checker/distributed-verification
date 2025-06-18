@@ -11,5 +11,4 @@ export VERIFY_RUST_STD_LIBRARY=$WORKSPACE/verify-rust-std/library
 
 ls -alh $VERIFY_RUST_STD_LIBRARY
 
-pushd tests/dummy-crate
-cargo r --example verify_rust_std
+cargo r --bin verify_rust_std
