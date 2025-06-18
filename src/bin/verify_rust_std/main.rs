@@ -5,7 +5,7 @@ use eyre::{Context, Result};
 use std::{
     env::var,
     path::{Path, PathBuf},
-    process::{Command, Stdio, abort},
+    process::{Command, Stdio},
 };
 
 #[macro_use]
@@ -26,7 +26,7 @@ fn main() -> Result<()> {
 
     if args.len() == 2 && args[1].as_str() == "-vV" {
         // cargo invokes `rustc -vV` first
-        run("rustc", &["-vV".to_owned()], &[])?;
+        run("rustc", &["-vV".to_owned()], &[])
     } else if std::env::var("WRAPPER").as_deref() == Ok("1") {
         // then cargo invokes `rustc - --crate-name ___ --print=file-names`
         if args[1] == "-" {
@@ -46,19 +46,18 @@ fn main() -> Result<()> {
             serde_json::to_writer_pretty(writer, &json).unwrap();
             let path = PathBuf::from(JSON_FILE).canonicalize().unwrap();
             println!("{path:?} is written.");
-            build_core(args.split_off(1));
+            build_core(args.split_off(1))
         } else {
             // build non-core crates
-            run("rustc", rustc_args, &[])?;
+            run("rustc", rustc_args, &[])
         }
     } else {
         run(
             "cargo",
             &["build", "-Zbuild-std=core"].map(String::from),
             &[("RUSTC", rustc_wrapper), ("WRAPPER", "1")],
-        )?
+        )
     }
-    Ok(())
 }
 
 fn run(cmd: &str, args: &[String], vars: &[(&str, &str)]) -> Result<()> {
@@ -66,7 +65,7 @@ fn run(cmd: &str, args: &[String], vars: &[(&str, &str)]) -> Result<()> {
     // CARGO_ENCODED_RUSTFLAGS takes a string that separte arguments by 0x1f
     let rustc_flags = rustc_flags();
 
-    let _span = debug_span!("run", ?library, ?args, ?vars, ?rustc_flags).entered();
+    let _span = debug_span!("run", cmd, ?library, ?args, ?vars, ?rustc_flags).entered();
 
     let rustflags = rustc_flags.join("\u{1f}");
     let status = Command::new(cmd)
@@ -80,10 +79,7 @@ fn run(cmd: &str, args: &[String], vars: &[(&str, &str)]) -> Result<()> {
         .with_context(|| "Failed to spawn a cmd process")?
         .wait()
         .with_context(|| "Failed to wait a cmd process")?;
-    ensure!(
-        status.success(),
-        "[error] {cmd}: args={args:?} vars={vars:?} rustc_flags={rustc_flags:?}"
-    );
+    ensure!(status.success(), "Process aborts.");
     Ok(())
 }
 
@@ -135,7 +131,7 @@ fn test_rustc_flags() {
     dbg!(rustc_flags());
 }
 
-fn build_core(args: Vec<String>) {
+fn build_core(args: Vec<String>) -> Result<()> {
     const OUTPUT_DIR: &str = "/home/zjp/rust/distributed-verification";
     let mut new_args = Vec::with_capacity(args.len() + 2);
     let output_dir = var("OUTPUT_DIR");
@@ -153,5 +149,5 @@ fn build_core(args: Vec<String>) {
         .map(String::from),
     );
     new_args.extend(args);
-    run(&ENV.DISTRIBUTED_VERIFICATION, &new_args, &[]);
+    run(&ENV.DISTRIBUTED_VERIFICATION, &new_args, &[])
 }
