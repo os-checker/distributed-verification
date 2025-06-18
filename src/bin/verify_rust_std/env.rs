@@ -1,3 +1,4 @@
+use crate::Result;
 use std::{
     env::var,
     path::{Path, PathBuf},
@@ -18,6 +19,23 @@ pub struct EnvVar {
     pub OUTPUT_DIR: PathBuf,
 }
 
+impl EnvVar {
+    pub fn write_rustflags_json(&self, json: &serde_json::Value) -> Result<()> {
+        const JSON_FILE: &str = "rustflags.json";
+
+        let path = self.OUTPUT_DIR.join(JSON_FILE);
+        let writer = std::fs::File::create(&path)?;
+        serde_json::to_writer_pretty(writer, json)?;
+        let path = path.canonicalize()?;
+        info!("{path:?} is written.");
+        Ok(())
+    }
+
+    pub fn core_json(&self) -> PathBuf {
+        self.OUTPUT_DIR.join("core.json")
+    }
+}
+
 fn var_to_path(env: &str) -> PathBuf {
     let s = var(env).unwrap();
     let path = Path::new(&s);
@@ -36,3 +54,17 @@ pub static ENV: LazyLock<EnvVar> = LazyLock::new(|| EnvVar {
     KANI_DIR: var_to_path("KANI_DIR"),
     OUTPUT_DIR: var_to_path("OUTPUT_DIR"),
 });
+
+const WRAPPER: &str = "WRAPPER";
+/// Inner env var to know if the process is cargo wrapper (verify_rust_std).
+pub fn is_wrapper() -> bool {
+    var(WRAPPER).as_deref() == Ok("1")
+}
+/// Set inner env var when cargo wrapper is to run.
+pub fn set_wrapper() -> (&'static str, &'static str) {
+    (WRAPPER, "1")
+}
+
+pub fn set_rustc_wrapper() -> (&'static str, &'static str) {
+    ("RUSTC", &ENV.VERIFY_RUST_STD)
+}

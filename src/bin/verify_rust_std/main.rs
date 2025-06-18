@@ -2,32 +2,26 @@
 //! `KANI_DIR=path/to/kani` should be set beforehand.
 
 use eyre::{Context, Result};
-use std::{
-    env::var,
-    path::{Path, PathBuf},
-    process::{Command, Stdio},
-};
+use std::process::{Command, Stdio};
 
 #[macro_use]
 extern crate tracing;
 #[macro_use]
 extern crate eyre;
 
-const JSON_FILE: &str = "rustflags.json";
-
 mod env;
 use env::ENV;
 
-fn main() -> Result<()> {
-    let rustc_wrapper = &ENV.VERIFY_RUST_STD;
+use crate::env::set_wrapper;
 
+fn main() -> Result<()> {
     let mut args = std::env::args().collect::<Vec<_>>();
     rustc_flags();
 
     if args.len() == 2 && args[1].as_str() == "-vV" {
         // cargo invokes `rustc -vV` first
         run("rustc", &["-vV".to_owned()], &[])
-    } else if std::env::var("WRAPPER").as_deref() == Ok("1") {
+    } else if env::is_wrapper() {
         // then cargo invokes `rustc - --crate-name ___ --print=file-names`
         if args[1] == "-" {
             // `rustc -` is a substitute file name from stdin
@@ -37,15 +31,11 @@ fn main() -> Result<()> {
 
         let rustc_args = &args[1..];
         if args.iter().any(|arg| arg == "core") {
-            println!("[build core] rustc_args={rustc_args:?}");
-            let writer = std::fs::File::create(JSON_FILE).unwrap();
             let json = serde_json::json!({
                 "rustflags": &rustc_args,
                 "rustc": format!("rustc {}", rustc_args.join(" "))
             });
-            serde_json::to_writer_pretty(writer, &json).unwrap();
-            let path = PathBuf::from(JSON_FILE).canonicalize().unwrap();
-            println!("{path:?} is written.");
+            ENV.write_rustflags_json(&json)?;
             build_core(args.split_off(1))
         } else {
             // build non-core crates
@@ -55,7 +45,7 @@ fn main() -> Result<()> {
         run(
             "cargo",
             &["build", "-Zbuild-std=core"].map(String::from),
-            &[("RUSTC", rustc_wrapper), ("WRAPPER", "1")],
+            &[env::set_rustc_wrapper(), set_wrapper()],
         )
     }
 }
@@ -132,11 +122,8 @@ fn test_rustc_flags() {
 }
 
 fn build_core(args: Vec<String>) -> Result<()> {
-    const OUTPUT_DIR: &str = "/home/zjp/rust/distributed-verification";
     let mut new_args = Vec::with_capacity(args.len() + 2);
-    let output_dir = var("OUTPUT_DIR");
-    let output_dir: &Path = output_dir.as_deref().unwrap_or(OUTPUT_DIR).as_ref();
-    let core_json = output_dir.join("core.json");
+    let core_json = ENV.core_json();
     new_args.extend(
         [
             "--no-kani-args",
