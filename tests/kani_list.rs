@@ -39,7 +39,11 @@ fn validate_kani_list_json() -> Result<()> {
 fn kani_list_json() -> Result<()> {
     let path = "assets/kani-list_verify-rust-std.json";
     let file = std::fs::File::open(path)?;
-    let kani_list: KaniListJson = serde_json::from_reader(file)?;
+    let mut kani_list: KaniListJson = serde_json::from_reader(file)?;
+
+    kani_list.strip_path_prefix("./verify-rust-std/library")?;
+    expect_file!["snapshots/kani_list/kani_list_json-files.json"]
+        .assert_eq(&serde_json::to_string_pretty(&kani_list.files())?);
 
     expect![[r#"
         Totals {
@@ -47,7 +51,8 @@ fn kani_list_json() -> Result<()> {
             contract_harnesses: 953,
             functions_under_contract: 337,
         }
-    "#]].assert_debug_eq(&kani_list.totals);
+    "#]]
+    .assert_debug_eq(&kani_list.totals);
 
     Ok(())
 }

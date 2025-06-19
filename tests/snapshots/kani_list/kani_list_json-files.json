@@ -1,0 +1,38 @@
+{
+  "standard_harnesses": [
+    "alloc/src/collections/vec_deque/mod.rs",
+    "alloc/src/vec/mod.rs",
+    "core/src/alloc/layout.rs",
+    "core/src/convert/num.rs",
+    "core/src/ffi/c_str.rs",
+    "core/src/intrinsics/mod.rs",
+    "core/src/num/mod.rs",
+    "core/src/num/nonzero.rs",
+    "core/src/option.rs",
+    "core/src/ptr/const_ptr.rs",
+    "core/src/ptr/mut_ptr.rs",
+    "core/src/ptr/non_null.rs",
+    "core/src/ptr/unique.rs",
+    "core/src/slice/ascii.rs",
+    "core/src/slice/iter.rs",
+    "core/src/str/validations.rs",
+    "core/src/time.rs"
+  ],
+  "contract_harnesses": [
+    "core/src/alloc/layout.rs",
+    "core/src/char/methods.rs",
+    "core/src/convert/num.rs",
+    "core/src/ffi/c_str.rs",
+    "core/src/intrinsics/mod.rs",
+    "core/src/mem/mod.rs",
+    "core/src/num/mod.rs",
+    "core/src/num/nonzero.rs",
+    "core/src/ptr/const_ptr.rs",
+    "core/src/ptr/mod.rs",
+    "core/src/ptr/mut_ptr.rs",
+    "core/src/ptr/non_null.rs",
+    "core/src/ptr/unique.rs",
+    "core/src/slice/iter.rs",
+    "core/src/time.rs"
+  ]
+}
