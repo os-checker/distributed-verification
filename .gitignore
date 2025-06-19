@@ -6,5 +6,6 @@ kani-list.json
 # ignore kani folder for grep or files findings
 # kani
 
+rustflags.json
 core.json
 /artifact-*

@@ -11,5 +11,12 @@ export VERIFY_RUST_STD_LIBRARY=$WORKSPACE/verify-rust-std/library
 
 ls -alh $VERIFY_RUST_STD_LIBRARY
 
-pushd tests/dummy-crate
-cargo r --example verify_rust_std
+cargo b --bin distributed-verification
+export DISTRIBUTED_VERIFICATION=$WORKSPACE/target/debug/distributed-verification
+
+cargo build --bin verify_rust_std
+export VERIFY_RUST_STD=$WORKSPACE/target/debug/verify_rust_std
+
+cd tests/dummy-crate
+cargo clean
+$VERIFY_RUST_STD
