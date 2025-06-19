@@ -12,8 +12,6 @@ extern crate eyre;
 mod env;
 use env::ENV;
 
-use crate::env::set_wrapper;
-
 fn main() -> Result<()> {
     let mut args = std::env::args().collect::<Vec<_>>();
 
@@ -44,7 +42,7 @@ fn main() -> Result<()> {
         run(
             "cargo",
             &["build", "-Zbuild-std=core"].map(String::from),
-            &[env::set_rustc_wrapper(), set_wrapper()],
+            &[env::set_rustc_wrapper(), env::set_wrapper()],
         )
     }
 }
@@ -66,7 +64,9 @@ fn run(cmd: &str, args: &[String], vars: &[(&str, &str)]) -> Result<()> {
         .with_context(|| "Failed to spawn a cmd process")?
         .wait()
         .with_context(|| "Failed to wait a cmd process")?;
+
     ensure!(status.success(), "Process aborts.");
+
     Ok(())
 }
 
