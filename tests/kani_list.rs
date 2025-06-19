@@ -1,4 +1,7 @@
-use distributed_verification::kani_list::{check_proofs, get_kani_list};
+use distributed_verification::{
+    diff::KaniListJson,
+    kani_list::{check_proofs, get_kani_list},
+};
 
 mod utils;
 use tracing::error_span;
@@ -28,6 +31,23 @@ fn validate_kani_list_json() -> Result<()> {
         // test `distributed-verification --check-kani-list`
         _ = cmd(&[path, "--check-kani-list=kani-list.json"]);
     }
+
+    Ok(())
+}
+
+#[test]
+fn kani_list_json() -> Result<()> {
+    let path = "assets/kani-list_verify-rust-std.json";
+    let file = std::fs::File::open(path)?;
+    let kani_list: KaniListJson = serde_json::from_reader(file)?;
+
+    expect![[r#"
+        Totals {
+            standard_harnesses: 622,
+            contract_harnesses: 953,
+            functions_under_contract: 337,
+        }
+    "#]].assert_debug_eq(&kani_list.totals);
 
     Ok(())
 }

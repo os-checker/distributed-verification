@@ -6,6 +6,7 @@ extern crate tracing;
 #[macro_use]
 extern crate eyre;
 
+pub mod diff;
 pub mod error_handling;
 pub mod kani_list;
 pub mod logger;
