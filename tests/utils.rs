@@ -39,3 +39,9 @@ pub fn get_proofs(dir: &str) -> Result<Vec<PathBuf>> {
 pub fn file_stem(path: &Path) -> &str {
     path.file_stem().and_then(|f| f.to_str()).unwrap()
 }
+
+pub fn read_file<T: serde::de::DeserializeOwned>(path: &str) -> Result<T> {
+    let file = std::fs::File::open(path)?;
+    let val = serde_json::from_reader(file)?;
+    Ok(val)
+}

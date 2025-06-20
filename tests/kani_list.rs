@@ -1,5 +1,6 @@
 use distributed_verification::{
-    diff::KaniListJson,
+    SimplifiedSerFunction,
+    diff::{KaniListJson, MergedHarnesses},
     kani_list::{check_proofs, get_kani_list},
 };
 
@@ -38,8 +39,7 @@ fn validate_kani_list_json() -> Result<()> {
 #[test]
 fn kani_list_json() -> Result<()> {
     let path = "assets/kani-list_verify-rust-std.json";
-    let file = std::fs::File::open(path)?;
-    let mut kani_list: KaniListJson = serde_json::from_reader(file)?;
+    let mut kani_list: KaniListJson = read_file(path)?;
 
     kani_list.strip_path_prefix("./verify-rust-std/library")?;
     expect_file!["snapshots/kani_list/kani_list_json-files.json"]
@@ -53,6 +53,32 @@ fn kani_list_json() -> Result<()> {
         }
     "#]]
     .assert_debug_eq(&kani_list.totals);
+
+    Ok(())
+}
+
+#[test]
+#[ignore = "core.json is too big, so this test is run locally"]
+fn core_json() -> Result<()> {
+    let v_func: Vec<SimplifiedSerFunction> = read_file("./assets/core.json")?;
+
+    let merged = MergedHarnesses::new(&v_func);
+
+    #[derive(Debug)]
+    #[allow(dead_code)]
+    struct Count {
+        standard: usize,
+        contract: usize,
+    }
+
+    let count = Count { standard: merged.standard.len(), contract: merged.contract.len() };
+    expect![[r#"
+        Count {
+            standard: 620,
+            contract: 953,
+        }
+    "#]]
+    .assert_debug_eq(&count);
 
     Ok(())
 }
