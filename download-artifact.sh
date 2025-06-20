@@ -23,3 +23,6 @@ gh api -H "Accept: application/vnd.github.v3+json" \
 
 # Download and unzip the artifact
 gh run download "$LATEST_RUN_ID" -R "$REPOSITORY"
+
+# For comparison if some proofs are missing.
+# jq -c "map({name, file}) | sort_by(.name) | .[]" artifact-libcore/core.json > x64.json
