@@ -14,9 +14,8 @@ pub struct SourceCode {
     /// Function name.
     pub name: String,
 
-    /// Mangled function name.
-    pub mangled_name: String,
-
+    // /// Mangled function name.
+    // pub mangled_name: String,
     /// String of [`InstanceKind`].
     ///
     /// [`InstanceKind`]: https://doc.rust-lang.org/nightly/nightly-rustc/stable_mir/mir/mono/enum.InstanceKind.html
@@ -47,7 +46,7 @@ pub struct SourceCode {
 impl SourceCode {
     pub fn with_hasher(&self, hasher: &mut StableHasher<SipHasher128>) {
         hasher.write_str(&self.name);
-        hasher.write_str(&self.mangled_name);
+        // hasher.write_str(&self.mangled_name);
         hasher.write_str(&self.kind);
         hasher.write_str(&self.file);
         hasher.write_str(&self.src);
@@ -86,21 +85,6 @@ pub fn source_code_with(
     let span = internal(tcx, stable_mir_span);
     let src = span_to_source(span, src_map);
 
-    if span.from_expansion() {
-        debug!(
-            "[find_oldest_ancestor_in_same_ctxt] {}",
-            span_to_source(span.find_oldest_ancestor_in_same_ctxt(), src_map)
-        );
-        debug!("[source_callsite] {}", span_to_source(span.source_callsite(), src_map));
-        if let Some(parent_callsite) = span.parent_callsite() {
-            debug!("[parent_callsite] {}", span_to_source(parent_callsite, src_map));
-        }
-        for m in span.macro_backtrace() {
-            debug!("[macro_backtrace - callsite] {}", span_to_source(m.call_site, src_map));
-            debug!("[macro_backtrace - defsite ] {}", span_to_source(m.def_site, src_map));
-        }
-        debug!("\n");
-    }
     let macro_backtrace: Vec<_> = span
         .macro_backtrace()
         .map(|m| MacroBacktrace {
@@ -119,9 +103,9 @@ pub fn source_code_with(
     }
 
     let name = inst.name();
-    let mangled_name = inst.mangled_name();
+    // let mangled_name = inst.mangled_name();
     let kind = format!("{:?}", inst.kind);
-    SourceCode { name, mangled_name, kind, file, src, macro_backtrace_len, macro_backtrace }
+    SourceCode { name, kind, file, src, macro_backtrace_len, macro_backtrace }
 }
 
 pub fn vec_convertion<U, T: From<U>>(vec: Vec<U>) -> Vec<T> {
