@@ -112,6 +112,6 @@ impl PathPrefixes {
     }
 
     fn prefixes(&self) -> [&str; 2] {
-        [&*self.pwd, &self.sysroot]
+        [&self.sysroot, &*self.pwd]
     }
 }

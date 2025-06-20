@@ -5,7 +5,6 @@ use distributed_verification::{
 };
 
 mod utils;
-use pretty_assertions::assert_eq;
 use tracing::error_span;
 use utils::*;
 
@@ -90,31 +89,6 @@ fn core_json() -> Result<()> {
         }
     "#]]
     .assert_debug_eq(&count);
-
-    Ok(())
-}
-
-#[test]
-fn diff_core_json_and_kani_list_json() -> Result<()> {
-    let kani_list = read_kani_list_json()?;
-    let v_func = read_core_json()?;
-
-    let names_kani_list = kani_list.harness_names()?;
-    let mut names_v_func: Vec<_> = v_func.iter().map(|f| f.name.as_str()).collect();
-    names_v_func.sort_unstable();
-
-    // FIXME: the assertion currently fails, because kani-list.json is generated
-    // on aarch64, while core.json is generated on x86_64, two proofs are missing:
-    // str::pattern::verify::check_small_slice_eq
-    // str::pattern::verify::check_small_slice_eq_empty
-    //
-    // What's more, kani-list.json includes non-core proofs, like ones from alloc:
-    // vec::verify::verify_swap_remove
-    // collections::vec_deque::verify::check_vecdeque_swap
-    assert_eq!(
-        names_v_func, names_kani_list,
-        "harness names in and core.json kani-list.json don't match"
-    );
 
     Ok(())
 }

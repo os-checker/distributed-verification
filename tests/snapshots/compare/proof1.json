@@ -1,6 +1,6 @@
 [
   {
-    "hash": "1199054345737169152412317427450168300472",
+    "hash": "696018930944113507118211039546662695939",
     "def_id": "DefId { id: 0, name: \"verify::f\" }",
     "attrs": [
       "#[kanitool::proof]"
@@ -8,7 +8,6 @@
     "kind": "Standard",
     "func": {
       "name": "verify::f",
-      "mangled_name": "_ZN5proof6verify1f17h99b0a6b6a9abfa23E",
       "kind": "Item",
       "file": "tests/compare/proof.rs",
       "src": "pub fn f() {\n        let a = 1;\n        assert_eq!(a + 1, 2);\n    }",
@@ -21,9 +20,8 @@
         "def_id": "DefId { id: 1, name: \"kani::assert\" }",
         "func": {
           "name": "kani::assert",
-          "mangled_name": "_ZN4kani6assert17h16fc3aebcf69514fE",
           "kind": "Item",
-          "file": "kani/library/kani_core/src/lib.rs",
+          "file": "distributed-verification/kani/library/kani_core/src/lib.rs",
           "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
           "macro_backtrace_len": 2,
           "macro_backtrace": [
