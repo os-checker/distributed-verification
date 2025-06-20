@@ -5,7 +5,7 @@ set -o pipefail
 export WORKSPACE="${WORKSPACE:-$(pwd)}"
 
 export RUST_LOG=off
-export OUTPUT_DIR=$WORKSPACE
+export OUTPUT_DIR=$WORKSPACE/assets
 export KANI_DIR=$WORKSPACE/kani/target/kani
 export VERIFY_RUST_STD_LIBRARY=$WORKSPACE/verify-rust-std/library
 
@@ -17,6 +17,10 @@ export DISTRIBUTED_VERIFICATION=$WORKSPACE/target/debug/distributed-verification
 cargo build --bin verify_rust_std
 export VERIFY_RUST_STD=$WORKSPACE/target/debug/verify_rust_std
 
-cd tests/dummy-crate
+pushd tests/dummy-crate
 cargo clean
 $VERIFY_RUST_STD
+
+popd
+pushd verify-rust-std
+git checkout .

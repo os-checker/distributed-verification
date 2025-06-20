@@ -20,7 +20,6 @@ use rustc_middle::ty::TyCtxt;
 
 mod cli;
 mod functions;
-mod logger;
 mod stat;
 
 #[macro_use]
@@ -29,7 +28,7 @@ extern crate tracing;
 extern crate eyre;
 
 fn main() -> Result<()> {
-    logger::init();
+    distributed_verification::logger::init();
     let mut run = cli::parse()?;
     let rustc_args = run.take_rustc_args();
     let run = run;

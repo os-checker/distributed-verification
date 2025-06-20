@@ -1,4 +1,8 @@
-use distributed_verification::kani_list::{check_proofs, get_kani_list};
+use distributed_verification::{
+    SimplifiedSerFunction,
+    diff::{KaniListJson, MergedHarnesses},
+    kani_list::{check_proofs, get_kani_list},
+};
 
 mod utils;
 use tracing::error_span;
@@ -28,6 +32,63 @@ fn validate_kani_list_json() -> Result<()> {
         // test `distributed-verification --check-kani-list`
         _ = cmd(&[path, "--check-kani-list=kani-list.json"]);
     }
+
+    Ok(())
+}
+
+fn read_kani_list_json() -> Result<KaniListJson> {
+    const KANI_LIST_JSON: &str = "assets/kani-list_verify-rust-std.json";
+    const PREFIX: &str = "/home/gh-zjp-CN/distributed-verification/verify-rust-std/library/";
+
+    let mut kani_list: KaniListJson = read_file(KANI_LIST_JSON)?;
+    kani_list.strip_path_prefix_raw(PREFIX)?;
+    Ok(kani_list)
+}
+
+#[test]
+fn kani_list_json() -> Result<()> {
+    let kani_list = read_kani_list_json()?;
+
+    expect_file!["snapshots/kani_list/kani_list_json-files.json"]
+        .assert_eq(&serde_json::to_string_pretty(&kani_list.files())?);
+
+    expect![[r#"
+        Totals {
+            standard_harnesses: 622,
+            contract_harnesses: 953,
+            functions_under_contract: 337,
+        }
+    "#]]
+    .assert_debug_eq(&kani_list.totals);
+
+    Ok(())
+}
+
+fn read_core_json() -> Result<Vec<SimplifiedSerFunction>> {
+    const CORE_JSON: &str = "./assets/core.json";
+    read_file(CORE_JSON)
+}
+
+#[test]
+fn core_json() -> Result<()> {
+    let v_func = read_core_json()?;
+    let merged = MergedHarnesses::new(&v_func);
+
+    #[derive(Debug)]
+    #[allow(dead_code)]
+    struct Count {
+        standard: usize,
+        contract: usize,
+    }
+
+    let count = Count { standard: merged.standard.len(), contract: merged.contract.len() };
+    expect![[r#"
+        Count {
+            standard: 622,
+            contract: 953,
+        }
+    "#]]
+    .assert_debug_eq(&count);
 
     Ok(())
 }

@@ -98,7 +98,11 @@ struct PathPrefixes {
 
 impl PathPrefixes {
     fn new() -> Self {
-        let mut pwd = std::env::current_dir().unwrap().into_os_string().into_string().unwrap();
+        // Path from crate folder, especially relative to `verify-rust-std/library`.
+        //
+        // cc https://github.com/os-checker/distributed-verification/issues/82
+        let mut pwd =
+            std::env::current_dir().unwrap().parent().unwrap().to_str().unwrap().to_owned();
         pwd.push('/');
 
         let out = std::process::Command::new("rustc").arg("--print=sysroot").output().unwrap();
@@ -108,6 +112,6 @@ impl PathPrefixes {
     }
 
     fn prefixes(&self) -> [&str; 2] {
-        [&*self.pwd, &self.sysroot]
+        [&self.sysroot, &*self.pwd]
     }
 }

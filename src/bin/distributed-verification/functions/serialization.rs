@@ -141,17 +141,9 @@ mod conversion {
 
     impl From<SourceCode> for lib::SourceCode {
         fn from(value: SourceCode) -> Self {
-            let SourceCode {
-                name,
-                mangled_name,
-                kind,
-                file,
-                src,
-                macro_backtrace_len,
-                macro_backtrace,
-            } = value;
+            let SourceCode { name, kind, file, src, macro_backtrace_len, macro_backtrace } = value;
             let macro_backtrace = vec_convertion(macro_backtrace);
-            Self { name, mangled_name, kind, file, src, macro_backtrace_len, macro_backtrace }
+            Self { name, kind, file, src, macro_backtrace_len, macro_backtrace }
         }
     }
 

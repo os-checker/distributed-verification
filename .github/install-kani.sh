@@ -11,7 +11,7 @@ pushd kani
 git submodule update --init charon
 
 ./scripts/setup/ubuntu/install_deps.sh
-cargo build-dev
+cargo build-dev -- --release
 
 export PATH=$(pwd)/scripts:$PATH
 echo PATH=$PATH >>$GITHUB_ENV

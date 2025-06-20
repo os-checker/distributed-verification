@@ -8,4 +8,4 @@ kani-list.json
 
 rustflags.json
 core.json
-/artifact-*
+/artifact*

@@ -6,6 +6,7 @@ extern crate tracing;
 #[macro_use]
 extern crate eyre;
 
+pub mod diff;
 pub mod error_handling;
 pub mod kani_list;
 pub mod logger;
@@ -51,9 +52,8 @@ pub struct SourceCode {
     /// Function name.
     pub name: String,
 
-    /// Mangled function name.
-    pub mangled_name: String,
-
+    // Mangled function name.
+    // pub mangled_name: String,
     /// String of [`InstanceKind`].
     ///
     /// [`InstanceKind`]: https://doc.rust-lang.org/nightly/nightly-rustc/stable_mir/mir/mono/enum.InstanceKind.html
