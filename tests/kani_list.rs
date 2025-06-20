@@ -41,7 +41,9 @@ fn kani_list_json() -> Result<()> {
     let path = "assets/kani-list_verify-rust-std.json";
     let mut kani_list: KaniListJson = read_file(path)?;
 
-    kani_list.strip_path_prefix("./verify-rust-std/library")?;
+    kani_list.strip_path_prefix_raw(
+        "/home/gh-zjp-CN/distributed-verification/verify-rust-std/library/",
+    )?;
     expect_file!["snapshots/kani_list/kani_list_json-files.json"]
         .assert_eq(&serde_json::to_string_pretty(&kani_list.files())?);
 

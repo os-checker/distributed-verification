@@ -79,6 +79,13 @@ impl KaniListJson {
         Ok(())
     }
 
+    /// This function is used in tests.
+    pub fn strip_path_prefix_raw(&mut self, prefix: &str) -> Result<()> {
+        self.standard_harnesses.strip_path_prefix(prefix)?;
+        self.contract_harnesses.strip_path_prefix(prefix)?;
+        Ok(())
+    }
+
     pub fn files(&self) -> serde_json::Value {
         serde_json::json!({
             "standard_harnesses": self.standard_harnesses.files(),
