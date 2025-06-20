@@ -5,6 +5,7 @@ use distributed_verification::{
 };
 
 mod utils;
+use pretty_assertions::assert_eq;
 use tracing::error_span;
 use utils::*;
 
@@ -36,14 +37,19 @@ fn validate_kani_list_json() -> Result<()> {
     Ok(())
 }
 
+fn read_kani_list_json() -> Result<KaniListJson> {
+    const KANI_LIST_JSON: &str = "assets/kani-list_verify-rust-std.json";
+    const PREFIX: &str = "/home/gh-zjp-CN/distributed-verification/verify-rust-std/library/";
+
+    let mut kani_list: KaniListJson = read_file(KANI_LIST_JSON)?;
+    kani_list.strip_path_prefix_raw(PREFIX)?;
+    Ok(kani_list)
+}
+
 #[test]
 fn kani_list_json() -> Result<()> {
-    let path = "assets/kani-list_verify-rust-std.json";
-    let mut kani_list: KaniListJson = read_file(path)?;
+    let kani_list = read_kani_list_json()?;
 
-    kani_list.strip_path_prefix_raw(
-        "/home/gh-zjp-CN/distributed-verification/verify-rust-std/library/",
-    )?;
     expect_file!["snapshots/kani_list/kani_list_json-files.json"]
         .assert_eq(&serde_json::to_string_pretty(&kani_list.files())?);
 
@@ -59,10 +65,14 @@ fn kani_list_json() -> Result<()> {
     Ok(())
 }
 
+fn read_core_json() -> Result<Vec<SimplifiedSerFunction>> {
+    const CORE_JSON: &str = "./assets/core.json";
+    read_file(CORE_JSON)
+}
+
 #[test]
 fn core_json() -> Result<()> {
-    let v_func: Vec<SimplifiedSerFunction> = read_file("./assets/core.json")?;
-
+    let v_func = read_core_json()?;
     let merged = MergedHarnesses::new(&v_func);
 
     #[derive(Debug)]
@@ -80,6 +90,31 @@ fn core_json() -> Result<()> {
         }
     "#]]
     .assert_debug_eq(&count);
+
+    Ok(())
+}
+
+#[test]
+fn diff_core_json_and_kani_list_json() -> Result<()> {
+    let kani_list = read_kani_list_json()?;
+    let v_func = read_core_json()?;
+
+    let names_kani_list = kani_list.harness_names()?;
+    let mut names_v_func: Vec<_> = v_func.iter().map(|f| f.name.as_str()).collect();
+    names_v_func.sort_unstable();
+
+    // FIXME: the assertion currently fails, because kani-list.json is generated
+    // on aarch64, while core.json is generated on x86_64, two proofs are missing:
+    // str::pattern::verify::check_small_slice_eq
+    // str::pattern::verify::check_small_slice_eq_empty
+    //
+    // What's more, kani-list.json includes non-core proofs, like ones from alloc:
+    // vec::verify::verify_swap_remove
+    // collections::vec_deque::verify::check_vecdeque_swap
+    assert_eq!(
+        names_v_func, names_kani_list,
+        "harness names in and core.json kani-list.json don't match"
+    );
 
     Ok(())
 }

@@ -1,7 +1,10 @@
 use crate::{Result, SimplifiedSerFunction};
 use indexmap::{IndexMap, IndexSet};
 use serde::{Deserialize, Serialize};
-use std::path::{MAIN_SEPARATOR, Path};
+use std::{
+    hash::Hash,
+    path::{MAIN_SEPARATOR, Path},
+};
 use syn::parse::Parser;
 
 pub type BoxStr = Box<str>;
@@ -34,6 +37,14 @@ impl KaniListHarnesses {
 
     fn files(&self) -> Vec<&str> {
         self.inner.keys().map(|s| &**s).collect()
+    }
+
+    fn names<'harness>(&'harness self, v: &mut Vec<&'harness str>) {
+        for harnesses in self.inner.values() {
+            for name in harnesses {
+                v.push(&**name);
+            }
+        }
     }
 }
 
@@ -92,6 +103,32 @@ impl KaniListJson {
             "contract_harnesses": self.contract_harnesses.files()
         })
     }
+
+    pub fn harness_names(&self) -> Result<Vec<&str>> {
+        let totals = &self.totals;
+        let len = totals.standard_harnesses + totals.contract_harnesses;
+        let mut v = Vec::with_capacity(len);
+
+        self.standard_harnesses.names(&mut v);
+        self.contract_harnesses.names(&mut v);
+
+        ensure!(
+            v.len() == len,
+            "These harnesses are duplicated: {outliers:#?}",
+            outliers = count_gt1(&v)
+        );
+
+        v.sort_unstable();
+        Ok(v)
+    }
+}
+
+fn count_gt1<T: Copy + Hash + Eq>(v: &[T]) -> Vec<(T, u32)> {
+    let mut map = IndexMap::with_capacity(v.len());
+    for key in v {
+        map.entry(*key).and_modify(|n| *n += 1).or_insert(1u32);
+    }
+    map.into_iter().filter(|(_, n)| *n != 1).collect()
 }
 
 // ************ difference ************
