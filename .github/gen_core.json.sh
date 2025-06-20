@@ -17,6 +17,10 @@ export DISTRIBUTED_VERIFICATION=$WORKSPACE/target/debug/distributed-verification
 cargo build --bin verify_rust_std
 export VERIFY_RUST_STD=$WORKSPACE/target/debug/verify_rust_std
 
-cd tests/dummy-crate
+pushd tests/dummy-crate
 cargo clean
 $VERIFY_RUST_STD
+
+popd
+pushd verify-rust-std
+git checkout .
