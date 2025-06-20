@@ -27,4 +27,15 @@ gh api -H "Accept: application/vnd.github.v3+json" \
 gh run download "$LATEST_RUN_ID" -R "$REPOSITORY" -D $DIR
 
 # For comparison if some proofs are missing.
-# jq -c "map({name, file}) | sort_by(.name) | .[]" artifact-libcore/core.json > x64.json
+# jq -c "map({name, file}) | sort_by(.name) | .[]" artifacts/artifact-libcore/core.json > x64.json
+
+function extract_harness() {
+  # gh run download 15710656488 -R model-checking/verify-rust-std -D artifacts
+  # cd artifacts/ubuntu-latest-results.json/
+  local prefix=/home/runner/work/verify-rust-std/verify-rust-std/library/core/
+  jq -c "map(
+    select((.result.is_autoharness | not) and .result.file_name)
+    | select(.result.file_name | startswith(\"$prefix\"))
+    | {name: .result.harness, file: .result.file_name | ltrimstr(\"$prefix\")}
+  )" results.json >core.json
+}
