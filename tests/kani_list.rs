@@ -58,7 +58,6 @@ fn kani_list_json() -> Result<()> {
 }
 
 #[test]
-#[ignore = "core.json is too big, so this test is run locally"]
 fn core_json() -> Result<()> {
     let v_func: Vec<SimplifiedSerFunction> = read_file("./assets/core.json")?;
 

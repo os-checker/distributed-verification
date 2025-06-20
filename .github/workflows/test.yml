@@ -13,18 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install kani
-        run: bash ./.github/install-kani.sh
-
-      - name: Run tests
-        run: cargo test -- --nocapture
-
-  verify-rust-std:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install kani
+      - name: Install kani and verify-rust-std
         run: |
           git submodule update --init --recursive verify-rust-std
           ./.github/install-kani.sh
@@ -48,6 +37,9 @@ jobs:
           path: assets/core.json
           compression-level: 9
           if-no-files-found: error
+
+      - name: Run tests
+        run: cargo test -- --nocapture
 
   kani-list:
     runs-on: ubuntu-latest
