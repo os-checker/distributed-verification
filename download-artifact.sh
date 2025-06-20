@@ -2,6 +2,8 @@
 
 set -x
 
+DIR=artifacts
+
 # Define the repo and workflow file
 REPOSITORY="os-checker/distributed-verification"
 WORKFLOW_FILE=".github/workflows/test.yml"
@@ -22,7 +24,7 @@ gh api -H "Accept: application/vnd.github.v3+json" \
   jq '.artifacts[] | {name: .name, id: .id, size: .size_in_bytes}'
 
 # Download and unzip the artifact
-gh run download "$LATEST_RUN_ID" -R "$REPOSITORY"
+gh run download "$LATEST_RUN_ID" -R "$REPOSITORY" -D $DIR
 
 # For comparison if some proofs are missing.
 # jq -c "map({name, file}) | sort_by(.name) | .[]" artifact-libcore/core.json > x64.json
