@@ -71,7 +71,8 @@ impl Function {
         };
 
         // Skip if no body.
-        cache::get_body(&instance, |_| ())?;
+        let body_span = cache::get_body(&instance, |body| body.span)?;
+        cache::print_src_str(instance.def.def_id(), body_span);
 
         // Only need kanitool attrs: proof, proof_for_contract, contract, ...
         let attrs = KANI_TOOL_ATTRS.iter().flat_map(|v| instance.def.tool_attrs(v)).collect();

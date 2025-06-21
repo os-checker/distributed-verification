@@ -4,6 +4,8 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+quote = "1"
+proc-macro2 = "1"
 syn = { version = "2", features = ["full"] }
 clap = { version = "4.5.35", features = ["derive", "string"] }
 serde = { version = "1", features = ["derive"] }

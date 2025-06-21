@@ -114,14 +114,14 @@ where
     // Filter regular items.
     for item in crate_items {
         // Only collect monomorphic items.
-        if let Ok(instance) = Instance::try_from(item) {
-            if predicate(tcx, instance) {
-                let body = instance.body().unwrap();
-                let mut collector =
-                    MonoItemsFnCollector { tcx, body: &body, collected: FxHashSet::default() };
-                collector.visit_body(&body);
-                roots.extend(collector.collected.into_iter());
-            }
+        if let Ok(instance) = Instance::try_from(item)
+            && predicate(tcx, instance)
+        {
+            let body = instance.body().unwrap();
+            let mut collector =
+                MonoItemsFnCollector { tcx, body: &body, collected: FxHashSet::default() };
+            collector.visit_body(&body);
+            roots.extend(collector.collected.into_iter());
         }
     }
     roots.into_iter().map(|root| root.item).collect()

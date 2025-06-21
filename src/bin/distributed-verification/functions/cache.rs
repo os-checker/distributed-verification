@@ -3,7 +3,10 @@
 //! The data is always behind a borrow through the `get_*` callbacks.
 
 use super::utils::{SourceCode, source_code_with};
+use itertools::Itertools;
+use rustc_attr_data_structures::AttributeKind;
 use rustc_data_structures::fx::FxHashMap;
+use rustc_hir::Attribute;
 use rustc_middle::ty::TyCtxt;
 use rustc_span::source_map::{SourceMap, get_source_map};
 use stable_mir::mir::{Body, mono::Instance};
@@ -50,6 +53,40 @@ pub fn cmp_callees(a: &Instance, b: &Instance) -> Ordering {
         let func_b = cache.set.get(b).unwrap().as_ref().map(|f| &f.src);
         func_a.cmp(&func_b)
     })
+}
+
+pub fn print_src_str(def_id: stable_mir::DefId, span: stable_mir::ty::Span) {
+    get_cache(|cache| {
+        let (tcx, src_map) = cache.rustc.as_ref().map(|val| (val.tcx, &*val.src_map)).unwrap();
+        let def_id = stable_mir::rustc_internal::internal(tcx, def_id);
+        let span = stable_mir::rustc_internal::internal(tcx, span);
+
+        let attrs = tcx
+            .get_all_attrs(def_id)
+            .filter(|attr| match attr {
+                Attribute::Unparsed(unparsed) => {
+                    if let Some(first) = unparsed.path.segments.first()
+                        && first.as_str() == super::TOOL
+                    {
+                        return true;
+                    }
+                    false
+                }
+                Attribute::Parsed(AttributeKind::Repr(_)) => true,
+                // FIXME: add support for #[align] when the toolchain bumps over 2025-06-19
+                //
+                // * https://github.com/rust-lang/rust/commit/1fdf2b562070ec98c5b32ee67b8c6d8145127a6e
+                // * https://github.com/rust-lang/rfcs/pull/3806
+                // Attribute::Parsed(AttributeKind::Align(_)) => true,
+                _ => false,
+            })
+            .map(|attr| rustc_hir_pretty::attribute_to_string(&tcx, attr))
+            .join("");
+
+        let file = src_map.span_to_string(span, rustc_span::FileNameDisplayPreference::Local);
+        let src = src_map.span_to_snippet(span).unwrap();
+        println!("{file}\n{attrs}{src}\n");
+    });
 }
 
 struct Cache {
@@ -114,4 +151,20 @@ impl PathPrefixes {
     fn prefixes(&self) -> [&str; 2] {
         [&self.sysroot, &*self.pwd]
     }
+}
+
+#[test]
+fn parse_attr() {
+    let attr = r##"
+#[attr = ConstStability {stability: PartialConstStability {level:
+Stable {since: Version(RustcVersion {major: 1, minor: 65, patch: 0})},
+feature: "ptr_const_cast", promotable: false}}]"##;
+
+    use proc_macro2::TokenStream;
+    use quote::ToTokens;
+    use syn::parse::Parser;
+    let attrs = syn::Attribute::parse_outer.parse_str(attr).unwrap();
+    let mut ts = TokenStream::new();
+    attrs.into_iter().for_each(|attr| ts.extend(attr.into_token_stream()));
+    println!("{ts}");
 }

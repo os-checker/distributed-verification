@@ -1,8 +1,10 @@
 #![feature(rustc_private, let_chains, hash_set_entry, hasher_prefixfree_extras)]
 
+extern crate rustc_attr_data_structures;
 extern crate rustc_data_structures;
 extern crate rustc_driver;
 extern crate rustc_hir;
+extern crate rustc_hir_pretty;
 extern crate rustc_interface;
 extern crate rustc_middle;
 extern crate rustc_session;
