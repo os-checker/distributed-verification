@@ -1,11 +1,7 @@
 use indexmap::IndexSet;
-use kani::{CallGraph, KANI_TOOL_ATTRS, collect_reachable_items};
+use kani::{CallGraph, collect_reachable_items};
 use rustc_middle::ty::TyCtxt;
-use stable_mir::{
-    CrateDef,
-    crate_def::Attribute,
-    mir::mono::{Instance, MonoItem},
-};
+use stable_mir::mir::mono::{Instance, MonoItem};
 
 mod cache;
 pub use cache::{clear_rustc_ctx, set_rustc_ctx};
@@ -37,7 +33,7 @@ pub fn analyze(tcx: TyCtxt) -> Vec<SerFunction> {
     // Filter out non kanitool functions.
     let mut proofs: Vec<_> = mono_items
         .iter()
-        .filter_map(|f| Function::new(f, &callgraph, |x| !x.attrs.is_empty()))
+        .filter_map(|f| Function::new(f, &callgraph))
         .map(SerFunction::new)
         .collect();
     // Sort proofs by file path and source code.
@@ -51,37 +47,25 @@ pub struct Function {
     /// Instance of the function.
     instance: Instance,
 
-    /// kanitool's attributs.
-    attrs: Vec<Attribute>,
-
     /// Recursive fnction calls inside the body.
     /// The elements are sorted by file path and fn source code to keep hash value stable.
     callees: IndexSet<Instance>,
 }
 
 impl Function {
-    pub fn new(
-        item: &MonoItem,
-        callgraph: &CallGraph,
-        filter: impl FnOnce(&Self) -> bool,
-    ) -> Option<Self> {
+    pub fn new(item: &MonoItem, callgraph: &CallGraph) -> Option<Self> {
         // Skip non fn items
         let &MonoItem::Fn(instance) = item else {
             return None;
         };
 
         // Skip if no body.
-        let body_span = cache::get_body(&instance, |body| body.span)?;
-        cache::print_src_str(instance.def.def_id(), body_span);
-
-        // Only need kanitool attrs: proof, proof_for_contract, contract, ...
-        let attrs = KANI_TOOL_ATTRS.iter().flat_map(|v| instance.def.tool_attrs(v)).collect();
+        cache::get_body(&instance, |_| ())?;
 
         let mut callees = IndexSet::new();
         callgraph.recursive_callees(item, &mut callees);
         callees.sort_by(cache::cmp_callees);
 
-        let this = Function { instance, attrs, callees };
-        filter(&this).then_some(this)
+        Some(Function { instance, callees })
     }
 }

@@ -1,77 +1,23 @@
+use distributed_verification::{InstKind, MacroBacktrace, ProofKind, SourceCode};
 use rustc_middle::ty::TyCtxt;
 use rustc_smir::rustc_internal::internal;
 use rustc_span::{Span, source_map::SourceMap};
-use rustc_stable_hash::{StableHasher, hashers::SipHasher128};
-use serde::Serialize;
-use stable_mir::mir::mono::Instance;
-use std::hash::Hasher;
+use stable_mir::{
+    CrateDef,
+    mir::mono::{Instance, InstanceKind},
+};
 
-/// Source code and potential source code before expansion.
-///
-/// The field order matters, since this struct implements Ord.
-#[derive(Clone, Debug, Serialize, PartialEq, Eq, PartialOrd, Ord, Default)]
-pub struct SourceCode {
-    /// Function name.
-    pub name: String,
-
-    // /// Mangled function name.
-    // pub mangled_name: String,
-    /// String of [`InstanceKind`].
-    ///
-    /// [`InstanceKind`]: https://doc.rust-lang.org/nightly/nightly-rustc/stable_mir/mir/mono/enum.InstanceKind.html
-    pub kind: String,
-
-    // A file path where src lies.
-    // The path is stripped with pwd or sysroot prefix.
-    pub file: String,
-
-    /// Source that a stable_mir span points to.
-    pub src: String,
-
-    /// The count of macro backtraces.
-    pub macro_backtrace_len: usize,
-
-    /// Is the stable_mir span from a macro expansion?
-    /// If it is from an expansion, what's the source code before expansion?
-    /// * Some(_) happens when the src (stable_mir) span comes from expansion, and tells
-    ///   the source before the expansion.
-    /// * None if the src is not from a macro expansion.
-    ///
-    /// Refer to [#31] to know sepecific cases.
-    ///
-    /// [#31]: https://github.com/os-checker/distributed-verification/issues/31
-    pub macro_backtrace: Vec<MacroBacktrace>,
+fn new_inst_kind(kind: InstanceKind) -> Option<InstKind> {
+    Some(match kind {
+        InstanceKind::Item => return None,
+        InstanceKind::Intrinsic => InstKind::Intrinsic,
+        InstanceKind::Virtual { .. } => InstKind::Virtual,
+        InstanceKind::Shim => InstKind::Shim,
+    })
 }
 
-impl SourceCode {
-    pub fn with_hasher(&self, hasher: &mut StableHasher<SipHasher128>) {
-        hasher.write_str(&self.name);
-        // hasher.write_str(&self.mangled_name);
-        hasher.write_str(&self.kind);
-        hasher.write_str(&self.file);
-        hasher.write_str(&self.src);
-        hasher.write_length_prefix(self.macro_backtrace_len);
-        for m in &self.macro_backtrace {
-            hasher.write_str(&m.callsite);
-            hasher.write_str(&m.defsite);
-        }
-    }
-}
-
-#[derive(Clone, Debug, Serialize, PartialEq, Eq, PartialOrd, Ord, Default)]
-pub struct MacroBacktrace {
-    pub callsite: String,
-    pub defsite: String,
-}
-
-fn span_to_source(span: Span, src_map: &SourceMap) -> String {
-    src_map
-        .span_to_source(span, |text, x, y| {
-            let src = &text[x..y];
-            // debug!("[{x}:{y}]\n{src}");
-            Ok(src.to_owned())
-        })
-        .unwrap()
+fn span_to_snippet(span: Span, src_map: &SourceMap) -> String {
+    src_map.span_to_snippet(span).unwrap()
 }
 
 /// Source code for a stable_mir span.
@@ -83,13 +29,14 @@ pub fn source_code_with(
     path_prefixes: [&str; 2],
 ) -> SourceCode {
     let span = internal(tcx, stable_mir_span);
-    let src = span_to_source(span, src_map);
+    let src = span_to_snippet(span, src_map);
+    let (attrs, proof_kind) = get_all_attrs(tcx, inst);
 
     let macro_backtrace: Vec<_> = span
         .macro_backtrace()
         .map(|m| MacroBacktrace {
-            callsite: span_to_source(m.call_site, src_map),
-            defsite: span_to_source(m.def_site, src_map),
+            callsite: span_to_snippet(m.call_site, src_map),
+            defsite: span_to_snippet(m.def_site, src_map),
         })
         .collect();
     let macro_backtrace_len = macro_backtrace.len();
@@ -102,10 +49,56 @@ pub fn source_code_with(
         }
     }
 
-    let name = inst.name();
-    // let mangled_name = inst.mangled_name();
-    let kind = format!("{:?}", inst.kind);
-    SourceCode { name, kind, file, src, macro_backtrace_len, macro_backtrace }
+    SourceCode {
+        name: inst.name(),
+        inst_kind: new_inst_kind(inst.kind),
+        proof_kind,
+        file,
+        attrs,
+        src,
+        macro_backtrace_len,
+        macro_backtrace,
+    }
+}
+
+fn get_all_attrs(tcx: TyCtxt, inst: &Instance) -> (Vec<String>, Option<ProofKind>) {
+    use super::kani::{PROOF, PROOF_FOR_CONTRACT};
+    use rustc_attr_data_structures::AttributeKind;
+    use rustc_hir::Attribute;
+
+    let def_id = internal(tcx, inst.def.def_id());
+    let mut proof_kind = None;
+    let attrs = tcx
+        .get_all_attrs(def_id)
+        .filter(|attr| match attr {
+            Attribute::Unparsed(unparsed) => {
+                let idents = &unparsed.path.segments;
+                if let Some(first) = idents.first()
+                    && first.as_str() == super::TOOL
+                {
+                    if let Some(second) = idents.get(1) {
+                        match second.as_str() {
+                            PROOF => proof_kind = Some(ProofKind::Standard),
+                            PROOF_FOR_CONTRACT => proof_kind = Some(ProofKind::Contract),
+                            _ => (),
+                        }
+                    }
+
+                    return true;
+                }
+                false
+            }
+            Attribute::Parsed(AttributeKind::Repr(_)) => true,
+            // FIXME: add support for #[align] when the toolchain bumps over 2025-06-19
+            //
+            // * https://github.com/rust-lang/rust/commit/1fdf2b562070ec98c5b32ee67b8c6d8145127a6e
+            // * https://github.com/rust-lang/rfcs/pull/3806
+            // Attribute::Parsed(AttributeKind::Align(_)) => true,
+            _ => false,
+        })
+        .map(|attr| rustc_hir_pretty::attribute_to_string(&tcx, attr))
+        .collect();
+    (attrs, proof_kind)
 }
 
 pub fn vec_convertion<U, T: From<U>>(vec: Vec<U>) -> Vec<T> {

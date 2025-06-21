@@ -1,8 +1,12 @@
-use super::{cache, utils::SourceCode};
+use super::cache;
+use distributed_verification::{Callee, SourceCode};
 use rustc_stable_hash::{FromStableHash, SipHasher128Hash, StableHasher, hashers::SipHasher128};
 use serde::Serialize;
 use stable_mir::{CrateDef, mir::mono::Instance};
-use std::{cmp::Ordering, hash::Hasher};
+use std::{
+    cmp::Ordering,
+    hash::{Hash, Hasher},
+};
 
 /// A kani proof with its file source, attributes, and raw function content.
 #[derive(Debug, Serialize)]
@@ -10,11 +14,6 @@ pub struct SerFunction {
     hash: String,
     /// DefId in stable_mir.
     def_id: String,
-    /// Attributes are attached the function, but it seems that attributes
-    /// and function must be separated to query.
-    attrs: Vec<String>,
-    /// Proof kind
-    kind: Kind,
     /// Raw function string, including name, signature, and body.
     func: SourceCode,
     /// Count of callees.
@@ -27,23 +26,21 @@ impl SerFunction {
     pub fn new(fun: super::Function) -> Self {
         let inst = fun.instance;
         let def_id = format_def_id(&inst);
-        let attrs: Vec<_> = fun.attrs.iter().map(|a| a.as_str().trim().to_owned()).collect();
-        let kind = Kind::new(&attrs);
+
         // Though this is from body span, fn name and signature are included.
-        let func = cache::get_source_code(&inst).unwrap_or_default();
-        let callees: Vec<_> = fun.callees.iter().map(Callee::new).collect();
+        let func = cache::get_source_code(&inst).unwrap();
+        let callees: Vec<_> = fun.callees.iter().map(new_callee).collect();
         let callees_len = callees.len();
 
-        // Hash
+        // Hash: don't include def_id
+        // NOTE: this hash considers callees.
         let mut hasher = StableHasher::<SipHasher128>::new();
-        func.with_hasher(&mut hasher);
-        hasher.write_length_prefix(attrs.len());
-        attrs.iter().for_each(|attr| hasher.write_str(attr));
+        func.hash(&mut hasher);
         hasher.write_length_prefix(callees_len);
-        callees.iter().for_each(|callee| callee.func.with_hasher(&mut hasher));
+        callees.iter().for_each(|callee| callee.func.hash(&mut hasher));
         let Hash128(hash) = hasher.finish();
 
-        SerFunction { hash, def_id, attrs, kind, func, callees_len, callees }
+        SerFunction { hash, def_id, func, callees_len, callees }
     }
 
     /// Compare by file and func string.
@@ -68,88 +65,23 @@ fn format_def_id(inst: &Instance) -> String {
     format!("{:?}", inst.def.def_id())
 }
 
-#[derive(Debug, Serialize)]
-pub struct Callee {
-    def_id: String,
-    func: SourceCode,
-}
-
-impl Callee {
-    fn new(inst: &Instance) -> Self {
-        let def_id = format_def_id(inst);
-        let func = cache::get_source_code(inst).unwrap_or_default();
-        Callee { def_id, func }
-    }
-}
-
-/// kani proof kind
-#[derive(Debug, Serialize)]
-pub enum Kind {
-    /// `#[kani::proof]` (actually `kanitool::proof`)
-    Standard,
-    /// `#[kani::proof_for_contract]` (actually `kanitool::proof_for_contract`)
-    Contract,
-}
-
-impl Kind {
-    /// ## Panic
-    ///
-    /// The given attributes must contain one of the proof kind macro.
-    fn new(attrs: &[String]) -> Self {
-        for attr in attrs {
-            if attr.contains("kanitool::proof_for_contract") {
-                return Kind::Contract;
-            } else if attr.contains("kanitool::proof") {
-                return Kind::Standard;
-            }
-        }
-        panic!("{attrs:?} doesn't contain a proof kind.")
-    }
+fn new_callee(inst: &Instance) -> Callee {
+    let def_id = format_def_id(inst);
+    let func = cache::get_source_code(inst).unwrap();
+    Callee { def_id, func }
 }
 
 /// Convertion from lib's SerFunction into the counterpart in main.rs
 mod conversion {
     use super::*;
-    use crate::functions::utils::{MacroBacktrace, vec_convertion};
+    use crate::functions::utils::vec_convertion;
     use distributed_verification as lib;
 
     impl From<SerFunction> for lib::SerFunction {
         fn from(value: SerFunction) -> Self {
-            let SerFunction { hash, def_id, attrs, kind, func, callees_len, callees } = value;
-            let func = func.into();
-            let kind = kind.into();
+            let SerFunction { hash, def_id, func, callees_len, callees } = value;
             let callees = vec_convertion(callees);
-            Self { hash, def_id, attrs, kind, func, callees_len, callees }
-        }
-    }
-
-    impl From<Kind> for lib::Kind {
-        fn from(value: Kind) -> Self {
-            match value {
-                Kind::Standard => Self::Standard,
-                Kind::Contract => Self::Contract,
-            }
-        }
-    }
-
-    impl From<Callee> for lib::Callee {
-        fn from(Callee { def_id, func }: Callee) -> Self {
-            let func = func.into();
-            Self { def_id, func }
-        }
-    }
-
-    impl From<SourceCode> for lib::SourceCode {
-        fn from(value: SourceCode) -> Self {
-            let SourceCode { name, kind, file, src, macro_backtrace_len, macro_backtrace } = value;
-            let macro_backtrace = vec_convertion(macro_backtrace);
-            Self { name, kind, file, src, macro_backtrace_len, macro_backtrace }
-        }
-    }
-
-    impl From<MacroBacktrace> for lib::MacroBacktrace {
-        fn from(MacroBacktrace { callsite, defsite }: MacroBacktrace) -> Self {
-            Self { callsite, defsite }
+            Self { hash, def_id, func, callees_len, callees }
         }
     }
 
@@ -157,9 +89,9 @@ mod conversion {
         fn from(val: &SerFunction) -> Self {
             Self {
                 hash: val.hash.clone(),
-                attrs: val.attrs.clone(),
                 name: val.func.name.clone(),
                 file: val.func.file.clone(),
+                proof_kind: val.func.proof_kind,
                 callees_len: val.callees_len,
                 callees: val.callees.iter().map(|c| c.func.name.clone()).collect(),
             }

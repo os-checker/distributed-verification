@@ -1,4 +1,4 @@
-use crate::{Kind, Result, SerFunction};
+use crate::{ProofKind, Result, SerFunction};
 use eyre::ContextCompat;
 use indexmap::{IndexMap, IndexSet};
 use serde::{Deserialize, Serialize};
@@ -91,7 +91,7 @@ pub fn check_proofs(list: &KaniList, v_ser_fun: &[SerFunction]) -> Result<()> {
     let map: HashMap<_, _> = v_ser_fun
         .iter()
         .enumerate()
-        .map(|(idx, f)| ((&*f.func.file, &*f.func.name), (idx, f.kind)))
+        .map(|(idx, f)| ((&*f.func.file, &*f.func.name), (idx, f.func.proof_kind)))
         .collect();
 
     // check all standard proofs are in distributed-verification json
@@ -123,8 +123,9 @@ pub fn check_proofs(list: &KaniList, v_ser_fun: &[SerFunction]) -> Result<()> {
     // double check
     for (&(path, proof), &(_, kind)) in &map {
         let harnesses = match kind {
-            Kind::Standard => &list.standard_harnesses[path],
-            Kind::Contract => &list.contract_harnesses[path],
+            Some(ProofKind::Standard) => &list.standard_harnesses[path],
+            Some(ProofKind::Contract) => &list.contract_harnesses[path],
+            None => continue,
         };
         harnesses.get(proof).with_context(|| {
             format!(

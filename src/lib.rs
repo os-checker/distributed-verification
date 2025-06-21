@@ -18,11 +18,6 @@ pub struct SerFunction {
     pub hash: String,
     /// DefId in stable_mir.
     pub def_id: String,
-    /// Attributes are attached the function, but it seems that attributes
-    /// and function must be separated to query.
-    pub attrs: Vec<String>,
-    /// Proof kind
-    pub kind: Kind,
     /// Raw function string, including name, signature, and body.
     pub func: SourceCode,
     /// Count of callees.
@@ -31,42 +26,65 @@ pub struct SerFunction {
     pub callees: Vec<Callee>,
 }
 
-/// kani proof kind
-#[derive(Debug, Default, Serialize, Deserialize, Clone, Copy)]
-pub enum Kind {
-    /// `#[kani::proof]` (actually `kanitool::proof`)
-    #[default]
+/// Kani proof kind.
+///
+/// Suppose each proof only belongs to single kind.
+#[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub enum ProofKind {
+    /// `#[kani::proof]`
     Standard,
-    /// `#[kani::proof_for_contract]` (actually `kanitool::proof_for_contract`)
+    /// `#[kani::proof_for_contract]`
     Contract,
 }
 
-#[derive(Debug, Default, Serialize, Deserialize, Clone)]
+/// [`InstanceKind`], but remove Virtual idx and make Item as None to save space.
+///
+/// [`InstanceKind`]: https://doc.rust-lang.org/nightly/nightly-rustc/stable_mir/mir/mono/enum.InstanceKind.html
+#[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub enum InstKind {
+    Intrinsic,
+    Virtual,
+    Shim,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Callee {
     pub def_id: String,
     pub func: SourceCode,
 }
 
-#[derive(Debug, Default, Serialize, Deserialize, Clone)]
+#[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SourceCode {
-    /// Function name.
-    pub name: String,
-
-    // Mangled function name.
-    // pub mangled_name: String,
-    /// String of [`InstanceKind`].
-    ///
-    /// [`InstanceKind`]: https://doc.rust-lang.org/nightly/nightly-rustc/stable_mir/mir/mono/enum.InstanceKind.html
-    pub kind: String,
-
     // A file path where src lies.
     // The path is stripped with pwd or sysroot prefix.
     pub file: String,
+
+    /// Function name.
+    pub name: String,
+
+    /// InstanceKind, but normal Item is represented as None.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    pub inst_kind: Option<InstKind>,
+
+    /// Potential kani proof kind: standard or contract.
+    /// This tool will never identify if a function is an auto harness.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    pub proof_kind: Option<ProofKind>,
+
+    /// Attributes are attached the function, but it seems that attributes
+    /// and function must be separated to query.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default)]
+    pub attrs: Vec<String>,
 
     /// Source that a stable_mir span points to.
     pub src: String,
 
     /// The count of macro backtraces.
+    #[serde(skip_serializing_if = "zero")]
+    #[serde(default)]
     pub macro_backtrace_len: usize,
 
     /// Is the stable_mir span from a macro expansion?
@@ -78,10 +96,16 @@ pub struct SourceCode {
     /// Refer to [#31] to know sepecific cases.
     ///
     /// [#31]: https://github.com/os-checker/distributed-verification/issues/31
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default)]
     pub macro_backtrace: Vec<MacroBacktrace>,
 }
 
-#[derive(Debug, Default, Serialize, Deserialize, Clone)]
+fn zero(n: &usize) -> bool {
+    *n == 0
+}
+
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct MacroBacktrace {
     pub callsite: String,
     pub defsite: String,
@@ -110,9 +134,9 @@ pub fn kani_path() -> String {
 #[derive(Debug, Default, Serialize, Deserialize, Clone)]
 pub struct SimplifiedSerFunction {
     pub hash: String,
-    pub attrs: Vec<String>,
     pub name: String,
     pub file: String,
+    pub proof_kind: Option<ProofKind>,
     pub callees_len: usize,
     pub callees: Vec<String>,
 }
@@ -121,9 +145,9 @@ impl From<&SerFunction> for SimplifiedSerFunction {
     fn from(val: &SerFunction) -> Self {
         SimplifiedSerFunction {
             hash: val.hash.clone(),
-            attrs: val.attrs.clone(),
             name: val.func.name.clone(),
             file: val.func.file.clone(),
+            proof_kind: val.func.proof_kind,
             callees_len: val.callees_len,
             callees: val.callees.iter().map(|c| c.func.name.clone()).collect(),
         }

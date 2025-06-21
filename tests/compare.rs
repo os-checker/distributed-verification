@@ -70,7 +70,6 @@ fn simplify_ser_function(fn1: &SerFunction) -> SerFunction {
     SerFunction {
         hash: fn1.hash.clone(),
         def_id: fn1.def_id.clone(),
-        attrs: fn1.attrs.clone(),
         func: fn1.func.clone(),
         callees_len: fn1.callees_len,
         ..Default::default()
