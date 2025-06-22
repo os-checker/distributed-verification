@@ -39,10 +39,6 @@ struct Args {
     #[arg(long)]
     check_kani_list: Option<String>,
 
-    /// Only emit def_id for callees in JSON.
-    #[arg(long, default_value_t = false)]
-    simplify_json: bool,
-
     /// Continue compilation. Default to false, meaning compilation stops
     /// once proofs are analyzed.
     #[arg(long, default_value_t = false)]
@@ -97,7 +93,6 @@ impl Args {
         Ok(Run {
             json: self.json,
             kani_list,
-            simplify_json: self.simplify_json,
             continue_compilation: self.continue_compilation,
             stat: self.stat,
             rustc_args,
@@ -108,7 +103,6 @@ impl Args {
 pub struct Run {
     pub json: Output,
     pub kani_list: Option<KaniList>,
-    pub simplify_json: bool,
     pub continue_compilation: bool,
     pub stat: Output,
     pub rustc_args: Vec<String>,

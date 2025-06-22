@@ -1,5 +1,5 @@
 mod utils;
-use distributed_verification::SimplifiedSerFunction;
+use distributed_verification::SerFunction;
 use utils::{assert_eq, *};
 
 #[test]
@@ -18,7 +18,7 @@ fn ensure_identical_hash() -> Result<()> {
 
         // run `distributed-verification file.rs --simplify-json`
         let text_simplified = cmd(&[path, "--simplify-json"]);
-        let v_ser_function_simplified: Vec<SimplifiedSerFunction> =
+        let v_ser_function_simplified: Vec<SerFunction> =
             serde_json::from_str(&text_simplified).unwrap();
         expect_file![snapshot].assert_eq(&text_simplified);
 

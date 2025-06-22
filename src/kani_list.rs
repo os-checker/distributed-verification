@@ -91,7 +91,7 @@ pub fn check_proofs(list: &KaniList, v_ser_fun: &[SerFunction]) -> Result<()> {
     let map: HashMap<_, _> = v_ser_fun
         .iter()
         .enumerate()
-        .map(|(idx, f)| ((&*f.func.file, &*f.func.name), (idx, f.func.proof_kind)))
+        .map(|(idx, f)| ((&*f.file, &*f.name), (idx, f.proof_kind)))
         .collect();
 
     // check all standard proofs are in distributed-verification json

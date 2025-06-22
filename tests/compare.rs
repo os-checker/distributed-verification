@@ -6,7 +6,7 @@ use utils::{assert_eq, *};
 fn get(text: &str, start: &str) -> SerFunction {
     let json = &text[text.find("[\n").unwrap()..];
     let v: Vec<SerFunction> = serde_json::from_str(json).unwrap();
-    v.into_iter().find(|f| f.func.src.starts_with(start)).unwrap()
+    v.into_iter().find(|f| f.name.starts_with(start)).unwrap()
 }
 
 const COMPARE: &str = "tests/compare";
@@ -67,11 +67,5 @@ fn test_compare() {
 }
 
 fn simplify_ser_function(fn1: &SerFunction) -> SerFunction {
-    SerFunction {
-        hash: fn1.hash.clone(),
-        def_id: fn1.def_id.clone(),
-        func: fn1.func.clone(),
-        callees_len: fn1.callees_len,
-        ..Default::default()
-    }
+    SerFunction { hash: fn1.hash.clone(), ..Default::default() }
 }

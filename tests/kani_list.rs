@@ -1,5 +1,5 @@
 use distributed_verification::{
-    SimplifiedSerFunction,
+    SerFunction,
     diff::{KaniListJson, MergedHarnesses},
     kani_list::{check_proofs, get_kani_list},
 };
@@ -64,7 +64,7 @@ fn kani_list_json() -> Result<()> {
     Ok(())
 }
 
-fn read_core_json() -> Result<Vec<SimplifiedSerFunction>> {
+fn read_core_json() -> Result<Vec<SerFunction>> {
     const CORE_JSON: &str = "./assets/core.json";
     read_file(CORE_JSON)
 }

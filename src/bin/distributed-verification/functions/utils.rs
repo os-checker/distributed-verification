@@ -2,10 +2,15 @@ use distributed_verification::{InstKind, MacroBacktrace, ProofKind, SourceCode};
 use rustc_middle::ty::TyCtxt;
 use rustc_smir::rustc_internal::internal;
 use rustc_span::{Span, source_map::SourceMap};
+use rustc_stable_hash::{
+    FromStableHash, StableHasher,
+    hashers::{SipHasher128, SipHasher128Hash},
+};
 use stable_mir::{
     CrateDef,
     mir::mono::{Instance, InstanceKind},
 };
+use std::hash::Hash;
 
 fn new_inst_kind(kind: InstanceKind) -> Option<InstKind> {
     Some(match kind {
@@ -101,6 +106,38 @@ fn get_all_attrs(tcx: TyCtxt, inst: &Instance) -> (Vec<String>, Option<ProofKind
     (attrs, proof_kind)
 }
 
-pub fn vec_convertion<U, T: From<U>>(vec: Vec<U>) -> Vec<T> {
-    vec.into_iter().map(T::from).collect()
+// ************* hash *************
+struct Hash128(Box<str>);
+
+impl FromStableHash for Hash128 {
+    type Hash = SipHasher128Hash;
+
+    fn from(SipHasher128Hash([a, b]): SipHasher128Hash) -> Hash128 {
+        Hash128(format!("{a}{b}").into())
+    }
 }
+
+pub fn stable_hash<T: Hash>(val: T) -> Box<str> {
+    let mut hasher = StableHasher::<SipHasher128>::new();
+    val.hash(&mut hasher);
+    let Hash128(hash) = hasher.finish();
+    hash
+}
+
+pub struct StreamHasher(StableHasher<SipHasher128>);
+
+impl StreamHasher {
+    pub fn new() -> Self {
+        StreamHasher(StableHasher::<SipHasher128>::new())
+    }
+
+    pub fn append<T: Hash>(&mut self, val: T) {
+        val.hash(&mut self.0);
+    }
+
+    pub fn finish(self) -> Box<str> {
+        let Hash128(hash) = self.0.finish();
+        hash
+    }
+}
+// ************* hash *************

@@ -1,4 +1,4 @@
-use crate::{ProofKind, Result, SimplifiedSerFunction};
+use crate::{ProofKind, Result, SerFunction};
 use indexmap::{IndexMap, IndexSet};
 use serde::{Deserialize, Serialize};
 use std::{
@@ -143,7 +143,7 @@ pub struct MergedHarnesses {
 }
 
 impl MergedHarnesses {
-    pub fn new(v: &[SimplifiedSerFunction]) -> Self {
+    pub fn new(v: &[SerFunction]) -> Self {
         let cap = v.len();
         let mut standard = Vec::with_capacity(cap);
         let mut contract = Vec::with_capacity(cap);
@@ -156,12 +156,7 @@ impl MergedHarnesses {
     }
 }
 
-fn add_harness(
-    idx: usize,
-    func: &SimplifiedSerFunction,
-    standard: &mut Harnesses,
-    contract: &mut Harnesses,
-) {
+fn add_harness(idx: usize, func: &SerFunction, standard: &mut Harnesses, contract: &mut Harnesses) {
     match func.proof_kind {
         Some(ProofKind::Standard) => standard.push(HarnessIdx(idx)),
         Some(ProofKind::Contract) => contract.push(HarnessIdx(idx)),

@@ -15,7 +15,7 @@ extern crate rustc_span;
 extern crate rustc_stable_hash;
 extern crate stable_mir;
 
-use distributed_verification::{SimplifiedSerFunction, kani_list::check_proofs};
+use distributed_verification::kani_list::check_proofs;
 use eyre::Result;
 use functions::{clear_rustc_ctx, set_rustc_ctx};
 use rustc_middle::ty::TyCtxt;
@@ -75,18 +75,12 @@ fn analyze_proofs(tcx: TyCtxt, run: cli::Run) -> Result<()> {
     let output = functions::analyze(tcx);
     clear_rustc_ctx();
 
-    let output = functions::vec_convertion(output);
     let mut res_check_kani_list = Ok(());
     if let Some(kani_list) = run.kani_list {
         res_check_kani_list = check_proofs(&kani_list, &output);
     }
 
-    let res_json = if run.simplify_json {
-        let simplified: Vec<_> = output.iter().map(SimplifiedSerFunction::from).collect();
-        run.json.emit(&simplified)
-    } else {
-        run.json.emit(&output)
-    };
+    let res_json = run.json.emit(&output);
 
     match (res_check_kani_list, res_json) {
         (Ok(_), Ok(_)) => Ok(()),

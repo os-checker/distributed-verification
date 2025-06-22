@@ -12,20 +12,6 @@ pub mod kani_list;
 pub mod logger;
 pub mod statistics;
 
-/// A kani proof with its file source, attributes, and raw function content.
-#[derive(Debug, Default, Serialize, Deserialize, Clone)]
-pub struct SerFunction {
-    pub hash: String,
-    /// DefId in stable_mir.
-    pub def_id: String,
-    /// Raw function string, including name, signature, and body.
-    pub func: SourceCode,
-    /// Count of callees.
-    pub callees_len: usize,
-    /// Recursive function calls inside the body.
-    pub callees: Vec<Callee>,
-}
-
 /// Kani proof kind.
 ///
 /// Suppose each proof only belongs to single kind.
@@ -132,24 +118,11 @@ pub fn kani_path() -> String {
 }
 
 #[derive(Debug, Default, Serialize, Deserialize, Clone)]
-pub struct SimplifiedSerFunction {
-    pub hash: String,
-    pub name: String,
-    pub file: String,
+pub struct SerFunction {
+    pub hash: Box<str>,
+    pub name: Box<str>,
+    pub file: Box<str>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
     pub proof_kind: Option<ProofKind>,
-    pub callees_len: usize,
-    pub callees: Vec<String>,
-}
-
-impl From<&SerFunction> for SimplifiedSerFunction {
-    fn from(val: &SerFunction) -> Self {
-        SimplifiedSerFunction {
-            hash: val.hash.clone(),
-            name: val.func.name.clone(),
-            file: val.func.file.clone(),
-            proof_kind: val.func.proof_kind,
-            callees_len: val.callees_len,
-            callees: val.callees.iter().map(|c| c.func.name.clone()).collect(),
-        }
-    }
 }

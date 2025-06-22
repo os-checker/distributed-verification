@@ -2,13 +2,17 @@
 //! If the data hasn't been available, generate one and insert it.
 //! The data is always behind a borrow through the `get_*` callbacks.
 
-use super::utils::source_code_with;
-use distributed_verification::SourceCode;
-use rustc_data_structures::fx::FxHashMap;
+use crate::functions::utils::{StreamHasher, source_code_with, stable_hash};
+use distributed_verification::{SerFunction, SourceCode};
+use rustc_data_structures::fx::{FxHashMap, FxHashSet};
 use rustc_middle::ty::TyCtxt;
 use rustc_span::source_map::{SourceMap, get_source_map};
-use stable_mir::mir::{Body, mono::Instance};
-use std::{cell::RefCell, cmp::Ordering, sync::Arc};
+use stable_mir::mir::mono::Instance;
+use std::{
+    cell::RefCell,
+    cmp::{Ordering, Reverse},
+    sync::Arc,
+};
 
 thread_local! {
     static CACHE: RefCell<Cache> = RefCell::new(Cache::new());
@@ -31,32 +35,34 @@ fn get_cache<T>(f: impl FnOnce(&mut Cache) -> T) -> T {
     CACHE.with(|c| f(&mut c.borrow_mut()))
 }
 
-fn get_cache_func<T>(inst: &Instance, f: impl FnOnce(&CacheFunction) -> T) -> Option<T> {
-    get_cache(|cache| cache.get_or_insert(inst).map(f))
+pub fn has_body(inst: &Instance) -> bool {
+    get_cache(|c| c.get_or_insert(inst).is_some())
 }
 
-pub fn get_body<T>(inst: &Instance, f: impl FnOnce(&Body) -> T) -> Option<T> {
-    get_cache_func(inst, |cf| f(&cf.body))
+/// Set direct callees in a function. This should be called once.
+pub fn set_callees(inst: &Instance, callees: Box<[Instance]>) {
+    get_cache(move |c| c.get_mut(inst).set_callees(callees))
 }
 
-pub fn get_source_code(inst: &Instance) -> Option<SourceCode> {
-    get_cache_func(inst, |cf| cf.src.clone())
+/// Get a function whose hash is computed by traversing callees.
+pub fn get_func_with_recursive_hash(inst: &Instance, set: &mut FxHashSet<Instance>) -> SerFunction {
+    get_cache(|c| c.get_func_with_recursive_hash(inst, set))
 }
 
 pub fn cmp_callees(a: &Instance, b: &Instance) -> Ordering {
     get_cache(|cache| {
         cache.get_or_insert(a);
         cache.get_or_insert(b);
-        let func_a = cache.set.get(a).unwrap().as_ref().map(|f| &f.src);
-        let func_b = cache.set.get(b).unwrap().as_ref().map(|f| &f.src);
-        func_a.cmp(&func_b)
+        let func_a = cache.get(a);
+        let func_b = cache.get(b);
+        func_a.compare(func_b)
     })
 }
 
 struct Cache {
     /// The reason to have Instance as the key is
     /// https://github.com/os-checker/distributed-verification/issues/42
-    set: FxHashMap<Instance, Option<CacheFunction>>,
+    set_of_func: FxHashMap<Instance, Function>,
     rustc: Option<RustcCxt>,
     path_prefixes: PathPrefixes,
 }
@@ -65,31 +71,140 @@ impl Cache {
     fn new() -> Self {
         let (set, rustc) = Default::default();
         let path_prefixes = PathPrefixes::new();
-        Cache { set, rustc, path_prefixes }
+        Cache { set_of_func: set, rustc, path_prefixes }
     }
 
-    fn get_or_insert(&mut self, inst: &Instance) -> Option<&CacheFunction> {
-        self.set
+    fn get_or_insert(&mut self, inst: &Instance) -> Option<&SerFunction> {
+        self.set_of_func
             .entry(*inst)
             .or_insert_with(|| {
-                let body = inst.body()?;
-                let rustc = self.rustc.as_ref()?;
+                let Some(body) = inst.body() else { return Function::default() };
+                let rustc = self.rustc.as_ref().expect("No TyCtxt available.");
                 let prefix = self.path_prefixes.prefixes();
                 let src = source_code_with(inst, body.span, rustc.tcx, &rustc.src_map, prefix);
-                Some(CacheFunction { body, src })
+                Function::new_non_recurisve(src)
             })
+            .inner
             .as_ref()
+    }
+
+    fn get_mut(&mut self, inst: &Instance) -> &mut Function {
+        self.set_of_func.get_mut(inst).unwrap_or_else(|| panic!("{inst:?} must be inserted before"))
+    }
+
+    fn get(&self, inst: &Instance) -> &Function {
+        self.set_of_func.get(inst).unwrap_or_else(|| panic!("{inst:?} must be inserted before"))
+    }
+
+    fn get_func_with_recursive_hash(
+        &mut self,
+        inst: &Instance,
+        set: &mut FxHashSet<Instance>,
+    ) -> SerFunction {
+        fn new(hash: Box<str>, func: &SerFunction) -> SerFunction {
+            let SerFunction { name, file, proof_kind, .. } = func;
+            SerFunction { hash, name: name.clone(), file: file.clone(), proof_kind: *proof_kind }
+        }
+
+        let hash = self.get_recursive_hash(inst, set);
+        let func = self.get(inst);
+        new(hash, func.inner.as_ref().unwrap())
+    }
+
+    fn push_recursive_callees(&self, inst: &Instance, set: &mut FxHashSet<Instance>) {
+        for callee in &self.set_of_func.get(inst).unwrap().callees {
+            if !set.insert(*callee) {
+                // traverse this call
+                self.push_recursive_callees(callee, set);
+            }
+        }
+    }
+
+    fn get_recursive_hash(&mut self, inst: &Instance, set: &mut FxHashSet<Instance>) -> Box<str> {
+        if let Some(recursive_hash) = self.get(inst).recursive_hash.clone() {
+            recursive_hash
+        } else {
+            set.clear();
+            set.insert(*inst);
+            self.push_recursive_callees(inst, set);
+
+            let mut hasher = StreamHasher::new();
+            for inst in &*set {
+                let hash = &*self.get(inst).inner.as_ref().unwrap().hash;
+                hasher.append(hash);
+            }
+            let recursive_hash = hasher.finish();
+
+            self.get_mut(inst).recursive_hash = Some(recursive_hash.clone());
+            recursive_hash
+        }
+    }
+}
+
+/// A function hash and its callees.
+#[derive(Debug, Default)]
+struct Function {
+    /// This can be None due to the exsitence of Instance body.
+    ///
+    /// NOTE:
+    /// * the hash is computed from current caller, not recursively obtained from callees
+    /// * callees_len is thus zero, because we only know body string ATM
+    inner: Option<SerFunction>,
+    /// Direct calls in the body.
+    callees: Box<[Instance]>,
+    /// A hash computed by traversing callees and the function itself.
+    recursive_hash: Option<Box<str>>,
+}
+
+impl Function {
+    fn new_non_recurisve(src: SourceCode) -> Self {
+        Function {
+            inner: Some(SerFunction {
+                hash: stable_hash(&src),
+                name: src.name.into(),
+                file: src.file.into(),
+                proof_kind: src.proof_kind,
+            }),
+            // traverse callees later
+            callees: Box::default(),
+            // compute hash after recursive callees are available
+            recursive_hash: None,
+        }
+    }
+
+    fn set_callees(&mut self, callees: Box<[Instance]>) {
+        if !self.callees.is_empty() {
+            error!(?callees, ?self.callees, "self.callees should be empty, while actually not");
+        }
+        self.callees = callees;
+    }
+
+    fn compare(&self, other: &Self) -> Ordering {
+        match (&self.inner, &other.inner) {
+            (Some(a), Some(b)) => {
+                // Sort by file, proof_kind, name, and recursive_hash.
+                // None is less than Some, so reverse the order to make proof first.
+                let x = (&*a.file, Reverse(a.proof_kind), &*a.name);
+                let y = (&*b.file, Reverse(b.proof_kind), &*b.name);
+                match x.cmp(&y) {
+                    Ordering::Equal => {
+                        let h1 = self.recursive_hash.as_deref().unwrap();
+                        let h2 = other.recursive_hash.as_deref().unwrap();
+                        h1.cmp(h2)
+                    }
+                    ord => ord,
+                }
+            }
+            (None, None) | (None, Some(_)) | (Some(_), None) => {
+                unreachable!("{self:?} and {other:?} must be a valid function")
+            }
+        }
     }
 }
 
 struct RustcCxt {
     tcx: TyCtxt<'static>,
     src_map: Arc<SourceMap>,
-}
-
-struct CacheFunction {
-    body: Body,
-    src: SourceCode,
 }
 
 struct PathPrefixes {

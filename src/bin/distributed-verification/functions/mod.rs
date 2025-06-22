@@ -1,5 +1,7 @@
+use distributed_verification::SerFunction;
 use indexmap::IndexSet;
 use kani::{CallGraph, collect_reachable_items};
+use rustc_data_structures::fx::FxHashSet;
 use rustc_middle::ty::TyCtxt;
 use stable_mir::mir::mono::{Instance, MonoItem};
 
@@ -10,10 +12,6 @@ mod kani;
 pub use kani::TOOL;
 
 mod utils;
-pub use utils::vec_convertion;
-
-mod serialization;
-pub use serialization::SerFunction;
 
 pub fn analyze(tcx: TyCtxt) -> Vec<SerFunction> {
     let local_items = stable_mir::all_local_items();
@@ -29,16 +27,20 @@ pub fn analyze(tcx: TyCtxt) -> Vec<SerFunction> {
     }
 
     let (mono_items, callgraph) = collect_reachable_items(tcx, &entries);
+    let mut set_of_instance = FxHashSet::with_capacity_and_hasher(1024, Default::default());
 
     // Filter out non kanitool functions.
-    let mut proofs: Vec<_> = mono_items
+    let mut v_func: Vec<_> = mono_items
         .iter()
         .filter_map(|f| Function::new(f, &callgraph))
-        .map(SerFunction::new)
+        .map(|f| {
+            let instance = f.set_callees();
+            (cache::get_func_with_recursive_hash(&instance, &mut set_of_instance), instance)
+        })
         .collect();
-    // Sort proofs by file path and source code.
-    proofs.sort_by(|a, b| a.cmp_by_file_and_func(b));
-    proofs
+    // Sort by file path and function name.
+    v_func.sort_by(|a, b| cache::cmp_callees(&a.1, &b.1));
+    v_func.into_iter().map(|f| f.0).collect()
 }
 
 /// A Rust funtion with its file source, attributes, and raw function content.
@@ -60,12 +62,20 @@ impl Function {
         };
 
         // Skip if no body.
-        cache::get_body(&instance, |_| ())?;
+        if cache::has_body(&instance) {
+            return None;
+        }
 
         let mut callees = IndexSet::new();
         callgraph.recursive_callees(item, &mut callees);
         callees.sort_by(cache::cmp_callees);
 
         Some(Function { instance, callees })
+    }
+
+    fn set_callees(self) -> Instance {
+        let callees = self.callees.into_iter().collect();
+        cache::set_callees(&self.instance, callees);
+        self.instance
     }
 }
