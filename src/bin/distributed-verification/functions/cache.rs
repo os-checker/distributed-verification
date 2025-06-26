@@ -41,7 +41,12 @@ pub fn has_body(inst: &Instance) -> bool {
 
 /// Set direct callees in a function. This should be called once.
 pub fn set_callees(inst: &Instance, callees: Box<[Instance]>) {
-    get_cache(move |c| c.get_mut(inst).set_callees(callees))
+    get_cache(move |c| {
+        for callee in &*callees {
+            _ = c.get_or_insert(callee);
+        }
+        c.get_mut(inst).set_callees(callees)
+    })
 }
 
 /// Get a function whose hash is computed by traversing callees.
@@ -89,11 +94,15 @@ impl Cache {
     }
 
     fn get_mut(&mut self, inst: &Instance) -> &mut Function {
-        self.set_of_func.get_mut(inst).unwrap_or_else(|| panic!("{inst:?} must be inserted before"))
+        self.set_of_func
+            .get_mut(inst)
+            .unwrap_or_else(|| panic!("{} {inst:?} must be inserted before", inst.name()))
     }
 
     fn get(&self, inst: &Instance) -> &Function {
-        self.set_of_func.get(inst).unwrap_or_else(|| panic!("{inst:?} must be inserted before"))
+        self.set_of_func
+            .get(inst)
+            .unwrap_or_else(|| panic!("{} {inst:?} must be inserted before", inst.name()))
     }
 
     fn get_func_with_recursive_hash(
