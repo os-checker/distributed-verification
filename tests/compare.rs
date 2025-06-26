@@ -46,8 +46,8 @@ fn test_compare() {
             f2 = simplify_ser_function(fn2),
         );
     }
-    compare("proof", &["proof1", "proof2"], "pub fn f()", eq);
-    compare("contract", &["contract1", "contract2"], "pub fn f()", eq);
+    compare("proof", &["proof1", "proof2"], "verify::f", eq);
+    compare("contract", &["contract1", "contract2"], "verify::f", eq);
 
     fn not_eq(fn1: &SerFunction, fn2: &SerFunction, f: &str) {
         assert_ne!(
