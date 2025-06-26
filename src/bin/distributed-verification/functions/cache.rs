@@ -197,9 +197,10 @@ impl Function {
                 let y = (&*b.file, Reverse(b.proof_kind), &*b.name);
                 match x.cmp(&y) {
                     Ordering::Equal => {
-                        let h1 = self.recursive_hash.as_deref().unwrap();
-                        let h2 = other.recursive_hash.as_deref().unwrap();
-                        h1.cmp(h2)
+                        // recursive_hash is still possible to be None, but why?
+                        let h1 = self.recursive_hash.as_deref();
+                        let h2 = other.recursive_hash.as_deref();
+                        h1.cmp(&h2)
                     }
                     ord => ord,
                 }
