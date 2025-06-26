@@ -62,7 +62,7 @@ impl Function {
         };
 
         // Skip if no body.
-        if cache::has_body(&instance) {
+        if !cache::has_body(&instance) {
             return None;
         }
 
