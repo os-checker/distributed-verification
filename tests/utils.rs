@@ -45,3 +45,8 @@ pub fn read_file<T: serde::de::DeserializeOwned>(path: &str) -> Result<T> {
     let val = serde_json::from_reader(file)?;
     Ok(val)
 }
+
+pub fn read_proofs(path: &str) -> Result<Vec<SerFunction>> {
+    let v_func: Vec<SerFunction> = serde_json::from_str(path)?;
+    Ok(v_func.into_iter().filter(SerFunction::is_proof).collect())
+}

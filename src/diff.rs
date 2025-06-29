@@ -1,13 +1,10 @@
-use crate::{Result, SimplifiedSerFunction};
+use crate::{BoxStr, ProofKind, Result, SerFunction};
 use indexmap::{IndexMap, IndexSet};
 use serde::{Deserialize, Serialize};
 use std::{
     hash::Hash,
     path::{MAIN_SEPARATOR, Path},
 };
-use syn::parse::Parser;
-
-pub type BoxStr = Box<str>;
 
 // ************ `kani list --json` ************
 
@@ -144,7 +141,7 @@ pub struct MergedHarnesses {
 }
 
 impl MergedHarnesses {
-    pub fn new(v: &[SimplifiedSerFunction]) -> Self {
+    pub fn new(v: &[SerFunction]) -> Self {
         let cap = v.len();
         let mut standard = Vec::with_capacity(cap);
         let mut contract = Vec::with_capacity(cap);
@@ -157,33 +154,10 @@ impl MergedHarnesses {
     }
 }
 
-fn add_harness(
-    idx: usize,
-    func: &SimplifiedSerFunction,
-    standard: &mut Harnesses,
-    contract: &mut Harnesses,
-) {
-    const KANITOOL: &str = "kanitool";
-    const PROOF: &str = "proof";
-    const CONTRACT: &str = "proof_for_contract";
-
-    for attr in &func.attrs {
-        if let Ok(v_attr) = syn::Attribute::parse_outer.parse_str(attr) {
-            // Usually an attr string corresponds to single attr item,
-            // but syn API donesn't provide one like that.
-            for attr in &v_attr {
-                let path = &attr.path().segments;
-                if path.first().map(|first| first.ident == KANITOOL).unwrap_or(false) {
-                    let ident = path.get(1).map(|p| &p.ident);
-                    if let Some(second) = ident {
-                        if second == PROOF {
-                            standard.push(HarnessIdx(idx));
-                        } else if second == CONTRACT {
-                            contract.push(HarnessIdx(idx));
-                        }
-                    }
-                }
-            }
-        }
+fn add_harness(idx: usize, func: &SerFunction, standard: &mut Harnesses, contract: &mut Harnesses) {
+    match func.proof_kind {
+        Some(ProofKind::Standard) => standard.push(HarnessIdx(idx)),
+        Some(ProofKind::Contract) => contract.push(HarnessIdx(idx)),
+        None => (),
     }
 }

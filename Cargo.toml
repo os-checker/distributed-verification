@@ -4,6 +4,8 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+quote = "1"
+proc-macro2 = "1"
 syn = { version = "2", features = ["full"] }
 clap = { version = "4.5.35", features = ["derive", "string"] }
 serde = { version = "1", features = ["derive"] }
@@ -18,6 +20,11 @@ color-eyre = "0.6"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 tracing-error = "0.2"
+
+# db
+rusqlite = { version = "0.36.0", features = ["bundled", "jiff"] }
+serde_rusqlite = "0.39.1"
+jiff = { version = "0.2", features = ["serde"] }
 
 [dev-dependencies]
 assert_cmd = "2.0.16"
