@@ -1,245 +1,65 @@
 [
   {
-    "hash": "982381882303912279312305728122247111802",
-    "def_id": "DefId { id: 0, name: \"adhoc::callee_defined_in_proof\" }",
-    "attrs": [
-      "#[kanitool::proof]"
-    ],
-    "kind": "Standard",
-    "func": {
-      "name": "adhoc::callee_defined_in_proof",
-      "kind": "Item",
-      "file": "tests/proofs/ad_hoc.rs",
-      "src": "fn callee_defined_in_proof() {\n        fn f() -> u8 {\n            1\n        }\n        assert!(f() == 1);\n    }",
-      "macro_backtrace_len": 0,
-      "macro_backtrace": []
-    },
-    "callees_len": 2,
-    "callees": [
-      {
-        "def_id": "DefId { id: 1, name: \"adhoc::callee_defined_in_proof::f\" }",
-        "func": {
-          "name": "adhoc::callee_defined_in_proof::f",
-          "kind": "Item",
-          "file": "tests/proofs/ad_hoc.rs",
-          "src": "fn f() -> u8 {\n            1\n        }",
-          "macro_backtrace_len": 0,
-          "macro_backtrace": []
-        }
-      },
-      {
-        "def_id": "DefId { id: 6, name: \"kani::assert\" }",
-        "func": {
-          "name": "kani::assert",
-          "kind": "Item",
-          "file": "distributed-verification/kani/library/kani_core/src/lib.rs",
-          "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
-          "macro_backtrace_len": 2,
-          "macro_backtrace": [
-            {
-              "callsite": "kani_core::kani_intrinsics!()",
-              "defsite": "macro_rules! kani_intrinsics"
-            },
-            {
-              "callsite": "kani_core::kani_lib!(kani)",
-              "defsite": "macro_rules! kani_lib"
-            }
-          ]
-        }
-      }
-    ]
+    "hash": "128116389291748399097708809590772830786",
+    "name": "<u8 as kani::Arbitrary>::any",
+    "file": "distributed-verification/kani/library/kani_core/src/arbitrary.rs"
   },
   {
-    "hash": "8086514324877310315972561360566710350",
-    "def_id": "DefId { id: 2, name: \"adhoc::closure_in_proof\" }",
-    "attrs": [
-      "#[kanitool::proof]"
-    ],
-    "kind": "Standard",
-    "func": {
-      "name": "adhoc::closure_in_proof",
-      "kind": "Item",
-      "file": "tests/proofs/ad_hoc.rs",
-      "src": "fn closure_in_proof() {\n        let f = || 1;\n        assert!(f() == 1);\n    }",
-      "macro_backtrace_len": 0,
-      "macro_backtrace": []
-    },
-    "callees_len": 2,
-    "callees": [
-      {
-        "def_id": "DefId { id: 3, name: \"adhoc::closure_in_proof::{closure#0}\" }",
-        "func": {
-          "name": "adhoc::closure_in_proof::{closure#0}",
-          "kind": "Item",
-          "file": "tests/proofs/ad_hoc.rs",
-          "src": "|| 1",
-          "macro_backtrace_len": 0,
-          "macro_backtrace": []
-        }
-      },
-      {
-        "def_id": "DefId { id: 6, name: \"kani::assert\" }",
-        "func": {
-          "name": "kani::assert",
-          "kind": "Item",
-          "file": "distributed-verification/kani/library/kani_core/src/lib.rs",
-          "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
-          "macro_backtrace_len": 2,
-          "macro_backtrace": [
-            {
-              "callsite": "kani_core::kani_intrinsics!()",
-              "defsite": "macro_rules! kani_intrinsics"
-            },
-            {
-              "callsite": "kani_core::kani_lib!(kani)",
-              "defsite": "macro_rules! kani_lib"
-            }
-          ]
-        }
-      }
-    ]
+    "hash": "1220099237073198494710193065325931072446",
+    "name": "kani::any::<u8>",
+    "file": "distributed-verification/kani/library/kani_core/src/lib.rs"
   },
   {
-    "hash": "1329203888330560593712803926555842648913",
-    "def_id": "DefId { id: 5, name: \"adhoc::proof_in_fn_item::proof\" }",
-    "attrs": [
-      "#[kanitool::proof]"
-    ],
-    "kind": "Standard",
-    "func": {
-      "name": "adhoc::proof_in_fn_item::proof",
-      "kind": "Item",
-      "file": "tests/proofs/ad_hoc.rs",
-      "src": "fn proof() {\n            assert!(kani::any::<u8>() == 1);\n        }",
-      "macro_backtrace_len": 0,
-      "macro_backtrace": []
-    },
-    "callees_len": 6,
-    "callees": [
-      {
-        "def_id": "DefId { id: 10, name: \"<u8 as kani::Arbitrary>::any\" }",
-        "func": {
-          "name": "<u8 as kani::Arbitrary>::any",
-          "kind": "Item",
-          "file": "distributed-verification/kani/library/kani_core/src/arbitrary.rs",
-          "src": "fn any() -> Self {\n                        // This size_of call does not use generic_const_exprs feature. It's inside a macro, and Self isn't generic.\n                        unsafe { crate::kani::any_raw_internal::<Self>() }\n                    }",
-          "macro_backtrace_len": 3,
-          "macro_backtrace": [
-            {
-              "callsite": "trivial_arbitrary!(u8)",
-              "defsite": "macro_rules! trivial_arbitrary {\n            ( $type: ty ) => {\n                impl Arbitrary for $type {\n                    #[inline(always)]\n                    fn any() -> Self {\n                        // This size_of call does not use generic_const_exprs feature. It's inside a macro, and Self isn't generic.\n                        unsafe { crate::kani::any_raw_internal::<Self>() }\n                    }\n                    fn any_array<const MAX_ARRAY_LENGTH: usize>() -> [Self; MAX_ARRAY_LENGTH] {\n                        unsafe { crate::kani::any_raw_array::<Self, MAX_ARRAY_LENGTH>() }\n                    }\n                }\n            };\n        }"
-            },
-            {
-              "callsite": "kani_core::generate_arbitrary!()",
-              "defsite": "macro_rules! generate_arbitrary"
-            },
-            {
-              "callsite": "kani_core::kani_lib!(kani)",
-              "defsite": "macro_rules! kani_lib"
-            }
-          ]
-        }
-      },
-      {
-        "def_id": "DefId { id: 8, name: \"kani::any\" }",
-        "func": {
-          "name": "kani::any::<u8>",
-          "kind": "Item",
-          "file": "distributed-verification/kani/library/kani_core/src/lib.rs",
-          "src": "pub fn any<T: Arbitrary>() -> T {\n            T::any()\n        }",
-          "macro_backtrace_len": 2,
-          "macro_backtrace": [
-            {
-              "callsite": "kani_core::kani_intrinsics!()",
-              "defsite": "macro_rules! kani_intrinsics"
-            },
-            {
-              "callsite": "kani_core::kani_lib!(kani)",
-              "defsite": "macro_rules! kani_lib"
-            }
-          ]
-        }
-      },
-      {
-        "def_id": "DefId { id: 12, name: \"kani::any_raw\" }",
-        "func": {
-          "name": "kani::any_raw::<u8>",
-          "kind": "Item",
-          "file": "distributed-verification/kani/library/kani_core/src/lib.rs",
-          "src": "fn any_raw<T: Copy>() -> T {\n            kani_intrinsic()\n        }",
-          "macro_backtrace_len": 2,
-          "macro_backtrace": [
-            {
-              "callsite": "kani_core::kani_intrinsics!()",
-              "defsite": "macro_rules! kani_intrinsics"
-            },
-            {
-              "callsite": "kani_core::kani_lib!(kani)",
-              "defsite": "macro_rules! kani_lib"
-            }
-          ]
-        }
-      },
-      {
-        "def_id": "DefId { id: 11, name: \"kani::any_raw_internal\" }",
-        "func": {
-          "name": "kani::any_raw_internal::<u8>",
-          "kind": "Item",
-          "file": "distributed-verification/kani/library/kani_core/src/lib.rs",
-          "src": "unsafe fn any_raw_internal<T: Copy>() -> T {\n            any_raw::<T>()\n        }",
-          "macro_backtrace_len": 2,
-          "macro_backtrace": [
-            {
-              "callsite": "kani_core::kani_intrinsics!()",
-              "defsite": "macro_rules! kani_intrinsics"
-            },
-            {
-              "callsite": "kani_core::kani_lib!(kani)",
-              "defsite": "macro_rules! kani_lib"
-            }
-          ]
-        }
-      },
-      {
-        "def_id": "DefId { id: 6, name: \"kani::assert\" }",
-        "func": {
-          "name": "kani::assert",
-          "kind": "Item",
-          "file": "distributed-verification/kani/library/kani_core/src/lib.rs",
-          "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
-          "macro_backtrace_len": 2,
-          "macro_backtrace": [
-            {
-              "callsite": "kani_core::kani_intrinsics!()",
-              "defsite": "macro_rules! kani_intrinsics"
-            },
-            {
-              "callsite": "kani_core::kani_lib!(kani)",
-              "defsite": "macro_rules! kani_lib"
-            }
-          ]
-        }
-      },
-      {
-        "def_id": "DefId { id: 13, name: \"kani::kani_intrinsic\" }",
-        "func": {
-          "name": "kani::kani_intrinsic::<u8>",
-          "kind": "Item",
-          "file": "distributed-verification/kani/library/kani_core/src/lib.rs",
-          "src": "fn kani_intrinsic<T>() -> T {\n            #[allow(clippy::empty_loop)]\n            loop {}\n        }",
-          "macro_backtrace_len": 2,
-          "macro_backtrace": [
-            {
-              "callsite": "kani_core::kani_intrinsics!()",
-              "defsite": "macro_rules! kani_intrinsics"
-            },
-            {
-              "callsite": "kani_core::kani_lib!(kani)",
-              "defsite": "macro_rules! kani_lib"
-            }
-          ]
-        }
-      }
-    ]
+    "hash": "639016265676536470412059127730951679109",
+    "name": "kani::any_raw::<u8>",
+    "file": "distributed-verification/kani/library/kani_core/src/lib.rs"
+  },
+  {
+    "hash": "7219302315358661591282750061493211645",
+    "name": "kani::any_raw_internal::<u8>",
+    "file": "distributed-verification/kani/library/kani_core/src/lib.rs"
+  },
+  {
+    "hash": "85386554272966900401013542891375544490",
+    "name": "kani::assert",
+    "file": "distributed-verification/kani/library/kani_core/src/lib.rs"
+  },
+  {
+    "hash": "63604683117599051803969663890141577372",
+    "name": "kani::kani_intrinsic::<u8>",
+    "file": "distributed-verification/kani/library/kani_core/src/lib.rs"
+  },
+  {
+    "hash": "1309208653661377515712365765387508062295",
+    "name": "adhoc::callee_defined_in_proof",
+    "file": "tests/proofs/ad_hoc.rs",
+    "proof_kind": "Standard"
+  },
+  {
+    "hash": "121241449027392343293277247323178552130",
+    "name": "adhoc::closure_in_proof",
+    "file": "tests/proofs/ad_hoc.rs",
+    "proof_kind": "Standard"
+  },
+  {
+    "hash": "176562382691056163816147651461090160383",
+    "name": "adhoc::proof_in_fn_item::proof",
+    "file": "tests/proofs/ad_hoc.rs",
+    "proof_kind": "Standard"
+  },
+  {
+    "hash": "116120900122094656513436693948576572312",
+    "name": "adhoc::callee_defined_in_proof::f",
+    "file": "tests/proofs/ad_hoc.rs"
+  },
+  {
+    "hash": "473300523053102860818369013278639669537",
+    "name": "adhoc::closure_in_proof::{closure#0}",
+    "file": "tests/proofs/ad_hoc.rs"
+  },
+  {
+    "hash": "494895237266828626812876351891424860387",
+    "name": "adhoc::proof_in_fn_item",
+    "file": "tests/proofs/ad_hoc.rs"
   }
 ]

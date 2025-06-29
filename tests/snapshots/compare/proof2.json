@@ -1,80 +1,19 @@
 [
   {
-    "hash": "696018930944113507118211039546662695939",
-    "def_id": "DefId { id: 0, name: \"verify::f\" }",
-    "attrs": [
-      "#[kanitool::proof]"
-    ],
-    "kind": "Standard",
-    "func": {
-      "name": "verify::f",
-      "kind": "Item",
-      "file": "tests/compare/proof.rs",
-      "src": "pub fn f() {\n        let a = 1;\n        assert_eq!(a + 1, 2);\n    }",
-      "macro_backtrace_len": 0,
-      "macro_backtrace": []
-    },
-    "callees_len": 1,
-    "callees": [
-      {
-        "def_id": "DefId { id: 2, name: \"kani::assert\" }",
-        "func": {
-          "name": "kani::assert",
-          "kind": "Item",
-          "file": "distributed-verification/kani/library/kani_core/src/lib.rs",
-          "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
-          "macro_backtrace_len": 2,
-          "macro_backtrace": [
-            {
-              "callsite": "kani_core::kani_intrinsics!()",
-              "defsite": "macro_rules! kani_intrinsics"
-            },
-            {
-              "callsite": "kani_core::kani_lib!(kani)",
-              "defsite": "macro_rules! kani_lib"
-            }
-          ]
-        }
-      }
-    ]
+    "hash": "85386554272966900401013542891375544490",
+    "name": "kani::assert",
+    "file": "distributed-verification/kani/library/kani_core/src/lib.rs"
   },
   {
-    "hash": "1606359870614515961212578851316357837045",
-    "def_id": "DefId { id: 1, name: \"verify::g\" }",
-    "attrs": [
-      "#[kanitool::proof]"
-    ],
-    "kind": "Standard",
-    "func": {
-      "name": "verify::g",
-      "kind": "Item",
-      "file": "tests/compare/proof.rs",
-      "src": "pub fn g() {\n        let a = 1;\n        assert_eq!(a + 1, 2);\n    }",
-      "macro_backtrace_len": 0,
-      "macro_backtrace": []
-    },
-    "callees_len": 1,
-    "callees": [
-      {
-        "def_id": "DefId { id: 2, name: \"kani::assert\" }",
-        "func": {
-          "name": "kani::assert",
-          "kind": "Item",
-          "file": "distributed-verification/kani/library/kani_core/src/lib.rs",
-          "src": "pub const fn assert(cond: bool, msg: &'static str) {\n            let _ = cond;\n            let _ = msg;\n        }",
-          "macro_backtrace_len": 2,
-          "macro_backtrace": [
-            {
-              "callsite": "kani_core::kani_intrinsics!()",
-              "defsite": "macro_rules! kani_intrinsics"
-            },
-            {
-              "callsite": "kani_core::kani_lib!(kani)",
-              "defsite": "macro_rules! kani_lib"
-            }
-          ]
-        }
-      }
-    ]
+    "hash": "131409162255971290596218362589820380184",
+    "name": "verify::f",
+    "file": "tests/compare/proof.rs",
+    "proof_kind": "Standard"
+  },
+  {
+    "hash": "137307750907139410719913422958790457405",
+    "name": "verify::g",
+    "file": "tests/compare/proof.rs",
+    "proof_kind": "Standard"
   }
 ]
