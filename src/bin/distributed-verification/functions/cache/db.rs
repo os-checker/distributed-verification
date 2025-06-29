@@ -21,12 +21,13 @@ CREATE TABLE IF NOT EXISTS db (
   src TEXT,
   macro_backtrace_len INTEGER,
   macro_backtrace TEXT,
+  callees_len INTEGER,
   callees TEXT
 ) STRICT;
 ";
 const SQL_INSERT: &str = "\
-INSERT INTO db (file, name, hash, hash_direct, inst_kind, proof_kind, attrs, src, macro_backtrace_len, macro_backtrace, callees) 
-VALUES (:file, :name, :hash, :hash_direct, :inst_kind, :proof_kind, :attrs, :src, :macro_backtrace_len, :macro_backtrace, :callees)
+INSERT INTO db (file, name, hash, hash_direct, inst_kind, proof_kind, attrs, src, macro_backtrace_len, macro_backtrace, callees_len, callees) 
+VALUES (:file, :name, :hash, :hash_direct, :inst_kind, :proof_kind, :attrs, :src, :macro_backtrace_len, :macro_backtrace, :callees_len, :callees)
 ";
 
 pub struct Db {
@@ -68,9 +69,10 @@ impl Db {
                 ":proof_kind": func.proof_kind.map(|k| to_string_pretty(&k).unwrap()),
                 ":attrs": to_string_pretty(&func.attrs).unwrap(),
                 ":src": &func.src,
-                ":macro_backtrace_len": &func.macro_backtrace_len,
+                ":macro_backtrace_len": func.macro_backtrace_len,
                 ":macro_backtrace": to_string_pretty(&func.macro_backtrace).unwrap(),
-                ":callees": to_string_pretty(&func.callees).unwrap()
+                ":callees_len": func.callees_len,
+                ":callees": to_string_pretty(&func.callees).unwrap(),
             };
             if let Err(err) = stmt.insert(params) {
                 match &err {
@@ -101,6 +103,20 @@ fn cache_to_db_func(map: &Functions) -> impl Iterator<Item = Result<DbFunction>>
         // skip func that has no recursive_hash
         let hash = func.recursive_hash.clone().context("No recursive_hash.")?;
         let src = &func.src;
+        let callees: Vec<_> = func
+            .callees
+            .iter()
+            .filter_map(|inst| match map.get(inst) {
+                Some(callee) => callee.recursive_hash.clone().or_else(|| {
+                    error!(callee = ?inst, "The callee donesn't exist.");
+                    None
+                }),
+                None => {
+                    error!(callee = ?inst, "The callee donesn't exist.");
+                    None
+                }
+            })
+            .collect();
         Ok(DbFunction {
             file: f.file.clone().into(),
             name: f.name.clone().into(),
@@ -112,20 +128,8 @@ fn cache_to_db_func(map: &Functions) -> impl Iterator<Item = Result<DbFunction>>
             src: src.src.clone(),
             macro_backtrace_len: src.macro_backtrace_len,
             macro_backtrace: src.macro_backtrace.clone(),
-            callees: func
-                .callees
-                .iter()
-                .filter_map(|inst| match map.get(inst) {
-                    Some(callee) => callee.recursive_hash.clone().or_else(|| {
-                        error!(callee = ?inst, "The callee donesn't exist.");
-                        None
-                    }),
-                    None => {
-                        error!(callee = ?inst, "The callee donesn't exist.");
-                        None
-                    }
-                })
-                .collect(),
+            callees_len: callees.len(),
+            callees,
         })
     })
 }

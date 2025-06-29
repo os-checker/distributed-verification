@@ -37,6 +37,9 @@ pub struct DbFunction {
     /// For a function that is generated through macros.
     pub macro_backtrace: Vec<MacroBacktrace>,
 
+    /// The count of callees recursively traversed.
+    pub callees_len: usize,
+
     /// Recurisve callees where the string refers to recursive hash of the function.
     pub callees: Vec<BoxStr>,
 }

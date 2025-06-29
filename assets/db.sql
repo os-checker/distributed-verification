@@ -11,6 +11,7 @@
 --   src TEXT,
 --   macro_backtrace_len INTEGER,
 --   macro_backtrace TEXT,
+--   callees_len INTEGER,
 --   callees TEXT
 -- ) STRICT;
 SELECT
@@ -18,9 +19,8 @@ SELECT
   name,
   hash,
   hash_direct,
-  inst_kind,
   proof_kind,
-  callees
+  callees_len
 FROM
   db
 WHERE
@@ -29,7 +29,14 @@ LIMIT
   10;
 
 SELECT
-  count()
+  count() AS `Total Proofs`
+FROM
+  db
+WHERE
+  proof_kind IS NOT NULL;
+
+SELECT
+  count() AS `Total Functions`
 FROM
   db;
 
