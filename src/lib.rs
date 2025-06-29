@@ -6,11 +6,14 @@ extern crate tracing;
 #[macro_use]
 extern crate eyre;
 
+pub mod db;
 pub mod diff;
 pub mod error_handling;
 pub mod kani_list;
 pub mod logger;
 pub mod statistics;
+
+pub type BoxStr = Box<str>;
 
 /// Kani proof kind.
 ///

@@ -40,6 +40,9 @@ pub fn analyze(tcx: TyCtxt) -> Vec<SerFunction> {
         .collect();
     // Sort by file path and function name.
     v_func.sort_by(|a, b| cache::cmp_callees(&a.1, &b.1));
+
+    cache::store_to_db();
+
     v_func.into_iter().map(|f| f.0).collect()
 }
 

@@ -1,12 +1,10 @@
-use crate::{ProofKind, Result, SerFunction};
+use crate::{BoxStr, ProofKind, Result, SerFunction};
 use indexmap::{IndexMap, IndexSet};
 use serde::{Deserialize, Serialize};
 use std::{
     hash::Hash,
     path::{MAIN_SEPARATOR, Path},
 };
-
-pub type BoxStr = Box<str>;
 
 // ************ `kani list --json` ************
 

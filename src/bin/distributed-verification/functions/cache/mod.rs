@@ -14,6 +14,8 @@ use std::{
     sync::Arc,
 };
 
+mod db;
+
 thread_local! {
     static CACHE: RefCell<Cache> = RefCell::new(Cache::new());
 }
@@ -64,10 +66,16 @@ pub fn cmp_callees(a: &Instance, b: &Instance) -> Ordering {
     })
 }
 
+pub fn store_to_db() {
+    get_cache(|cache| cache.store_to_db());
+}
+
+type Functions = FxHashMap<Instance, Function>;
+
 struct Cache {
     /// The reason to have Instance as the key is
     /// https://github.com/os-checker/distributed-verification/issues/42
-    set_of_func: FxHashMap<Instance, Function>,
+    functions: Functions,
     rustc: Option<RustcCxt>,
     path_prefixes: PathPrefixes,
 }
@@ -76,11 +84,11 @@ impl Cache {
     fn new() -> Self {
         let (set, rustc) = Default::default();
         let path_prefixes = PathPrefixes::new();
-        Cache { set_of_func: set, rustc, path_prefixes }
+        Cache { functions: set, rustc, path_prefixes }
     }
 
     fn get_or_insert(&mut self, inst: &Instance) -> Option<&SerFunction> {
-        self.set_of_func
+        self.functions
             .entry(*inst)
             .or_insert_with(|| {
                 let Some(body) = inst.body() else { return Function::default() };
@@ -94,13 +102,13 @@ impl Cache {
     }
 
     fn get_mut(&mut self, inst: &Instance) -> &mut Function {
-        self.set_of_func
+        self.functions
             .get_mut(inst)
             .unwrap_or_else(|| panic!("{} {inst:?} must be inserted before", inst.name()))
     }
 
     fn get(&self, inst: &Instance) -> &Function {
-        self.set_of_func
+        self.functions
             .get(inst)
             .unwrap_or_else(|| panic!("{} {inst:?} must be inserted before", inst.name()))
     }
@@ -121,7 +129,7 @@ impl Cache {
     }
 
     fn push_recursive_callees(&self, inst: &Instance, set: &mut FxHashSet<Instance>) {
-        for callee in &self.set_of_func.get(inst).unwrap().callees {
+        for callee in &self.functions.get(inst).unwrap().callees {
             if !set.insert(*callee) {
                 // traverse this call
                 self.push_recursive_callees(callee, set);
@@ -148,11 +156,19 @@ impl Cache {
             recursive_hash
         }
     }
+
+    /// Store functions info to db
+    fn store_to_db(&self) {
+        let db = db::Db::new().unwrap();
+        db.store(&self.functions).unwrap();
+    }
 }
 
 /// A function hash and its callees.
 #[derive(Debug, Default)]
 struct Function {
+    /// Sorce information.
+    src: SourceCode,
     /// This can be None due to the exsitence of Instance body.
     ///
     /// NOTE:
@@ -170,14 +186,15 @@ impl Function {
         Function {
             inner: Some(SerFunction {
                 hash: stable_hash(&src),
-                name: src.name.into(),
-                file: src.file.into(),
+                name: src.name.clone().into(),
+                file: src.file.clone().into(),
                 proof_kind: src.proof_kind,
             }),
             // traverse callees later
             callees: Box::default(),
             // compute hash after recursive callees are available
             recursive_hash: None,
+            src,
         }
     }
 

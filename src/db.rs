@@ -1,0 +1,42 @@
+use crate::{BoxStr, InstKind, MacroBacktrace, ProofKind};
+use serde::{Deserialize, Serialize};
+
+/// All information for a function stored in db.
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct DbFunction {
+    // A file path where src lies.
+    // The path is stripped with pwd or sysroot prefix.
+    pub file: String,
+
+    /// Function name.
+    pub name: String,
+
+    /// A hash considering recursive calls.
+    pub hash: BoxStr,
+
+    /// A hash only computed from direct calls.
+    pub hash_direct: BoxStr,
+
+    /// InstanceKind, but normal Item is represented as None.
+    pub inst_kind: Option<InstKind>,
+
+    /// Potential kani proof kind: standard or contract.
+    /// This tool will never identify if a function is an auto harness.
+    pub proof_kind: Option<ProofKind>,
+
+    /// Attributes are attached the function, but it seems that attributes
+    /// and function must be separated to query.
+    pub attrs: Vec<String>,
+
+    /// Source that a stable_mir span points to.
+    pub src: String,
+
+    /// The count of macro backtraces.
+    pub macro_backtrace_len: usize,
+
+    /// For a function that is generated through macros.
+    pub macro_backtrace: Vec<MacroBacktrace>,
+
+    /// Recurisve callees where the string refers to recursive hash of the function.
+    pub callees: Vec<BoxStr>,
+}
