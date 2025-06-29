@@ -129,3 +129,10 @@ pub struct SerFunction {
     #[serde(default)]
     pub proof_kind: Option<ProofKind>,
 }
+
+impl SerFunction {
+    /// Is this a kani proof?
+    pub fn is_proof(&self) -> bool {
+        self.proof_kind.is_some()
+    }
+}

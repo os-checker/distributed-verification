@@ -70,7 +70,7 @@ fn test_proofs() -> Result<()> {
     for (idx, path) in proofs.iter().enumerate() {
         let file_stem = file_stem(path);
         let text = cmd(&[path.to_str().unwrap()]);
-        v_json.push(serde_json::from_str(&text).unwrap());
+        v_json.push(read_proofs(&text)?);
         // collect macro generated proofs
         if file_stem.ends_with("by_macros") || file_stem.ends_with("by_nested_macros") {
             v_macro.push((idx, file_stem));
@@ -93,6 +93,7 @@ fn test_proofs() -> Result<()> {
 
 #[test]
 fn test_compare_unique_hash() -> Result<()> {
+    distributed_verification::logger::init();
     let proofs = get_proofs("tests/compare")?;
 
     expect![[r#"
@@ -112,7 +113,7 @@ fn test_compare_unique_hash() -> Result<()> {
         // let file_stem = path.file_stem().and_then(|f| f.to_str()).unwrap();
         let text = cmd(&[path.to_str().unwrap()]);
         // NOTE: don't write text to json file, since compare.rs write it in a different way
-        v_json.push(serde_json::from_str(&text).unwrap());
+        v_json.push(read_proofs(&text)?);
     }
 
     assert_unique_hash(&proofs, &v_json);
