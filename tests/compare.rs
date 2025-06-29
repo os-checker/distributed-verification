@@ -11,7 +11,12 @@ fn get(text: &str, start: &str) -> SerFunction {
 
 const COMPARE: &str = "tests/compare";
 
-fn compare(tmp: &str, v_file: &[&str], f: &str, assert: impl Fn(&SerFunction, &SerFunction, &str)) {
+fn compare(
+    tmp: &str,
+    v_file: &[&str],
+    f: &str,
+    assert: impl Fn(&SerFunction, &SerFunction, &str, &str, &str),
+) {
     let len = v_file.len();
     assert!(len > 1);
     let tmp = format!("{COMPARE}/{tmp}.rs");
@@ -30,32 +35,26 @@ fn compare(tmp: &str, v_file: &[&str], f: &str, assert: impl Fn(&SerFunction, &S
     // the hash value must be the same.
     for i in 0..len - 1 {
         for j in 1..len {
-            assert(&v_func[i], &v_func[j], f);
+            assert(&v_func[i], &v_func[j], f, v_file[i], v_file[j]);
         }
     }
 }
 
 #[test]
 fn test_compare() {
-    fn eq(fn1: &SerFunction, fn2: &SerFunction, f: &str) {
+    fn eq(fn1: &SerFunction, fn2: &SerFunction, f: &str, f1: &str, f2: &str) {
         assert_eq!(
-            fn1.hash,
-            fn2.hash,
-            "Hash values of {f:?} are not equal: {f1:#?} ≠ {f2:#?}",
-            f1 = simplify_ser_function(fn1),
-            f2 = simplify_ser_function(fn2),
+            fn1.hash, fn2.hash,
+            "Adding irrelevant code shouldn't change the hash of {f:?}:\n{f1}: {fn1:#?}\n ≠ \n{f2}: {fn2:#?}"
         );
     }
     compare("proof", &["proof1", "proof2"], "verify::f", eq);
     compare("contract", &["contract1", "contract2"], "verify::f", eq);
 
-    fn not_eq(fn1: &SerFunction, fn2: &SerFunction, f: &str) {
+    fn not_eq(fn1: &SerFunction, fn2: &SerFunction, f: &str, f1: &str, f2: &str) {
         assert_ne!(
-            fn1.hash,
-            fn2.hash,
-            "Hash values of {f:?} should not equal: {f1:#?} vs {f2:#?}",
-            f1 = simplify_ser_function(fn1),
-            f2 = simplify_ser_function(fn2),
+            fn1.hash, fn2.hash,
+            "Hash values of {f:?} should not equal:\n{f1}: {fn1:#?}\n vs \n{f2}: {fn2:#?}"
         );
     }
     compare(
@@ -64,8 +63,4 @@ fn test_compare() {
         "fn",
         not_eq,
     );
-}
-
-fn simplify_ser_function(fn1: &SerFunction) -> SerFunction {
-    SerFunction { hash: fn1.hash.clone(), ..Default::default() }
 }
