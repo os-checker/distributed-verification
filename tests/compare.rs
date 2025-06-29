@@ -60,7 +60,7 @@ fn test_compare() {
     compare(
         "gen_proofs_by_nested_macros",
         &["gen_proofs_by_nested_macros1", "gen_proofs_by_nested_macros2"],
-        "fn",
+        "verify::proof",
         not_eq,
     );
 }

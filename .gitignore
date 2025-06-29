@@ -9,4 +9,7 @@ kani-list.json
 rustflags.json
 core.json
 /artifact*
+
 *.sqlite3
+*.db
+*.diff
