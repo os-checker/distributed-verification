@@ -581,12 +581,12 @@ impl CallGraph {
         let nodes = self.edges.get(key).unwrap_or_else(|| panic!("No {item:?} in the call graph."));
 
         for node in nodes {
-            let item = &node.0.item;
-            match item {
+            let callee_item = &node.0.item;
+            match callee_item {
                 MonoItem::Fn(inst) => {
                     if callees.insert(*inst) {
                         // first insert the function instance
-                        self.recursive_callees(item, callees);
+                        self.recursive_callees(callee_item, callees);
                     }
                 }
                 // TODO: only consider functions items.
