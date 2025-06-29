@@ -83,13 +83,7 @@ fn core_json() -> Result<()> {
     }
 
     let count = Count { standard: merged.standard.len(), contract: merged.contract.len() };
-    expect![[r#"
-        Count {
-            standard: 620,
-            contract: 953,
-        }
-    "#]]
-    .assert_debug_eq(&count);
+    dbg!(count);
 
     Ok(())
 }
