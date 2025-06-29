@@ -130,7 +130,7 @@ impl Cache {
 
     fn push_recursive_callees(&self, inst: &Instance, set: &mut FxHashSet<Instance>) {
         for callee in &self.functions.get(inst).unwrap().callees {
-            if !set.insert(*callee) {
+            if set.insert(*callee) {
                 // traverse this call
                 self.push_recursive_callees(callee, set);
             }
