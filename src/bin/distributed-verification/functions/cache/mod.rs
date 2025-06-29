@@ -4,7 +4,8 @@
 
 use crate::functions::utils::{StreamHasher, source_code_with, stable_hash};
 use distributed_verification::{SerFunction, SourceCode};
-use rustc_data_structures::fx::{FxHashMap, FxHashSet};
+use indexmap::IndexSet;
+use rustc_data_structures::fx::FxHashMap;
 use rustc_middle::ty::TyCtxt;
 use rustc_span::source_map::{SourceMap, get_source_map};
 use stable_mir::mir::mono::Instance;
@@ -52,7 +53,7 @@ pub fn set_callees(inst: &Instance, callees: Box<[Instance]>) {
 }
 
 /// Get a function whose hash is computed by traversing callees.
-pub fn get_func_with_recursive_hash(inst: &Instance, set: &mut FxHashSet<Instance>) -> SerFunction {
+pub fn get_func_with_recursive_hash(inst: &Instance, set: &mut IndexSet<Instance>) -> SerFunction {
     get_cache(|c| c.get_func_with_recursive_hash(inst, set))
 }
 
@@ -116,7 +117,7 @@ impl Cache {
     fn get_func_with_recursive_hash(
         &mut self,
         inst: &Instance,
-        set: &mut FxHashSet<Instance>,
+        set: &mut IndexSet<Instance>,
     ) -> SerFunction {
         fn new(hash: Box<str>, func: &SerFunction) -> SerFunction {
             let SerFunction { name, file, proof_kind, .. } = func;
@@ -128,7 +129,7 @@ impl Cache {
         new(hash, func.inner.as_ref().unwrap())
     }
 
-    fn push_recursive_callees(&self, inst: &Instance, set: &mut FxHashSet<Instance>) {
+    fn push_recursive_callees(&self, inst: &Instance, set: &mut IndexSet<Instance>) {
         for callee in &self.functions.get(inst).unwrap().callees {
             if set.insert(*callee) {
                 // traverse this call
@@ -137,13 +138,22 @@ impl Cache {
         }
     }
 
-    fn get_recursive_hash(&mut self, inst: &Instance, set: &mut FxHashSet<Instance>) -> Box<str> {
+    fn get_recursive_hash(&mut self, inst: &Instance, set: &mut IndexSet<Instance>) -> Box<str> {
         if let Some(recursive_hash) = self.get(inst).recursive_hash.clone() {
             recursive_hash
         } else {
             set.clear();
             set.insert(*inst);
             self.push_recursive_callees(inst, set);
+
+            // stable sort through file, fn name, (direct) hash
+            set.sort_unstable_by(|a, b| {
+                let fields = |inst: &Instance| {
+                    let func = self.get(inst).inner.as_ref().unwrap();
+                    (&*func.file, &*func.name, &*func.hash)
+                };
+                fields(a).cmp(&fields(b))
+            });
 
             let mut hasher = StreamHasher::new();
             for inst in &*set {

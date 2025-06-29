@@ -1,7 +1,6 @@
 use distributed_verification::SerFunction;
 use indexmap::IndexSet;
 use kani::{CallGraph, collect_reachable_items};
-use rustc_data_structures::fx::FxHashSet;
 use rustc_middle::ty::TyCtxt;
 use stable_mir::mir::mono::{Instance, MonoItem};
 
@@ -27,7 +26,7 @@ pub fn analyze(tcx: TyCtxt) -> Vec<SerFunction> {
     }
 
     let (mono_items, callgraph) = collect_reachable_items(tcx, &entries);
-    let mut set_of_instance = FxHashSet::with_capacity_and_hasher(1024, Default::default());
+    let mut set_of_instance = IndexSet::with_capacity_and_hasher(1024, Default::default());
 
     // Filter out non kanitool functions.
     let mut v_func: Vec<_> = mono_items
