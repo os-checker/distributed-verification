@@ -32,7 +32,7 @@ pub struct Total {
 }
 
 /// Get kani list and check if it complies with Vec<SerFunction>.
-pub fn check(file: &str, v_ser_fun: &[SerFunction]) {
+pub fn check(file: &str, v_ser_fun: &[&SerFunction]) {
     let list = get_kani_list(file).unwrap();
     check_proofs(&list, v_ser_fun).unwrap();
 }
@@ -60,7 +60,7 @@ pub fn read_kani_list(kani_list_path: &str) -> Result<KaniList> {
 }
 
 /// Check if all proofs matches in kani-list.json and SerFunctions.
-pub fn check_proofs(list: &KaniList, v_ser_fun: &[SerFunction]) -> Result<()> {
+pub fn check_proofs(list: &KaniList, v_ser_fun: &[&SerFunction]) -> Result<()> {
     // sanity check
     let totals = &list.totals;
     {

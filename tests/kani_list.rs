@@ -27,7 +27,8 @@ fn validate_kani_list_json() -> Result<()> {
         // run `distributed-verification`
         let text = cmd(&[path]);
         let v_ser_function: Vec<SerFunction> = serde_json::from_str(&text).unwrap();
-        check_proofs(&kani_list, &v_ser_function).unwrap();
+        let v_proof: Vec<_> = v_ser_function.iter().filter(|f| f.proof_kind.is_some()).collect();
+        check_proofs(&kani_list, &v_proof).unwrap();
 
         // test `distributed-verification --check-kani-list`
         _ = cmd(&[path, "--check-kani-list=kani-list.json"]);
@@ -84,7 +85,7 @@ fn core_json() -> Result<()> {
     let count = Count { standard: merged.standard.len(), contract: merged.contract.len() };
     expect![[r#"
         Count {
-            standard: 622,
+            standard: 620,
             contract: 953,
         }
     "#]]

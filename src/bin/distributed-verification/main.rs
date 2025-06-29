@@ -77,7 +77,8 @@ fn analyze_proofs(tcx: TyCtxt, run: cli::Run) -> Result<()> {
 
     let mut res_check_kani_list = Ok(());
     if let Some(kani_list) = run.kani_list {
-        res_check_kani_list = check_proofs(&kani_list, &output);
+        let proofs: Vec<_> = output.iter().filter(|f| f.proof_kind.is_some()).collect();
+        res_check_kani_list = check_proofs(&kani_list, &proofs);
     }
 
     let res_json = run.json.emit(&output);
