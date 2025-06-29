@@ -5,7 +5,7 @@ use eyre::{Context, ContextCompat};
 use rusqlite::{Connection, named_params};
 use serde_json::to_string_pretty;
 
-const FILE_NAME: &str = "db.sqlite3";
+const DB_FILE: &str = "db.sqlite3";
 const SQL_DROP: &str = "DROP TABLE IF EXISTS db;";
 // cannot VACUUM from within a transaction
 const SQL_VACUUM: &str = "VACUUM;";
@@ -37,9 +37,12 @@ pub struct Db {
 impl Db {
     /// Create a timestamp.sqlite3 file and db table.
     pub fn new() -> Result<Db> {
-        // let now = jiff::Timestamp::now();
-        let _span = error_span!("Db::new", FILE_NAME).entered();
-        let db = Connection::open(FILE_NAME).context("Failed to open or create db file.")?;
+        const VAR_DB_FILE: &str = "DB_FILE";
+        let db_file = std::env::var(VAR_DB_FILE);
+        let db_file = db_file.as_deref().unwrap_or(DB_FILE);
+
+        let _span = error_span!("Db::new", db_file).entered();
+        let db = Connection::open(db_file).context("Failed to open or create db file.")?;
 
         db.execute(SQL_DROP, []).context("Failed to drop db.")?;
         db.execute(SQL_VACUUM, []).context("Failed to VACUUM.")?;
