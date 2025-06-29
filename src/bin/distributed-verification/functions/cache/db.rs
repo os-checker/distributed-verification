@@ -59,7 +59,7 @@ impl Db {
                 }
             };
 
-            stmt.insert(named_params! {
+            let params = named_params! {
                 ":file": &func.file,
                 ":name": &func.name,
                 ":hash": &func.hash,
@@ -71,7 +71,23 @@ impl Db {
                 ":macro_backtrace_len": &func.macro_backtrace_len,
                 ":macro_backtrace": to_string_pretty(&func.macro_backtrace).unwrap(),
                 ":callees": to_string_pretty(&func.callees).unwrap()
-            })?;
+            };
+            if let Err(err) = stmt.insert(params) {
+                match &err {
+                    rusqlite::Error::SqliteFailure(error, opt_str) => {
+                        // skip if the same hash exists
+                        // FIXME: need to figure out hash collision
+                        if matches!(error.code, rusqlite::ffi::ErrorCode::ConstraintViolation)
+                            && error.extended_code == rusqlite::ffi::SQLITE_CONSTRAINT_PRIMARYKEY
+                        {
+                            error!(%error, ?opt_str, ?func, "No insert a duplicated PRIMARY KEY.");
+                        } else {
+                            bail!("Failed to insert {func:?}\nerr={err:?}")
+                        }
+                    }
+                    _ => bail!("Failed to insert {func:?}\nerr={err:?}"),
+                }
+            }
         }
         Ok(())
     }
