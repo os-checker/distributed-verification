@@ -9,6 +9,7 @@ fn read_kani_list_json() -> Result<KaniListJson> {
     const PREFIX: &str = "/home/runner/work/verify-rust-std/verify-rust-std/library/";
 
     let mut kani_list: KaniListJson = read_file(KANI_LIST_JSON)?;
+    kani_list.normalize_file_path();
     kani_list.strip_path_prefix_raw(PREFIX)?;
     Ok(kani_list)
 }

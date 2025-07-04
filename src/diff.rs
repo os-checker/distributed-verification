@@ -3,7 +3,7 @@ use indexmap::{IndexMap, IndexSet};
 use serde::{Deserialize, Serialize};
 use std::{
     hash::Hash,
-    path::{MAIN_SEPARATOR, Path},
+    path::{Component, MAIN_SEPARATOR, Path, PathBuf},
 };
 
 // ************ `kani list --json` ************
@@ -15,6 +15,42 @@ pub struct KaniListHarnesses {
 }
 
 impl KaniListHarnesses {
+    pub fn normalize_file_path(&mut self) {
+        pub fn normalize_path(path: &Path) -> String {
+            let mut components = path.components().peekable();
+            let mut ret = if let Some(c @ Component::Prefix(..)) = components.peek().cloned() {
+                components.next();
+                PathBuf::from(c.as_os_str())
+            } else {
+                PathBuf::new()
+            };
+
+            for component in components {
+                match component {
+                    Component::Prefix(..) => unreachable!(),
+                    Component::RootDir => {
+                        ret.push(component.as_os_str());
+                    }
+                    Component::CurDir => {}
+                    Component::ParentDir => {
+                        ret.pop();
+                    }
+                    Component::Normal(c) => {
+                        ret.push(c);
+                    }
+                }
+            }
+            ret.display().to_string()
+        }
+
+        let mut inner = IndexMap::with_capacity(self.inner.len());
+        for (path, value) in self.inner.iter_mut() {
+            let key = normalize_path(&PathBuf::from(&**path)).into();
+            inner.insert(key, std::mem::take(value));
+        }
+        self.inner = inner;
+    }
+
     pub fn strip_path_prefix(&mut self, prefix: &str) -> Result<()> {
         let mut map = IndexMap::with_capacity(self.inner.len());
         for (key, val) in self.inner.iter_mut() {
@@ -90,6 +126,13 @@ pub struct KaniListJson {
 }
 
 impl KaniListJson {
+    /// Call this immediately after deserialization is done, especially before strip_path_prefix.
+    pub fn normalize_file_path(&mut self) {
+        self.standard_harnesses.normalize_file_path();
+        self.contract_harnesses.normalize_file_path();
+    }
+
+    // FIXME: merge this and the raw one.
     pub fn strip_path_prefix<P: AsRef<Path>>(&mut self, path: P) -> Result<()> {
         let path = path.as_ref().canonicalize()?;
         let prefix = &format!("{}{MAIN_SEPARATOR}", path.to_str().unwrap());
