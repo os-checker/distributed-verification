@@ -130,34 +130,28 @@ fn count_gt1<T: Copy + Hash + Eq>(v: &[T]) -> Vec<(T, u32)> {
 
 // ************ difference ************
 
-/// Index to the `&[SimplifiedSerFunction]`
-pub struct HarnessIdx(pub usize);
-
-type Harnesses = Vec<HarnessIdx>;
-
-pub struct MergedHarnesses {
-    pub standard: Harnesses,
-    pub contract: Harnesses,
+pub struct MergedHarnesses<'a> {
+    pub functions: &'a [SerFunction],
+    pub standard: Box<[&'a SerFunction]>,
+    pub contract: Box<[&'a SerFunction]>,
 }
 
-impl MergedHarnesses {
-    pub fn new(v: &[SerFunction]) -> Self {
-        let cap = v.len();
+impl MergedHarnesses<'_> {
+    pub fn new(functions: &[SerFunction]) -> MergedHarnesses<'_> {
+        let cap = functions.len();
         let mut standard = Vec::with_capacity(cap);
         let mut contract = Vec::with_capacity(cap);
-        for (idx, func) in v.iter().enumerate() {
-            add_harness(idx, func, &mut standard, &mut contract);
+        for func in functions {
+            match func.proof_kind {
+                Some(ProofKind::Standard) => standard.push(func),
+                Some(ProofKind::Contract) => contract.push(func),
+                None => (),
+            }
         }
-        standard.shrink_to_fit();
-        contract.shrink_to_fit();
-        MergedHarnesses { standard, contract }
-    }
-}
-
-fn add_harness(idx: usize, func: &SerFunction, standard: &mut Harnesses, contract: &mut Harnesses) {
-    match func.proof_kind {
-        Some(ProofKind::Standard) => standard.push(HarnessIdx(idx)),
-        Some(ProofKind::Contract) => contract.push(HarnessIdx(idx)),
-        None => (),
+        MergedHarnesses {
+            functions,
+            standard: standard.into_boxed_slice(),
+            contract: contract.into_boxed_slice(),
+        }
     }
 }
