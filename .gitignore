@@ -13,3 +13,5 @@ core.json
 *.sqlite3
 *.db
 *.diff
+
+tmp/

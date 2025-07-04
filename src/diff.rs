@@ -21,10 +21,14 @@ impl KaniListHarnesses {
             let val = std::mem::take(val);
             match key.strip_prefix(prefix) {
                 Some(stripped) => _ = map.insert(stripped.into(), val),
-                None => bail!(
-                    "The key `{key}`\nis not stripped with prefix `{prefix}`, \
-                     which probably a bug."
-                ),
+                None => {
+                    // Some files refer to registry folder:
+                    // `/home/runner/.cargo/registry/src/innerdex.crates.io-1949cf8
+                    // c6b5b557f/addr2line-0.25.0/src/line.rs`
+                    // So we should keep it as it is.
+                    warn!("The key `{key}`\nis not stripped with prefix `{prefix}`.");
+                    _ = map.insert(key.clone(), val);
+                }
             }
         }
         map.sort_unstable_keys();
@@ -36,10 +40,18 @@ impl KaniListHarnesses {
         self.inner.keys().map(|s| &**s).collect()
     }
 
-    fn names<'harness>(&'harness self, v: &mut Vec<&'harness str>) {
-        for harnesses in self.inner.values() {
+    /// filter is a closure where the first argument is filename, and the second is function name.
+    /// If filter returns true, the function name will be appended to v.
+    fn names<'harness>(
+        &'harness self,
+        v: &mut Vec<&'harness str>,
+        mut filter: impl FnMut(&str, &str) -> bool,
+    ) {
+        for (file, harnesses) in &self.inner {
             for name in harnesses {
-                v.push(&**name);
+                if filter(file, name) {
+                    v.push(&**name);
+                }
             }
         }
     }
@@ -101,22 +113,17 @@ impl KaniListJson {
         })
     }
 
-    pub fn harness_names(&self) -> Result<Vec<&str>> {
+    pub fn harness_names(&self, mut filter: impl FnMut(&str, &str) -> bool) -> IndexSet<&str> {
         let totals = &self.totals;
         let len = totals.standard_harnesses + totals.contract_harnesses;
         let mut v = Vec::with_capacity(len);
 
-        self.standard_harnesses.names(&mut v);
-        self.contract_harnesses.names(&mut v);
+        self.standard_harnesses.names(&mut v, &mut filter);
+        self.contract_harnesses.names(&mut v, &mut filter);
 
-        ensure!(
-            v.len() == len,
-            "These harnesses are duplicated: {outliers:#?}",
-            outliers = count_gt1(&v)
-        );
-
-        v.sort_unstable();
-        Ok(v)
+        let duplicates = count_gt1(&v);
+        assert!(duplicates.is_empty(), "Function name duplicates: {duplicates:#?}");
+        vec_to_set(&v)
     }
 }
 
@@ -126,6 +133,12 @@ fn count_gt1<T: Copy + Hash + Eq>(v: &[T]) -> Vec<(T, u32)> {
         map.entry(*key).and_modify(|n| *n += 1).or_insert(1u32);
     }
     map.into_iter().filter(|(_, n)| *n != 1).collect()
+}
+
+fn vec_to_set<T: Copy + Hash + Eq + Ord>(v: &[T]) -> IndexSet<T> {
+    let mut set: IndexSet<_> = v.iter().copied().collect();
+    set.sort_unstable();
+    set
 }
 
 // ************ difference ************
@@ -153,5 +166,11 @@ impl MergedHarnesses<'_> {
             standard: standard.into_boxed_slice(),
             contract: contract.into_boxed_slice(),
         }
+    }
+
+    pub fn function_names(&self, mut filter: impl FnMut(&SerFunction) -> bool) -> IndexSet<&str> {
+        let v: Vec<_> = self.functions.iter().filter(|f| filter(f)).map(|f| &*f.name).collect();
+        // FIXME: it's possible the function name will duplicate, need to figure out why.
+        vec_to_set(&v)
     }
 }
