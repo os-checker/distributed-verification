@@ -233,6 +233,4 @@
     "ptr::alignment::Alignment::new_unchecked::{closure#0}::{closure#1}::{closure#2}::precondition_check",
     "ptr::alignment::Alignment::new_unchecked::{closure#2}::{closure#2}::precondition_check",
     "ptr::alignment::Alignment::new_unchecked::{closure#3}::{closure#0}::precondition_check",
-    "str::pattern::verify::check_small_slice_eq",
-    "str::pattern::verify::check_small_slice_eq_empty",
 ]
