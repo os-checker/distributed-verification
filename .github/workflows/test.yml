@@ -13,6 +13,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # test/verify-rust-std needs this, so remember to 
+      # * update runid after verify-rust-std submodule syncs
+      # * update snapshots after runid changes
+      - name: Download kani-list from verify-rust-std CI
+        run: gh run download -D tmp -R model-checking/verify-rust-std 16057809811
+
       - name: Install kani and verify-rust-std
         run: |
           git submodule update --init --recursive verify-rust-std
