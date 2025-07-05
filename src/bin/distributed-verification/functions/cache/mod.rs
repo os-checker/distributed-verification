@@ -169,7 +169,7 @@ impl Cache {
 
     /// Store functions info to db
     fn store_to_db(&self) {
-        let db = db::Db::new().unwrap();
+        let mut db = db::Db::new().unwrap();
         db.store(&self.functions).unwrap();
     }
 }

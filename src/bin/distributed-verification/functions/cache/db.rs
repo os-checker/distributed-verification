@@ -52,8 +52,9 @@ impl Db {
     }
 
     /// This function should be called after recursive hashes are computed for all functions.
-    pub fn store(&self, map: &Functions) -> Result<()> {
-        let mut stmt = self.db.prepare(SQL_INSERT)?;
+    pub fn store(&mut self, map: &Functions) -> Result<()> {
+        let tx = self.db.transaction()?;
+        let mut stmt = tx.prepare(SQL_INSERT)?;
         for func in cache_to_db_func(map) {
             let func = match func {
                 Ok(func) => func,
@@ -94,6 +95,7 @@ impl Db {
                 }
             }
         }
+        stmt.finalize().context("Faield to commit prepare statement.")?;
         Ok(())
     }
 }
