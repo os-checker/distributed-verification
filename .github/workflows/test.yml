@@ -17,6 +17,8 @@ jobs:
       # * update runid after verify-rust-std submodule syncs
       # * update snapshots after runid changes
       - name: Download kani-list from verify-rust-std CI
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: gh run download -D tmp -R model-checking/verify-rust-std 16057809811
 
       - name: Install kani and verify-rust-std
