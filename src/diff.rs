@@ -72,6 +72,16 @@ impl KaniListHarnesses {
         Ok(())
     }
 
+    pub fn strip_path_closure_name(&mut self, text: &str) {
+        for set in self.inner.values_mut() {
+            let mut stripped = IndexSet::with_capacity(set.len());
+            for name in set.iter() {
+                stripped.insert(name.replace(text, "").into());
+            }
+            *set = stripped;
+        }
+    }
+
     fn files(&self) -> Vec<&str> {
         self.inner.keys().map(|s| &**s).collect()
     }
@@ -147,6 +157,11 @@ impl KaniListJson {
         self.standard_harnesses.strip_path_prefix(prefix)?;
         self.contract_harnesses.strip_path_prefix(prefix)?;
         Ok(())
+    }
+
+    pub fn strip_path_closure_name(&mut self, text: &str) {
+        self.standard_harnesses.strip_path_closure_name(text);
+        self.contract_harnesses.strip_path_closure_name(text);
     }
 
     pub fn files(&self) -> serde_json::Value {

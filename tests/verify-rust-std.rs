@@ -11,12 +11,21 @@ fn read_kani_list_json() -> Result<KaniListJson> {
     let mut kani_list: KaniListJson = read_file(KANI_LIST_JSON)?;
     kani_list.normalize_file_path();
     kani_list.strip_path_prefix_raw(PREFIX)?;
+    kani_list.strip_path_closure_name(PREFIX);
     Ok(kani_list)
 }
 
 fn read_core_json() -> Result<Vec<SerFunction>> {
     const CORE_JSON: &str = "./assets/core.json";
-    read_file(CORE_JSON)
+    const PREFIX_LOCAL: &str = "/home/gh-zjp-CN/distributed-verification/verify-rust-std/library/";
+    const PREFIX_CI: &str = "/home/runner/work/distributed-verification/distributed-verification/verify-rust-std/library/";
+
+    let mut v: Vec<SerFunction> = read_file(CORE_JSON)?;
+    for func in &mut v {
+        // strip_path_closure_name
+        func.name = func.name.replace(PREFIX_LOCAL, "").replace(PREFIX_CI, "").into();
+    }
+    Ok(v)
 }
 
 #[test]
@@ -37,7 +46,8 @@ fn core_json() -> Result<()> {
             standard: 621,
             contract: 995,
         }
-    "#]].assert_debug_eq(&count);
+    "#]]
+    .assert_debug_eq(&count);
 
     Ok(())
 }
@@ -51,7 +61,8 @@ fn read() -> Result<()> {
             contract_harnesses: 1154,
             functions_under_contract: 356,
         }
-    "#]].assert_debug_eq(&kani_list.totals);
+    "#]]
+    .assert_debug_eq(&kani_list.totals);
 
     let harness_names = kani_list.harness_names(|file, _| file.starts_with("core/"));
     expect_file!["snapshots/verify-rust-std/harness_names.txt"].assert_debug_eq(&harness_names);
