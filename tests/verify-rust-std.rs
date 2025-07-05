@@ -3,6 +3,10 @@ use distributed_verification::diff::{KaniListJson, MergedHarnesses};
 mod utils;
 use utils::*;
 
+// path to distributed-verification
+const PREFIX_LOCAL_DIR: &str = "/home/gh-zjp-CN/distributed-verification/";
+const PREFIX_CI_DIR: &str = "/home/runner/work/distributed-verification/distributed-verification/";
+
 /// Read kani-list.json generated from verify-rust-std CI.
 fn read_kani_list_json() -> Result<KaniListJson> {
     const KANI_LIST_JSON: &str = "tmp/ubuntu-latest-kani-list.json/kani-list.json";
@@ -11,7 +15,7 @@ fn read_kani_list_json() -> Result<KaniListJson> {
     let mut kani_list: KaniListJson = read_file(KANI_LIST_JSON)?;
     kani_list.normalize_file_path();
     kani_list.strip_path_prefix_raw(PREFIX)?;
-    kani_list.strip_path_closure_name(PREFIX);
+    kani_list.strip_path_closure_name(&[PREFIX, PREFIX_LOCAL_DIR, PREFIX_CI_DIR]);
     Ok(kani_list)
 }
 
@@ -23,7 +27,13 @@ fn read_core_json() -> Result<Vec<SerFunction>> {
     let mut v: Vec<SerFunction> = read_file(CORE_JSON)?;
     for func in &mut v {
         // strip_path_closure_name
-        func.name = func.name.replace(PREFIX_LOCAL, "").replace(PREFIX_CI, "").into();
+        func.name = func
+            .name
+            .replace(PREFIX_LOCAL, "")
+            .replace(PREFIX_CI, "")
+            .replace(PREFIX_LOCAL_DIR, "")
+            .replace(PREFIX_CI_DIR, "")
+            .into();
     }
     Ok(v)
 }

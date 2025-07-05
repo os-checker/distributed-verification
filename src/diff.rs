@@ -72,11 +72,15 @@ impl KaniListHarnesses {
         Ok(())
     }
 
-    pub fn strip_path_closure_name(&mut self, text: &str) {
+    pub fn strip_path_closure_name(&mut self, v_text: &[&str]) {
         for set in self.inner.values_mut() {
             let mut stripped = IndexSet::with_capacity(set.len());
             for name in set.iter() {
-                stripped.insert(name.replace(text, "").into());
+                let mut new_name = String::new();
+                for text in v_text {
+                    new_name = name.replace(text, "");
+                }
+                stripped.insert(new_name.into());
             }
             *set = stripped;
         }
@@ -159,7 +163,7 @@ impl KaniListJson {
         Ok(())
     }
 
-    pub fn strip_path_closure_name(&mut self, text: &str) {
+    pub fn strip_path_closure_name(&mut self, text: &[&str]) {
         self.standard_harnesses.strip_path_closure_name(text);
         self.contract_harnesses.strip_path_closure_name(text);
     }
