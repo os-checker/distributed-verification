@@ -96,6 +96,7 @@ impl Db {
             }
         }
         stmt.finalize().context("Faield to commit prepare statement.")?;
+        tx.finish()?;
         Ok(())
     }
 }
