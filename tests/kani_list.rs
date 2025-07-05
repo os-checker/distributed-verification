@@ -1,6 +1,6 @@
 use distributed_verification::{
     SerFunction,
-    diff::{KaniListJson, MergedHarnesses},
+    diff::KaniListJson,
     kani_list::{check_proofs, get_kani_list},
 };
 
@@ -61,29 +61,6 @@ fn kani_list_json() -> Result<()> {
         }
     "#]]
     .assert_debug_eq(&kani_list.totals);
-
-    Ok(())
-}
-
-fn read_core_json() -> Result<Vec<SerFunction>> {
-    const CORE_JSON: &str = "./assets/core.json";
-    read_file(CORE_JSON)
-}
-
-#[test]
-fn core_json() -> Result<()> {
-    let v_func = read_core_json()?;
-    let merged = MergedHarnesses::new(&v_func);
-
-    #[derive(Debug)]
-    #[allow(dead_code)]
-    struct Count {
-        standard: usize,
-        contract: usize,
-    }
-
-    let count = Count { standard: merged.standard.len(), contract: merged.contract.len() };
-    dbg!(count);
 
     Ok(())
 }

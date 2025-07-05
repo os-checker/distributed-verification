@@ -22,6 +22,8 @@ jobs:
         run: cargo install --path . --locked
 
       - name: Verify Rust Std
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: ./.github/gen_core.json.sh
 
       - name: View core.json

@@ -9,6 +9,12 @@ export OUTPUT_DIR=$WORKSPACE/assets
 export KANI_DIR=$WORKSPACE/kani/target/kani
 export VERIFY_RUST_STD_LIBRARY=$WORKSPACE/verify-rust-std/library
 
+# test/verify-rust-std needs this, so remember to
+# * update runid after verify-rust-std submodule syncs
+# * update snapshots after runid changes
+rm tmp -rf
+gh run download -D tmp -R model-checking/verify-rust-std 16057809811
+
 ls -alh $VERIFY_RUST_STD_LIBRARY
 
 cargo b --bin distributed-verification
@@ -23,4 +29,5 @@ $VERIFY_RUST_STD
 
 popd
 pushd verify-rust-std
+cp library/core/db.sqlite3 ../assets/core.sqlite3
 git checkout .
