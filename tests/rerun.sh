@@ -9,6 +9,7 @@ mkdir tests/snapshots/kani_list
 mkdir tests/snapshots/compare
 mkdir tests/snapshots/proofs
 mkdir tests/snapshots/proofs/by_macros
+mkdir tests/snapshots/verify-rust-std
 
 # UPDATE_EXPECT=1
 cargo test -- --nocapture

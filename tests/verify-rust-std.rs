@@ -32,7 +32,12 @@ fn core_json() -> Result<()> {
     }
 
     let count = Count { standard: merged.standard.len(), contract: merged.contract.len() };
-    dbg!(count);
+    expect![[r#"
+        Count {
+            standard: 620,
+            contract: 995,
+        }
+    "#]].assert_debug_eq(&count);
 
     Ok(())
 }
@@ -40,24 +45,29 @@ fn core_json() -> Result<()> {
 #[test]
 fn read() -> Result<()> {
     let kani_list = read_kani_list_json()?;
+    expect![[r#"
+        Totals {
+            standard_harnesses: 8350,
+            contract_harnesses: 1154,
+            functions_under_contract: 356,
+        }
+    "#]].assert_debug_eq(&kani_list.totals);
 
     let harness_names = kani_list.harness_names(|file, _| file.starts_with("core/"));
+    expect_file!["snapshots/verify-rust-std/harness_names.txt"].assert_debug_eq(&harness_names);
 
     let v_func = read_core_json()?;
     let merged = MergedHarnesses::new(&v_func);
-    let function_names = merged.function_names(|f| f.file.starts_with("core/"));
 
-    dbg!(&kani_list.totals, &harness_names, &function_names);
+    let function_names = merged.function_names(|f| f.file.starts_with("core/"));
+    expect_file!["snapshots/verify-rust-std/function_names.txt"].assert_debug_eq(&function_names);
 
     let names_not_in_functions: Vec<_> = harness_names
         .iter()
         .filter_map(|&h| function_names.get(h).is_none().then_some(h))
         .collect();
-
-    assert!(
-        names_not_in_functions.is_empty(),
-        "Some harnesses are not found: {names_not_in_functions:#?}"
-    );
+    expect_file!["snapshots/verify-rust-std/names_not_in_functions.txt"]
+        .assert_debug_eq(&names_not_in_functions);
 
     Ok(())
 }
