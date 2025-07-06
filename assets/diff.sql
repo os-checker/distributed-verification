@@ -1,9 +1,9 @@
 SELECT
-  name,
-  hash
+  *
 FROM
   db
 WHERE
-  callees_len==1
+  name LIKE 'char::convert%'
+  -- hash=='22375753217274649884991570758697034622'
 ORDER BY
   name;
