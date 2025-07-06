@@ -29,5 +29,6 @@ $VERIFY_RUST_STD
 
 popd
 pushd verify-rust-std
-cp library/core/db.sqlite3 ../assets/core.sqlite3
+ls -a library/core/db.sqlite3
+mv library/core/db.sqlite3 ../assets/core.sqlite3
 git checkout .
