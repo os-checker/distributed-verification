@@ -46,7 +46,10 @@ jobs:
         run: cargo test -- --nocapture
 
   kani-list:
+    name: kani-list ${{ matrix.kani-args }}
     runs-on: ubuntu-latest
+    matrix:
+      kani-args: ["", "-Zautoharness"]
     if: true
     steps:
       - uses: actions/checkout@v4
@@ -60,7 +63,8 @@ jobs:
         working-directory: verify-rust-std
         env:
           UNSTABLE_ARGS: -Z function-contracts -Z mem-predicates -Z float-lib -Z c-ffi -Z loop-contracts
-        run: kani list -Zlist ${{ env.UNSTABLE_ARGS }} --std ./library --format=json
+        # FIXME: we could just run ./scripts/run-kani.sh --run list {,--with-autoharness}
+        run: kani list -Zlist ${{ env.UNSTABLE_ARGS }} ${{ matrix.kani-args }} --std ./library --format=json
 
       - name: View list
         working-directory: verify-rust-std
@@ -69,7 +73,7 @@ jobs:
       - name: Upload kani-list.json
         uses: actions/upload-artifact@v4
         with:
-          name: artifact-kani-list
+          name: artifact-kani-list${{ matrix.kani-args }}
           path: verify-rust-std/kani-list.json
           compression-level: 9
           if-no-files-found: error
