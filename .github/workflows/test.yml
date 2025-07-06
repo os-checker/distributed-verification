@@ -48,8 +48,9 @@ jobs:
   kani-list:
     name: kani-list ${{ matrix.kani-args }}
     runs-on: ubuntu-latest
-    matrix:
-      kani-args: ["", "-Zautoharness"]
+    strategy:
+      matrix:
+        kani-args: ["", "-Zautoharness"]
     if: true
     steps:
       - uses: actions/checkout@v4
