@@ -50,7 +50,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        kani-args: ["", "-Zautoharness"]
+        kani-args: ["", "--with-autoharness"]
     if: true
     steps:
       - uses: actions/checkout@v4
@@ -62,10 +62,7 @@ jobs:
 
       - name: Kani list
         working-directory: verify-rust-std
-        env:
-          UNSTABLE_ARGS: -Z function-contracts -Z mem-predicates -Z float-lib -Z c-ffi -Z loop-contracts
-        # FIXME: we could just run ./scripts/run-kani.sh --run list {,--with-autoharness}
-        run: kani list -Zlist ${{ env.UNSTABLE_ARGS }} ${{ matrix.kani-args }} --std ./library --format=json
+        run: ./scripts/run-kani.sh --run list ${{ matrix.kani-args }}
 
       - name: View list
         working-directory: verify-rust-std
