@@ -63,7 +63,7 @@ jobs:
       - run: echo ${{ env.AUTO }}
       - run: echo ${{ matrix.autoharness }}
       - run: echo "yay"
-        if: ${{ env.AUTO }} == '-autoharness'
+        if: ${{ env.AUTO == '-autoharness' }} 
 
       - name: Install kani
         run: bash ./.github/install-kani.sh
