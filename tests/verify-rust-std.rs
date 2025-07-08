@@ -65,8 +65,8 @@ fn read() {
     let kani_list = read_kani_list_json();
     expect![[r#"
         Totals {
-            standard_harnesses: 8350,
-            contract_harnesses: 1154,
+            standard_harnesses: 8385,
+            contract_harnesses: 1232,
             functions_under_contract: 356,
         }
     "#]]
