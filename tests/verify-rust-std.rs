@@ -9,7 +9,7 @@ const PREFIX_CI_DIR: &str = "/home/runner/work/distributed-verification/distribu
 
 /// Read kani-list.json generated from verify-rust-std CI.
 fn read_kani_list_json() -> KaniListJson {
-    const KANI_LIST_JSON: &str = "tmp/ubuntu-latest-kani-list.json/kani-list.json";
+    const KANI_LIST_JSON: &str = "assets/kani-list_verify-rust-std-CI.json";
     const PREFIX: &str = "/home/runner/work/verify-rust-std/verify-rust-std/library/";
 
     let mut kani_list: KaniListJson = read_file(KANI_LIST_JSON).unwrap();
