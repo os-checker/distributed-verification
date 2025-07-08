@@ -1,4 +1,4 @@
-use crate::{BoxStr, ProofKind, Result, SerFunction};
+use crate::{BoxStr, ProofKind, SerFunction};
 use indexmap::{IndexMap, IndexSet};
 use serde::{Deserialize, Serialize};
 use std::{
@@ -51,7 +51,7 @@ impl KaniListHarnesses {
         self.inner = inner;
     }
 
-    pub fn strip_path_prefix(&mut self, prefix: &str) -> Result<()> {
+    pub fn strip_path_prefix(&mut self, prefix: &str) {
         let mut map = IndexMap::with_capacity(self.inner.len());
         for (key, val) in self.inner.iter_mut() {
             let val = std::mem::take(val);
@@ -69,7 +69,6 @@ impl KaniListHarnesses {
         }
         map.sort_unstable_keys();
         self.inner = map;
-        Ok(())
     }
 
     pub fn strip_path_closure_name(&mut self, v_text: &[&str]) {
@@ -147,20 +146,21 @@ impl KaniListJson {
     }
 
     // FIXME: merge this and the raw one.
-    pub fn strip_path_prefix<P: AsRef<Path>>(&mut self, path: P) -> Result<()> {
-        let path = path.as_ref().canonicalize()?;
+    pub fn strip_path_prefix<P: AsRef<Path>>(&mut self, path: P) {
+        let path = path.as_ref();
+        let path = path
+            .canonicalize()
+            .unwrap_or_else(|err| panic!("Unable to canonicalize {path:?}:\n{err}"));
         let prefix = &format!("{}{MAIN_SEPARATOR}", path.to_str().unwrap());
 
-        self.standard_harnesses.strip_path_prefix(prefix)?;
-        self.contract_harnesses.strip_path_prefix(prefix)?;
-        Ok(())
+        self.standard_harnesses.strip_path_prefix(prefix);
+        self.contract_harnesses.strip_path_prefix(prefix);
     }
 
     /// This function is used in tests.
-    pub fn strip_path_prefix_raw(&mut self, prefix: &str) -> Result<()> {
-        self.standard_harnesses.strip_path_prefix(prefix)?;
-        self.contract_harnesses.strip_path_prefix(prefix)?;
-        Ok(())
+    pub fn strip_path_prefix_raw(&mut self, prefix: &str) {
+        self.standard_harnesses.strip_path_prefix(prefix);
+        self.contract_harnesses.strip_path_prefix(prefix);
     }
 
     pub fn strip_path_closure_name(&mut self, text: &[&str]) {

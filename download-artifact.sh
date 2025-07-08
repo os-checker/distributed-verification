@@ -1,8 +1,11 @@
 #!/bin/bash
 
+# This script download latest artifacts from distributed-verification CI.
+
 set -x
 
 DIR=artifacts
+rm $DIR -rf
 
 # Define the repo and workflow file
 REPOSITORY="os-checker/distributed-verification"

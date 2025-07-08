@@ -41,6 +41,7 @@ impl Db {
         let db_file = std::env::var(VAR_DB_FILE);
         let db_file = db_file.as_deref().unwrap_or(DB_FILE);
 
+        info!(db_file, "start sqlite db");
         let _span = error_span!("Db::new", db_file).entered();
         let db = Connection::open(db_file).context("Failed to open or create db file.")?;
 
@@ -53,8 +54,11 @@ impl Db {
 
     /// This function should be called after recursive hashes are computed for all functions.
     pub fn store(&mut self, map: &Functions) -> Result<()> {
+        info!(db = ?self.db.path(), "data ready to be stored to sqlite db");
         let tx = self.db.transaction()?;
         let mut stmt = tx.prepare(SQL_INSERT)?;
+
+        let mut count = 0usize;
         for func in cache_to_db_func(map) {
             let func = match func {
                 Ok(func) => func,
@@ -78,6 +82,7 @@ impl Db {
                 ":callees_len": func.callees_len,
                 ":callees": to_string_pretty(&func.callees).unwrap(),
             };
+
             if let Err(err) = stmt.insert(params) {
                 match &err {
                     rusqlite::Error::SqliteFailure(error, opt_str) => {
@@ -86,7 +91,7 @@ impl Db {
                         if matches!(error.code, rusqlite::ffi::ErrorCode::ConstraintViolation)
                             && error.extended_code == rusqlite::ffi::SQLITE_CONSTRAINT_PRIMARYKEY
                         {
-                            error!(%error, ?opt_str, ?func, "No insert a duplicated PRIMARY KEY.");
+                            error!(%error, ?opt_str, func.file, func.name, func.hash, "No insert a duplicated PRIMARY KEY.");
                         } else {
                             bail!("Failed to insert {func:?}\nerr={err:?}")
                         }
@@ -94,9 +99,12 @@ impl Db {
                     _ => bail!("Failed to insert {func:?}\nerr={err:?}"),
                 }
             }
+            count += 1;
         }
         stmt.finalize().context("Faield to commit prepare statement.")?;
-        tx.finish()?;
+        tx.commit()?;
+
+        info!(db = ?self.db.path(), count, "data successully stored to sqlite db");
         Ok(())
     }
 }

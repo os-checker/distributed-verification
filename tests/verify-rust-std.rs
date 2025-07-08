@@ -8,23 +8,23 @@ const PREFIX_LOCAL_DIR: &str = "/home/gh-zjp-CN/distributed-verification/";
 const PREFIX_CI_DIR: &str = "/home/runner/work/distributed-verification/distributed-verification/";
 
 /// Read kani-list.json generated from verify-rust-std CI.
-fn read_kani_list_json() -> Result<KaniListJson> {
-    const KANI_LIST_JSON: &str = "tmp/ubuntu-latest-kani-list.json/kani-list.json";
+fn read_kani_list_json() -> KaniListJson {
+    const KANI_LIST_JSON: &str = "assets/kani-list_verify-rust-std-CI.json";
     const PREFIX: &str = "/home/runner/work/verify-rust-std/verify-rust-std/library/";
 
-    let mut kani_list: KaniListJson = read_file(KANI_LIST_JSON)?;
+    let mut kani_list: KaniListJson = read_file(KANI_LIST_JSON).unwrap();
     kani_list.normalize_file_path();
-    kani_list.strip_path_prefix_raw(PREFIX)?;
+    kani_list.strip_path_prefix_raw(PREFIX);
     kani_list.strip_path_closure_name(&[PREFIX, PREFIX_LOCAL_DIR, PREFIX_CI_DIR]);
-    Ok(kani_list)
+    kani_list
 }
 
-fn read_core_json() -> Result<Vec<SerFunction>> {
+fn read_core_json() -> Vec<SerFunction> {
     const CORE_JSON: &str = "./assets/core.json";
     const PREFIX_LOCAL: &str = "/home/gh-zjp-CN/distributed-verification/verify-rust-std/library/";
     const PREFIX_CI: &str = "/home/runner/work/distributed-verification/distributed-verification/verify-rust-std/library/";
 
-    let mut v: Vec<SerFunction> = read_file(CORE_JSON)?;
+    let mut v: Vec<SerFunction> = read_file(CORE_JSON).unwrap();
     for func in &mut v {
         // strip_path_closure_name
         func.name = func
@@ -35,12 +35,12 @@ fn read_core_json() -> Result<Vec<SerFunction>> {
             .replace(PREFIX_CI_DIR, "")
             .into();
     }
-    Ok(v)
+    v
 }
 
 #[test]
-fn core_json() -> Result<()> {
-    let v_func = read_core_json()?;
+fn core_json() {
+    let v_func = read_core_json();
     let merged = MergedHarnesses::new(&v_func);
 
     #[derive(Debug)]
@@ -58,17 +58,15 @@ fn core_json() -> Result<()> {
         }
     "#]]
     .assert_debug_eq(&count);
-
-    Ok(())
 }
 
 #[test]
-fn read() -> Result<()> {
-    let kani_list = read_kani_list_json()?;
+fn read() {
+    let kani_list = read_kani_list_json();
     expect![[r#"
         Totals {
-            standard_harnesses: 8350,
-            contract_harnesses: 1154,
+            standard_harnesses: 8385,
+            contract_harnesses: 1232,
             functions_under_contract: 356,
         }
     "#]]
@@ -77,7 +75,7 @@ fn read() -> Result<()> {
     let harness_names = kani_list.harness_names(|file, _| file.starts_with("core/"));
     expect_file!["snapshots/verify-rust-std/harness_names.txt"].assert_debug_eq(&harness_names);
 
-    let v_func = read_core_json()?;
+    let v_func = read_core_json();
     let merged = MergedHarnesses::new(&v_func);
 
     let function_names = merged.function_names(|f| f.file.starts_with("core/"));
@@ -89,6 +87,4 @@ fn read() -> Result<()> {
         .collect();
     expect_file!["snapshots/verify-rust-std/names_not_in_functions.txt"]
         .assert_debug_eq(&names_not_in_functions);
-
-    Ok(())
 }

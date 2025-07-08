@@ -37,21 +37,21 @@ fn validate_kani_list_json() -> Result<()> {
     Ok(())
 }
 
-fn read_kani_list_json() -> Result<KaniListJson> {
+fn read_kani_list_json() -> KaniListJson {
     const KANI_LIST_JSON: &str = "assets/kani-list_verify-rust-std.json";
     const PREFIX: &str = "/home/gh-zjp-CN/distributed-verification/verify-rust-std/library/";
 
-    let mut kani_list: KaniListJson = read_file(KANI_LIST_JSON)?;
-    kani_list.strip_path_prefix_raw(PREFIX)?;
-    Ok(kani_list)
+    let mut kani_list: KaniListJson = read_file(KANI_LIST_JSON).unwrap();
+    kani_list.strip_path_prefix_raw(PREFIX);
+    kani_list
 }
 
 #[test]
-fn kani_list_json() -> Result<()> {
-    let kani_list = read_kani_list_json()?;
+fn kani_list_json() {
+    let kani_list = read_kani_list_json();
 
     expect_file!["snapshots/kani_list/kani_list_json-files.json"]
-        .assert_eq(&serde_json::to_string_pretty(&kani_list.files())?);
+        .assert_eq(&serde_json::to_string_pretty(&kani_list.files()).unwrap());
 
     expect![[r#"
         Totals {
@@ -61,6 +61,4 @@ fn kani_list_json() -> Result<()> {
         }
     "#]]
     .assert_debug_eq(&kani_list.totals);
-
-    Ok(())
 }

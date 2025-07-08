@@ -36,7 +36,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: artifact-libcore
-          path: assets/core.json
+          path: |
+            assets/core.json
+            assets/core.sqlite3
           compression-level: 9
           if-no-files-found: error
 
@@ -44,9 +46,23 @@ jobs:
         run: cargo test -- --nocapture
 
   kani-list:
+    name: kani-list${{ matrix.autoharness }}
     runs-on: ubuntu-latest
-    if: false
+    strategy:
+      matrix:
+        autoharness: ["", "-autoharness"]
+    if: true
+    env:
+      UNSTABLE_ARGS: -Z function-contracts -Z mem-predicates -Z float-lib -Z c-ffi -Z loop-contracts
+      AUTO: ${{ matrix.autoharness }}
     steps:
+      - name: Remove unnecessary software to free up disk space
+        run: |
+          # inspired by https://github.com/easimon/maximize-build-space/blob/master/action.yml
+          df -h
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /usr/local/.ghcup
+          df -h
+
       - uses: actions/checkout@v4
         with:
           submodules: 'recursive'
@@ -56,9 +72,13 @@ jobs:
 
       - name: Kani list
         working-directory: verify-rust-std
-        env:
-          UNSTABLE_ARGS: -Z function-contracts -Z mem-predicates -Z float-lib -Z c-ffi -Z loop-contracts
-        run: kani list -Zlist ${{ env.UNSTABLE_ARGS }} --std ./library --format=json
+        if: ${{ env.AUTO == '' }}
+        run:  kani list -Zlist ${{ env.UNSTABLE_ARGS }} --std ./library --format=json
+
+      - name: Kani list with Autoharness
+        working-directory: verify-rust-std
+        if: ${{ env.AUTO == '-autoharness' }}
+        run: kani autoharness -Z autoharness --list -Z list ${{ env.UNSTABLE_ARGS }} --std ./library --format=json
 
       - name: View list
         working-directory: verify-rust-std
@@ -67,7 +87,7 @@ jobs:
       - name: Upload kani-list.json
         uses: actions/upload-artifact@v4
         with:
-          name: artifact-kani-list
+          name: artifact-kani-list${{ env.AUTO }}
           path: verify-rust-std/kani-list.json
           compression-level: 9
           if-no-files-found: error
