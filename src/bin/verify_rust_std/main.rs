@@ -12,6 +12,8 @@ extern crate eyre;
 mod env;
 use env::ENV;
 
+mod diff;
+
 fn main() -> Result<()> {
     let mut args = std::env::args().collect::<Vec<_>>();
 
@@ -38,6 +40,9 @@ fn main() -> Result<()> {
             // build non-core crates
             run("rustc", rustc_args, &[])
         }
+    } else if args.get(1).map(|arg| arg == "merge").unwrap_or(false) {
+        distributed_verification::logger::init();
+        diff::run(&args[1..])
     } else {
         run(
             "cargo",

@@ -104,6 +104,10 @@ impl KaniListHarnesses {
             }
         }
     }
+
+    fn file_func_name(&self) -> impl Iterator<Item = (&str, &str)> {
+        self.inner.iter().flat_map(|(k, v)| v.iter().map(|func| (&**k, &**func)))
+    }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, Eq, PartialEq, PartialOrd, Ord, Hash)]
@@ -119,9 +123,9 @@ pub struct ContractedFunction {
 #[derive(Debug, Clone, Serialize, Deserialize, Eq, PartialEq, PartialOrd, Ord)]
 #[serde(rename_all = "kebab-case")]
 pub struct Totals {
-    standard_harnesses: usize,
-    contract_harnesses: usize,
-    functions_under_contract: usize,
+    pub standard_harnesses: usize,
+    pub contract_harnesses: usize,
+    pub functions_under_contract: usize,
 }
 
 /// The datastructure generated from `kani list --json`.
@@ -186,6 +190,10 @@ impl KaniListJson {
         let duplicates = count_gt1(&v);
         assert!(duplicates.is_empty(), "Function name duplicates: {duplicates:#?}");
         vec_to_set(&v)
+    }
+
+    pub fn file_func_name(&self) -> impl Iterator<Item = (&str, &str)> {
+        self.standard_harnesses.file_func_name().chain(self.contract_harnesses.file_func_name())
     }
 }
 
