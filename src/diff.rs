@@ -2,6 +2,7 @@ use crate::{BoxStr, ProofKind, SerFunction};
 use indexmap::{IndexMap, IndexSet};
 use serde::{Deserialize, Serialize};
 use std::{
+    collections::HashSet,
     hash::Hash,
     path::{Component, MAIN_SEPARATOR, Path, PathBuf},
 };
@@ -104,6 +105,10 @@ impl KaniListHarnesses {
             }
         }
     }
+
+    fn file_func_name(&self) -> impl Iterator<Item = (&str, &str)> {
+        self.inner.iter().flat_map(|(k, v)| v.iter().map(|func| (&**k, &**func)))
+    }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, Eq, PartialEq, PartialOrd, Ord, Hash)]
@@ -119,9 +124,9 @@ pub struct ContractedFunction {
 #[derive(Debug, Clone, Serialize, Deserialize, Eq, PartialEq, PartialOrd, Ord)]
 #[serde(rename_all = "kebab-case")]
 pub struct Totals {
-    standard_harnesses: usize,
-    contract_harnesses: usize,
-    functions_under_contract: usize,
+    pub standard_harnesses: usize,
+    pub contract_harnesses: usize,
+    pub functions_under_contract: usize,
 }
 
 /// The datastructure generated from `kani list --json`.
@@ -187,6 +192,10 @@ impl KaniListJson {
         assert!(duplicates.is_empty(), "Function name duplicates: {duplicates:#?}");
         vec_to_set(&v)
     }
+
+    pub fn file_func_name(&self) -> impl Iterator<Item = (&str, &str)> {
+        self.standard_harnesses.file_func_name().chain(self.contract_harnesses.file_func_name())
+    }
 }
 
 fn count_gt1<T: Copy + Hash + Eq>(v: &[T]) -> Vec<(T, u32)> {
@@ -235,4 +244,24 @@ impl MergedHarnesses<'_> {
         // FIXME: it's possible the function name will duplicate, need to figure out why.
         vec_to_set(&v)
     }
+}
+
+/// Merge hash json and kani-list.
+#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
+pub struct MergeHashKaniList {
+    pub file: Box<str>,
+    pub func: Box<str>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    pub hash: Option<Box<str>>,
+}
+
+/// Compare two `MergeHashKaniList`, and returns the ones from new that don't match the old,
+/// usually the ones don't have hash values or whoes hash values changed.
+///
+/// If new is sorted, especially directly from the stdout of verify_rust_std merge subcommand,
+/// the result is sorted.
+pub fn diff(old: &[MergeHashKaniList], new: &[MergeHashKaniList]) -> Vec<MergeHashKaniList> {
+    let set: HashSet<_> = old.iter().collect();
+    new.iter().filter(|item| item.hash.is_none() || !set.contains(item)).cloned().collect()
 }
