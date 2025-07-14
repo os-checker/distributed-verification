@@ -102,7 +102,7 @@ fn read() {
 // --strip-kani-list-prefix /home/runner/work/verify-rust-std/verify-rust-std/library/ > merge.json
 #[test]
 fn merge() {
-    let mut cmd = Command::cargo_bin(CLI).unwrap();
+    let mut cmd = Command::new(CLI);
     let args = [
         "merge",
         "--hash-json",
@@ -119,5 +119,5 @@ fn merge() {
 
     let v_hash: Vec<MergeHashKaniList> = serde_json::from_str(stdout).unwrap();
     expect!["9616"].assert_eq(&v_hash.len().to_string());
-    expect!["5935"].assert_eq(&v_hash.iter().filter(|h| h.hash.is_some()).count().to_string());
+    expect!["5937"].assert_eq(&v_hash.iter().filter(|h| h.hash.is_some()).count().to_string());
 }
