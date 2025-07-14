@@ -2,6 +2,7 @@ use crate::{BoxStr, ProofKind, SerFunction};
 use indexmap::{IndexMap, IndexSet};
 use serde::{Deserialize, Serialize};
 use std::{
+    collections::HashSet,
     hash::Hash,
     path::{Component, MAIN_SEPARATOR, Path, PathBuf},
 };
@@ -246,11 +247,18 @@ impl MergedHarnesses<'_> {
 }
 
 /// Merge hash json and kani-list.
-#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct MergeHashKaniList {
     pub file: Box<str>,
     pub func: Box<str>,
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(default)]
     pub hash: Option<Box<str>>,
+}
+
+/// Compare two `MergeHashKaniList`, and returns the ones from new that don't have hash values or
+/// whoes hash values changed.
+pub fn diff(old: &[MergeHashKaniList], new: &[MergeHashKaniList]) -> Vec<MergeHashKaniList> {
+    let set: HashSet<_> = old.iter().collect();
+    new.iter().filter(|item| !set.contains(item)).cloned().collect()
 }
