@@ -1,6 +1,7 @@
 //! `VERIFY_RUST_STD_LIBRARY=path/to/verify-rust-std/library` and
 //! `KANI_DIR=path/to/kani` should be set beforehand.
 
+use distributed_verification::logger;
 use eyre::{Context, Result};
 use std::process::{Command, Stdio};
 
@@ -12,6 +13,7 @@ extern crate eyre;
 mod env;
 use env::ENV;
 
+mod diff;
 mod merge;
 
 fn main() -> Result<()> {
@@ -41,8 +43,11 @@ fn main() -> Result<()> {
             run("rustc", rustc_args, &[])
         }
     } else if args.get(1).map(|arg| arg == "merge").unwrap_or(false) {
-        distributed_verification::logger::init();
+        logger::init();
         merge::run(&args[1..])
+    } else if args.get(1).map(|arg| arg == "diff").unwrap_or(false) {
+        logger::init();
+        diff::run(&args[1..])
     } else {
         run(
             "cargo",
@@ -84,4 +89,10 @@ fn build_core(args: Vec<String>) -> Result<()> {
     );
     new_args.extend(args);
     run(&ENV.DISTRIBUTED_VERIFICATION, &new_args, &[])
+}
+
+fn read_json<T: serde::de::DeserializeOwned>(path: &str) -> Result<T> {
+    let _span = error_span!("read_json", path).entered();
+    let file = std::fs::File::open(path)?;
+    Ok(serde_json::from_reader(file)?)
 }

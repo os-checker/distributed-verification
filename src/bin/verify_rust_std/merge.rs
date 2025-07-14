@@ -4,7 +4,7 @@ use distributed_verification::{
     SerFunction,
     diff::{KaniListJson, MergeHashKaniList},
 };
-use std::{collections::HashMap, fs::File};
+use std::collections::HashMap;
 
 pub fn run(args: &[String]) -> Result<()> {
     SubCmdMerge::parse_from(args).run()
@@ -34,7 +34,11 @@ impl SubCmdMerge {
     fn run(self) -> Result<()> {
         debug!(?self);
 
-        let (mut hash_json, mut kani_list) = read_json(&self.hash_json, &self.kani_list)?;
+        let mut hash_json: Vec<SerFunction> = crate::read_json(&self.hash_json)?;
+
+        let mut kani_list: KaniListJson = crate::read_json(&self.kani_list)?;
+        // normalize paths like core/src/../../portable-simd/crates/core_simd/src/masks.rs
+        kani_list.normalize_file_path();
 
         if !self.strip_kani_list_prefix.is_empty() {
             kani_list.strip_path_prefix_raw(&self.strip_kani_list_prefix);
@@ -64,25 +68,4 @@ impl SubCmdMerge {
 
         Ok(())
     }
-}
-
-fn read_json(
-    hash_json_path: &str,
-    kani_list_path: &str,
-) -> Result<(Vec<SerFunction>, KaniListJson)> {
-    let hash_json: Vec<SerFunction> = {
-        let _span = error_span!("hash_json_path", hash_json_path).entered();
-        let file = File::open(hash_json_path)?;
-        serde_json::from_reader(file)?
-    };
-
-    let mut kani_list: KaniListJson = {
-        let _span = error_span!("kani_list_path", kani_list_path).entered();
-        let file = File::open(kani_list_path)?;
-        serde_json::from_reader(file)?
-    };
-    // normalize paths like core/src/../../portable-simd/crates/core_simd/src/masks.rs
-    kani_list.normalize_file_path();
-
-    Ok((hash_json, kani_list))
 }

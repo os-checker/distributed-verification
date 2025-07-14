@@ -256,9 +256,12 @@ pub struct MergeHashKaniList {
     pub hash: Option<Box<str>>,
 }
 
-/// Compare two `MergeHashKaniList`, and returns the ones from new that don't have hash values or
-/// whoes hash values changed.
+/// Compare two `MergeHashKaniList`, and returns the ones from new that don't match the old,
+/// usually the ones don't have hash values or whoes hash values changed.
+///
+/// If new is sorted, especially directly from the stdout of verify_rust_std merge subcommand,
+/// the result is sorted.
 pub fn diff(old: &[MergeHashKaniList], new: &[MergeHashKaniList]) -> Vec<MergeHashKaniList> {
     let set: HashSet<_> = old.iter().collect();
-    new.iter().filter(|item| !set.contains(item)).cloned().collect()
+    new.iter().filter(|item| item.hash.is_none() || !set.contains(item)).cloned().collect()
 }
