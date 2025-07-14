@@ -244,3 +244,13 @@ impl MergedHarnesses<'_> {
         vec_to_set(&v)
     }
 }
+
+/// Merge hash json and kani-list.
+#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
+pub struct MergeHashKaniList {
+    pub file: Box<str>,
+    pub func: Box<str>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    pub hash: Option<Box<str>>,
+}

@@ -1,7 +1,9 @@
 use crate::Result;
 use clap::Parser;
-use distributed_verification::{SerFunction, diff::KaniListJson};
-use serde::{Deserialize, Serialize};
+use distributed_verification::{
+    SerFunction,
+    diff::{KaniListJson, MergeHashKaniList},
+};
 use std::{collections::HashMap, fs::File};
 
 pub fn run(args: &[String]) -> Result<()> {
@@ -50,7 +52,7 @@ impl SubCmdMerge {
         let mut v_merge = Vec::with_capacity(cap);
         for file_func in kani_list.file_func_name() {
             let (file, func) = file_func;
-            v_merge.push(Merge {
+            v_merge.push(MergeHashKaniList {
                 file: file.into(),
                 func: func.into(),
                 hash: hash_map.get(&file_func).map(|s| (*s).into()),
@@ -62,15 +64,6 @@ impl SubCmdMerge {
 
         Ok(())
     }
-}
-
-#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
-pub struct Merge {
-    pub file: Box<str>,
-    pub func: Box<str>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    #[serde(default)]
-    pub hash: Option<Box<str>>,
 }
 
 fn read_json(
