@@ -81,11 +81,13 @@ fn read_json(
         serde_json::from_reader(file)?
     };
 
-    let kani_list: KaniListJson = {
+    let mut kani_list: KaniListJson = {
         let _span = error_span!("kani_list_path", kani_list_path).entered();
         let file = File::open(kani_list_path)?;
         serde_json::from_reader(file)?
     };
+    // normalize paths like core/src/../../portable-simd/crates/core_simd/src/masks.rs
+    kani_list.normalize_file_path();
 
     Ok((hash_json, kani_list))
 }
