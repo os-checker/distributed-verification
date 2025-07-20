@@ -2,21 +2,27 @@
   "local": {
     "attrs": {
       "all_tool_attrs": 35,
-      "kanitools": 25
+      "kanitools": 31
     },
     "fn_defs": {
-      "total": 13,
+      "total": 19,
       "kanitools": {
-        "count": 13,
+        "count": 19,
         "names": [
           "verify::contract",
           "verify::contract::kani_contract_mode",
+          "verify::contract::kani_force_fn_once",
+          "verify::contract::kani_force_fn_once_with_args",
           "verify::contract::kani_register_contract",
           "verify::contract_ensures",
           "verify::contract_ensures::kani_contract_mode",
+          "verify::contract_ensures::kani_force_fn_once",
+          "verify::contract_ensures::kani_force_fn_once_with_args",
           "verify::contract_ensures::kani_register_contract",
           "verify::contract_requires",
           "verify::contract_requires::kani_contract_mode",
+          "verify::contract_requires::kani_force_fn_once",
+          "verify::contract_requires::kani_force_fn_once_with_args",
           "verify::contract_requires::kani_register_contract",
           "verify::single_contract",
           "verify::single_contract_requires",
@@ -29,7 +35,7 @@
       "count": {
         "kanitool::asserted_with": 3,
         "kanitool::checked_with": 3,
-        "kanitool::fn_marker": 6,
+        "kanitool::fn_marker": 12,
         "kanitool::modifies_wrapper": 3,
         "kanitool::proof": 4,
         "kanitool::recursion_check": 3,
@@ -48,10 +54,16 @@
         ],
         "kanitool::fn_marker": [
           "verify::contract::kani_contract_mode",
+          "verify::contract::kani_force_fn_once",
+          "verify::contract::kani_force_fn_once_with_args",
           "verify::contract::kani_register_contract",
           "verify::contract_ensures::kani_contract_mode",
+          "verify::contract_ensures::kani_force_fn_once",
+          "verify::contract_ensures::kani_force_fn_once_with_args",
           "verify::contract_ensures::kani_register_contract",
           "verify::contract_requires::kani_contract_mode",
+          "verify::contract_requires::kani_force_fn_once",
+          "verify::contract_requires::kani_force_fn_once_with_args",
           "verify::contract_requires::kani_register_contract"
         ],
         "kanitool::modifies_wrapper": [
