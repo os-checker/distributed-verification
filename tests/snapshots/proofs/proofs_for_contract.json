@@ -10,7 +10,7 @@
     "file": "distributed-verification/kani/library/kani_core/src/lib.rs"
   },
   {
-    "hash": "9110013437157474711273995327575973953",
+    "hash": "170185868534852403517319670654034345935",
     "name": "kani::panic",
     "file": "distributed-verification/kani/library/kani_core/src/lib.rs"
   },
@@ -20,22 +20,22 @@
     "file": "library/core/src/array/mod.rs"
   },
   {
-    "hash": "1835555409892641968715518659512763629305",
+    "hash": "1253501917253063290515286798079291406022",
     "name": "std::char::convert::char_try_from_u32",
     "file": "library/core/src/char/convert.rs"
   },
   {
-    "hash": "181272475585460647517443557415321318659",
+    "hash": "131606170482807693362175987803096434760",
     "name": "std::char::convert::from_u32_unchecked",
     "file": "library/core/src/char/convert.rs"
   },
   {
-    "hash": "1320043678392507861115191954133317143490",
+    "hash": "141777398513335345408154280402043326980",
     "name": "std::char::methods::<impl char>::from_u32_unchecked",
     "file": "library/core/src/char/methods.rs"
   },
   {
-    "hash": "105293143189968001175910723606472847453",
+    "hash": "80249903325342526932651822469818924130",
     "name": "<usize as std::cmp::Ord>::min",
     "file": "library/core/src/cmp.rs"
   },
@@ -50,7 +50,7 @@
     "file": "library/core/src/cmp.rs"
   },
   {
-    "hash": "45420099425906739229972611360828906996",
+    "hash": "1774680678790287728814454280293715994219",
     "name": "std::cmp::min::<usize>",
     "file": "library/core/src/cmp.rs"
   },
@@ -65,12 +65,12 @@
     "file": "library/core/src/convert/num.rs"
   },
   {
-    "hash": "1371746331589039016331056560044945030",
+    "hash": "55365444148228517684466806986787559606",
     "name": "<&str as std::fmt::Display>::fmt",
     "file": "library/core/src/fmt/mod.rs"
   },
   {
-    "hash": "1354177614729625835117775292546531775014",
+    "hash": "694412030810075507040989598874491585",
     "name": "<str as std::fmt::Display>::fmt",
     "file": "library/core/src/fmt/mod.rs"
   },
@@ -80,17 +80,17 @@
     "file": "library/core/src/fmt/mod.rs"
   },
   {
-    "hash": "172944738288885290083276427975264664072",
+    "hash": "4372901837201700045367109528985425757",
     "name": "core::fmt::PostPadding::write",
     "file": "library/core/src/fmt/mod.rs"
   },
   {
-    "hash": "1533180195846334583617947954899683798657",
+    "hash": "699002900709069648812102067476367562990",
     "name": "std::fmt::Formatter::<'_>::pad",
     "file": "library/core/src/fmt/mod.rs"
   },
   {
-    "hash": "142514712097694120346572792450431499665",
+    "hash": "141869330349636326479565094854406012453",
     "name": "std::fmt::Formatter::<'_>::padding",
     "file": "library/core/src/fmt/mod.rs"
   },
@@ -100,7 +100,7 @@
     "file": "library/core/src/fmt/mod.rs"
   },
   {
-    "hash": "151549091835301814569478420826126555649",
+    "hash": "1161005037905311640618283830950292411169",
     "name": "std::fmt::FormattingOptions::get_fill",
     "file": "library/core/src/fmt/mod.rs"
   },
@@ -120,7 +120,7 @@
     "file": "library/core/src/fmt/rt.rs"
   },
   {
-    "hash": "931076662517735820116389385577792859706",
+    "hash": "64831333328555634737835457686945546342",
     "name": "core::fmt::rt::Argument::<'_>::new_display::<&str>",
     "file": "library/core/src/fmt/rt.rs"
   },
@@ -140,7 +140,7 @@
     "file": "library/core/src/intrinsics/mod.rs"
   },
   {
-    "hash": "1408393638760277889216161485462822825467",
+    "hash": "91375825332728499584552473133800788915",
     "name": "core::ub_checks::maybe_is_aligned_and_not_null::runtime",
     "file": "library/core/src/intrinsics/mod.rs"
   },
@@ -170,12 +170,12 @@
     "file": "library/core/src/iter/adapters/filter.rs"
   },
   {
-    "hash": "766528270008730576414797874131980563974",
+    "hash": "1169454885572802949911851882877522755773",
     "name": "<std::iter::Filter<I, P> as std::iter::Iterator>::count::to_usize::<&u8, {closure@core::str::count::char_count_general_case::{closure#0}}>::{closure#0}",
     "file": "library/core/src/iter/adapters/filter.rs"
   },
   {
-    "hash": "98972097590179534414450729561525715395",
+    "hash": "545707798122007980817913094500135596036",
     "name": "<std::iter::Filter<std::slice::Iter<'_, u8>, {closure@core::str::count::char_count_general_case::{closure#0}}> as std::iter::Iterator>::count",
     "file": "library/core/src/iter/adapters/filter.rs"
   },
@@ -185,7 +185,7 @@
     "file": "library/core/src/iter/adapters/filter.rs"
   },
   {
-    "hash": "136460023026271463242964210703970143574",
+    "hash": "1311510069182000871611712506430824967365",
     "name": "<std::iter::Map<std::slice::Iter<'_, u8>, {closure@<std::iter::Filter<I, P> as std::iter::Iterator>::count::to_usize<&u8, {closure@core::str::count::char_count_general_case::{closure#0}}>::{closure#0}}> as std::iter::Iterator>::fold::<usize, {closure@<usize as std::iter::Sum>::sum<std::iter::Map<std::slice::Iter<'_, u8>, {closure@<std::iter::Filter<I, P> as std::iter::Iterator>::count::to_usize<&u8, {closure@core::str::count::char_count_general_case::{closure#0}}>::{closure#0}}>>::{closure#0}}>",
     "file": "library/core/src/iter/adapters/map.rs"
   },
@@ -200,27 +200,27 @@
     "file": "library/core/src/iter/adapters/map.rs"
   },
   {
-    "hash": "1298212628145154126618156816134265951344",
+    "hash": "143385254926310059114601711607934802626",
     "name": "std::iter::adapters::map::map_fold::<&u8, usize, usize, {closure@<std::iter::Filter<I, P> as std::iter::Iterator>::count::to_usize<&u8, {closure@core::str::count::char_count_general_case::{closure#0}}>::{closure#0}}, {closure@<usize as std::iter::Sum>::sum<std::iter::Map<std::slice::Iter<'_, u8>, {closure@<std::iter::Filter<I, P> as std::iter::Iterator>::count::to_usize<&u8, {closure@core::str::count::char_count_general_case::{closure#0}}>::{closure#0}}>>::{closure#0}}>::{closure#0}",
     "file": "library/core/src/iter/adapters/map.rs"
   },
   {
-    "hash": "1232889667129580128612195481125876355895",
+    "hash": "69836621587154186912082287672825986701",
     "name": "<std::ops::Range<u16> as std::iter::range::RangeIteratorImpl>::spec_next",
     "file": "library/core/src/iter/range.rs"
   },
   {
-    "hash": "65191485396793801441708908227891945976",
+    "hash": "74263642424770005886585667687132666700",
     "name": "<u16 as std::iter::Step>::forward_unchecked",
     "file": "library/core/src/iter/range.rs"
   },
   {
-    "hash": "188312196520496208216777120611981411403",
+    "hash": "150021953543632011655891713384046546195",
     "name": "std::iter::range::<impl std::iter::Iterator for std::ops::Range<u16>>::next",
     "file": "library/core/src/iter/range.rs"
   },
   {
-    "hash": "1118720028921197857316850364974898782644",
+    "hash": "83212516662910391527380784146422699337",
     "name": "<usize as std::iter::Sum>::sum::<std::iter::Map<std::slice::Iter<'_, u8>, {closure@<std::iter::Filter<I, P> as std::iter::Iterator>::count::to_usize<&u8, {closure@core::str::count::char_count_general_case::{closure#0}}>::{closure#0}}>>",
     "file": "library/core/src/iter/traits/accum.rs"
   },
@@ -240,7 +240,7 @@
     "file": "library/core/src/iter/traits/collect.rs"
   },
   {
-    "hash": "117160024467577062374814279693937914308",
+    "hash": "1476188077969759501416587624527731620422",
     "name": "<std::iter::Map<std::slice::Iter<'_, u8>, {closure@<std::iter::Filter<I, P> as std::iter::Iterator>::count::to_usize<&u8, {closure@core::str::count::char_count_general_case::{closure#0}}>::{closure#0}}> as std::iter::Iterator>::sum::<usize>",
     "file": "library/core/src/iter/traits/iterator.rs"
   },
@@ -255,22 +255,22 @@
     "file": "library/core/src/iter/traits/iterator.rs"
   },
   {
-    "hash": "169254447276496917964889824994222006487",
+    "hash": "746335627686636360311089028698215315621",
     "name": "<std::str::CharIndices<'_> as std::iter::Iterator::advance_by::SpecAdvanceBy>::spec_advance_by",
     "file": "library/core/src/iter/traits/iterator.rs"
   },
   {
-    "hash": "95354230261524383717847373957185145555",
+    "hash": "890743343806001783818377326543496764999",
     "name": "<std::str::CharIndices<'_> as std::iter::Iterator::advance_by::SpecAdvanceBy>::spec_advance_by::{closure#0}",
     "file": "library/core/src/iter/traits/iterator.rs"
   },
   {
-    "hash": "64016173223473785207354785894730039924",
+    "hash": "38248963824617361146577789155806220457",
     "name": "<std::str::CharIndices<'_> as std::iter::Iterator>::advance_by",
     "file": "library/core/src/iter/traits/iterator.rs"
   },
   {
-    "hash": "68746763044528098428227291452128003750",
+    "hash": "162963300457841015274153803823417766214",
     "name": "<std::str::CharIndices<'_> as std::iter::Iterator>::try_fold::<std::num::NonZero<usize>, {closure@<std::str::CharIndices<'_> as std::iter::Iterator::advance_by::SpecAdvanceBy>::spec_advance_by::{closure#0}}, std::option::Option<std::num::NonZero<usize>>>",
     "file": "library/core/src/iter/traits/iterator.rs"
   },
@@ -315,52 +315,52 @@
     "file": "library/core/src/num/nonzero.rs"
   },
   {
-    "hash": "28416299455941732499272441497123863286",
+    "hash": "66472461948522780286669743098512884020",
     "name": "core::num::<impl u16>::overflowing_add",
     "file": "library/core/src/num/uint_macros.rs"
   },
   {
-    "hash": "1767882825766330041012289079684840123988",
+    "hash": "1755481411544761241911010338868424028032",
     "name": "core::num::<impl u16>::unchecked_add",
     "file": "library/core/src/num/uint_macros.rs"
   },
   {
-    "hash": "531547630013775774616630521705918956890",
+    "hash": "778307969913358517318134351169293017006",
     "name": "core::num::<impl u32>::wrapping_sub",
     "file": "library/core/src/num/uint_macros.rs"
   },
   {
-    "hash": "1491976204649427753712444486504685158667",
+    "hash": "1817700327438920062811986284895946972360",
     "name": "core::num::<impl usize>::count_ones",
     "file": "library/core/src/num/uint_macros.rs"
   },
   {
-    "hash": "267503639466522371016185904314247059966",
+    "hash": "1198745042195432320316237250098976336783",
     "name": "core::num::<impl usize>::is_power_of_two",
     "file": "library/core/src/num/uint_macros.rs"
   },
   {
-    "hash": "420027195811498354113361982279400413970",
+    "hash": "29280884443006517116686346795110467729",
     "name": "core::num::<impl usize>::overflowing_add",
     "file": "library/core/src/num/uint_macros.rs"
   },
   {
-    "hash": "9766519181220151615102176802326253862",
+    "hash": "680697364573271958516692421008805893594",
     "name": "core::num::<impl usize>::overflowing_sub",
     "file": "library/core/src/num/uint_macros.rs"
   },
   {
-    "hash": "861075789615506151054802343958342702",
+    "hash": "10088042682663381447210876152059630410",
     "name": "core::num::<impl usize>::unchecked_add",
     "file": "library/core/src/num/uint_macros.rs"
   },
   {
-    "hash": "1240112622965974978610989681601335370041",
+    "hash": "163514900348266881411363175083503667972",
     "name": "core::num::<impl usize>::unchecked_sub",
     "file": "library/core/src/num/uint_macros.rs"
   },
   {
-    "hash": "176480214868331547301536851964719628253",
+    "hash": "115578125622558050988953568575947871951",
     "name": "core::num::<impl usize>::wrapping_mul",
     "file": "library/core/src/num/uint_macros.rs"
   },
@@ -395,17 +395,17 @@
     "file": "library/core/src/option.rs"
   },
   {
-    "hash": "131534592200098059029750365218172562280",
+    "hash": "551284205942989744010603758892918003809",
     "name": "std::option::Option::<std::fmt::Alignment>::unwrap_or",
     "file": "library/core/src/option.rs"
   },
   {
-    "hash": "37329511099916694324318814422027472373",
+    "hash": "139548131330438493408310223143043863897",
     "name": "std::option::Option::<u32>::map::<char, {closure@<std::str::Chars<'_> as std::iter::Iterator>::next::{closure#0}}>",
     "file": "library/core/src/option.rs"
   },
   {
-    "hash": "145379337856805001595892687783013497010",
+    "hash": "93873349781065085267543059115936351593",
     "name": "kani::panic::panic_cold_display::<&str>",
     "file": "library/core/src/panic.rs"
   },
@@ -430,7 +430,7 @@
     "file": "library/core/src/panicking.rs"
   },
   {
-    "hash": "161984531712227522752564874190257605258",
+    "hash": "156103043049447019914417901809615508350",
     "name": "std::rt::panic_display::<&str>",
     "file": "library/core/src/panicking.rs"
   },
@@ -450,7 +450,7 @@
     "file": "library/core/src/ptr/const_ptr.rs"
   },
   {
-    "hash": "172740984469479579071665404435289701023",
+    "hash": "135040582385212612735475257113813496500",
     "name": "std::ptr::const_ptr::<impl *const ()>::is_aligned_to",
     "file": "library/core/src/ptr/const_ptr.rs"
   },
@@ -470,7 +470,7 @@
     "file": "library/core/src/ptr/const_ptr.rs"
   },
   {
-    "hash": "11106989263465620674119447375151988759",
+    "hash": "21654441677010109529687023928280502180",
     "name": "std::ptr::const_ptr::<impl *const [u8]>::len",
     "file": "library/core/src/ptr/const_ptr.rs"
   },
@@ -525,22 +525,22 @@
     "file": "library/core/src/ptr/const_ptr.rs"
   },
   {
-    "hash": "1300271856392091645916001889619506617490",
+    "hash": "1618707962037661705218318211105471942120",
     "name": "std::ptr::from_raw_parts::<[[usize; 4]], [usize; 4]>",
     "file": "library/core/src/ptr/metadata.rs"
   },
   {
-    "hash": "14412815270469178284372346649253214057",
+    "hash": "171364413319637295715083043732096201442",
     "name": "std::ptr::from_raw_parts::<[u8], u8>",
     "file": "library/core/src/ptr/metadata.rs"
   },
   {
-    "hash": "759301201495386013914096069500577582268",
+    "hash": "10108227029034297089458694313942657216",
     "name": "std::ptr::from_raw_parts::<[usize], usize>",
     "file": "library/core/src/ptr/metadata.rs"
   },
   {
-    "hash": "1363429953646800642818322319211259624481",
+    "hash": "65477300936560271722610262085043582244",
     "name": "std::ptr::metadata::<[u8]>",
     "file": "library/core/src/ptr/metadata.rs"
   },
@@ -555,117 +555,117 @@
     "file": "library/core/src/ptr/mod.rs"
   },
   {
-    "hash": "507486726895721764016555491610607611305",
+    "hash": "844348294257748951813515064259923850502",
     "name": "std::ptr::drop_in_place::<&u8>",
     "file": "library/core/src/ptr/mod.rs"
   },
   {
-    "hash": "32758264716275548135301815416129443538",
+    "hash": "786281027352090909410587866630825111124",
     "name": "std::ptr::drop_in_place::<(usize, char)>",
     "file": "library/core/src/ptr/mod.rs"
   },
   {
-    "hash": "92620507381766029301237587487992527213",
+    "hash": "1602108665480339150417063482100093944787",
     "name": "std::ptr::drop_in_place::<std::fmt::Alignment>",
     "file": "library/core/src/ptr/mod.rs"
   },
   {
-    "hash": "102773287537006387418136460951493449150",
+    "hash": "14750464030756559092072511389613712638",
     "name": "std::ptr::drop_in_place::<std::option::Option<(usize, char)>>",
     "file": "library/core/src/ptr/mod.rs"
   },
   {
-    "hash": "149239371713813135466988763744767882801",
+    "hash": "180547684808059406565403285055600712836",
     "name": "std::ptr::drop_in_place::<usize>",
     "file": "library/core/src/ptr/mod.rs"
   },
   {
-    "hash": "55367978787089163010793217435139837876",
+    "hash": "554158701962205684218313987735220350468",
     "name": "std::ptr::drop_in_place::<{closure@<std::str::CharIndices<'_> as std::iter::Iterator::advance_by::SpecAdvanceBy>::spec_advance_by::{closure#0}}>",
     "file": "library/core/src/ptr/mod.rs"
   },
   {
-    "hash": "1209564197857095228814830958456579553221",
+    "hash": "82095542769953368154912485864031886270",
     "name": "std::ptr::drop_in_place::<{closure@<std::str::Chars<'_> as std::iter::Iterator>::next::{closure#0}}>",
     "file": "library/core/src/ptr/mod.rs"
   },
   {
-    "hash": "748209534850776693517100400031629133312",
+    "hash": "5831255669648730149843380384415246652",
     "name": "std::ptr::drop_in_place::<{closure@std::iter::adapters::map::map_fold<&u8, usize, usize, {closure@<std::iter::Filter<I, P> as std::iter::Iterator>::count::to_usize<&u8, {closure@core::str::count::char_count_general_case::{closure#0}}>::{closure#0}}, {closure@<usize as std::iter::Sum>::sum<std::iter::Map<std::slice::Iter<'_, u8>, {closure@<std::iter::Filter<I, P> as std::iter::Iterator>::count::to_usize<&u8, {closure@core::str::count::char_count_general_case::{closure#0}}>::{closure#0}}>>::{closure#0}}>::{closure#0}}>",
     "file": "library/core/src/ptr/mod.rs"
   },
   {
-    "hash": "604266344039168659216032964566050355997",
+    "hash": "175036670015225221411772188187965169190",
     "name": "std::ptr::drop_in_place::<{closure@tests/proofs/proofs_for_contract.rs:11:5: 11:37}>",
     "file": "library/core/src/ptr/mod.rs"
   },
   {
-    "hash": "604266344039168659216032964566050355997",
+    "hash": "175036670015225221411772188187965169190",
     "name": "std::ptr::drop_in_place::<{closure@tests/proofs/proofs_for_contract.rs:11:5: 11:37}>",
     "file": "library/core/src/ptr/mod.rs"
   },
   {
-    "hash": "604266344039168659216032964566050355997",
+    "hash": "175036670015225221411772188187965169190",
     "name": "std::ptr::drop_in_place::<{closure@tests/proofs/proofs_for_contract.rs:11:5: 11:37}>",
     "file": "library/core/src/ptr/mod.rs"
   },
   {
-    "hash": "604266344039168659216032964566050355997",
+    "hash": "175036670015225221411772188187965169190",
     "name": "std::ptr::drop_in_place::<{closure@tests/proofs/proofs_for_contract.rs:11:5: 11:37}>",
     "file": "library/core/src/ptr/mod.rs"
   },
   {
-    "hash": "123444524744287359945969605918134445431",
+    "hash": "1819755273233344233944960289259596867",
     "name": "std::ptr::drop_in_place::<{closure@tests/proofs/proofs_for_contract.rs:27:5: 27:29}>",
     "file": "library/core/src/ptr/mod.rs"
   },
   {
-    "hash": "123444524744287359945969605918134445431",
+    "hash": "1819755273233344233944960289259596867",
     "name": "std::ptr::drop_in_place::<{closure@tests/proofs/proofs_for_contract.rs:27:5: 27:29}>",
     "file": "library/core/src/ptr/mod.rs"
   },
   {
-    "hash": "123444524744287359945969605918134445431",
+    "hash": "1819755273233344233944960289259596867",
     "name": "std::ptr::drop_in_place::<{closure@tests/proofs/proofs_for_contract.rs:27:5: 27:29}>",
     "file": "library/core/src/ptr/mod.rs"
   },
   {
-    "hash": "123444524744287359945969605918134445431",
+    "hash": "1819755273233344233944960289259596867",
     "name": "std::ptr::drop_in_place::<{closure@tests/proofs/proofs_for_contract.rs:27:5: 27:29}>",
     "file": "library/core/src/ptr/mod.rs"
   },
   {
-    "hash": "101492910187298678619036524670569532491",
+    "hash": "31562733682696207696545845758769098332",
     "name": "std::ptr::drop_in_place::<{closure@tests/proofs/proofs_for_contract.rs:3:5: 3:29}>",
     "file": "library/core/src/ptr/mod.rs"
   },
   {
-    "hash": "101492910187298678619036524670569532491",
+    "hash": "31562733682696207696545845758769098332",
     "name": "std::ptr::drop_in_place::<{closure@tests/proofs/proofs_for_contract.rs:3:5: 3:29}>",
     "file": "library/core/src/ptr/mod.rs"
   },
   {
-    "hash": "101492910187298678619036524670569532491",
+    "hash": "31562733682696207696545845758769098332",
     "name": "std::ptr::drop_in_place::<{closure@tests/proofs/proofs_for_contract.rs:3:5: 3:29}>",
     "file": "library/core/src/ptr/mod.rs"
   },
   {
-    "hash": "101492910187298678619036524670569532491",
+    "hash": "31562733682696207696545845758769098332",
     "name": "std::ptr::drop_in_place::<{closure@tests/proofs/proofs_for_contract.rs:3:5: 3:29}>",
     "file": "library/core/src/ptr/mod.rs"
   },
   {
-    "hash": "267935267854751480818415065985053337078",
+    "hash": "937477061605388048115884892480312288537",
     "name": "std::ptr::slice_from_raw_parts::<[usize; 4]>",
     "file": "library/core/src/ptr/mod.rs"
   },
   {
-    "hash": "57392431669649698342516110218176469764",
+    "hash": "892461914248527136611431264334752468555",
     "name": "std::ptr::slice_from_raw_parts::<u8>",
     "file": "library/core/src/ptr/mod.rs"
   },
   {
-    "hash": "122558071050321327518145172778423713781",
+    "hash": "1297187182340166219213119975319687609972",
     "name": "std::ptr::slice_from_raw_parts::<usize>",
     "file": "library/core/src/ptr/mod.rs"
   },
@@ -885,7 +885,7 @@
     "file": "library/core/src/result.rs"
   },
   {
-    "hash": "88633046024721928868158000904972228167",
+    "hash": "54888678836671866272358132516024826502",
     "name": "<std::slice::Chunks<'_, usize> as std::iter::Iterator>::next",
     "file": "library/core/src/slice/iter.rs"
   },
@@ -910,7 +910,7 @@
     "file": "library/core/src/slice/iter.rs"
   },
   {
-    "hash": "125489371537082193378561958245297073133",
+    "hash": "45060499419383805014075082957353484074",
     "name": "std::slice::Iter::<'_, u8>::as_slice",
     "file": "library/core/src/slice/iter.rs"
   },
@@ -925,7 +925,7 @@
     "file": "library/core/src/slice/iter.rs"
   },
   {
-    "hash": "112093191663101859282706845470326278900",
+    "hash": "47269698298620023111796944825903179130",
     "name": "<std::slice::Iter<'_, [usize; 4]> as std::iter::Iterator>::next",
     "file": "library/core/src/slice/iter/macros.rs"
   },
@@ -935,22 +935,22 @@
     "file": "library/core/src/slice/iter/macros.rs"
   },
   {
-    "hash": "136484293011665227087512181501588076411",
+    "hash": "674881123049448667512672737959208587337",
     "name": "<std::slice::Iter<'_, u8> as std::iter::Iterator>::fold::<usize, {closure@std::iter::adapters::map::map_fold<&u8, usize, usize, {closure@<std::iter::Filter<I, P> as std::iter::Iterator>::count::to_usize<&u8, {closure@core::str::count::char_count_general_case::{closure#0}}>::{closure#0}}, {closure@<usize as std::iter::Sum>::sum<std::iter::Map<std::slice::Iter<'_, u8>, {closure@<std::iter::Filter<I, P> as std::iter::Iterator>::count::to_usize<&u8, {closure@core::str::count::char_count_general_case::{closure#0}}>::{closure#0}}>>::{closure#0}}>::{closure#0}}>",
     "file": "library/core/src/slice/iter/macros.rs"
   },
   {
-    "hash": "7250475688043728136115351013068090102",
+    "hash": "154659969182662416984535348444125844",
     "name": "<std::slice::Iter<'_, u8> as std::iter::Iterator>::next",
     "file": "library/core/src/slice/iter/macros.rs"
   },
   {
-    "hash": "155597816474146809159504684113290845792",
+    "hash": "1219085896046917615810259583008727206943",
     "name": "<std::slice::Iter<'_, usize> as std::iter::Iterator>::next",
     "file": "library/core/src/slice/iter/macros.rs"
   },
   {
-    "hash": "145530532616617731099568344791001893798",
+    "hash": "793309437318306726913806640804801036999",
     "name": "std::slice::Iter::<'_, u8>::make_slice",
     "file": "library/core/src/slice/iter/macros.rs"
   },
@@ -960,7 +960,7 @@
     "file": "library/core/src/slice/mod.rs"
   },
   {
-    "hash": "1593063580605279640314183922934412511157",
+    "hash": "51188353216572513337552947382367213612",
     "name": "core::slice::<impl [u8]>::align_to::<usize>",
     "file": "library/core/src/slice/mod.rs"
   },
@@ -980,27 +980,27 @@
     "file": "library/core/src/slice/mod.rs"
   },
   {
-    "hash": "1785941139609704198311972964660228370976",
+    "hash": "1041529063314010914218218438532577583921",
     "name": "core::slice::<impl [u8]>::split_at",
     "file": "library/core/src/slice/mod.rs"
   },
   {
-    "hash": "84572646525781694072079679591848027002",
+    "hash": "11017778733362591934337269956689912680",
     "name": "core::slice::<impl [u8]>::split_at_checked",
     "file": "library/core/src/slice/mod.rs"
   },
   {
-    "hash": "58089700496514419381325942148928567391",
+    "hash": "89128813248987492211721493584967359724",
     "name": "core::slice::<impl [u8]>::split_at_unchecked",
     "file": "library/core/src/slice/mod.rs"
   },
   {
-    "hash": "917728468319067451416388429251863159678",
+    "hash": "348372507889018041910054944302851661070",
     "name": "core::slice::<impl [usize]>::as_chunks::<4>",
     "file": "library/core/src/slice/mod.rs"
   },
   {
-    "hash": "1621046050041371142817756793657558429507",
+    "hash": "144624929410860970405573471555686596396",
     "name": "core::slice::<impl [usize]>::as_chunks_unchecked::<4>",
     "file": "library/core/src/slice/mod.rs"
   },
@@ -1025,32 +1025,32 @@
     "file": "library/core/src/slice/mod.rs"
   },
   {
-    "hash": "3900672375060331021424481618253650288",
+    "hash": "1689731528734002832615362599744307150563",
     "name": "core::slice::<impl [usize]>::split_at",
     "file": "library/core/src/slice/mod.rs"
   },
   {
-    "hash": "171173179240508091544601281736583524354",
+    "hash": "157354110368917150977548446164644269157",
     "name": "core::slice::<impl [usize]>::split_at_checked",
     "file": "library/core/src/slice/mod.rs"
   },
   {
-    "hash": "116483621522571785213244680499922945415",
+    "hash": "1325059444048598179110854173592682518417",
     "name": "core::slice::<impl [usize]>::split_at_unchecked",
     "file": "library/core/src/slice/mod.rs"
   },
   {
-    "hash": "325660469324403897513522339552212646632",
+    "hash": "1617537487569895078313557542670536892075",
     "name": "std::slice::from_raw_parts::<'_, [usize; 4]>",
     "file": "library/core/src/slice/raw.rs"
   },
   {
-    "hash": "47514593099713610332964838893229837936",
+    "hash": "44787092142404380205959599561725184847",
     "name": "std::slice::from_raw_parts::<'_, u8>",
     "file": "library/core/src/slice/raw.rs"
   },
   {
-    "hash": "184867918752959488617184774691899169910",
+    "hash": "630819595617041232110620176331560268262",
     "name": "std::slice::from_raw_parts::<'_, usize>",
     "file": "library/core/src/slice/raw.rs"
   },
@@ -1060,7 +1060,7 @@
     "file": "library/core/src/str/converts.rs"
   },
   {
-    "hash": "145201222854331195178815443675397277392",
+    "hash": "105509042728785276095738116562226884135",
     "name": "core::str::count::char_count_general_case",
     "file": "library/core/src/str/count.rs"
   },
@@ -1075,37 +1075,37 @@
     "file": "library/core/src/str/count.rs"
   },
   {
-    "hash": "47468782241743602393810882143023349945",
+    "hash": "101539333883602999142743294499662142781",
     "name": "core::str::count::count_chars",
     "file": "library/core/src/str/count.rs"
   },
   {
-    "hash": "944297586695660734811678461952919859244",
+    "hash": "155145547891548244516298634347765599627",
     "name": "core::str::count::do_count_chars",
     "file": "library/core/src/str/count.rs"
   },
   {
-    "hash": "268701197549167845816540622531722429171",
+    "hash": "12025566570273099920903542994299871817",
     "name": "core::str::count::sum_bytes_in_usize",
     "file": "library/core/src/str/count.rs"
   },
   {
-    "hash": "174931159159579161911556326084018243713",
+    "hash": "152715002861639775393988580799560247805",
     "name": "<std::str::CharIndices<'_> as std::iter::Iterator>::next",
     "file": "library/core/src/str/iter.rs"
   },
   {
-    "hash": "759516041501256089813279787494912941682",
+    "hash": "644663214087010307916081317719588641492",
     "name": "<std::str::Chars<'_> as std::iter::Iterator>::count",
     "file": "library/core/src/str/iter.rs"
   },
   {
-    "hash": "151051332114409904941604214564891538957",
+    "hash": "660978859467132204713340652707099987613",
     "name": "<std::str::Chars<'_> as std::iter::Iterator>::next",
     "file": "library/core/src/str/iter.rs"
   },
   {
-    "hash": "42461548492323519705759720031945445712",
+    "hash": "16139698699567968342904534840657946470",
     "name": "<std::str::Chars<'_> as std::iter::Iterator>::next::{closure#0}",
     "file": "library/core/src/str/iter.rs"
   },
@@ -1115,7 +1115,7 @@
     "file": "library/core/src/str/iter.rs"
   },
   {
-    "hash": "50301635678991252011107801667626389768",
+    "hash": "1563992362164201785411080871236623299079",
     "name": "std::str::Chars::<'_>::as_str",
     "file": "library/core/src/str/iter.rs"
   },
@@ -1135,7 +1135,7 @@
     "file": "library/core/src/str/mod.rs"
   },
   {
-    "hash": "867395007143103994512438910488508336973",
+    "hash": "71021883313881662847215860786847447423",
     "name": "core::str::<impl str>::get_unchecked::<std::ops::RangeTo<usize>>",
     "file": "library/core/src/str/mod.rs"
   },
@@ -1145,17 +1145,17 @@
     "file": "library/core/src/str/mod.rs"
   },
   {
-    "hash": "112020109271780179669495653821738681551",
+    "hash": "91070850951614709601933024856310781945",
     "name": "core::str::traits::<impl std::slice::SliceIndex<str> for std::ops::Range<usize>>::get_unchecked",
     "file": "library/core/src/str/traits.rs"
   },
   {
-    "hash": "152909514978300660252157530308776102467",
+    "hash": "145757805227894694174215691004963108394",
     "name": "core::str::traits::<impl std::slice::SliceIndex<str> for std::ops::RangeTo<usize>>::get_unchecked",
     "file": "library/core/src/str/traits.rs"
   },
   {
-    "hash": "68493124835835642495275913021346263998",
+    "hash": "1317118350612563145817400323127232106582",
     "name": "core::str::validations::next_code_point::<'_, std::slice::Iter<'_, u8>>",
     "file": "library/core/src/str/validations.rs"
   },
@@ -1175,17 +1175,17 @@
     "file": "library/core/src/str/validations.rs"
   },
   {
-    "hash": "1563172082169351546616225899813991043484",
+    "hash": "172646548629003079288424832349823487421",
     "name": "core::num::<impl u16>::unchecked_add::precondition_check",
     "file": "library/core/src/ub_checks.rs"
   },
   {
-    "hash": "33957922410128141509625682565657813466",
+    "hash": "1248191826238009221015171546017389042989",
     "name": "core::num::<impl usize>::unchecked_add::precondition_check",
     "file": "library/core/src/ub_checks.rs"
   },
   {
-    "hash": "100872428199167332544577177169244129806",
+    "hash": "13514854596489369474334665362530945420",
     "name": "core::num::<impl usize>::unchecked_sub::precondition_check",
     "file": "library/core/src/ub_checks.rs"
   },
@@ -1215,12 +1215,12 @@
     "file": "library/core/src/ub_checks.rs"
   },
   {
-    "hash": "1158923569256985321513541004220644151856",
+    "hash": "748210795816008050710623801889599715701",
     "name": "core::ub_checks::maybe_is_aligned_and_not_null",
     "file": "library/core/src/ub_checks.rs"
   },
   {
-    "hash": "140048639800126365939997225010682400254",
+    "hash": "7461493046945910432435712880095080611",
     "name": "std::char::convert::from_u32_unchecked::precondition_check",
     "file": "library/core/src/ub_checks.rs"
   },
@@ -1235,36 +1235,36 @@
     "file": "library/core/src/ub_checks.rs"
   },
   {
-    "hash": "71108690579660086896269737077011959868",
+    "hash": "399721967138328910814551048930416922779",
     "name": "std::slice::from_raw_parts::precondition_check",
     "file": "library/core/src/ub_checks.rs"
   },
   {
-    "hash": "701526988294430207414821647670184897330",
+    "hash": "793225298737803974414835553001713146394",
     "name": "verify::single_contract",
     "file": "tests/proofs/proofs_for_contract.rs",
     "proof_kind": "Contract"
   },
   {
-    "hash": "157358757356173787254952107394866850361",
+    "hash": "190958661898519013513875693945335012974",
     "name": "verify::single_contract_requires",
     "file": "tests/proofs/proofs_for_contract.rs",
     "proof_kind": "Contract"
   },
   {
-    "hash": "163886666099788461512155870154695223372",
+    "hash": "72605166534883769010740627084392583844",
     "name": "verify::single_with_contract_ensures",
     "file": "tests/proofs/proofs_for_contract.rs",
     "proof_kind": "Contract"
   },
   {
-    "hash": "1269040190462182887711828666912254439700",
+    "hash": "78552360882815941222871696662580086661",
     "name": "verify::two_contracts_requires_and_ensures",
     "file": "tests/proofs/proofs_for_contract.rs",
     "proof_kind": "Contract"
   },
   {
-    "hash": "2623055860877728893199821296195161800",
+    "hash": "146510885743608713509163719806804039748",
     "name": "verify::contract",
     "file": "tests/proofs/proofs_for_contract.rs"
   },
@@ -1274,22 +1274,42 @@
     "file": "tests/proofs/proofs_for_contract.rs"
   },
   {
-    "hash": "13639025576242879361733715326367503686",
+    "hash": "1182434864504194244015029782800165074459",
+    "name": "verify::contract::kani_force_fn_once::<u8, {closure@tests/proofs/proofs_for_contract.rs:27:5: 27:29}>",
+    "file": "tests/proofs/proofs_for_contract.rs"
+  },
+  {
+    "hash": "1182434864504194244015029782800165074459",
+    "name": "verify::contract::kani_force_fn_once::<u8, {closure@tests/proofs/proofs_for_contract.rs:27:5: 27:29}>",
+    "file": "tests/proofs/proofs_for_contract.rs"
+  },
+  {
+    "hash": "1182434864504194244015029782800165074459",
+    "name": "verify::contract::kani_force_fn_once::<u8, {closure@tests/proofs/proofs_for_contract.rs:27:5: 27:29}>",
+    "file": "tests/proofs/proofs_for_contract.rs"
+  },
+  {
+    "hash": "1182434864504194244015029782800165074459",
+    "name": "verify::contract::kani_force_fn_once::<u8, {closure@tests/proofs/proofs_for_contract.rs:27:5: 27:29}>",
+    "file": "tests/proofs/proofs_for_contract.rs"
+  },
+  {
+    "hash": "157249491237794083928428048602624188053",
     "name": "verify::contract::kani_register_contract::<u8, {closure@tests/proofs/proofs_for_contract.rs:27:5: 27:29}>",
     "file": "tests/proofs/proofs_for_contract.rs"
   },
   {
-    "hash": "13639025576242879361733715326367503686",
+    "hash": "157249491237794083928428048602624188053",
     "name": "verify::contract::kani_register_contract::<u8, {closure@tests/proofs/proofs_for_contract.rs:27:5: 27:29}>",
     "file": "tests/proofs/proofs_for_contract.rs"
   },
   {
-    "hash": "13639025576242879361733715326367503686",
+    "hash": "157249491237794083928428048602624188053",
     "name": "verify::contract::kani_register_contract::<u8, {closure@tests/proofs/proofs_for_contract.rs:27:5: 27:29}>",
     "file": "tests/proofs/proofs_for_contract.rs"
   },
   {
-    "hash": "13639025576242879361733715326367503686",
+    "hash": "157249491237794083928428048602624188053",
     "name": "verify::contract::kani_register_contract::<u8, {closure@tests/proofs/proofs_for_contract.rs:27:5: 27:29}>",
     "file": "tests/proofs/proofs_for_contract.rs"
   },
@@ -1299,7 +1319,7 @@
     "file": "tests/proofs/proofs_for_contract.rs"
   },
   {
-    "hash": "1206580667269463865914834143548694613363",
+    "hash": "1195331541890807965216321001278771493568",
     "name": "verify::contract_ensures",
     "file": "tests/proofs/proofs_for_contract.rs"
   },
@@ -1309,22 +1329,42 @@
     "file": "tests/proofs/proofs_for_contract.rs"
   },
   {
-    "hash": "155574938752675177533544455983464431109",
+    "hash": "72091074602908430379999836884376602519",
+    "name": "verify::contract_ensures::kani_force_fn_once::<u8, {closure@tests/proofs/proofs_for_contract.rs:11:5: 11:37}>",
+    "file": "tests/proofs/proofs_for_contract.rs"
+  },
+  {
+    "hash": "72091074602908430379999836884376602519",
+    "name": "verify::contract_ensures::kani_force_fn_once::<u8, {closure@tests/proofs/proofs_for_contract.rs:11:5: 11:37}>",
+    "file": "tests/proofs/proofs_for_contract.rs"
+  },
+  {
+    "hash": "72091074602908430379999836884376602519",
+    "name": "verify::contract_ensures::kani_force_fn_once::<u8, {closure@tests/proofs/proofs_for_contract.rs:11:5: 11:37}>",
+    "file": "tests/proofs/proofs_for_contract.rs"
+  },
+  {
+    "hash": "72091074602908430379999836884376602519",
+    "name": "verify::contract_ensures::kani_force_fn_once::<u8, {closure@tests/proofs/proofs_for_contract.rs:11:5: 11:37}>",
+    "file": "tests/proofs/proofs_for_contract.rs"
+  },
+  {
+    "hash": "2349763213441544269314060789600297712",
     "name": "verify::contract_ensures::kani_register_contract::<u8, {closure@tests/proofs/proofs_for_contract.rs:11:5: 11:37}>",
     "file": "tests/proofs/proofs_for_contract.rs"
   },
   {
-    "hash": "155574938752675177533544455983464431109",
+    "hash": "2349763213441544269314060789600297712",
     "name": "verify::contract_ensures::kani_register_contract::<u8, {closure@tests/proofs/proofs_for_contract.rs:11:5: 11:37}>",
     "file": "tests/proofs/proofs_for_contract.rs"
   },
   {
-    "hash": "155574938752675177533544455983464431109",
+    "hash": "2349763213441544269314060789600297712",
     "name": "verify::contract_ensures::kani_register_contract::<u8, {closure@tests/proofs/proofs_for_contract.rs:11:5: 11:37}>",
     "file": "tests/proofs/proofs_for_contract.rs"
   },
   {
-    "hash": "155574938752675177533544455983464431109",
+    "hash": "2349763213441544269314060789600297712",
     "name": "verify::contract_ensures::kani_register_contract::<u8, {closure@tests/proofs/proofs_for_contract.rs:11:5: 11:37}>",
     "file": "tests/proofs/proofs_for_contract.rs"
   },
@@ -1334,7 +1374,7 @@
     "file": "tests/proofs/proofs_for_contract.rs"
   },
   {
-    "hash": "4878027181794487515844454088721928356",
+    "hash": "880175715806394731914059849796451720387",
     "name": "verify::contract_requires",
     "file": "tests/proofs/proofs_for_contract.rs"
   },
@@ -1344,22 +1384,42 @@
     "file": "tests/proofs/proofs_for_contract.rs"
   },
   {
-    "hash": "1688923391201567444911995970604371434073",
+    "hash": "28621828018843203299283958331135706694",
+    "name": "verify::contract_requires::kani_force_fn_once::<(), {closure@tests/proofs/proofs_for_contract.rs:3:5: 3:29}>",
+    "file": "tests/proofs/proofs_for_contract.rs"
+  },
+  {
+    "hash": "28621828018843203299283958331135706694",
+    "name": "verify::contract_requires::kani_force_fn_once::<(), {closure@tests/proofs/proofs_for_contract.rs:3:5: 3:29}>",
+    "file": "tests/proofs/proofs_for_contract.rs"
+  },
+  {
+    "hash": "28621828018843203299283958331135706694",
+    "name": "verify::contract_requires::kani_force_fn_once::<(), {closure@tests/proofs/proofs_for_contract.rs:3:5: 3:29}>",
+    "file": "tests/proofs/proofs_for_contract.rs"
+  },
+  {
+    "hash": "28621828018843203299283958331135706694",
+    "name": "verify::contract_requires::kani_force_fn_once::<(), {closure@tests/proofs/proofs_for_contract.rs:3:5: 3:29}>",
+    "file": "tests/proofs/proofs_for_contract.rs"
+  },
+  {
+    "hash": "99485635645147491446124587870675969389",
     "name": "verify::contract_requires::kani_register_contract::<(), {closure@tests/proofs/proofs_for_contract.rs:3:5: 3:29}>",
     "file": "tests/proofs/proofs_for_contract.rs"
   },
   {
-    "hash": "1688923391201567444911995970604371434073",
+    "hash": "99485635645147491446124587870675969389",
     "name": "verify::contract_requires::kani_register_contract::<(), {closure@tests/proofs/proofs_for_contract.rs:3:5: 3:29}>",
     "file": "tests/proofs/proofs_for_contract.rs"
   },
   {
-    "hash": "1688923391201567444911995970604371434073",
+    "hash": "99485635645147491446124587870675969389",
     "name": "verify::contract_requires::kani_register_contract::<(), {closure@tests/proofs/proofs_for_contract.rs:3:5: 3:29}>",
     "file": "tests/proofs/proofs_for_contract.rs"
   },
   {
-    "hash": "1688923391201567444911995970604371434073",
+    "hash": "99485635645147491446124587870675969389",
     "name": "verify::contract_requires::kani_register_contract::<(), {closure@tests/proofs/proofs_for_contract.rs:3:5: 3:29}>",
     "file": "tests/proofs/proofs_for_contract.rs"
   },
