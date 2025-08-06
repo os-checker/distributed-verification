@@ -73,12 +73,12 @@ jobs:
       - name: Kani list
         working-directory: verify-rust-std
         if: ${{ env.AUTO == '' }}
-        run:  kani list -Zlist ${{ env.UNSTABLE_ARGS }} --std ./library --format=json
+        run:  kani list ${{ env.UNSTABLE_ARGS }} --std ./library --format=json
 
       - name: Kani list with Autoharness
         working-directory: verify-rust-std
         if: ${{ env.AUTO == '-autoharness' }}
-        run: kani autoharness -Z autoharness --list -Z list ${{ env.UNSTABLE_ARGS }} --std ./library --format=json
+        run: kani autoharness -Z autoharness --list ${{ env.UNSTABLE_ARGS }} --std ./library --format=json
 
       - name: View list
         working-directory: verify-rust-std
