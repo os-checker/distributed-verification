@@ -30,17 +30,17 @@
     "file": "distributed-verification/kani/library/kani_core/src/lib.rs"
   },
   {
-    "hash": "1253501917253063290515286798079291406022",
+    "hash": "65868497651168410449545344117964583712",
     "name": "std::char::convert::char_try_from_u32",
     "file": "library/core/src/char/convert.rs"
   },
   {
-    "hash": "131606170482807693362175987803096434760",
+    "hash": "159016299650019319744076356113035176035",
     "name": "std::char::convert::from_u32_unchecked",
     "file": "library/core/src/char/convert.rs"
   },
   {
-    "hash": "141777398513335345408154280402043326980",
+    "hash": "153658810344092466781820247044550218870",
     "name": "std::char::methods::<impl char>::from_u32_unchecked",
     "file": "library/core/src/char/methods.rs"
   },
@@ -100,17 +100,17 @@
     "file": "library/core/src/num/int_macros.rs"
   },
   {
-    "hash": "778307969913358517318134351169293017006",
+    "hash": "25251120696431570092093182612131515912",
     "name": "core::num::<impl u32>::wrapping_sub",
     "file": "library/core/src/num/uint_macros.rs"
   },
   {
-    "hash": "680697364573271958516692421008805893594",
+    "hash": "810805184278421777613446275204946905605",
     "name": "core::num::<impl usize>::overflowing_sub",
     "file": "library/core/src/num/uint_macros.rs"
   },
   {
-    "hash": "163514900348266881411363175083503667972",
+    "hash": "388062057804816876417244863152148256946",
     "name": "core::num::<impl usize>::unchecked_sub",
     "file": "library/core/src/num/uint_macros.rs"
   },
@@ -135,17 +135,17 @@
     "file": "library/core/src/option.rs"
   },
   {
-    "hash": "109385176472642702115257968545485189902",
+    "hash": "121138144017554845846145226474538493918",
     "name": "std::option::Option::<char>::map::<(usize, char), {closure@<std::str::CharIndices<'_> as std::iter::DoubleEndedIterator>::next_back::{closure#0}}>",
     "file": "library/core/src/option.rs"
   },
   {
-    "hash": "93526250790004031471906599419143816654",
+    "hash": "3998812374978224713649899915503990811",
     "name": "std::option::Option::<u32>::map::<char, {closure@<std::str::Chars<'_> as std::iter::DoubleEndedIterator>::next_back::{closure#0}}>",
     "file": "library/core/src/option.rs"
   },
   {
-    "hash": "139548131330438493408310223143043863897",
+    "hash": "31097527810414601854869280272233554572",
     "name": "std::option::Option::<u32>::map::<char, {closure@<std::str::Chars<'_> as std::iter::Iterator>::next::{closure#0}}>",
     "file": "library/core/src/option.rs"
   },
@@ -355,7 +355,7 @@
     "file": "library/core/src/slice/iter/macros.rs"
   },
   {
-    "hash": "154659969182662416984535348444125844",
+    "hash": "110775021307695758384035914487754563410",
     "name": "<std::slice::Iter<'_, u8> as std::iter::Iterator>::next",
     "file": "library/core/src/slice/iter/macros.rs"
   },
@@ -375,7 +375,7 @@
     "file": "library/core/src/slice/mod.rs"
   },
   {
-    "hash": "1600793067427995966117951132574009622835",
+    "hash": "972680180014184893012764096234904438678",
     "name": "<std::str::CharIndices<'_> as std::iter::DoubleEndedIterator>::next_back",
     "file": "library/core/src/str/iter.rs"
   },
@@ -385,27 +385,27 @@
     "file": "library/core/src/str/iter.rs"
   },
   {
-    "hash": "152715002861639775393988580799560247805",
+    "hash": "45178312548995258631480226543031651606",
     "name": "<std::str::CharIndices<'_> as std::iter::Iterator>::next",
     "file": "library/core/src/str/iter.rs"
   },
   {
-    "hash": "203299270282650216711849692141603321998",
+    "hash": "250065958923065742115658239965183767423",
     "name": "<std::str::Chars<'_> as std::iter::DoubleEndedIterator>::next_back",
     "file": "library/core/src/str/iter.rs"
   },
   {
-    "hash": "145778172834776373404454916597382558267",
+    "hash": "42587915166929228844110779617808460761",
     "name": "<std::str::Chars<'_> as std::iter::DoubleEndedIterator>::next_back::{closure#0}",
     "file": "library/core/src/str/iter.rs"
   },
   {
-    "hash": "660978859467132204713340652707099987613",
+    "hash": "1450296015905243226815123439351302697270",
     "name": "<std::str::Chars<'_> as std::iter::Iterator>::next",
     "file": "library/core/src/str/iter.rs"
   },
   {
-    "hash": "16139698699567968342904534840657946470",
+    "hash": "133172276690676584415345770565170110553",
     "name": "<std::str::Chars<'_> as std::iter::Iterator>::next::{closure#0}",
     "file": "library/core/src/str/iter.rs"
   },
@@ -430,12 +430,12 @@
     "file": "library/core/src/str/mod.rs"
   },
   {
-    "hash": "567173681531154279218296512637220369082",
+    "hash": "61176600762203396763045020903121460176",
     "name": "core::str::<impl str>::trim",
     "file": "library/core/src/str/mod.rs"
   },
   {
-    "hash": "9693894676321952815355429995054057025",
+    "hash": "80843382329027282372416913409291691173",
     "name": "core::str::<impl str>::trim_matches::<fn(char) -> bool {std::char::methods::<impl char>::is_whitespace}>",
     "file": "library/core/src/str/mod.rs"
   },
@@ -450,12 +450,12 @@
     "file": "library/core/src/str/pattern.rs"
   },
   {
-    "hash": "916260299002420620213303575465445801045",
+    "hash": "152326476073463781499034821721484510581",
     "name": "<std::str::pattern::CharPredicateSearcher<'_, fn(char) -> bool {std::char::methods::<impl char>::is_whitespace}> as std::str::pattern::ReverseSearcher<'_>>::next_reject_back",
     "file": "library/core/src/str/pattern.rs"
   },
   {
-    "hash": "1525625489453947944917512082162169543118",
+    "hash": "180363005427043661111566933926338230496",
     "name": "<std::str::pattern::CharPredicateSearcher<'_, fn(char) -> bool {std::char::methods::<impl char>::is_whitespace}> as std::str::pattern::Searcher<'_>>::next_reject",
     "file": "library/core/src/str/pattern.rs"
   },
@@ -465,22 +465,22 @@
     "file": "library/core/src/str/pattern.rs"
   },
   {
-    "hash": "1111635474439559909233102576243507100",
+    "hash": "1354749367383077130317388572389435762793",
     "name": "<std::str::pattern::MultiCharEqSearcher<'_, fn(char) -> bool {std::char::methods::<impl char>::is_whitespace}> as std::str::pattern::ReverseSearcher<'_>>::next_back",
     "file": "library/core/src/str/pattern.rs"
   },
   {
-    "hash": "108492770323485280674389488868081059627",
+    "hash": "1785118702871194558614964354743404010219",
     "name": "<std::str::pattern::MultiCharEqSearcher<'_, fn(char) -> bool {std::char::methods::<impl char>::is_whitespace}> as std::str::pattern::ReverseSearcher<'_>>::next_reject_back",
     "file": "library/core/src/str/pattern.rs"
   },
   {
-    "hash": "1678390452388873267010299124183561816183",
+    "hash": "534179323822348516917459009105716897316",
     "name": "<std::str::pattern::MultiCharEqSearcher<'_, fn(char) -> bool {std::char::methods::<impl char>::is_whitespace}> as std::str::pattern::Searcher<'_>>::next",
     "file": "library/core/src/str/pattern.rs"
   },
   {
-    "hash": "1546358471913062153412631284591389044570",
+    "hash": "139743796024906758409700561843182797527",
     "name": "<std::str::pattern::MultiCharEqSearcher<'_, fn(char) -> bool {std::char::methods::<impl char>::is_whitespace}> as std::str::pattern::Searcher<'_>>::next_reject",
     "file": "library/core/src/str/pattern.rs"
   },
@@ -490,7 +490,7 @@
     "file": "library/core/src/str/traits.rs"
   },
   {
-    "hash": "1317118350612563145817400323127232106582",
+    "hash": "306296972680789691812453773540819462160",
     "name": "core::str::validations::next_code_point::<'_, std::slice::Iter<'_, u8>>",
     "file": "library/core/src/str/validations.rs"
   },
@@ -520,7 +520,7 @@
     "file": "library/core/src/ub_checks.rs"
   },
   {
-    "hash": "13514854596489369474334665362530945420",
+    "hash": "74531839116015862918249023074016223610",
     "name": "core::num::<impl usize>::unchecked_sub::precondition_check",
     "file": "library/core/src/ub_checks.rs"
   },
@@ -535,7 +535,7 @@
     "file": "library/core/src/ub_checks.rs"
   },
   {
-    "hash": "7461493046945910432435712880095080611",
+    "hash": "1424797134762156698315675217245053131382",
     "name": "std::char::convert::from_u32_unchecked::precondition_check",
     "file": "library/core/src/ub_checks.rs"
   },
@@ -555,7 +555,7 @@
     "file": "library/core/src/unicode/unicode_data.rs"
   },
   {
-    "hash": "4334811063674073226813469283385178240",
+    "hash": "697494069068399828213164637943298392531",
     "name": "verify::recursive_callees",
     "file": "tests/proofs/standard_proofs.rs",
     "proof_kind": "Standard"
@@ -573,12 +573,12 @@
     "proof_kind": "Standard"
   },
   {
-    "hash": "677480054236845771815111058937132547057",
+    "hash": "153050620407914103147810891643095975497",
     "name": "m::func1",
     "file": "tests/proofs/standard_proofs.rs"
   },
   {
-    "hash": "1752482367619339351416462201666492809793",
+    "hash": "1286657304343325917316032004565436623297",
     "name": "top_level",
     "file": "tests/proofs/standard_proofs.rs"
   }
