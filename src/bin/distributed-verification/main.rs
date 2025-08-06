@@ -1,6 +1,5 @@
-#![feature(rustc_private, let_chains, hash_set_entry, hasher_prefixfree_extras)]
+#![feature(rustc_private, hash_set_entry, hasher_prefixfree_extras)]
 
-extern crate rustc_attr_data_structures;
 extern crate rustc_data_structures;
 extern crate rustc_driver;
 extern crate rustc_hir;
@@ -9,11 +8,10 @@ extern crate rustc_interface;
 extern crate rustc_middle;
 extern crate rustc_session;
 #[macro_use]
-extern crate rustc_smir;
+extern crate rustc_public;
 extern crate itertools;
 extern crate rustc_span;
 extern crate rustc_stable_hash;
-extern crate stable_mir;
 
 use distributed_verification::kani_list::check_proofs;
 use eyre::Result;
@@ -65,7 +63,7 @@ fn main() -> Result<()> {
     });
 
     match res {
-        Ok(res_inner) | Err(stable_mir::CompilerError::Interrupted(res_inner)) => res_inner,
+        Ok(res_inner) | Err(rustc_public::CompilerError::Interrupted(res_inner)) => res_inner,
         Err(err) => Err(eyre!("Unexpected error {err:?}")),
     }
 }

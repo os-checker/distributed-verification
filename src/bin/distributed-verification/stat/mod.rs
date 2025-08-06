@@ -3,15 +3,14 @@ use distributed_verification::statistics::*;
 use indexmap::IndexMap;
 use itertools::Itertools;
 use rustc_middle::ty::TyCtxt;
-use rustc_smir::rustc_internal::internal;
-use stable_mir::CrateDef;
+use rustc_public::{CrateDef, external_crates, local_crate, rustc_internal::internal};
 
 fn new_stat(tcx: TyCtxt) -> Stat {
     Stat { local: new_local_crate(tcx), external: new_external_crates() }
 }
 
 fn new_external_crates() -> ExternalCrates {
-    let external_crates = stable_mir::external_crates();
+    let external_crates = external_crates();
     let count = external_crates.len();
     // // NOTE: crate name may duplicate, like std will appear twice
     // let crates = external_crates.into_iter().map(|krate| krate.name).sorted().collect();
@@ -22,7 +21,7 @@ fn new_local_crate(tcx: TyCtxt) -> LocalCrateFnDefs {
     let mut this = LocalCrateFnDefs::default();
 
     // for krate in stable_mir::find_crates("core") {
-    let krate = stable_mir::local_crate();
+    let krate = local_crate();
     let fn_defs = krate.fn_defs();
     this.fn_defs.total = fn_defs.len();
 
@@ -32,7 +31,7 @@ fn new_local_crate(tcx: TyCtxt) -> LocalCrateFnDefs {
 
         let did = internal(tcx, fn_def.def_id());
         // cc https://github.com/rust-lang/project-stable-mir/issues/83
-        let kanitools_attrs = tcx.get_all_attrs(did).filter_map(|attr| {
+        let kanitools_attrs = tcx.get_all_attrs(did).iter().filter_map(|attr| {
             if let rustc_hir::Attribute::Unparsed(attr) = attr {
                 this.attrs.all_tool_attrs += 1;
                 let paths = &attr.path.segments;
