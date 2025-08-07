@@ -31,7 +31,7 @@ jobs:
         working-directory: assets
         run: |
           ls -alh core.json
-          head -n 1000 core.json
+          head -n 100 core.json
 
       - name: Upload core.json
         uses: actions/upload-artifact@v4
@@ -83,7 +83,7 @@ jobs:
 
       - name: View list
         working-directory: verify-rust-std
-        run: ls -alh kani-list.json && cat kani-list.json
+        run: ls -alh kani-list.json && head -n 100 kani-list.json
 
       - name: Upload kani-list.json
         uses: actions/upload-artifact@v4
