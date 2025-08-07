@@ -9,7 +9,8 @@ env:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
+    # runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
