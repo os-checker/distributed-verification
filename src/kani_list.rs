@@ -40,11 +40,11 @@ pub fn check(file: &str, v_ser_fun: &[&SerFunction]) {
 /// Run `kani list` on single rust file.
 pub fn get_kani_list(rs_file_path: &str) -> Result<KaniList> {
     // kani list -Zlist -Zfunction-contracts --format=json file.rs
-    let args = ["list", "-Zlist", "-Zfunction-contracts", "--format=json", rs_file_path];
+    let args = ["list", "-Zfunction-contracts", "--format=json", rs_file_path];
     let output = Command::new("kani").args(args).output()?;
     assert!(
         output.status.success(),
-        "Failed to run `kani list -Zlist -Zfunction-contracts --format=json {rs_file_path}`:\n{}",
+        "Failed to run `kani list -Zfunction-contracts --format=json {rs_file_path}`:\n{}",
         std::str::from_utf8(&output.stderr).unwrap()
     );
 

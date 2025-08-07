@@ -2,7 +2,10 @@ use distributed_verification::SerFunction;
 use indexmap::IndexSet;
 use kani::{CallGraph, collect_reachable_items};
 use rustc_middle::ty::TyCtxt;
-use stable_mir::mir::mono::{Instance, MonoItem};
+use rustc_public::{
+    all_local_items,
+    mir::mono::{Instance, MonoItem},
+};
 
 mod cache;
 pub use cache::{clear_rustc_ctx, set_rustc_ctx};
@@ -13,7 +16,7 @@ pub use kani::TOOL;
 mod utils;
 
 pub fn analyze(tcx: TyCtxt) -> Vec<SerFunction> {
-    let local_items = stable_mir::all_local_items();
+    let local_items = all_local_items();
     let cap = local_items.len();
 
     let mut entries = Vec::with_capacity(cap);

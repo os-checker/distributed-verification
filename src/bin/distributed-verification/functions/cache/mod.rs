@@ -7,8 +7,8 @@ use distributed_verification::{SerFunction, SourceCode};
 use indexmap::IndexSet;
 use rustc_data_structures::fx::FxHashMap;
 use rustc_middle::ty::TyCtxt;
+use rustc_public::mir::mono::Instance;
 use rustc_span::source_map::{SourceMap, get_source_map};
-use stable_mir::mir::mono::Instance;
 use std::{
     cell::RefCell,
     cmp::{Ordering, Reverse},

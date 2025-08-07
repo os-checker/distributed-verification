@@ -1,14 +1,14 @@
 use distributed_verification::{InstKind, MacroBacktrace, ProofKind, SourceCode};
 use rustc_middle::ty::TyCtxt;
-use rustc_smir::rustc_internal::internal;
+use rustc_public::{
+    CrateDef,
+    mir::mono::{Instance, InstanceKind},
+    rustc_internal::internal,
+};
 use rustc_span::{Span, source_map::SourceMap};
 use rustc_stable_hash::{
     FromStableHash, StableHasher,
     hashers::{SipHasher128, SipHasher128Hash},
-};
-use stable_mir::{
-    CrateDef,
-    mir::mono::{Instance, InstanceKind},
 };
 use std::hash::Hash;
 
@@ -28,7 +28,7 @@ fn span_to_snippet(span: Span, src_map: &SourceMap) -> String {
 /// Source code for a stable_mir span.
 pub fn source_code_with(
     inst: &Instance,
-    stable_mir_span: stable_mir::ty::Span,
+    stable_mir_span: rustc_public::ty::Span,
     tcx: TyCtxt,
     src_map: &SourceMap,
     path_prefixes: [&str; 2],
@@ -68,13 +68,14 @@ pub fn source_code_with(
 
 fn get_all_attrs(tcx: TyCtxt, inst: &Instance) -> (Vec<String>, Option<ProofKind>) {
     use super::kani::{PROOF, PROOF_FOR_CONTRACT};
-    use rustc_attr_data_structures::AttributeKind;
     use rustc_hir::Attribute;
+    use rustc_hir::attrs::AttributeKind;
 
     let def_id = internal(tcx, inst.def.def_id());
     let mut proof_kind = None;
     let attrs = tcx
         .get_all_attrs(def_id)
+        .iter()
         .filter(|attr| match attr {
             Attribute::Unparsed(unparsed) => {
                 let idents = &unparsed.path.segments;
@@ -93,9 +94,8 @@ fn get_all_attrs(tcx: TyCtxt, inst: &Instance) -> (Vec<String>, Option<ProofKind
                 }
                 false
             }
-            Attribute::Parsed(AttributeKind::Repr(_)) => true,
-            // FIXME: add support for #[align] when the toolchain bumps over 2025-06-19
-            //
+            Attribute::Parsed(AttributeKind::Repr { .. }) => true,
+            Attribute::Parsed(AttributeKind::Align { .. }) => true,
             // * https://github.com/rust-lang/rust/commit/1fdf2b562070ec98c5b32ee67b8c6d8145127a6e
             // * https://github.com/rust-lang/rfcs/pull/3806
             // Attribute::Parsed(AttributeKind::Align(_)) => true,

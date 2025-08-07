@@ -23,17 +23,17 @@ use rustc_data_structures::fingerprint::Fingerprint;
 use rustc_data_structures::fx::FxHashSet;
 use rustc_data_structures::stable_hasher::{HashStable, StableHasher};
 use rustc_middle::ty::{TyCtxt, VtblEntry};
-use rustc_session::config::OutputType;
-use rustc_smir::rustc_internal;
-use stable_mir::mir::alloc::{AllocId, GlobalAlloc};
-use stable_mir::mir::mono::{Instance, InstanceKind, MonoItem, StaticDef};
-use stable_mir::mir::{
+use rustc_public::mir::alloc::{AllocId, GlobalAlloc};
+use rustc_public::mir::mono::{Instance, InstanceKind, MonoItem, StaticDef};
+use rustc_public::mir::{
     Body, CastKind, ConstOperand, MirVisitor, PointerCoercion, Rvalue, Terminator, TerminatorKind,
     visit::Location,
 };
-use stable_mir::ty::{Allocation, ClosureKind, ConstantKind, RigidTy, Ty, TyKind};
-use stable_mir::{CrateDef, ItemKind};
-use stable_mir::{CrateItem, DefId};
+use rustc_public::rustc_internal;
+use rustc_public::ty::{Allocation, ClosureKind, ConstantKind, RigidTy, Ty, TyKind};
+use rustc_public::{CrateDef, ItemKind};
+use rustc_public::{CrateItem, DefId};
+use rustc_session::config::OutputType;
 use std::fmt::{Display, Formatter};
 use std::{
     collections::{HashMap, HashSet},
@@ -75,7 +75,7 @@ pub fn filter_crate_items<F>(tcx: TyCtxt, predicate: F) -> Vec<Instance>
 where
     F: Fn(TyCtxt, Instance) -> bool,
 {
-    let crate_items = stable_mir::all_local_items();
+    let crate_items = rustc_public::all_local_items();
     // Filter regular items.
     crate_items
         .iter()
@@ -109,7 +109,7 @@ pub fn filter_const_crate_items<F>(tcx: TyCtxt, mut predicate: F) -> Vec<MonoIte
 where
     F: FnMut(TyCtxt, Instance) -> bool,
 {
-    let crate_items = stable_mir::all_local_items();
+    let crate_items = rustc_public::all_local_items();
     let mut roots = Vec::new();
     // Filter regular items.
     for item in crate_items {
@@ -552,6 +552,7 @@ fn collect_alloc_items(tcx: TyCtxt, alloc_id: AllocId) -> Vec<MonoItem> {
             let vtable_id = vtable_alloc.vtable_allocation().unwrap();
             items = collect_alloc_items(tcx, vtable_id);
         }
+        GlobalAlloc::TypeId { ty: _ } => {}
     };
     items
 }
