@@ -1,3 +1,4 @@
+use assert_cmd::cargo::CommandCargoExt;
 use distributed_verification::diff::{KaniListJson, MergeHashKaniList, MergedHarnesses};
 use std::process::{Command, Stdio};
 
@@ -131,7 +132,7 @@ fn merge(kani_list: &str, out: &str) -> (String, Vec<MergeHashKaniList>) {
 }
 
 fn run(args: &[&str], out: &str) -> (String, Vec<MergeHashKaniList>) {
-    let mut cmd = Command::new(CLI);
+    let mut cmd = Command::cargo_bin(CLI).unwrap();
     let output = cmd.args(args).stderr(Stdio::inherit()).output().unwrap();
     let stdout = std::str::from_utf8(&output.stdout).unwrap();
     assert!(output.status.success(), "stdout={stdout}");

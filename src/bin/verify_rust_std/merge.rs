@@ -48,7 +48,7 @@ impl SubCmdMerge {
         for func in &mut hash_json {
             let file = func.file.strip_prefix(&self.strip_hash_json_prefix).unwrap_or(&func.file);
             let fn_name = &*func.name;
-            let value = &*func.hash;
+            let value = (&*func.hash, func.proof_kind);
             hash_map.insert((file, fn_name), value);
         }
 
@@ -56,10 +56,15 @@ impl SubCmdMerge {
         let mut v_merge = Vec::with_capacity(cap);
         for file_func in kani_list.file_func_name() {
             let (file, func) = file_func;
+            let (hash, proof_kind) = match hash_map.get(&file_func) {
+                Some((hash, proof_kind)) => (Some((*hash).into()), *proof_kind),
+                None => (None, None),
+            };
             v_merge.push(MergeHashKaniList {
                 file: file.into(),
                 func: func.into(),
-                hash: hash_map.get(&file_func).map(|s| (*s).into()),
+                hash,
+                proof_kind,
             });
         }
         v_merge.sort_unstable();
