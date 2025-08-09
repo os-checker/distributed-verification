@@ -21,7 +21,7 @@ if (localStorage.getItem(KEY) === DARK) {
 
 <template>
   <div>
-    <div class="flex justify-between p-2">
+    <div class="flex justify-between p-2" id="topbar">
       <div></div>
       <div>
         <Button :icon='dark ? "pi pi-sun" : "pi pi-moon"' @click="toggleTheme" severity="contrast" raised />

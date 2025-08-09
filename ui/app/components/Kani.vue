@@ -3,7 +3,8 @@ import { ofetch } from "ofetch";
 import { URL_MERGE_DIFF, MergeKaniColumns, multiSort, type VecMergeHashKaniList, FILTERS, ProofKind } from "~/shared/utils/kani";
 import { useStyleStore } from "~/stores/style";
 
-const { viewportHeight } = storeToRefs(useStyleStore());
+const { restHeight } = storeToRefs(useStyleStore());
+watch(restHeight, val => console.log(val));
 
 const raw = ref<VecMergeHashKaniList>([]);
 // Download JSON
@@ -30,7 +31,7 @@ useHead({ title: "Verify Rust Std - Kani" });
 <template>
   <DataTable :value="raw" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" sortMode="multiple" removableSort
     v-model:multi-sort-meta="multiSort" stripedRows tableStyle="min-width: 20rem" tableClass="m-2"
-    :scrollHeight="`${(viewportHeight - 100) * 0.8}px`" v-model:filters="filters" :globalFilterFields="FILTERS.fields"
+    :scrollHeight="`${restHeight - 10}px`" v-model:filters="filters" :globalFilterFields="FILTERS.fields"
     currentPageReportTemplate="{first} to {last} of {totalRecords}">
 
     <template #header>
