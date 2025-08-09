@@ -5,6 +5,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   ssr: false, // Client-side Only Rendering (SPA)
+  css: ["primeicons/primeicons.css"],
   typescript: { typeCheck: true },
   modules: ['@primevue/nuxt-module'],
   primevue: {

@@ -17,7 +17,14 @@ useHead({ title: "Verify Rust Std - Kani" });
   <div>len = {{ vec.length }}</div>
 
   <DataTable :value="vec" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" sortMode="multiple" removableSort
-    sortField="proof_kind" :sort-order="1" v-model:multi-sort-meta="multiSort" tableStyle="min-width: 50rem">
+    v-model:multi-sort-meta="multiSort" tableStyle="min-width: 50rem">
+    <template #header>
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <span class="text-xl font-bold">Products</span>
+        <Button icon="pi pi-refresh" rounded raised />
+      </div>
+    </template>
+
     <Column v-for="col of MergeKaniColumns" :key="col.key" :field="col.col.field" :header="col.col.header"
       :style="{ width: col.col.width }" :sortable="col.col.sortable"></Column>
   </DataTable>
