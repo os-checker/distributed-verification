@@ -4,12 +4,9 @@ import Aura from '@primeuix/themes/aura';
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  typescript: {
-    typeCheck: true
-  },
-  modules: [
-    '@primevue/nuxt-module'
-  ],
+  ssr: false, // Client-side Only Rendering (SPA)
+  typescript: { typeCheck: true },
+  modules: ['@primevue/nuxt-module'],
   primevue: {
     options: {
       theme: {

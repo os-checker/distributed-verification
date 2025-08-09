@@ -1,5 +1,5 @@
 <template>
   <div>
-    <Test />
+    <Kani />
   </div>
 </template>
