@@ -7,11 +7,12 @@ export default defineNuxtConfig({
   ssr: false, // Client-side Only Rendering (SPA)
   css: ["primeicons/primeicons.css"],
   typescript: { typeCheck: true },
-  modules: ['@primevue/nuxt-module'],
+  modules: ['@primevue/nuxt-module', '@nuxtjs/tailwindcss'],
   primevue: {
     options: {
       theme: {
-        preset: Aura
+        preset: Aura,
+        options: { darkModeSelector: '.my-app-dark' }
       }
     }
   }
