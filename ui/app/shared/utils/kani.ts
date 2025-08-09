@@ -1,4 +1,5 @@
 import type { DataTableSortMeta } from "primevue";
+import { FilterMatchMode } from '@primevue/core/api';
 
 export const URL_MERGE_DIFF = "https://raw.githubusercontent.com/os-checker/verify-rust-std_data/refs/heads/main/merge_diff-proofs-only.json";
 
@@ -31,7 +32,7 @@ export interface MergeKaniColumn {
 export const MergeKaniColumns: MergeKaniColumn[] = [
   {
     key: "file",
-    col: { field: "file", header: "File Path", width: "25%", sortable: true },
+    col: { field: "file", header: "File Path", width: "18%", sortable: true },
   },
   {
     key: "func",
@@ -39,11 +40,11 @@ export const MergeKaniColumns: MergeKaniColumn[] = [
   },
   {
     key: "hash",
-    col: { field: "hash", header: "Hash", width: "25%" },
+    col: { field: "hash", header: "Hash", width: "25%", },
   },
   {
     key: "proof_kind",
-    col: { field: "proof_kind", header: "Proof Kind", width: "10%", sortable: true },
+    col: { field: "proof_kind", header: "Proof Kind", width: "12%", sortable: true },
   },
 ];
 
@@ -51,3 +52,10 @@ export const multiSort: DataTableSortMeta[] = [
   // { field: "proof_kind", order: 1 },
   // { field: "func", order: 1 },
 ];
+
+export const FILTERS = {
+  filters: {
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  },
+  fields: ["file", "func"]
+};

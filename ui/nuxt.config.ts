@@ -7,7 +7,11 @@ export default defineNuxtConfig({
   ssr: false, // Client-side Only Rendering (SPA)
   css: ["primeicons/primeicons.css"],
   typescript: { typeCheck: true },
-  modules: ['@primevue/nuxt-module', '@nuxtjs/tailwindcss'],
+  modules: [
+    '@primevue/nuxt-module',
+    '@nuxtjs/tailwindcss',
+    '@pinia/nuxt'
+  ],
   primevue: {
     options: {
       theme: {
