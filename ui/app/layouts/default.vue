@@ -3,7 +3,6 @@
 const CLASS_DARK = "my-app-dark";
 function toggleTheme() {
   const isDark = document.documentElement.classList.toggle(CLASS_DARK);
-  console.log("dark", isDark);
   localStorage.setItem("theme", isDark ? "dark" : "light");
 }
 

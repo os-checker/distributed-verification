@@ -17,7 +17,8 @@ useHead({ title: "Verify Rust Std - Kani" });
   <div>len = {{ vec.length }}</div>
 
   <DataTable :value="vec" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" sortMode="multiple" removableSort
-    v-model:multi-sort-meta="multiSort" tableStyle="min-width: 50rem">
+    v-model:multi-sort-meta="multiSort" stripedRows tableStyle="min-width: 50rem">
+    <!-- :virtual-scroller-options="{ itemSize: 5, lazy: true, }"> It's slow to render the table, so partial render. -->
     <template #header>
       <div class="flex flex-wrap items-center justify-between gap-2">
         <span class="text-xl font-bold">Products</span>

@@ -1,6 +1,6 @@
 import type { DataTableSortMeta } from "primevue";
 
-export const URL_MERGE_DIFF = "https://raw.githubusercontent.com/os-checker/verify-rust-std_data/refs/heads/main/merge_diff.json";
+export const URL_MERGE_DIFF = "https://raw.githubusercontent.com/os-checker/verify-rust-std_data/refs/heads/main/merge_diff-proofs-only.json";
 
 export type VecMergeHashKaniList = MergeHashKaniList[];
 
@@ -48,6 +48,6 @@ export const MergeKaniColumns: MergeKaniColumn[] = [
 ];
 
 export const multiSort: DataTableSortMeta[] = [
-  { field: "proof_kind", order: 1 },
-  { field: "func", order: 1 },
+  // { field: "proof_kind", order: 1 },
+  // { field: "func", order: 1 },
 ];
