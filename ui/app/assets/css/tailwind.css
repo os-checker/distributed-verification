@@ -1,4 +1,5 @@
 @import "tailwindcss";
 @import "tailwindcss-primeui";
 
-@custom-variant dark (&:where(.my-app-dark, .my-app-dark *));     //dark mode configuration
+/* dark mode configuration */
+@custom-variant dark (&:where(.my-app-dark, .my-app-dark *));

@@ -4,14 +4,6 @@ import { URL_MERGE_DIFF, MergeKaniColumns, multiSort, type VecMergeHashKaniList,
 import { useStyleStore } from "~/stores/style";
 
 const { viewportHeight } = storeToRefs(useStyleStore());
-const colStyle = (ratio: number) => {
-  const style = {
-    "width": `${Math.round(viewportHeight.value * ratio)}px`,
-    "white-space": "normal", "word-break": "break-word",
-  };
-  console.log(style);
-  return style;
-};
 
 const raw = ref<VecMergeHashKaniList>([]);
 // Download JSON
@@ -37,8 +29,9 @@ useHead({ title: "Verify Rust Std - Kani" });
 
 <template>
   <DataTable :value="raw" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" sortMode="multiple" removableSort
-    v-model:multi-sort-meta="multiSort" stripedRows tableStyle="min-width: 20rem" v-model:filters="filters"
-    :globalFilterFields="FILTERS.fields" currentPageReportTemplate="{first} to {last} of {totalRecords}">
+    v-model:multi-sort-meta="multiSort" stripedRows tableStyle="min-width: 20rem" tableClass="m-2"
+    :scrollHeight="`${(viewportHeight - 100) * 0.8}px`" v-model:filters="filters" :globalFilterFields="FILTERS.fields"
+    currentPageReportTemplate="{first} to {last} of {totalRecords}">
 
     <template #header>
       <div class="flex justify-between items-center">
