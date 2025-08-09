@@ -4,8 +4,6 @@ export const useStyleStore = defineStore("style", () => {
     topButton: "white", orange: "orange", orange_light: "orange",
   });
   const viewportHeight = ref(800);
-  const topbarHeight = ref(800);
-  const restHeight = computed(() => viewportHeight.value - topbarHeight.value);
 
   onMounted(() => {
     // Get styles after computation.
@@ -21,14 +19,11 @@ export const useStyleStore = defineStore("style", () => {
 
     // Get heights
     viewportHeight.value = window.innerHeight;
-    topbarHeight.value = document.getElementById("topbar")?.offsetHeight ?? 800;
     window.addEventListener("resize", () => {
       viewportHeight.value = window.innerHeight;
-      topbarHeight.value = document.getElementById("topbar")?.offsetHeight ?? 800;
     });
-
   });
 
-  return { color, viewportHeight, topbarHeight, restHeight }
+  return { color, viewportHeight }
 });
 
