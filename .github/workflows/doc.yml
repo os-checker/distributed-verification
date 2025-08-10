@@ -2,46 +2,50 @@ name: Deploy Doc
 
 on:
   push:
-    branches: [ main ]
 
 jobs:
-  # Build job
   build:
     # Specify runner +  build & upload the static files as an artifact
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build static files
-        env:
-          CARGO_TERM_COLOR: always
-        run: |
-          cargo doc --document-private-items --no-deps
-
-      - name: Install rustc internal docs
-        run: |
-          rustup toolchain list -v
-          # Find toolchain path
-          export TOOLCHAIN=$(rustc --print sysroot)
-          echo "toolchain=\"$TOOLCHAIN\""
-          # Remove rustc book
-          rm $TOOLCHAIN/share/doc/rust/html/rustc -rf
-          # Download rustc API docs
-          rustup component add rustc-docs
-          # Move the docs to deployment path
-          mv $TOOLCHAIN/share/doc/rust/html/rustc target/doc/rustc
-
-      - name: Prepare index.html
-        run: |
-          # Find toolchain name
-          export toolchain=$(rustc --print sysroot | grep -oP "nightly-\d{4}-\d{2}-\d{2}")
-          echo "toolchain=\"$toolchain\""
-          # Fill in toolchain placeholder in index.html
-          sed "s/nightly-xxxx-xx-xx/$toolchain/" .github/index.html > target/doc/index.html
-
+      # - name: Build static files
+      #   env:
+      #     CARGO_TERM_COLOR: always
+      #   run: |
+      #     cargo doc --document-private-items --no-deps
+      #
+      # - name: Install rustc internal docs
+      #   run: |
+      #     rustup toolchain list -v
+      #     # Find toolchain path
+      #     export TOOLCHAIN=$(rustc --print sysroot)
+      #     echo "toolchain=\"$TOOLCHAIN\""
+      #     # Remove rustc book
+      #     rm $TOOLCHAIN/share/doc/rust/html/rustc -rf
+      #     # Download rustc API docs
+      #     rustup component add rustc-docs
+      #     # Move the docs to deployment path
+      #     mv $TOOLCHAIN/share/doc/rust/html/rustc target/doc/rustc
+      #
+      # - name: Prepare index.html
+      #   run: |
+      #     # Find toolchain name
+      #     export toolchain=$(rustc --print sysroot | grep -oP "nightly-\d{4}-\d{2}-\d{2}")
+      #     echo "toolchain=\"$toolchain\""
+      #     # Fill in toolchain placeholder in index.html
+      #     sed "s/nightly-xxxx-xx-xx/$toolchain/" .github/index.html > target/doc/index.html
+      #
+      # - name: Upload static files as artifact
+      #   uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
+      #   with:
+      #     path: target/doc/
+      - name: Build UI
+        run: cd ui && npm i && NUXT_APP_BASE_URL=/distributed-verification/ npm run generate
       - name: Upload static files as artifact
-        uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: target/doc/
+          path: ui/.output/public/
 
   # Deployment job
   deploy:

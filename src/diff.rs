@@ -254,6 +254,9 @@ pub struct MergeHashKaniList {
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(default)]
     pub hash: Option<Box<str>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    pub proof_kind: Option<ProofKind>,
 }
 
 /// Compare two `MergeHashKaniList`, and returns the ones from new that don't match the old,
