@@ -13,20 +13,36 @@ const raw = ref<VecMergeHashKaniList>([]);
 ofetch<VecMergeHashKaniList>(
   URL_MERGE_DIFF,
   { parseResponse: JSON.parse }
-).then(val => raw.value = val);
+).then(val => {
+  raw.value = val;
+  data.value = val;
+});
+
+// Real data for DataTable.
+const data = ref<VecMergeHashKaniList>([]);
+// Changed data for DataTable.
+const dataChanged = ref<VecMergeHashKaniList>([]);
+function valueChange(v: VecMergeHashKaniList) {
+  dataChanged.value = v;
+}
 
 // fitler rows
 const filters = ref(FILTERS.filters);
 // stats
-const counts = computed<{ total: number, standard: number, contract: number }>(() => ({
+type Counts = { total: number, selected_total: number, standard: number, contract: number };
+const counts = computed<Counts>(() => ({
   total: raw.value.length,
+  selected_total: dataChanged.value.length,
   standard: raw.value.filter(ele => ele.proof_kind === ProofKind.Standard).length,
   contract:
     raw.value.filter(ele => ele.proof_kind === ProofKind.Contract).length,
 }));
 
 const selectedProofKind = ref<string[]>([]);
-watch(selectedProofKind, val => console.log(val));
+watch(selectedProofKind, val => {
+  data.value = (val.length === 0) ? raw.value :
+    raw.value.filter(ele => val.find(k => k === ele.proof_kind));
+});
 
 // Set title
 useHead({ title: "Verify Rust Std - Kani" });
@@ -34,10 +50,10 @@ useHead({ title: "Verify Rust Std - Kani" });
 
 <template>
 
-  <DataTable :value="raw" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" sortMode="multiple" removableSort
+  <DataTable :value="data" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" sortMode="multiple" removableSort
     v-model:multi-sort-meta="multiSort" stripedRows :tableStyle="{ width: `${Math.round(viewportWidth - 10)}px` }"
     tableClass="p-1" :scrollHeight="`${Math.round(viewportHeight * 0.78)}px`" v-model:filters="filters"
-    :globalFilterFields="FILTERS.fields" currentPageReportTemplate="{first} to {last} of {totalRecords}">
+    :globalFilterFields="FILTERS.fields" @value-change="valueChange">
 
     <template #header>
       <div class="flex justify-between items-center">
@@ -72,10 +88,15 @@ useHead({ title: "Verify Rust Std - Kani" });
     </Column>
 
     <template #paginatorstart>
-      <span>Total: {{ counts.total }}</span>
+      <div class="grid grid-cols-2 grid-rows-2 justify-items-end">
+        <span>Total:</span>
+        <span>{{ counts.total }}</span>
+        <span>Filtered:</span>
+        <span>{{ counts.selected_total }}</span>
+      </div>
     </template>
     <template #paginatorend>
-      <div class="grid grid-cols-2 grid-rows-2 place-items-center">
+      <div class="grid grid-cols-2 grid-rows-2 justify-items-end">
         <span>Standard:</span>
         <span>{{ counts.standard }}</span>
         <span>Contract:</span>
