@@ -22,12 +22,19 @@ export interface Column {
   header: string,
   width: string,
   sortable?: boolean,
+  pt?: any
 }
 
 export interface MergeKaniColumn {
   key: string,
   col: Column,
 }
+
+/** Make header and column content center aligned. */
+export const center = {
+  columnHeaderContent: { style: { "justify-content": "center" } },
+  bodyCell: { style: { "text-align": "center" } }
+};
 
 export const MergeKaniColumns: MergeKaniColumn[] = [
   {
@@ -44,7 +51,7 @@ export const MergeKaniColumns: MergeKaniColumn[] = [
   },
   {
     key: "proof_kind",
-    col: { field: "proof_kind", header: "Proof Kind", width: "12%", sortable: true },
+    col: { field: "proof_kind", header: "Proof Kind", width: "12%", sortable: true, pt: center },
   },
 ];
 

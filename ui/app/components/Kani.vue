@@ -84,24 +84,30 @@ useHead({ title: "Verify Rust Std - Kani" });
     <!-- Passing ratio to maxWidth seems not working. Pass bodyStyle to wrap long paths while bodyClass not working. -->
     <Column v-for="col of MergeKaniColumns" :key="col.key" :field="col.col.field" :header="col.col.header"
       :style="{ width: col.col.width }" bodyStyle="white-space: normal; word-break: break-word"
-      :sortable="col.col.sortable">
+      :sortable="col.col.sortable" :pt="col.col.pt">
     </Column>
 
     <template #paginatorstart>
-      <div class="grid grid-cols-2 grid-rows-2 justify-items-end">
+      <div class="grid grid-cols-2 grid-rows-2 justify-items-end counts">
         <span>Total:</span>
-        <span>{{ counts.total }}</span>
+        <span class="mx-auto">{{ counts.total }}</span>
         <span>Filtered:</span>
-        <span>{{ counts.selected_total }}</span>
+        <span class="mx-auto">{{ counts.selected_total }}</span>
       </div>
     </template>
     <template #paginatorend>
-      <div class="grid grid-cols-2 grid-rows-2 justify-items-end">
+      <div class="grid grid-cols-2 grid-rows-2 justify-items-end counts mr-3">
         <span>Standard:</span>
-        <span>{{ counts.standard }}</span>
+        <span class="mx-auto">{{ counts.standard }}</span>
         <span>Contract:</span>
-        <span>{{ counts.contract }}</span>
+        <span class="mx-auto">{{ counts.contract }}</span>
       </div>
     </template>
   </DataTable>
 </template>
+
+<style lang="css" scoped>
+.counts {
+  color: #aaaaaa
+}
+</style>
