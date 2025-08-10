@@ -5,7 +5,7 @@ import { URL_MERGE_DIFF, MergeKaniColumns, multiSort, type VecMergeHashKaniList,
 import { useDarkStore, useStyleStore } from "~/stores/style";
 
 // Compute absolute scrollHeight for DataTable.
-const { color, viewportHeight } = storeToRefs(useStyleStore());
+const { color, viewportHeight, viewportWidth } = storeToRefs(useStyleStore());
 const { fontColor } = storeToRefs(useDarkStore());
 
 const raw = ref<VecMergeHashKaniList>([]);
@@ -35,8 +35,8 @@ useHead({ title: "Verify Rust Std - Kani" });
 <template>
 
   <DataTable :value="raw" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" sortMode="multiple" removableSort
-    v-model:multi-sort-meta="multiSort" stripedRows tableStyle="min-width: 20rem" tableClass="m-1"
-    :scrollHeight="`${Math.round(viewportHeight * 0.78)}px`" v-model:filters="filters"
+    v-model:multi-sort-meta="multiSort" stripedRows :tableStyle="{ width: `${Math.round(viewportWidth - 10)}px` }"
+    tableClass="p-1" :scrollHeight="`${Math.round(viewportHeight * 0.78)}px`" v-model:filters="filters"
     :globalFilterFields="FILTERS.fields" currentPageReportTemplate="{first} to {last} of {totalRecords}">
 
     <template #header>

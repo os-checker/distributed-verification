@@ -32,7 +32,7 @@ export interface MergeKaniColumn {
 export const MergeKaniColumns: MergeKaniColumn[] = [
   {
     key: "file",
-    col: { field: "file", header: "File Path", width: "18%", sortable: true },
+    col: { field: "file", header: "File Path", width: "15%", sortable: true },
   },
   {
     key: "func",

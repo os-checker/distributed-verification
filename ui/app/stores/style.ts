@@ -4,6 +4,7 @@ export const useStyleStore = defineStore("style", () => {
     primary: "white", orange: "orange", orange_light: "orange",
   });
   const viewportHeight = ref(800);
+  const viewportWidth = ref(800);
 
   onMounted(() => {
     // Get styles after computation.
@@ -17,14 +18,16 @@ export const useStyleStore = defineStore("style", () => {
     color.orange_light = styles.getPropertyValue("--p-orange-400").trim();
     color.orange = styles.getPropertyValue("--p-orange-500").trim();
 
-    // Get heights
+    // Get heights and widths.
     viewportHeight.value = window.innerHeight;
+    viewportWidth.value = window.innerWidth;
     window.addEventListener("resize", () => {
       viewportHeight.value = window.innerHeight;
+      viewportWidth.value = window.innerWidth;
     });
   });
 
-  return { color, viewportHeight }
+  return { color, viewportHeight, viewportWidth }
 });
 
 /** Styling based on dark theme mode. */
