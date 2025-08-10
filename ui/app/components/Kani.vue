@@ -97,7 +97,7 @@ useHead({ title: "Verify Rust Std - Kani" });
           <MultiSelect v-model="selectedMods" :options="mod_names" :maxSelectedLabels="3" placeholder="select modules"
             optionLabel="name" optionValue="name" filter>
             <template #option="{ option }">
-              <span class="inline-block w-10 text-right rounded-lg px-1 py-1" :style="{ background: color.green }">
+              <span class="inline-block w-10 text-right rounded-lg px-1 my-2" :style="{ background: color.green }">
                 {{ option.n }}
               </span>
               {{ option.name }}
@@ -155,5 +155,9 @@ useHead({ title: "Verify Rust Std - Kani" });
 <style lang="css" scoped>
 .counts {
   color: #aaaaaa
+}
+
+:deep(.p-togglebutton:hover) {
+  background: var(--p-emerald-300) !important;
 }
 </style>
