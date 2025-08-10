@@ -59,3 +59,5 @@ export const FILTERS = {
   },
   fields: ["file", "func"]
 };
+
+export const optionsProofKind: string[] = [ProofKind.Standard, ProofKind.Contract];

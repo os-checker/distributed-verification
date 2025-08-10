@@ -1,18 +1,23 @@
 <script setup lang="ts">
+import { useDarkStore } from '~/stores/style';
 
 const CLASS_DARK = "my-app-dark";
 const KEY = "theme";
 const DARK = "dark";
 
 const dark = ref(false);
+const storeDark = useDarkStore();
 
 function toggleTheme() {
   const isDark = document.documentElement.classList.toggle(CLASS_DARK);
   dark.value = isDark;
+  storeDark.setFontColor(isDark);
   localStorage.setItem(KEY, isDark ? DARK : "light");
 }
 
-if (localStorage.getItem(KEY) === DARK) {
+const isInitDark = localStorage.getItem(KEY) === DARK;
+storeDark.setFontColor(isInitDark);
+if (isInitDark) {
   document.documentElement.classList.add(CLASS_DARK);
   dark.value = true;
 }

@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { ofetch } from "ofetch";
-import { URL_MERGE_DIFF, MergeKaniColumns, multiSort, type VecMergeHashKaniList, FILTERS, ProofKind } from "~/shared/utils/kani";
-import { useStyleStore } from "~/stores/style";
+import type { SelectButtonPassThroughMethodOptions } from "primevue";
+import { URL_MERGE_DIFF, MergeKaniColumns, multiSort, type VecMergeHashKaniList, FILTERS, ProofKind, optionsProofKind } from "~/shared/utils/kani";
+import { useDarkStore, useStyleStore } from "~/stores/style";
 
 // Compute absolute scrollHeight for DataTable.
-const { viewportHeight } = storeToRefs(useStyleStore());
+const { color, viewportHeight } = storeToRefs(useStyleStore());
+const { fontColor } = storeToRefs(useDarkStore());
 
 const raw = ref<VecMergeHashKaniList>([]);
 // Download JSON
@@ -23,6 +25,8 @@ const counts = computed<{ total: number, standard: number, contract: number }>((
     raw.value.filter(ele => ele.proof_kind === ProofKind.Contract).length,
 }));
 
+const selectedProofKind = ref<string[]>([]);
+watch(selectedProofKind, val => console.log(val));
 
 // Set title
 useHead({ title: "Verify Rust Std - Kani" });
@@ -37,7 +41,18 @@ useHead({ title: "Verify Rust Std - Kani" });
 
     <template #header>
       <div class="flex justify-between items-center">
-        <div>
+        <div class="flex justify-between items-center gap-1">
+          Proof Kind:
+          <SelectButton v-model="selectedProofKind" :options="optionsProofKind" :option-label="x => x" multiple :pt="{
+            pcToggleButton: {
+              content: (opt: SelectButtonPassThroughMethodOptions) => ({
+                style: {
+                  background: opt.context.active ? color.green : 'transparent',
+                  color: fontColor
+                }
+              })
+            }
+          }" />
         </div>
         <div>
           <IconField>
