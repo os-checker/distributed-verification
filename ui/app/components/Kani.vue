@@ -18,30 +18,65 @@ ofetch<VecMergeHashKaniList>(
   data.value = val;
 });
 
-// Real data for DataTable.
-const data = ref<VecMergeHashKaniList>([]);
 // Changed data for DataTable.
 const dataChanged = ref<VecMergeHashKaniList>([]);
 function valueChange(v: VecMergeHashKaniList) {
   dataChanged.value = v;
 }
 
-// fitler rows
-const filters = ref(FILTERS.filters);
 // stats
 type Counts = { total: number, selected_total: number, standard: number, contract: number };
 const counts = computed<Counts>(() => ({
   total: raw.value.length,
   selected_total: dataChanged.value.length,
-  standard: raw.value.filter(ele => ele.proof_kind === ProofKind.Standard).length,
-  contract:
-    raw.value.filter(ele => ele.proof_kind === ProofKind.Contract).length,
+  standard: dataChanged.value.filter(ele => ele.proof_kind === ProofKind.Standard).length,
+  contract: dataChanged.value.filter(ele => ele.proof_kind === ProofKind.Contract).length
 }));
 
+// fitler rows
+const filters = ref(FILTERS.filters);
+
+// module names
+type ModName = { name: string, n: number };
+const selectedMods = ref<string[]>([]);
+const mod_names = computed<ModName[]>(() => {
+  return Object.entries(
+    raw.value.reduce((acc, { func }) => {
+      const prefix = func.split("::")[0] ?? func;
+      acc[prefix] = (acc[prefix] || 0) + 1;
+      return acc;
+    }, {} as { [key: string]: number })
+  )
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([name, n]) => ({ name, n }));
+});
+
+// Real data for DataTable: outer sorting.
+const data = ref<VecMergeHashKaniList>([]);
 const selectedProofKind = ref<string[]>([]);
-watch(selectedProofKind, val => {
-  data.value = (val.length === 0) ? raw.value :
-    raw.value.filter(ele => val.find(k => k === ele.proof_kind));
+watch([selectedMods, selectedProofKind], ([mods, proofs]) => {
+  const empty_mod = mods.length === 0;
+  const empty_proof = proofs.length === 0;
+
+  if (empty_mod && empty_proof) { data.value = raw.value; return; }
+
+  const set_proof = new Set(proofs);
+  let v: VecMergeHashKaniList = [];
+
+  for (const val of raw.value) {
+    // consider proof kind
+    let push = empty_proof;
+    push = push || ((val.proof_kind && !empty_proof && set_proof.has(val.proof_kind)) ?? false);
+    if (!push) continue;
+
+    // consider func mod
+    push = empty_mod;
+    for (const name of mods) {
+      if (val.func.startsWith(`${name}::`)) { push = true; break; }
+    }
+    if (push) v.push(val);
+  }
+  data.value = v;
 });
 
 // Set title
@@ -57,13 +92,24 @@ useHead({ title: "Verify Rust Std - Kani" });
 
     <template #header>
       <div class="flex justify-between items-center">
-        <div class="flex justify-between items-center gap-1">
-          Proof Kind:
+        <div class="flex justify-between items-center gap-2">
+          <span class="font-bold">Module:</span>
+          <MultiSelect v-model="selectedMods" :options="mod_names" :maxSelectedLabels="3" placeholder="select modules"
+            optionLabel="name" optionValue="name" filter>
+            <template #option="{ option }">
+              <span class="inline-block w-10 text-right rounded-lg px-1 py-1" :style="{ background: color.green }">
+                {{ option.n }}
+              </span>
+              {{ option.name }}
+            </template>
+          </MultiSelect>
+
+          <span class="font-bold">Proof Kind:</span>
           <SelectButton v-model="selectedProofKind" :options="optionsProofKind" :option-label="x => x" multiple :pt="{
             pcToggleButton: {
-              content: (opt: SelectButtonPassThroughMethodOptions) => ({
+              content: (opts: SelectButtonPassThroughMethodOptions) => ({
                 style: {
-                  background: opt.context.active ? color.green : 'transparent',
+                  background: opts.context.active ? color.green : 'transparent',
                   color: fontColor
                 }
               })
