@@ -43,6 +43,10 @@ export const center = {
   columnHeaderContent: { style: { "justify-content": "center" } },
   bodyCell: { style: { "text-align": "center" } }
 };
+export const right = {
+  columnHeaderContent: { style: { "justify-content": "flex-end" } },
+  bodyCell: { style: { "text-align": "right" } }
+};
 
 export const MergeKaniColumns: MergeKaniColumn[] = [
   {
@@ -60,6 +64,10 @@ export const MergeKaniColumns: MergeKaniColumn[] = [
   {
     key: "proof_kind",
     col: { field: "proof_kind", header: "Proof Kind", width: "12%", sortable: true, pt: center },
+  },
+  {
+    key: "time",
+    col: { field: "time", header: "Time (ms)", width: "5%", sortable: true, pt: right },
   },
 ];
 
