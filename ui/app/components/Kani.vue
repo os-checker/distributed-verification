@@ -41,8 +41,8 @@ type ModName = { name: string, n: number };
 const selectedMods = ref<string[]>([]);
 const mod_names = computed<ModName[]>(() => {
   return Object.entries(
-    raw.value.reduce((acc, { func }) => {
-      const prefix = func.split("::")[0] ?? func;
+    raw.value.reduce((acc, { harness }) => {
+      const prefix = harness.split("::")[0] ?? harness;
       acc[prefix] = (acc[prefix] || 0) + 1;
       return acc;
     }, {} as { [key: string]: number })
@@ -72,7 +72,7 @@ watch([selectedMods, selectedProofKind], ([mods, proofs]) => {
     // consider func mod
     push = empty_mod;
     for (const name of mods) {
-      if (val.func.startsWith(`${name}::`)) { push = true; break; }
+      if (val.harness.startsWith(`${name}::`)) { push = true; break; }
     }
     if (push) v.push(val);
   }
