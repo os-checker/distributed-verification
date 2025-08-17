@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ofetch } from "ofetch";
 import type { SelectButtonPassThroughMethodOptions } from "primevue";
-import { URL_MERGE_DIFF, MergeKaniColumns, multiSort, type VecMergeHashKaniList, FILTERS, ProofKind, optionsProofKind } from "~/shared/utils/kani";
+import { URL_MERGE_DIFF, MergeKaniColumns, multiSort, type VecMergeHashKaniList, type MergeHashKaniList, FILTERS, ProofKind, optionsProofKind } from "~/shared/utils/kani";
 import { useDarkStore, useStyleStore } from "~/stores/style";
 
 // Compute absolute scrollHeight for DataTable.
@@ -79,6 +79,15 @@ watch([selectedMods, selectedProofKind], ([mods, proofs]) => {
   data.value = v;
 });
 
+const visible = ref(false);
+const selectedHarness = ref<MergeHashKaniList | null>(null);
+watch(selectedHarness, val => {
+  if (val === null) { visible.value = false; return }
+
+  visible.value = true;
+});
+
+
 // Set title
 useHead({ title: "Verify Rust Std - Kani" });
 </script>
@@ -88,7 +97,8 @@ useHead({ title: "Verify Rust Std - Kani" });
   <DataTable :value="data" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" sortMode="multiple" removableSort
     v-model:multi-sort-meta="multiSort" stripedRows :tableStyle="{ width: `${Math.round(viewportWidth - 10)}px` }"
     tableClass="p-1" :scrollHeight="`${Math.round(viewportHeight * 0.78)}px`" v-model:filters="filters"
-    :globalFilterFields="FILTERS.fields" @value-change="valueChange">
+    :globalFilterFields="FILTERS.fields" @value-change="valueChange" selectionMode="single"
+    v-model:selection="selectedHarness">
 
     <template #header>
       <div class="flex justify-between items-center">
@@ -150,6 +160,38 @@ useHead({ title: "Verify Rust Std - Kani" });
       </div>
     </template>
   </DataTable>
+
+
+  <Dialog v-model:visible="visible" modal header="Kani Harness" :style="{ width: '75%' }">
+    <div class="grid grid-cols-2 gap-4 justify-center">
+      <div>
+        <Card class="border border-sky-300">
+          <template #content>
+            <div> Harness Name:
+              <Tag severity="info" :value="selectedHarness?.harness" />
+            </div>
+            <div> Harness File: {{ selectedHarness?.file }}</div>
+            <div> Harness Hash: {{ selectedHarness?.hash }}</div>
+            <div> Proof Kind: {{ selectedHarness?.proof_kind }}</div>
+            <div> Total Properties: {{ selectedHarness?.props }}</div>
+            <div> Execution Time: {{ selectedHarness?.time }}ms</div>
+          </template>
+        </Card>
+      </div>
+
+      <div>
+        <Card class="border border-sky-300">
+          <template #content>
+            <div> Verified Function:
+              <Tag severity="info" :value="selectedHarness?.func.name" />
+            </div>
+            <div> Function File: {{ selectedHarness?.func.file }}</div>
+            <div> Safeness: {{ selectedHarness?.func.safe }}</div>
+          </template>
+        </Card>
+      </div>
+    </div>
+  </Dialog>
 </template>
 
 <style lang="css" scoped>
