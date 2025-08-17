@@ -15,6 +15,7 @@ export interface MergeHashKaniList {
   func: {
     name: string,
     safe: string,
+    file: String,
   },
   ok?: boolean,
   n_fialed_properties?: number,
