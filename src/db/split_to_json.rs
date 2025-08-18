@@ -1,16 +1,12 @@
 use crate::{
     Result,
-    db::{
-        DbFunction,
-        sql::{SQL_SELECT_ALL, db_file},
-    },
+    db::{DbFunction, sql::SQL_SELECT_ALL},
 };
 use rusqlite::Connection;
 use serde::de::DeserializeOwned;
 use std::{fs, path::PathBuf};
 
-pub fn split_to_json() -> Result<()> {
-    let db_file = db_file();
+pub fn split_to_json(db_file: &str, base: &str) -> Result<()> {
     let _span = debug_span!("split_to_json", db_file).entered();
     let db = Connection::open(db_file)?;
 
@@ -33,11 +29,14 @@ pub fn split_to_json() -> Result<()> {
     })?;
 
     let mut path_buf = PathBuf::with_capacity(128);
-    let base = json_path_base();
+    // Create base folder if not exists.
+    if !base.is_empty() && !fs::exists(base).unwrap() {
+        fs::create_dir_all(base).unwrap();
+    }
 
     for row in rows {
         let row = row?;
-        path_buf.push(&base);
+        path_buf.push(base);
         row.json_path(&mut path_buf);
         let _json = error_span!("write json", path = %path_buf.display()).entered();
         let file = fs::File::create(&path_buf)?;
@@ -54,14 +53,4 @@ fn convert_opt<T: DeserializeOwned>(s: String) -> Option<T> {
 }
 fn convert<T: DeserializeOwned>(s: String) -> T {
     serde_json::from_str(&s).unwrap()
-}
-
-/// Only respect env var `JSON_PATH_BASE` as base folder to store JSON files.
-/// Recurisvely create it if not exists.
-fn json_path_base() -> String {
-    let base = std::env::var("JSON_PATH_BASE").unwrap_or_default();
-    if !base.is_empty() && !fs::exists(&base).unwrap() {
-        fs::create_dir_all(&base).unwrap();
-    }
-    base
 }
