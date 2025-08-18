@@ -1,6 +1,6 @@
 use crate::{BoxStr, InstKind, MacroBacktrace, ProofKind};
 use serde::{Deserialize, Serialize};
-use std::path::PathBuf;
+use std::{fs, path::PathBuf};
 
 pub mod split_to_json;
 pub mod sql;
@@ -52,6 +52,12 @@ impl DbFunction {
     /// Path to  erialize JSON. The string buffer may contain base folder, like `folder/`.
     fn json_path(&self, path_buf: &mut PathBuf) {
         path_buf.push(&self.file);
+
+        // Create parent folder if not exists.
+        if !fs::exists(&path_buf).unwrap() {
+            fs::create_dir_all(&path_buf).unwrap();
+        }
+
         path_buf.push(&self.name);
     }
 }

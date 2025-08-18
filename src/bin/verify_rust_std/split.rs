@@ -22,6 +22,9 @@ struct SubCmdSplit {
 
 impl SubCmdSplit {
     fn run(self) -> Result<()> {
-        split_to_json(&self.db, &self.base)
+        let Self { db, base } = &self;
+        ensure!(!db.is_empty(), "db path must be nonempty");
+        ensure!(!base.is_empty(), "base path must be nonempty");
+        split_to_json(db, base)
     }
 }

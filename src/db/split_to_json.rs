@@ -29,16 +29,13 @@ pub fn split_to_json(db_file: &str, base: &str) -> Result<()> {
     })?;
 
     let mut path_buf = PathBuf::with_capacity(128);
-    // Create base folder if not exists.
-    if !base.is_empty() && !fs::exists(base).unwrap() {
-        fs::create_dir_all(base).unwrap();
-    }
 
     for row in rows {
         let row = row?;
         path_buf.push(base);
         row.json_path(&mut path_buf);
         let _json = error_span!("write json", path = %path_buf.display()).entered();
+
         let file = fs::File::create(&path_buf)?;
         serde_json::to_writer_pretty(file, &row)?;
         path_buf.clear();
