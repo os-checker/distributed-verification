@@ -22,6 +22,7 @@ pub const SQL_INSERT: &str = "\
 INSERT INTO db (file, name, hash, hash_direct, inst_kind, proof_kind, attrs, src, macro_backtrace_len, macro_backtrace, callees_len, callees) 
 VALUES (:file, :name, :hash, :hash_direct, :inst_kind, :proof_kind, :attrs, :src, :macro_backtrace_len, :macro_backtrace, :callees_len, :callees)
 ";
+pub const SQL_SELECT_ALL: &str = "SELECT * FROM db";
 
 pub fn db_file() -> String {
     const VAR_DB_FILE: &str = "DB_FILE";
