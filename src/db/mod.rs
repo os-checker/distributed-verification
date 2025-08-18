@@ -1,6 +1,8 @@
 use crate::{BoxStr, InstKind, MacroBacktrace, ProofKind};
 use serde::{Deserialize, Serialize};
 
+pub mod sql;
+
 /// All information for a function stored in db.
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct DbFunction {
