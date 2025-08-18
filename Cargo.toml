@@ -23,7 +23,6 @@ tracing-error = "0.2"
 
 # db
 rusqlite = { version = "0.36.0", features = ["bundled", "jiff"] }
-serde_rusqlite = "0.39.1"
 jiff = { version = "0.2", features = ["serde"] }
 
 [dev-dependencies]
