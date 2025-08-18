@@ -17,8 +17,8 @@ pub fn split_to_json(db_file: &str, base: &str) -> Result<()> {
             name: row.get(1)?,
             hash: row.get(2)?,
             hash_direct: row.get(3)?,
-            inst_kind: row.get(4).map(convert_opt)?,
-            proof_kind: row.get(5).map(convert_opt)?,
+            inst_kind: row.get(4).ok().map(convert),
+            proof_kind: row.get(5).ok().map(convert),
             attrs: row.get(6).map(convert)?,
             src: row.get(7)?,
             macro_backtrace_len: row.get(8)?,
@@ -48,9 +48,6 @@ pub fn split_to_json(db_file: &str, base: &str) -> Result<()> {
 }
 
 /// Types that don't implement FromSql have to be converted from JSON string.
-fn convert_opt<T: DeserializeOwned>(s: String) -> Option<T> {
-    serde_json::from_str(&s).ok()
-}
 fn convert<T: DeserializeOwned>(s: String) -> T {
     serde_json::from_str(&s).unwrap()
 }
