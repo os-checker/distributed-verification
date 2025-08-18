@@ -1,7 +1,6 @@
 //! `VERIFY_RUST_STD_LIBRARY=path/to/verify-rust-std/library` and
 //! `KANI_DIR=path/to/kani` should be set beforehand.
 
-use distributed_verification::logger;
 use eyre::{Context, Result};
 use std::process::{Command, Stdio};
 
@@ -42,19 +41,23 @@ fn main() -> Result<()> {
             // build non-core crates
             run("rustc", rustc_args, &[])
         }
-    } else if args.get(1).map(|arg| arg == "merge").unwrap_or(false) {
-        logger::init();
-        merge::run(&args[1..])
-    } else if args.get(1).map(|arg| arg == "diff").unwrap_or(false) {
-        logger::init();
-        diff::run(&args[1..])
+    } else if let Some(arg) = args.get(1) {
+        match arg.as_str() {
+            "merge" => merge::run(&args[1..]),
+            "diff" => diff::run(&args[1..]),
+            _ => run_cargo(),
+        }
     } else {
-        run(
-            "cargo",
-            &["build", "-Zbuild-std=core"].map(String::from),
-            &[env::set_rustc_wrapper(), env::set_wrapper()],
-        )
+        run_cargo()
     }
+}
+
+fn run_cargo() -> std::result::Result<(), eyre::Error> {
+    run(
+        "cargo",
+        &["build", "-Zbuild-std=core"].map(String::from),
+        &[env::set_rustc_wrapper(), env::set_wrapper()],
+    )
 }
 
 fn run(cmd: &str, args: &[String], vars: &[(&str, &str)]) -> Result<()> {
