@@ -1,4 +1,4 @@
--- sqlite3 -batch ../artifacts/artifact-libcore/core.sqlite3 <hash.sql | jq -s '.' >hash.json
+-- sqlite3 ../artifacts/artifact-libcore/core.sqlite3 <hash.sql | jq -s '.' >../ui/verify-rust-std_data/hash.json
 WITH
   df AS (
     SELECT
