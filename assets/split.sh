@@ -3,6 +3,7 @@
 set -eou pipefail
 
 # Usage: sqlite.sh db-path sql-path
+# e.g. ./split.sh ../artifacts/artifact-libcore/core.sqlite3 split.sql ../tmp/json
 db=$1
 sql=$2
 base=$3
