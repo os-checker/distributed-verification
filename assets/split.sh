@@ -13,9 +13,10 @@ echo "db=$db, sql=$sql, base=$base"
 PREFIX=/home/runner/work/verify-rust-std/verify-rust-std/library/
 
 sqlite3 -batch "$db" -separator $'\t' <"$sql" |
-  while IFS=$'\t' read -r filename json; do
+  while IFS=$'\t' read -r filename hash json; do
     json_folder="$base/${filename#"$PREFIX"}"
-    echo "$json_folder"
+    json_file="$json_folder/$hash.json"
+    echo "$json_file"
     mkdir -p "$json_folder"
-    jq 'map(del(.[] | select(. == [])))' <<<"$json" >"$json_folder/DbFunctions.json"
+    jq 'del(.[] | select(. == []))' <<<"$json" >"$json_file"
   done
