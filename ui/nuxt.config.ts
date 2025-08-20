@@ -8,7 +8,6 @@ export default defineNuxtConfig({
   css: [
     "primeicons/primeicons.css",
     "~/assets/css/main.css",
-    "~/assets/css/prism-themes.scss",
   ],
   typescript: { typeCheck: true },
   modules: [
