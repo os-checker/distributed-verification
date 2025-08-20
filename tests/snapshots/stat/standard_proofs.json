@@ -1,11 +1,11 @@
 {
   "local": {
     "attrs": {
-      "all_tool_attrs": 9,
+      "all_tool_attrs": 7,
       "kanitools": 3
     },
     "fn_defs": {
-      "total": 6,
+      "total": 5,
       "kanitools": {
         "count": 3,
         "names": [
