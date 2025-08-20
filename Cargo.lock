@@ -241,6 +241,7 @@ dependencies = [
  "eyre",
  "indexmap",
  "jiff",
+ "log",
  "pretty_assertions",
  "proc-macro2",
  "quote",

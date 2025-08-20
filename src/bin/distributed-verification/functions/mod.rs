@@ -18,6 +18,7 @@ mod utils;
 pub fn analyze(tcx: TyCtxt) -> Vec<SerFunction> {
     let local_items = all_local_items();
     let cap = local_items.len();
+    dbg!(cap);
 
     let mut entries = Vec::with_capacity(cap);
 

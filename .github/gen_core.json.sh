@@ -12,8 +12,8 @@ export VERIFY_RUST_STD_LIBRARY=$WORKSPACE/verify-rust-std/library
 # test/verify-rust-std needs this, so remember to
 # * update runid after verify-rust-std submodule syncs
 # * update snapshots after runid changes
-rm tmp -rf
-gh run download -D tmp -R model-checking/verify-rust-std 16777123952
+# rm tmp -rf
+# gh run download -D tmp -R model-checking/verify-rust-std 16777123952
 
 ls -alh $VERIFY_RUST_STD_LIBRARY
 
