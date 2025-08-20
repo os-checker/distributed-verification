@@ -36,7 +36,7 @@ fn main() -> Result<()> {
                 "rustc": format!("rustc {}", args.join(" "))
             });
             ENV.write_rustflags_json(&json)?;
-            build_core(args.split_off(1))
+            build_core(args)
         } else {
             // build non-core crates
             run("rustc", &args, &[])
