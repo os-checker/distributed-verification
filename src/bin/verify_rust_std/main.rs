@@ -14,7 +14,6 @@ use env::ENV;
 
 mod diff;
 mod merge;
-mod split;
 
 fn main() -> Result<()> {
     let mut args = std::env::args().collect::<Vec<_>>();
@@ -46,7 +45,6 @@ fn main() -> Result<()> {
         match arg.as_str() {
             "merge" => merge::run(&args[1..]),
             "diff" => diff::run(&args[1..]),
-            "split" => split::run(&args[1..]),
             _ => run_cargo(),
         }
     } else {

@@ -1,3 +1,4 @@
+//! NOTE: this module is suspended by `assets/split.sh` due to simplicity.
 use crate::{
     Result,
     db::{DbFunction, sql::SQL_SELECT_ALL},
