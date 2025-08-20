@@ -1,22 +1,26 @@
 <script setup lang="ts">
-import { ofetch } from "ofetch";
 import type { SelectButtonPassThroughMethodOptions } from "primevue";
+import { download } from "~/shared/utils";
 import { URL_MERGE_DIFF, MergeKaniColumns, multiSort, type VecMergeHashKaniList, type MergeHashKaniList, FILTERS, ProofKind, optionsProofKind } from "~/shared/utils/kani";
+import { get_split_json, URL_HASH_JSON, type HashJson, type DbFunction } from "~/shared/utils/kani-split";
 import { useDarkStore, useStyleStore } from "~/stores/style";
+
+// Set title
+useHead({ title: "Verify Rust Std - Kani" });
 
 // Compute absolute scrollHeight for DataTable.
 const { color, viewportHeight, viewportWidth } = storeToRefs(useStyleStore());
-const { fontColor } = storeToRefs(useDarkStore());
+const { fontColor, isDark } = storeToRefs(useDarkStore());
+
+watch(isDark, d => console.log("Kani", d))
 
 const raw = ref<VecMergeHashKaniList>([]);
 // Download JSON
-ofetch<VecMergeHashKaniList>(
-  URL_MERGE_DIFF,
-  { parseResponse: JSON.parse }
-).then(val => {
-  raw.value = val;
-  data.value = val;
-});
+download<VecMergeHashKaniList>(URL_MERGE_DIFF)
+  .then(val => {
+    raw.value = val;
+    data.value = val;
+  });
 
 // Changed data for DataTable.
 const dataChanged = ref<VecMergeHashKaniList>([]);
@@ -79,17 +83,22 @@ watch([selectedMods, selectedProofKind], ([mods, proofs]) => {
   data.value = v;
 });
 
+const v_hash = ref<HashJson[]>([]);
+download<HashJson[]>(URL_HASH_JSON).then(v => v_hash.value = v);
+
+const func = ref<DbFunction>();
+
 const visible = ref(false);
 const selectedHarness = ref<MergeHashKaniList | null>(null);
 watch(selectedHarness, val => {
   if (val === null) { visible.value = false; return }
 
   visible.value = true;
+  const url = get_split_json(v_hash.value, val.harness);
+  console.log(url);
+  if (url) download<DbFunction>(url).then(f => func.value = f);
 });
 
-
-// Set title
-useHead({ title: "Verify Rust Std - Kani" });
 </script>
 
 <template>
@@ -191,6 +200,7 @@ useHead({ title: "Verify Rust Std - Kani" });
         </Card>
       </div>
     </div>
+    <CodeBlock v-if="func?.src" :code="func.src" />
   </Dialog>
 </template>
 

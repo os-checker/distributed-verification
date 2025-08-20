@@ -32,10 +32,12 @@ export const useStyleStore = defineStore("style", () => {
 
 /** Styling based on dark theme mode. */
 export const useDarkStore = defineStore('dark', {
-  state: () => ({ fontColor: "black" }),
+  state: () => ({ fontColor: "black", isDark: false }),
   actions: {
     setFontColor(isDark: boolean) {
-      this.fontColor = isDark ? "white" : "black"
+      this.fontColor = isDark ? "white" : "black";
+      this.isDark = isDark;
+      console.log("setFontColor")
     }
   }
 });
