@@ -4,7 +4,7 @@ set -o pipefail
 
 export WORKSPACE="${WORKSPACE:-$(pwd)}"
 
-export RUST_LOG=off
+export DV_LOG=off
 export OUTPUT_DIR=$WORKSPACE/assets
 export KANI_DIR=$WORKSPACE/kani/target/kani
 export VERIFY_RUST_STD_LIBRARY=$WORKSPACE/verify-rust-std/library
