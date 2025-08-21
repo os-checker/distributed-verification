@@ -54,7 +54,7 @@ jobs:
         autoharness: ["", "-autoharness"]
     if: true
     env:
-      UNSTABLE_ARGS: -Z function-contracts -Z mem-predicates -Z float-lib -Z c-ffi -Z loop-contracts
+      UNSTABLE_ARGS: -Z function-contracts -Z mem-predicates -Z float-lib -Z c-ffi -Z loop-contracts -Z stubbing
       AUTO: ${{ matrix.autoharness }}
     steps:
       - name: Remove unnecessary software to free up disk space

@@ -241,13 +241,13 @@ dependencies = [
  "eyre",
  "indexmap",
  "jiff",
+ "log",
  "pretty_assertions",
  "proc-macro2",
  "quote",
  "rusqlite",
  "serde",
  "serde_json",
- "serde_rusqlite",
  "syn",
  "tracing",
  "tracing-error",
@@ -677,16 +677,6 @@ dependencies = [
  "itoa",
  "memchr",
  "ryu",
- "serde",
-]
-
-[[package]]
-name = "serde_rusqlite"
-version = "0.39.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b4bc35a7ff183ff8a9f26143589c4631a98eec73b7d23a135a6f769231f50fa5"
-dependencies = [
- "rusqlite",
  "serde",
 ]
 

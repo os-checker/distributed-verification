@@ -1,7 +1,6 @@
 //! `VERIFY_RUST_STD_LIBRARY=path/to/verify-rust-std/library` and
 //! `KANI_DIR=path/to/kani` should be set beforehand.
 
-use distributed_verification::logger;
 use eyre::{Context, Result};
 use std::process::{Command, Stdio};
 
@@ -17,44 +16,48 @@ mod diff;
 mod merge;
 
 fn main() -> Result<()> {
-    let mut args = std::env::args().collect::<Vec<_>>();
+    // arguments passed to rustc
+    let mut args = std::env::args().skip(1).collect::<Vec<_>>();
 
-    if args.len() == 2 && args[1].as_str() == "-vV" {
+    if args.as_slice() == ["-vv"] {
         // cargo invokes `rustc -vV` first
         run("rustc", &["-vV".to_owned()], &[])
     } else if env::is_wrapper() {
         // then cargo invokes `rustc - --crate-name ___ --print=file-names`
-        if args[1] == "-" {
+        if args[0] == "-" {
             // `rustc -` is a substitute file name from stdin
             // see https://rust-lang.zulipchat.com/#narrow/channel/182449-t-compiler.2Fhelp/topic/.E2.9C.94.20What.20does.20.60rustc.20-.60do.3F/with/514494493
-            args[1] = "src/lib.rs".to_owned();
+            args[0] = "src/lib.rs".to_owned();
         }
 
-        let rustc_args = &args[1..];
         if args.iter().any(|arg| arg == "core") {
             let json = serde_json::json!({
-                "rustflags": &rustc_args,
-                "rustc": format!("rustc {}", rustc_args.join(" "))
+                "rustflags": &args,
+                "rustc": format!("rustc {}", args.join(" "))
             });
             ENV.write_rustflags_json(&json)?;
-            build_core(args.split_off(1))
+            build_core(args)
         } else {
             // build non-core crates
-            run("rustc", rustc_args, &[])
+            run("rustc", &args, &[])
         }
-    } else if args.get(1).map(|arg| arg == "merge").unwrap_or(false) {
-        logger::init();
-        merge::run(&args[1..])
-    } else if args.get(1).map(|arg| arg == "diff").unwrap_or(false) {
-        logger::init();
-        diff::run(&args[1..])
+    } else if let Some(subcmd) = args.first() {
+        match subcmd.as_str() {
+            "merge" => merge::run(&args),
+            "diff" => diff::run(&args),
+            _ => run_cargo(),
+        }
     } else {
-        run(
-            "cargo",
-            &["build", "-Zbuild-std=core"].map(String::from),
-            &[env::set_rustc_wrapper(), env::set_wrapper()],
-        )
+        run_cargo()
     }
+}
+
+fn run_cargo() -> std::result::Result<(), eyre::Error> {
+    run(
+        "cargo",
+        &["build", "-Zbuild-std=core"].map(String::from),
+        &[env::set_rustc_wrapper(), env::set_wrapper()],
+    )
 }
 
 fn run(cmd: &str, args: &[String], vars: &[(&str, &str)]) -> Result<()> {

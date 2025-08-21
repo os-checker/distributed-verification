@@ -1,34 +1,12 @@
 use super::Functions;
 use crate::Result;
-use distributed_verification::db::DbFunction;
+use distributed_verification::db::{
+    DbFunction,
+    sql::{SQL_CREATE, SQL_DROP, SQL_INSERT, SQL_VACUUM, db_file},
+};
 use eyre::{Context, ContextCompat};
 use rusqlite::{Connection, named_params};
 use serde_json::to_string_pretty;
-
-const DB_FILE: &str = "db.sqlite3";
-const SQL_DROP: &str = "DROP TABLE IF EXISTS db;";
-// cannot VACUUM from within a transaction
-const SQL_VACUUM: &str = "VACUUM;";
-const SQL_CREATE: &str = "\
-CREATE TABLE IF NOT EXISTS db (
-  file TEXT NOT NULL,
-  name TEXT NOT NULL,
-  hash TEXT NOT NULL PRIMARY KEY,
-  hash_direct TEXT NOT NULL,
-  inst_kind TEXT,
-  proof_kind TEXT,
-  attrs TEXT,
-  src TEXT,
-  macro_backtrace_len INTEGER,
-  macro_backtrace TEXT,
-  callees_len INTEGER,
-  callees TEXT
-) STRICT;
-";
-const SQL_INSERT: &str = "\
-INSERT INTO db (file, name, hash, hash_direct, inst_kind, proof_kind, attrs, src, macro_backtrace_len, macro_backtrace, callees_len, callees) 
-VALUES (:file, :name, :hash, :hash_direct, :inst_kind, :proof_kind, :attrs, :src, :macro_backtrace_len, :macro_backtrace, :callees_len, :callees)
-";
 
 pub struct Db {
     db: Connection,
@@ -37,10 +15,7 @@ pub struct Db {
 impl Db {
     /// Create a timestamp.sqlite3 file and db table.
     pub fn new() -> Result<Db> {
-        const VAR_DB_FILE: &str = "DB_FILE";
-        let db_file = std::env::var(VAR_DB_FILE);
-        let db_file = db_file.as_deref().unwrap_or(DB_FILE);
-
+        let db_file = db_file();
         info!(db_file, "start sqlite db");
         let _span = error_span!("Db::new", db_file).entered();
         let db = Connection::open(db_file).context("Failed to open or create db file.")?;

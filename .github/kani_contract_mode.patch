@@ -1,0 +1,13 @@
+diff --git a/library/kani_macros/src/sysroot/contracts/bootstrap.rs b/library/kani_macros/src/sysroot/contracts/bootstrap.rs
+index ed8bde7f8..d8f2eae87 100644
+--- a/library/kani_macros/src/sysroot/contracts/bootstrap.rs
++++ b/library/kani_macros/src/sysroot/contracts/bootstrap.rs
+@@ -71,7 +71,7 @@ const fn kani_register_contract<T, F: FnOnce() -> T>(f: F) -> T {
+                 }
+                 // Dummy function that we replace to pick the contract mode.
+                 // By default, return ORIGINAL
+-                #[inline(never)]
++                #[inline]
+                 #[kanitool::fn_marker = "kani_contract_mode"]
+                 const fn kani_contract_mode() -> kani::internal::Mode {
+                     kani::internal::ORIGINAL

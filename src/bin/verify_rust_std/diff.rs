@@ -1,8 +1,10 @@
 use crate::{Result, read_json};
 use clap::Parser;
 use distributed_verification::diff::{MergeHashKaniList, diff};
+use distributed_verification::logger;
 
 pub fn run(args: &[String]) -> Result<()> {
+    logger::init();
     SubCmdDiff::parse_from(args).run()
 }
 

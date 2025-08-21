@@ -3,10 +3,12 @@ use clap::Parser;
 use distributed_verification::{
     SerFunction,
     diff::{KaniListJson, MergeHashKaniList},
+    logger,
 };
 use std::collections::HashMap;
 
 pub fn run(args: &[String]) -> Result<()> {
+    logger::init();
     SubCmdMerge::parse_from(args).run()
 }
 
