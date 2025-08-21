@@ -1,3 +1,4 @@
+use log::LevelFilter;
 use std::{env, fs};
 use tracing_subscriber::{EnvFilter, fmt, prelude::*, registry};
 
@@ -22,7 +23,10 @@ pub fn init() {
     // write logs is keeping records across the whole compilation.
     let reg = if let Some(log_file) = env::var(ENV_LOG)
         .map(|log| {
-            log.parse::<log::Level>().ok()?;
+            let level = log.parse::<LevelFilter>().ok()?;
+            if level == LevelFilter::Off {
+                return None;
+            }
             log_file()
         })
         .ok()

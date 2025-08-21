@@ -9,7 +9,7 @@ pub use pretty_assertions::assert_eq;
 
 pub fn cmd(args: &[&str]) -> String {
     let mut command = Command::cargo_bin(env!("CARGO_PKG_NAME")).unwrap();
-    command.env("RUST_LOG", "off").args(args);
+    command.env("DV_LOG", "off").args(args);
     let output = command.output().unwrap();
     assert!(
         output.status.success(),
