@@ -92,19 +92,19 @@ function funcTargetReset() { funcTarget.value = undefined }
 const visible = ref(false);
 watch(visible, val => { if (!val) { funcHarnessReset(); funcTargetReset(); } });
 
-const selectedHarnessOk = ref(true);
+const selectedHarnessTag = ref("success");
 const selectedHarness = ref<MergeHashKaniList | null>(null);
 watch(selectedHarness, val => {
   if (val === null) {
     visible.value = false;
     funcTargetReset();
     funcTargetReset();
-    selectedHarnessOk.value = false;
+    selectedHarnessTag.value = "success";
     return;
   }
 
   visible.value = true;
-  if (val.ok === false) { selectedHarnessOk.value = false } else { selectedHarnessOk.value = true }
+  if (val.ok === false) { selectedHarnessTag.value = "danger" } else { selectedHarnessTag.value = "success" }
 
   const url_harness = get_split_json(v_hash.value, val.harness);
   if (url_harness) download<DbFunction>(url_harness).then(f => funcHarness.value = f).catch(funcHarnessReset);
@@ -188,50 +188,36 @@ watch(selectedHarness, val => {
 
 
   <Dialog v-model:visible="visible" modal header="Kani Harness" :style="{ width: '80%' }">
-    <div class="grid grid-cols-2 gap-4 justify-center break-all mb-2">
-      <div>
-        <Card class="border border-sky-300">
-          <template #content>
-            <div> Harness Name:
-              <Tag :severity="selectedHarnessOk ? 'success' : 'danger'" :value="selectedHarness?.harness" />
-            </div>
-            <div> Harness File: {{ selectedHarness?.file }}</div>
-            <div> Harness Hash: {{ selectedHarness?.hash }}</div>
-            <div> Proof Kind: {{ selectedHarness?.proof_kind }}</div>
-            <div> Total Properties: {{ selectedHarness?.props }}</div>
-            <div> Execution Time: {{ selectedHarness?.time }}ms</div>
-          </template>
-        </Card>
-      </div>
-
-      <div>
-        <Card class="border border-sky-300">
-          <template #content>
-            <div> Verified Function:
-              <Tag severity="info" :value="selectedHarness?.func.name" />
-            </div>
-            <div> Function File: {{ selectedHarness?.func.file }}</div>
-            <div> Safeness: {{ selectedHarness?.func.safe }}</div>
-          </template>
-        </Card>
-      </div>
-    </div>
-
-    <div>
-      <CodeBlock v-if="funcHarness?.src" :code="funcHarness.src">
-        <template #header>
-          <div>Harness source code:
-            <Tag :severity="selectedHarnessOk ? 'success' : 'danger'" :value="selectedHarness?.harness" />
+    <div class="space-y-4 break-all">
+      <Card class="border border-green-300 card">
+        <template #content>
+          <div> Harness Name:
+            <Tag :severity="selectedHarnessTag" :value="selectedHarness?.harness" />
           </div>
+          <div> Harness File: {{ selectedHarness?.file }}</div>
+          <div> Harness Hash: {{ selectedHarness?.hash }}</div>
+          <div class="flex items-center gap-4">
+            <div> Proof Kind:
+              <Tag :severity="selectedHarnessTag"> {{ selectedHarness?.proof_kind }}</Tag>
+            </div>
+            <div> Total Properties: {{ selectedHarness?.props }}</div>
+            <div> Execution Time:
+              <Tag :severity="selectedHarnessTag"> {{ selectedHarness?.time }}ms</Tag>
+            </div>
+          </div>
+          <CodeBlock v-if="funcHarness?.src" :code="funcHarness.src" />
         </template>
-      </CodeBlock>
-      <CodeBlock v-if="funcTarget?.src" :code="funcTarget.src">
-        <template #header>
-          <div>Target source code:
+      </Card>
+
+      <Card class="border border-sky-300 card">
+        <template #content>
+          <div> Verified Function:
             <Tag severity="info" :value="selectedHarness?.func.name" />
           </div>
+          <div> Function File: {{ selectedHarness?.func.file }}</div>
+          <CodeBlock v-if="funcTarget?.src" :code="funcTarget.src" />
         </template>
-      </CodeBlock>
+      </Card>
     </div>
   </Dialog>
 </template>
@@ -243,5 +229,9 @@ watch(selectedHarness, val => {
 
 :deep(.p-togglebutton:hover) {
   background: var(--p-emerald-300) !important;
+}
+
+.card {
+  --p-card-body-padding: 10px;
 }
 </style>

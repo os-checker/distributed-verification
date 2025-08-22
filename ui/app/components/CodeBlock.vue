@@ -39,7 +39,7 @@ html[data-theme="dark"] {
 
 pre[class*="language-"].line-numbers {
   position: relative;
-  padding-left: 3.8em !important;
+  padding-left: 3.2em !important;
   counter-reset: start;
 }
 </style>
