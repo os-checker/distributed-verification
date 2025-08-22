@@ -9,7 +9,7 @@ export interface DbFunction {
   hash: string,
   hash_direct: string,
   proof_kind?: string,
-  attr?: string[],
+  attrs?: string[],
   src: string,
   macro_backtrace?: string[],
   callees?: string[],
@@ -29,4 +29,12 @@ export function get_split_json(v_hash: HashJson[], name: string): string | null 
   const key = v_hash.find(h => h.name === name);
   if (key === undefined) return null;
   return `${URL_SPLIT_BASE}/${key.file}/${key.hash}.json`
+}
+
+/** Source code string including attributes. */
+export function src(func: DbFunction): string {
+  const attrs = func.attrs?.join("\n");
+
+  if (!attrs) return func.src;
+  return `${attrs}${func.src}`;
 }

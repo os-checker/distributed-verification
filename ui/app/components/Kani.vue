@@ -2,7 +2,7 @@
 import type { SelectButtonPassThroughMethodOptions } from "primevue";
 import { download } from "~/shared/utils";
 import { URL_MERGE_DIFF, MergeKaniColumns, multiSort, type VecMergeHashKaniList, type MergeHashKaniList, FILTERS, ProofKind, optionsProofKind } from "~/shared/utils/kani";
-import { get_split_json, URL_HASH_JSON, type HashJson, type DbFunction } from "~/shared/utils/kani-split";
+import { get_split_json, src, URL_HASH_JSON, type HashJson, type DbFunction } from "~/shared/utils/kani-split";
 import { useDarkStore, useStyleStore } from "~/stores/style";
 
 // Set title
@@ -205,7 +205,7 @@ watch(selectedHarness, val => {
               <Tag :severity="selectedHarnessTag"> {{ selectedHarness?.time }}ms</Tag>
             </div>
           </div>
-          <CodeBlock v-if="funcHarness?.src" :code="funcHarness.src" />
+          <CodeBlock v-if="funcHarness?.src" :code="src(funcHarness)" />
         </template>
       </Card>
 
@@ -215,7 +215,7 @@ watch(selectedHarness, val => {
             <Tag severity="info" :value="selectedHarness?.func.name" />
           </div>
           <div> Function File: {{ selectedHarness?.func.file }}</div>
-          <CodeBlock v-if="funcTarget?.src" :code="funcTarget.src" />
+          <CodeBlock v-if="funcTarget?.src" :code="src(funcTarget)" />
         </template>
       </Card>
     </div>
