@@ -19,6 +19,7 @@ onUpdated(() => nextTick(highlight));
 
 <template>
   <div ref="codeElement">
+    <slot name="header" />
     <pre class="line-numbers"><code class="language-rust">{{ code }}</code></pre>
   </div>
 </template>

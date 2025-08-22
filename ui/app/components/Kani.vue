@@ -10,9 +10,7 @@ useHead({ title: "Verify Rust Std - Kani" });
 
 // Compute absolute scrollHeight for DataTable.
 const { color, viewportHeight, viewportWidth } = storeToRefs(useStyleStore());
-const { fontColor, isDark } = storeToRefs(useDarkStore());
-
-watch(isDark, d => console.log("Kani", d))
+const { fontColor } = storeToRefs(useDarkStore());
 
 const raw = ref<VecMergeHashKaniList>([]);
 // Download JSON
@@ -86,17 +84,35 @@ watch([selectedMods, selectedProofKind], ([mods, proofs]) => {
 const v_hash = ref<HashJson[]>([]);
 download<HashJson[]>(URL_HASH_JSON).then(v => v_hash.value = v);
 
-const func = ref<DbFunction>();
+const funcHarness = ref<DbFunction>();
+function funcHarnessReset() { funcHarness.value = undefined }
+const funcTarget = ref<DbFunction>();
+function funcTargetReset() { funcTarget.value = undefined }
 
 const visible = ref(false);
+watch(visible, val => { if (!val) { funcHarnessReset(); funcTargetReset(); } });
+
+const selectedHarnessOk = ref(true);
 const selectedHarness = ref<MergeHashKaniList | null>(null);
 watch(selectedHarness, val => {
-  if (val === null) { visible.value = false; return }
+  if (val === null) {
+    visible.value = false;
+    funcTargetReset();
+    funcTargetReset();
+    selectedHarnessOk.value = false;
+    return;
+  }
 
   visible.value = true;
-  const url = get_split_json(v_hash.value, val.harness);
-  console.log(url);
-  if (url) download<DbFunction>(url).then(f => func.value = f);
+  if (val.ok === false) { selectedHarnessOk.value = false } else { selectedHarnessOk.value = true }
+
+  const url_harness = get_split_json(v_hash.value, val.harness);
+  if (url_harness) download<DbFunction>(url_harness).then(f => funcHarness.value = f).catch(funcHarnessReset);
+  else funcHarnessReset();
+
+  const url_target = get_split_json(v_hash.value, val.func.name);
+  if (url_target) download<DbFunction>(url_target).then(f => funcTarget.value = f).catch(funcTargetReset);
+  else funcTargetReset();
 });
 
 </script>
@@ -171,13 +187,13 @@ watch(selectedHarness, val => {
   </DataTable>
 
 
-  <Dialog v-model:visible="visible" modal header="Kani Harness" :style="{ width: '75%' }">
-    <div class="grid grid-cols-2 gap-4 justify-center">
+  <Dialog v-model:visible="visible" modal header="Kani Harness" :style="{ width: '80%' }">
+    <div class="grid grid-cols-2 gap-4 justify-center break-all mb-2">
       <div>
         <Card class="border border-sky-300">
           <template #content>
             <div> Harness Name:
-              <Tag severity="info" :value="selectedHarness?.harness" />
+              <Tag :severity="selectedHarnessOk ? 'success' : 'danger'" :value="selectedHarness?.harness" />
             </div>
             <div> Harness File: {{ selectedHarness?.file }}</div>
             <div> Harness Hash: {{ selectedHarness?.hash }}</div>
@@ -200,7 +216,23 @@ watch(selectedHarness, val => {
         </Card>
       </div>
     </div>
-    <CodeBlock v-if="func?.src" :code="func.src" />
+
+    <div>
+      <CodeBlock v-if="funcHarness?.src" :code="funcHarness.src">
+        <template #header>
+          <div>Harness source code:
+            <Tag :severity="selectedHarnessOk ? 'success' : 'danger'" :value="selectedHarness?.harness" />
+          </div>
+        </template>
+      </CodeBlock>
+      <CodeBlock v-if="funcTarget?.src" :code="funcTarget.src">
+        <template #header>
+          <div>Target source code:
+            <Tag severity="info" :value="selectedHarness?.func.name" />
+          </div>
+        </template>
+      </CodeBlock>
+    </div>
   </Dialog>
 </template>
 

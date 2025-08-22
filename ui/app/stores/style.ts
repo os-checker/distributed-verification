@@ -37,7 +37,6 @@ export const useDarkStore = defineStore('dark', {
     setFontColor(isDark: boolean) {
       this.fontColor = isDark ? "white" : "black";
       this.isDark = isDark;
-      console.log("setFontColor")
     }
   }
 });
