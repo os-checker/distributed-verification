@@ -18,12 +18,15 @@
     "pinia": "^3.0.3",
     "primeicons": "^7.0.0",
     "primevue": "^4.3.7",
+    "prismjs": "^1.30.0",
     "tailwindcss-primeui": "^0.6.1",
     "vue": "^3.5.18",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
     "@primevue/nuxt-module": "^4.3.7",
+    "@types/prismjs": "^1.26.5",
+    "sass-embedded": "^1.90.0",
     "typescript": "^5.9.2",
     "vue-tsc": "^3.0.5"
   }

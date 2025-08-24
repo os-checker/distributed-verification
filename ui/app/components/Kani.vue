@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import { ofetch } from "ofetch";
 import type { SelectButtonPassThroughMethodOptions } from "primevue";
+import { download } from "~/shared/utils";
 import { URL_MERGE_DIFF, MergeKaniColumns, multiSort, type VecMergeHashKaniList, type MergeHashKaniList, FILTERS, ProofKind, optionsProofKind } from "~/shared/utils/kani";
+import { get_split_json, src, URL_HASH_JSON, type HashJson, type DbFunction } from "~/shared/utils/kani-split";
 import { useDarkStore, useStyleStore } from "~/stores/style";
+
+// Set title
+useHead({ title: "Verify Rust Std - Kani" });
 
 // Compute absolute scrollHeight for DataTable.
 const { color, viewportHeight, viewportWidth } = storeToRefs(useStyleStore());
@@ -10,13 +14,11 @@ const { fontColor } = storeToRefs(useDarkStore());
 
 const raw = ref<VecMergeHashKaniList>([]);
 // Download JSON
-ofetch<VecMergeHashKaniList>(
-  URL_MERGE_DIFF,
-  { parseResponse: JSON.parse }
-).then(val => {
-  raw.value = val;
-  data.value = val;
-});
+download<VecMergeHashKaniList>(URL_MERGE_DIFF)
+  .then(val => {
+    raw.value = val;
+    data.value = val;
+  });
 
 // Changed data for DataTable.
 const dataChanged = ref<VecMergeHashKaniList>([]);
@@ -79,17 +81,40 @@ watch([selectedMods, selectedProofKind], ([mods, proofs]) => {
   data.value = v;
 });
 
+const v_hash = ref<HashJson[]>([]);
+download<HashJson[]>(URL_HASH_JSON).then(v => v_hash.value = v);
+
+const funcHarness = ref<DbFunction>();
+function funcHarnessReset() { funcHarness.value = undefined }
+const funcTarget = ref<DbFunction>();
+function funcTargetReset() { funcTarget.value = undefined }
+
 const visible = ref(false);
+watch(visible, val => { if (!val) { funcHarnessReset(); funcTargetReset(); } });
+
+const selectedHarnessTag = ref("success");
 const selectedHarness = ref<MergeHashKaniList | null>(null);
 watch(selectedHarness, val => {
-  if (val === null) { visible.value = false; return }
+  if (val === null) {
+    visible.value = false;
+    funcTargetReset();
+    funcTargetReset();
+    selectedHarnessTag.value = "success";
+    return;
+  }
 
   visible.value = true;
+  if (val.ok === false) { selectedHarnessTag.value = "danger" } else { selectedHarnessTag.value = "success" }
+
+  const url_harness = get_split_json(v_hash.value, val.harness);
+  if (url_harness) download<DbFunction>(url_harness).then(f => funcHarness.value = f).catch(funcHarnessReset);
+  else funcHarnessReset();
+
+  const url_target = get_split_json(v_hash.value, val.func.name);
+  if (url_target) download<DbFunction>(url_target).then(f => funcTarget.value = f).catch(funcTargetReset);
+  else funcTargetReset();
 });
 
-
-// Set title
-useHead({ title: "Verify Rust Std - Kani" });
 </script>
 
 <template>
@@ -162,34 +187,37 @@ useHead({ title: "Verify Rust Std - Kani" });
   </DataTable>
 
 
-  <Dialog v-model:visible="visible" modal header="Kani Harness" :style="{ width: '75%' }">
-    <div class="grid grid-cols-2 gap-4 justify-center">
-      <div>
-        <Card class="border border-sky-300">
-          <template #content>
-            <div> Harness Name:
-              <Tag severity="info" :value="selectedHarness?.harness" />
+  <Dialog v-model:visible="visible" modal header="Kani Harness" :style="{ width: '80%' }">
+    <div class="space-y-4 break-all">
+      <Card class="border border-green-300 card">
+        <template #content>
+          <div> Harness Name:
+            <Tag :severity="selectedHarnessTag" :value="selectedHarness?.harness" />
+          </div>
+          <div> Harness File: {{ selectedHarness?.file }}</div>
+          <div> Harness Hash: {{ selectedHarness?.hash }}</div>
+          <div class="flex items-center gap-4">
+            <div> Proof Kind:
+              <Tag :severity="selectedHarnessTag"> {{ selectedHarness?.proof_kind }}</Tag>
             </div>
-            <div> Harness File: {{ selectedHarness?.file }}</div>
-            <div> Harness Hash: {{ selectedHarness?.hash }}</div>
-            <div> Proof Kind: {{ selectedHarness?.proof_kind }}</div>
             <div> Total Properties: {{ selectedHarness?.props }}</div>
-            <div> Execution Time: {{ selectedHarness?.time }}ms</div>
-          </template>
-        </Card>
-      </div>
-
-      <div>
-        <Card class="border border-sky-300">
-          <template #content>
-            <div> Verified Function:
-              <Tag severity="info" :value="selectedHarness?.func.name" />
+            <div> Execution Time:
+              <Tag :severity="selectedHarnessTag"> {{ selectedHarness?.time }}ms</Tag>
             </div>
-            <div> Function File: {{ selectedHarness?.func.file }}</div>
-            <div> Safeness: {{ selectedHarness?.func.safe }}</div>
-          </template>
-        </Card>
-      </div>
+          </div>
+          <CodeBlock v-if="funcHarness?.src" :code="src(funcHarness)" />
+        </template>
+      </Card>
+
+      <Card class="border border-sky-300 card">
+        <template #content>
+          <div> Verified Function:
+            <Tag severity="info" :value="selectedHarness?.func.name" />
+          </div>
+          <div> Function File: {{ selectedHarness?.func.file }}</div>
+          <CodeBlock v-if="funcTarget?.src" :code="src(funcTarget)" />
+        </template>
+      </Card>
     </div>
   </Dialog>
 </template>
@@ -201,5 +229,9 @@ useHead({ title: "Verify Rust Std - Kani" });
 
 :deep(.p-togglebutton:hover) {
   background: var(--p-emerald-300) !important;
+}
+
+.card {
+  --p-card-body-padding: 10px;
 }
 </style>

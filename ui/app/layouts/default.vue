@@ -8,15 +8,22 @@ const DARK = "dark";
 const dark = ref(false);
 const storeDark = useDarkStore();
 
+function setDark(dark: boolean) {
+  // Update dark state.
+  storeDark.setFontColor(dark);
+  // switch css, especially prism codeblock css
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+}
+
 function toggleTheme() {
   const isDark = document.documentElement.classList.toggle(CLASS_DARK);
   dark.value = isDark;
-  storeDark.setFontColor(isDark);
   localStorage.setItem(KEY, isDark ? DARK : "light");
+  setDark(isDark);
 }
 
 const isInitDark = localStorage.getItem(KEY) === DARK;
-storeDark.setFontColor(isInitDark);
+setDark(isInitDark);
 if (isInitDark) {
   document.documentElement.classList.add(CLASS_DARK);
   dark.value = true;
