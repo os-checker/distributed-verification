@@ -116,7 +116,10 @@ pub fn kani_path() -> String {
         let home = var("KANI_HOME").or_else(|_| var("HOME")).unwrap();
         format!("{home}/.kani/{kani_folder}")
     };
-    assert!(std::fs::exists(&path).unwrap());
+    assert!(std::fs::exists(&path).expect(
+        "Kani is not found. You need to \
+         set `KANI_DIR` or install it."
+    ));
     path
 }
 
