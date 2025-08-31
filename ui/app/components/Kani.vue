@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { SelectButtonPassThroughMethodOptions } from "primevue";
 import { download } from "~/shared/utils";
-import { URL_MERGE_DIFF, MergeKaniColumns, multiSort, type VecMergeHashKaniList, type MergeHashKaniList, FILTERS, ProofKind, optionsProofKind } from "~/shared/utils/kani";
+import { URL_MERGE_DIFF, MergeKaniColumns, multiSort, type VecMergeHashKaniList, type MergeHashKaniList, FILTERS, ProofKind, } from "~/shared/utils/kani";
 import { get_split_json, src, URL_HASH_JSON, type HashJson, type DbFunction } from "~/shared/utils/kani-split";
 import { useDarkStore, useStyleStore } from "~/stores/style";
 
@@ -27,13 +27,29 @@ function valueChange(v: VecMergeHashKaniList) {
 }
 
 // stats
-type Counts = { total: number, selected_total: number, standard: number, contract: number };
-const counts = computed<Counts>(() => ({
-  total: raw.value.length,
-  selected_total: dataChanged.value.length,
-  standard: dataChanged.value.filter(ele => ele.proof_kind === ProofKind.Standard).length,
-  contract: dataChanged.value.filter(ele => ele.proof_kind === ProofKind.Contract).length
-}));
+type CountsProofKind = { kind: string, count: number };
+type Counts = {
+  total: number, total_proof: CountsProofKind[],
+  selected_total: number, selected_proof: CountsProofKind[]
+};
+const counts = computed<Counts>(() => {
+  function counts_proof_kind(v: VecMergeHashKaniList): CountsProofKind[] {
+    let kinds: CountsProofKind[] = [];
+    const standard = v.filter(ele => ele.proof_kind === ProofKind.Standard).length;
+    if (standard !== 0) kinds.push({ kind: "Standard", count: standard })
+    const contract = v.filter(ele => ele.proof_kind === ProofKind.Contract).length;
+    if (contract !== 0) kinds.push({ kind: "Contract", count: contract })
+    const unknown = v.filter(ele => !ele.proof_kind).length;
+    if (unknown !== 0) kinds.push({ kind: "Unknown", count: unknown })
+    kinds.sort((a, b) => b.count - a.count);
+    return kinds
+  }
+
+  return {
+    total: raw.value.length, total_proof: counts_proof_kind(raw.value),
+    selected_total: dataChanged.value.length, selected_proof: counts_proof_kind(dataChanged.value)
+  }
+});
 
 // fitler rows
 const filters = ref(FILTERS.filters);
@@ -55,20 +71,20 @@ const mod_names = computed<ModName[]>(() => {
 
 // Real data for DataTable: outer sorting.
 const data = ref<VecMergeHashKaniList>([]);
-const selectedProofKind = ref<string[]>([]);
+const selectedProofKind = ref<CountsProofKind[]>([]);
 watch([selectedMods, selectedProofKind], ([mods, proofs]) => {
   const empty_mod = mods.length === 0;
-  const empty_proof = proofs.length === 0;
+  const push_due_to_empty_or_full_proof = proofs.length === 0 || proofs.length === 3;
 
-  if (empty_mod && empty_proof) { data.value = raw.value; return; }
+  if (empty_mod && push_due_to_empty_or_full_proof) { data.value = raw.value; return; }
 
-  const set_proof = new Set(proofs);
+  const set_proof = new Set(proofs.map(p => p.kind ?? "Unknown"));
   let v: VecMergeHashKaniList = [];
 
   for (const val of raw.value) {
     // consider proof kind
-    let push = empty_proof;
-    push = push || ((val.proof_kind && !empty_proof && set_proof.has(val.proof_kind)) ?? false);
+    let push = push_due_to_empty_or_full_proof;
+    push = push || set_proof.has(val.proof_kind ?? "Unknown");
     if (!push) continue;
 
     // consider func mod
@@ -80,6 +96,10 @@ watch([selectedMods, selectedProofKind], ([mods, proofs]) => {
   }
   data.value = v;
 });
+function selectedProofKindLabel(x: CountsProofKind): string {
+  const sel_count = counts.value.selected_proof.find(sel => sel.kind === x.kind)?.count ?? 0;
+  return `${x.kind} (${sel_count} / ${x.count})`
+}
 
 const v_hash = ref<HashJson[]>([]);
 download<HashJson[]>(URL_HASH_JSON).then(v => v_hash.value = v);
@@ -132,7 +152,8 @@ watch(selectedHarness, val => {
           <MultiSelect v-model="selectedMods" :options="mod_names" :maxSelectedLabels="3" placeholder="select modules"
             optionLabel="name" optionValue="name" filter>
             <template #option="{ option }">
-              <span class="inline-block w-10 text-right rounded-lg px-1 my-2" :style="{ background: color.green }">
+              <span class="inline-block w-10 text-right rounded-lg px-1 my-2"
+                :style="{ background: color.green, color: 'black' }">
                 {{ option.n }}
               </span>
               {{ option.name }}
@@ -140,16 +161,17 @@ watch(selectedHarness, val => {
           </MultiSelect>
 
           <span class="font-bold">Proof Kind:</span>
-          <SelectButton v-model="selectedProofKind" :options="optionsProofKind" :option-label="x => x" multiple :pt="{
-            pcToggleButton: {
-              content: (opts: SelectButtonPassThroughMethodOptions) => ({
-                style: {
-                  background: opts.context.active ? color.green : 'transparent',
-                  color: fontColor
-                }
-              })
-            }
-          }" />
+          <SelectButton v-model="selectedProofKind" :options="counts.total_proof" :option-label="selectedProofKindLabel"
+            multiple :pt="{
+              pcToggleButton: {
+                content: (opts: SelectButtonPassThroughMethodOptions) => ({
+                  style: {
+                    background: opts.context.active ? color.green : '#efefef',
+                    color: 'black'
+                  }
+                })
+              }
+            }" />
         </div>
         <div>
           <IconField>
@@ -177,12 +199,7 @@ watch(selectedHarness, val => {
       </div>
     </template>
     <template #paginatorend>
-      <div class="grid grid-cols-2 grid-rows-2 justify-items-end counts mr-3">
-        <span>Standard:</span>
-        <span class="mx-auto">{{ counts.standard }}</span>
-        <span>Contract:</span>
-        <span class="mx-auto">{{ counts.contract }}</span>
-      </div>
+      <div> </div>
     </template>
   </DataTable>
 
