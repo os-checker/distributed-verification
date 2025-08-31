@@ -23,7 +23,9 @@ export interface MergeHashKaniList {
 
 export enum ProofKind {
   Standard = "Standard",
-  Contract = "Contract"
+  Contract = "Contract",
+  // Placeholder for null proof_kind
+  Unknown = "Unknown",
 }
 
 export interface Column {
@@ -84,4 +86,3 @@ export const FILTERS = {
   fields: ["file", "harness"]
 };
 
-export const optionsProofKind: string[] = [ProofKind.Standard, ProofKind.Contract];
