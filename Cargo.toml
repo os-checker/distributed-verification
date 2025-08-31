@@ -23,7 +23,7 @@ tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 tracing-error = "0.2"
 
 # db
-rusqlite = { version = "0.36.0", features = ["bundled", "jiff"] }
+rusqlite = { version = "0.37.0", features = ["bundled", "jiff"] }
 jiff = { version = "0.2", features = ["serde"] }
 
 [dev-dependencies]
