@@ -3,19 +3,23 @@ import type { SelectButtonPassThroughMethodOptions } from "primevue";
 import { download } from "~/shared/utils";
 import { URL_MERGE_DIFF, MergeKaniColumns, multiSort, type VecMergeHashKaniList, type MergeHashKaniList, FILTERS, ProofKind, } from "~/shared/utils/kani";
 import { get_split_json, src, URL_HASH_JSON, type HashJson, type DbFunction } from "~/shared/utils/kani-split";
-import { useDarkStore, useStyleStore } from "~/stores/style";
+import { useStyleStore } from "~/stores/style";
 
 // Set title
 useHead({ title: "Verify Rust Std - Kani" });
 
 // Compute absolute scrollHeight for DataTable.
 const { color, viewportHeight, viewportWidth } = storeToRefs(useStyleStore());
-const { fontColor } = storeToRefs(useDarkStore());
 
 const raw = ref<VecMergeHashKaniList>([]);
 // Download JSON
 download<VecMergeHashKaniList>(URL_MERGE_DIFF)
   .then(val => {
+    // Replace null proof_kind by Unknown
+    val = val.map(x => {
+      x.proof_kind = x.proof_kind ?? ProofKind.Unknown;
+      return x;
+    });
     raw.value = val;
     data.value = val;
   });
@@ -27,7 +31,7 @@ function valueChange(v: VecMergeHashKaniList) {
 }
 
 // stats
-type CountsProofKind = { kind: string, count: number };
+type CountsProofKind = { kind: ProofKind, count: number };
 type Counts = {
   total: number, total_proof: CountsProofKind[],
   selected_total: number, selected_proof: CountsProofKind[]
@@ -36,11 +40,11 @@ const counts = computed<Counts>(() => {
   function counts_proof_kind(v: VecMergeHashKaniList): CountsProofKind[] {
     let kinds: CountsProofKind[] = [];
     const standard = v.filter(ele => ele.proof_kind === ProofKind.Standard).length;
-    if (standard !== 0) kinds.push({ kind: "Standard", count: standard })
+    if (standard !== 0) kinds.push({ kind: ProofKind.Standard, count: standard })
     const contract = v.filter(ele => ele.proof_kind === ProofKind.Contract).length;
-    if (contract !== 0) kinds.push({ kind: "Contract", count: contract })
-    const unknown = v.filter(ele => !ele.proof_kind).length;
-    if (unknown !== 0) kinds.push({ kind: "Unknown", count: unknown })
+    if (contract !== 0) kinds.push({ kind: ProofKind.Contract, count: contract })
+    const unknown = v.filter(ele => !ele.proof_kind || ele.proof_kind === ProofKind.Unknown).length;
+    if (unknown !== 0) kinds.push({ kind: ProofKind.Unknown, count: unknown })
     kinds.sort((a, b) => b.count - a.count);
     return kinds
   }
@@ -78,13 +82,13 @@ watch([selectedMods, selectedProofKind], ([mods, proofs]) => {
 
   if (empty_mod && push_due_to_empty_or_full_proof) { data.value = raw.value; return; }
 
-  const set_proof = new Set(proofs.map(p => p.kind ?? "Unknown"));
+  const set_proof = new Set(proofs.map(p => p.kind ?? ProofKind.Unknown));
   let v: VecMergeHashKaniList = [];
 
   for (const val of raw.value) {
     // consider proof kind
     let push = push_due_to_empty_or_full_proof;
-    push = push || set_proof.has(val.proof_kind ?? "Unknown");
+    push = push || set_proof.has(val.proof_kind ?? ProofKind.Unknown);
     if (!push) continue;
 
     // consider func mod
