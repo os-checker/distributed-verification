@@ -30,16 +30,16 @@ fn main() -> Result<()> {
             args[0] = "src/lib.rs".to_owned();
         }
 
-        if args.iter().any(|arg| arg == "core") {
+        if args.iter().any(|arg| is_normal_built(arg)) {
+            // build non-core crates
+            run("rustc", &args, &[])
+        } else {
             let json = serde_json::json!({
                 "rustflags": &args,
                 "rustc": format!("rustc {}", args.join(" "))
             });
             ENV.write_rustflags_json(&json)?;
             build_core(args)
-        } else {
-            // build non-core crates
-            run("rustc", &args, &[])
         }
     } else if let Some(subcmd) = args.first() {
         match subcmd.as_str() {
@@ -55,7 +55,7 @@ fn main() -> Result<()> {
 fn run_cargo() -> std::result::Result<(), eyre::Error> {
     run(
         "cargo",
-        &["build", "-Zbuild-std=core"].map(String::from),
+        &["build", "-Zbuild-std=core,alloc"].map(String::from),
         &[env::set_rustc_wrapper(), env::set_wrapper()],
     )
 }
@@ -92,6 +92,24 @@ fn build_core(args: Vec<String>) -> Result<()> {
     );
     new_args.extend(args);
     run(&ENV.DISTRIBUTED_VERIFICATION, &new_args, &[])
+}
+
+/// Normally build crates such as proc-macros, build scripts, and some common used crates we don't
+/// care from verify-rust-std. This can be possible false positive, but it works currently.
+fn is_normal_built(arg: &str) -> bool {
+    matches!(
+        arg,
+        "proc-macro"
+            | "build_script_build"
+            | "syn"
+            | "quote"
+            | "proc_macro2"
+            | "unicode_ident"
+            | "version_check"
+            | "proc_macro_error"
+            | "proc_macro_error_attr"
+            | "compiler_builtins"
+    )
 }
 
 fn read_json<T: serde::de::DeserializeOwned>(path: &str) -> Result<T> {
