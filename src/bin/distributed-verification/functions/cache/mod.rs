@@ -149,15 +149,15 @@ impl Cache {
             // stable sort through file, fn name, (direct) hash
             set.sort_unstable_by(|a, b| {
                 let fields = |inst: &Instance| {
-                    let func = self.get(inst).inner.as_ref().unwrap();
-                    (&*func.file, &*func.name, &*func.hash)
+                    let func = self.get(inst).inner.as_ref()?;
+                    Some((&*func.file, &*func.name, &*func.hash))
                 };
                 fields(a).cmp(&fields(b))
             });
 
             let mut hasher = StreamHasher::new();
             for inst in &*set {
-                let hash = &*self.get(inst).inner.as_ref().unwrap().hash;
+                let hash = self.get(inst).inner.as_ref().map(|val| &*val.hash);
                 hasher.append(hash);
             }
             let recursive_hash = hasher.finish();
@@ -233,9 +233,9 @@ impl Function {
                     ord => ord,
                 }
             }
-            (None, None) | (None, Some(_)) | (Some(_), None) => {
-                unreachable!("{self:?} and {other:?} must be a valid function")
-            }
+            (None, None) => Ordering::Equal,
+            (None, Some(_)) => Ordering::Less,
+            (Some(_), None) => Ordering::Greater,
         }
     }
 }
