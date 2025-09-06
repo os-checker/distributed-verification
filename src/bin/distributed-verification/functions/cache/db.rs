@@ -2,7 +2,7 @@ use super::Functions;
 use crate::Result;
 use distributed_verification::db::{
     DbFunction,
-    sql::{SQL_CREATE, SQL_DROP, SQL_INSERT, SQL_VACUUM, db_file},
+    sql::{SQL_CREATE, SQL_INSERT, db_file},
 };
 use eyre::{Context, ContextCompat};
 use rusqlite::{Connection, named_params};
@@ -20,21 +20,19 @@ impl Db {
         let _span = error_span!("Db::new", db_file).entered();
         let db = Connection::open(db_file).context("Failed to open or create db file.")?;
 
-        db.execute(SQL_DROP, []).context("Failed to drop db.")?;
-        db.execute(SQL_VACUUM, []).context("Failed to VACUUM.")?;
         db.execute(SQL_CREATE, []).context("Failed to execute SQL_CREATE.")?;
 
         Ok(Db { db })
     }
 
     /// This function should be called after recursive hashes are computed for all functions.
-    pub fn store(&mut self, map: &Functions) -> Result<()> {
+    pub fn store(&mut self, map: &Functions, crate_name: &str) -> Result<()> {
         info!(db = ?self.db.path(), "data ready to be stored to sqlite db");
         let tx = self.db.transaction()?;
         let mut stmt = tx.prepare(SQL_INSERT)?;
 
         let mut count = 0usize;
-        for func in cache_to_db_func(map) {
+        for func in cache_to_db_func(map, crate_name) {
             let func = match func {
                 Ok(func) => func,
                 Err(err) => {
@@ -56,6 +54,7 @@ impl Db {
                 ":macro_backtrace": to_string_pretty(&func.macro_backtrace).unwrap(),
                 ":callees_len": func.callees_len,
                 ":callees": to_string_pretty(&func.callees).unwrap(),
+                ":crate": &func.krate,
             };
 
             if let Err(err) = stmt.insert(params) {
@@ -84,7 +83,7 @@ impl Db {
     }
 }
 
-fn cache_to_db_func(map: &Functions) -> impl Iterator<Item = Result<DbFunction>> {
+fn cache_to_db_func(map: &Functions, crate_name: &str) -> impl Iterator<Item = Result<DbFunction>> {
     map.iter().map(|(inst, func)| {
         let _span = error_span!("cache_to_db_func", ?inst, ?func).entered();
         // skip func that has no body
@@ -114,11 +113,12 @@ fn cache_to_db_func(map: &Functions) -> impl Iterator<Item = Result<DbFunction>>
             inst_kind: src.inst_kind,
             proof_kind: f.proof_kind,
             attrs: src.attrs.clone(),
-            src: src.src.clone(),
+            src: src.src.as_str().into(),
             macro_backtrace_len: src.macro_backtrace_len,
             macro_backtrace: src.macro_backtrace.clone(),
             callees_len: callees.len(),
             callees,
+            krate: crate_name.into(),
         })
     })
 }

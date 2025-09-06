@@ -12,9 +12,11 @@
 --   macro_backtrace_len INTEGER,
 --   macro_backtrace TEXT,
 --   callees_len INTEGER,
---   callees TEXT
+--   callees TEXT,
+--   crate TEXT
 -- ) STRICT;
 SELECT
+  crate,
   file,
   name,
   hash,

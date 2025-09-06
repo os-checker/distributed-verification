@@ -15,17 +15,18 @@ CREATE TABLE IF NOT EXISTS db (
   macro_backtrace_len INTEGER,
   macro_backtrace TEXT,
   callees_len INTEGER,
-  callees TEXT
+  callees TEXT,
+  crate TEXT
 ) STRICT;
 ";
 pub const SQL_INSERT: &str = "\
-INSERT INTO db (file, name, hash, hash_direct, inst_kind, proof_kind, attrs, src, macro_backtrace_len, macro_backtrace, callees_len, callees) 
-VALUES (:file, :name, :hash, :hash_direct, :inst_kind, :proof_kind, :attrs, :src, :macro_backtrace_len, :macro_backtrace, :callees_len, :callees)
+INSERT INTO db (file, name, hash, hash_direct, inst_kind, proof_kind, attrs, src, macro_backtrace_len, macro_backtrace, callees_len, callees, crate) 
+VALUES (:file, :name, :hash, :hash_direct, :inst_kind, :proof_kind, :attrs, :src, :macro_backtrace_len, :macro_backtrace, :callees_len, :callees, :crate)
 ";
 pub const SQL_SELECT_ALL: &str = "SELECT * FROM db";
 
 pub fn db_file() -> String {
-    const VAR_DB_FILE: &str = "DB_FILE";
-    let db_file = std::env::var(VAR_DB_FILE);
+    const ENV_DB_FILE: &str = "DB_FILE";
+    let db_file = std::env::var(ENV_DB_FILE);
     db_file.unwrap_or_else(|_| DB_FILE.to_owned())
 }

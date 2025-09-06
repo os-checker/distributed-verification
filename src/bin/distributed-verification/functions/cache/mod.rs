@@ -170,7 +170,8 @@ impl Cache {
     /// Store functions info to db
     fn store_to_db(&self) {
         let mut db = db::Db::new().unwrap();
-        db.store(&self.functions).unwrap();
+        let crate_name = &rustc_public::local_crate().name;
+        db.store(&self.functions, crate_name).unwrap();
     }
 }
 
