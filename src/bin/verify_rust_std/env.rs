@@ -33,10 +33,6 @@ impl EnvVar {
         info!("{path:?} is written.");
         Ok(())
     }
-
-    pub fn core_json(&self) -> PathBuf {
-        self.OUTPUT_DIR.join("core.json")
-    }
 }
 
 fn var_to_path(env: &str) -> PathBuf {

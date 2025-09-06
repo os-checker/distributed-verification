@@ -75,7 +75,7 @@ fn main() -> Result<()> {
 
 fn analyze_proofs(tcx: TyCtxt, run: cli::Run) -> Result<()> {
     set_rustc_ctx(tcx);
-    let output = functions::analyze(tcx);
+    let (crate_name, output) = functions::analyze(tcx);
     clear_rustc_ctx();
 
     let mut res_check_kani_list = Ok(());
@@ -84,7 +84,7 @@ fn analyze_proofs(tcx: TyCtxt, run: cli::Run) -> Result<()> {
         res_check_kani_list = check_proofs(&kani_list, &proofs);
     }
 
-    let res_json = run.json.emit(&output);
+    let res_json = run.json.emit(&output, &crate_name);
 
     match (res_check_kani_list, res_json) {
         (Ok(_), Ok(_)) => Ok(()),

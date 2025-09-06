@@ -85,10 +85,9 @@ fn run(cmd: &str, args: &[String], vars: &[(&str, &str)]) -> Result<()> {
 
 fn build_core(args: Vec<String>) -> Result<()> {
     let mut new_args = Vec::with_capacity(args.len() + 2);
-    let core_json = ENV.core_json();
+    let dir = ENV.OUTPUT_DIR.to_str().unwrap();
     new_args.extend(
-        ["--no-kani-args", "--continue-compilation", "--json", core_json.to_str().unwrap(), "--"]
-            .map(String::from),
+        ["--no-kani-args", "--continue-compilation", "--json", dir, "--"].map(String::from),
     );
     new_args.extend(args);
     run(&ENV.DISTRIBUTED_VERIFICATION, &new_args, &[])
