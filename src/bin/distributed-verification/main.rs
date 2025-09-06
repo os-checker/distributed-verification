@@ -17,6 +17,7 @@ use distributed_verification::kani_list::check_proofs;
 use eyre::Result;
 use functions::{clear_rustc_ctx, set_rustc_ctx};
 use rustc_middle::ty::TyCtxt;
+use rustc_public::CompilerError;
 
 mod cli;
 mod functions;
@@ -63,8 +64,12 @@ fn main() -> Result<()> {
     });
 
     match res {
-        Ok(res_inner) | Err(rustc_public::CompilerError::Interrupted(res_inner)) => res_inner,
-        Err(err) => Err(eyre!("Unexpected error {err:?}")),
+        Ok(err) | Err(CompilerError::Interrupted(err)) => err,
+        Err(CompilerError::Failed) => bail!("Compilation failed!"),
+        Err(CompilerError::Skipped) => {
+            eprintln!("Compilation skipped.");
+            Ok(())
+        }
     }
 }
 
