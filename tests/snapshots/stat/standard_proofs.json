@@ -1,5 +1,6 @@
 {
   "local": {
+    "crate_name": "standard_proofs",
     "attrs": {
       "all_tool_attrs": 7,
       "kanitools": 3

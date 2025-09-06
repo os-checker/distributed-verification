@@ -1,5 +1,6 @@
 {
   "local": {
+    "crate_name": "gen_proofs_by_nested_macros",
     "attrs": {
       "all_tool_attrs": 6,
       "kanitools": 3

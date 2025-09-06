@@ -1,5 +1,6 @@
 {
   "local": {
+    "crate_name": "gen_contracts_by_macros",
     "attrs": {
       "all_tool_attrs": 33,
       "kanitools": 30
