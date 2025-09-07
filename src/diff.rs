@@ -249,6 +249,8 @@ impl MergedHarnesses<'_> {
 /// Merge hash json and kani-list.
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct MergeHashKaniList {
+    #[serde(rename = "crate")]
+    pub krate: Box<str>,
     pub file: Box<str>,
     pub func: Box<str>,
     #[serde(skip_serializing_if = "Option::is_none")]
