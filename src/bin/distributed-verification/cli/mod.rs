@@ -7,9 +7,6 @@ use distributed_verification::{
 use eyre::Context;
 use std::{fmt, path::PathBuf};
 
-/// Compare simplify-json and kani-list.json
-pub mod diff;
-
 /// Parse cli arguments.
 pub fn parse() -> Result<Run> {
     Args::parse().into_args()
