@@ -6,6 +6,7 @@ export const URL_MERGE_DIFF = "https://raw.githubusercontent.com/os-checker/veri
 export type VecMergeHashKaniList = MergeHashKaniList[];
 
 export interface MergeHashKaniList {
+  crate: string,
   file: string,
   harness: string,
   proof_kind?: ProofKind,
@@ -52,6 +53,10 @@ export const right = {
 };
 
 export const MergeKaniColumns: MergeKaniColumn[] = [
+  {
+    key: "crate",
+    col: { field: "crate", header: "Crate", width: "8%", sortable: true },
+  },
   {
     key: "file",
     col: { field: "file", header: "File Path", width: "15%", sortable: true },
