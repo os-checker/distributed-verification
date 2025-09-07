@@ -5,9 +5,11 @@ set -o pipefail
 export WORKSPACE="${WORKSPACE:-$(pwd)}"
 
 export DV_LOG=off
-export OUTPUT_DIR=$WORKSPACE/assets/json
 export KANI_DIR=$WORKSPACE/kani/target/kani
 export VERIFY_RUST_STD_LIBRARY=$WORKSPACE/verify-rust-std/library
+
+export OUTPUT_DIR=$WORKSPACE/assets/json
+mkdir "$OUTPUT_DIR" -p
 
 # test/verify-rust-std needs this, so remember to
 # * update runid after verify-rust-std submodule syncs
