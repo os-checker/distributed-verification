@@ -28,7 +28,7 @@ jobs:
         run: ./.github/gen_core.json.sh
 
       - name: View core.json
-        working-directory: assets
+        working-directory: assets/json
         run: |
           ls -alh core.json
           head -n 100 core.json
@@ -38,7 +38,7 @@ jobs:
         with:
           name: artifact-libcore
           path: |
-            assets/core.json
+            assets/json
             assets/core.sqlite3
           compression-level: 9
           if-no-files-found: error
