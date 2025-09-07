@@ -22,6 +22,7 @@ fn new_local_crate(tcx: TyCtxt) -> LocalCrateFnDefs {
 
     // for krate in stable_mir::find_crates("core") {
     let krate = local_crate();
+    this.crate_name = krate.name.clone();
     let fn_defs = krate.fn_defs();
     this.fn_defs.total = fn_defs.len();
 
@@ -76,7 +77,7 @@ fn new_local_crate(tcx: TyCtxt) -> LocalCrateFnDefs {
 
 pub fn analyze(out: Output, tcx: TyCtxt) -> crate::Result<()> {
     let stat = new_stat(tcx);
-    out.emit(&stat)
+    out.emit(&stat, &stat.local.crate_name)
 }
 
 // From verify-rust-std CI:

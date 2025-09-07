@@ -17,6 +17,7 @@ use distributed_verification::kani_list::check_proofs;
 use eyre::Result;
 use functions::{clear_rustc_ctx, set_rustc_ctx};
 use rustc_middle::ty::TyCtxt;
+use rustc_public::CompilerError;
 
 mod cli;
 mod functions;
@@ -63,14 +64,18 @@ fn main() -> Result<()> {
     });
 
     match res {
-        Ok(res_inner) | Err(rustc_public::CompilerError::Interrupted(res_inner)) => res_inner,
-        Err(err) => Err(eyre!("Unexpected error {err:?}")),
+        Ok(err) | Err(CompilerError::Interrupted(err)) => err,
+        Err(CompilerError::Failed) => bail!("Compilation failed!"),
+        Err(CompilerError::Skipped) => {
+            eprintln!("Compilation skipped.");
+            Ok(())
+        }
     }
 }
 
 fn analyze_proofs(tcx: TyCtxt, run: cli::Run) -> Result<()> {
     set_rustc_ctx(tcx);
-    let output = functions::analyze(tcx);
+    let (crate_name, output) = functions::analyze(tcx);
     clear_rustc_ctx();
 
     let mut res_check_kani_list = Ok(());
@@ -79,7 +84,7 @@ fn analyze_proofs(tcx: TyCtxt, run: cli::Run) -> Result<()> {
         res_check_kani_list = check_proofs(&kani_list, &proofs);
     }
 
-    let res_json = run.json.emit(&output);
+    let res_json = run.json.emit(&output, &crate_name);
 
     match (res_check_kani_list, res_json) {
         (Ok(_), Ok(_)) => Ok(()),

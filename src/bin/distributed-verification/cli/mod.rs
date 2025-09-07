@@ -5,10 +5,7 @@ use distributed_verification::{
     kani_path,
 };
 use eyre::Context;
-use std::fmt;
-
-/// Compare simplify-json and kani-list.json
-pub mod diff;
+use std::{fmt, path::PathBuf};
 
 /// Parse cli arguments.
 pub fn parse() -> Result<Run> {
@@ -21,7 +18,7 @@ pub fn parse() -> Result<Run> {
 struct Args {
     /// Possible one of these values:
     /// * `--json false`: skip serializing to json
-    /// * `--json path/to/file.json`: serlialize into a file
+    /// * `--json folder`: serlialize into a file under this folder with name being `{crate_name}.json`
     /// * `--json` or `--json stdout`: print to stdout
     ///
     /// NOTE: the default value is stdout, so if no other output is specified,
@@ -121,18 +118,20 @@ pub enum Output {
     False,
     /// Write to stdout.
     Stdout,
-    /// Write to a local file.
-    Path(String),
+    /// Write to a local file under this folder.
+    Dir(PathBuf),
 }
 
 impl Output {
-    pub fn emit<T: serde::Serialize>(self, val: &T) -> Result<()> {
+    pub fn emit<T: serde::Serialize>(self, val: &T, crate_name: &str) -> Result<()> {
         let _span = error_span!("emit", ?self).entered();
 
         let writer: Box<dyn std::io::Write> = match self {
             Output::False => return Ok(()),
             Output::Stdout => Box::new(std::io::stdout()),
-            Output::Path(path) => {
+            Output::Dir(mut path) => {
+                path.push(crate_name);
+                path.set_extension("json");
                 let file = std::fs::File::create(path)?;
                 Box::new(file)
             }
@@ -152,7 +151,11 @@ impl From<String> for Output {
         match &*s.to_ascii_lowercase() {
             "false" => Self::False,
             "" | "stdout" => Self::Stdout,
-            _ => Self::Path(s),
+            _ => {
+                let dir = PathBuf::from(s);
+                assert!(dir.exists(), "The folder doesn't exist: {}", dir.display());
+                Self::Dir(dir)
+            }
         }
     }
 }
@@ -162,7 +165,7 @@ impl fmt::Display for Output {
         f.write_str(match self {
             Output::False => "false",
             Output::Stdout => "stdout",
-            Output::Path(path) => path,
+            Output::Dir(path) => path.to_str().unwrap(),
         })
     }
 }

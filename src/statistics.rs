@@ -19,6 +19,7 @@ pub struct ExternalCrates {
 /// Metrics based on `Vec<FnDef>`.
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct LocalCrateFnDefs {
+    pub crate_name: String,
     pub attrs: CountAttrs,
     pub fn_defs: FnDefs,
     pub kanitools: KaniTools,

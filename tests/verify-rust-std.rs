@@ -13,7 +13,7 @@ const PREFIX_LOCAL_LIBRARY: &str =
     "/home/gh-zjp-CN/distributed-verification/verify-rust-std/library/";
 
 const CLI: &str = "verify_rust_std";
-const CORE_JSON: &str = "./assets/core.json";
+const CORE_JSON: &str = "./assets/json/core.json";
 
 const KANI_LIST_JSON_NEW: &str = "assets/kani-list_verify-rust-std-CI.json";
 const KANI_LIST_JSON_OLD: &str = "assets/kani-list_verify-rust-std.json";

@@ -7,7 +7,7 @@ kani-list.json
 # kani
 
 rustflags.json
-core.json
+assets/json
 /artifact*
 
 *.sqlite3

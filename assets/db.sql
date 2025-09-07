@@ -12,9 +12,11 @@
 --   macro_backtrace_len INTEGER,
 --   macro_backtrace TEXT,
 --   callees_len INTEGER,
---   callees TEXT
+--   callees TEXT,
+--   crate TEXT
 -- ) STRICT;
 SELECT
+  crate,
   file,
   name,
   hash,
@@ -27,6 +29,19 @@ WHERE
   proof_kind IS NOT NULL
 LIMIT
   10;
+
+SELECT
+  crate,
+  count() AS `Functions`,
+  COUNT(
+    CASE
+      WHEN proof_kind IS NOT NULL THEN 1
+    END
+  ) AS `Proofs`
+FROM
+  db
+GROUP BY
+  crate;
 
 SELECT
   count() AS `Total Proofs`

@@ -1,5 +1,6 @@
 {
   "local": {
+    "crate_name": "proofs_for_contract",
     "attrs": {
       "all_tool_attrs": 35,
       "kanitools": 31

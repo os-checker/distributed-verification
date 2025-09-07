@@ -15,10 +15,12 @@ pub use kani::TOOL;
 
 mod utils;
 
-pub fn analyze(tcx: TyCtxt) -> Vec<SerFunction> {
+pub fn analyze(tcx: TyCtxt) -> (String, Vec<SerFunction>) {
+    let crate_name = rustc_public::local_crate().name;
+    // FIXME: retrieve functions using local_crate
     let local_items = all_local_items();
     let cap = local_items.len();
-    dbg!(cap);
+    dbg!(&crate_name, cap);
 
     let mut entries = Vec::with_capacity(cap);
 
@@ -46,7 +48,7 @@ pub fn analyze(tcx: TyCtxt) -> Vec<SerFunction> {
 
     cache::store_to_db();
 
-    v_func.into_iter().map(|f| f.0).collect()
+    (crate_name, v_func.into_iter().map(|f| f.0).collect())
 }
 
 /// A Rust funtion with its file source, attributes, and raw function content.

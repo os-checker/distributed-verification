@@ -1,5 +1,6 @@
 {
   "local": {
+    "crate_name": "ad_hoc",
     "attrs": {
       "all_tool_attrs": 6,
       "kanitools": 3

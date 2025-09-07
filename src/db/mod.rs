@@ -33,7 +33,7 @@ pub struct DbFunction {
     pub attrs: Vec<String>,
 
     /// Source that a stable_mir span points to.
-    pub src: String,
+    pub src: BoxStr,
 
     /// The count of macro backtraces.
     pub macro_backtrace_len: usize,
@@ -46,6 +46,10 @@ pub struct DbFunction {
 
     /// Recurisve callees where the string refers to recursive hash of the function.
     pub callees: Vec<BoxStr>,
+
+    /// Crate name.
+    #[serde(rename = "crate")]
+    pub krate: BoxStr,
 }
 
 impl DbFunction {
