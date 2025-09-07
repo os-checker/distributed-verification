@@ -215,7 +215,12 @@ watch(selectedHarness, val => {
           <div> Harness Name:
             <Tag :severity="selectedHarnessTag" :value="selectedHarness?.harness" />
           </div>
-          <div> Harness File: {{ selectedHarness?.file }}</div>
+          <div class="flex items-center gap-4">
+            <div> Crate:
+              <Tag :severity="selectedHarnessTag"> {{ selectedHarness?.crate }}</Tag>
+            </div>
+            <div> Harness File: {{ selectedHarness?.file }}</div>
+          </div>
           <div> Harness Hash: {{ selectedHarness?.hash }}</div>
           <div class="flex items-center gap-4">
             <div> Proof Kind:

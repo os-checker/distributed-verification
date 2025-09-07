@@ -55,7 +55,7 @@ export const right = {
 export const MergeKaniColumns: MergeKaniColumn[] = [
   {
     key: "crate",
-    col: { field: "crate", header: "Crate", width: "8%", sortable: true },
+    col: { field: "crate", header: "Crate", width: "5%", sortable: true },
   },
   {
     key: "file",
