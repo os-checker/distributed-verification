@@ -123,7 +123,7 @@ pub fn kani_path() -> String {
     path
 }
 
-#[derive(Debug, Default, Serialize, Deserialize, Clone)]
+#[derive(Debug, Default, Hash, PartialEq, Eq, Serialize, Deserialize, Clone)]
 pub struct SerFunction {
     pub hash: Box<str>,
     pub name: Box<str>,
