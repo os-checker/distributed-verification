@@ -19,11 +19,13 @@ fn run(bin: &str, args: &[&str]) -> String {
     let mut command = Command::cargo_bin(bin).unwrap();
     command.env("DV_LOG", "off").args(args);
     let output = command.output().unwrap();
-    assert!(
-        output.status.success(),
-        "Failed to test standard_proof.rs:\n{}",
-        std::str::from_utf8(&output.stderr).unwrap()
-    );
+    if !output.status.success() {
+        let args = args.join(" ");
+        panic!(
+            "Failed to run `{bin} {args}`\nOutput = {}",
+            std::str::from_utf8(&output.stderr).unwrap()
+        );
+    }
 
     String::from_utf8(output.stdout).unwrap()
 }
