@@ -11,7 +11,9 @@ pub fn run_dv(args: &[&str]) -> String {
     run(env!("CARGO_PKG_NAME"), args)
 }
 
-pub fn run_vrs(args: &[&str]) -> String {
+// verify_rust_std diff --old tests/snapshots/compare/proof1.json --new tests/snapshots/compare/proof2.json --hash-json
+pub fn run_vrs_diff(old: &str, new: &str) -> String {
+    let args = &["diff", "--old", old, "--new", new, "--hash-json"];
     run("verify_rust_std", args)
 }
 

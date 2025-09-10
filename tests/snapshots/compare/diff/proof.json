@@ -1,0 +1,8 @@
+[
+  {
+    "hash": "1360231931955151956814099580363286591245",
+    "name": "verify::g",
+    "file": "tests/compare/proof.rs",
+    "proof_kind": "Standard"
+  }
+]

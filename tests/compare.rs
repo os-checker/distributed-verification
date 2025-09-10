@@ -1,5 +1,4 @@
-use std::fs::{copy, remove_file};
-
+use std::fs::{copy, create_dir_all, remove_file};
 mod utils;
 use utils::{assert_eq, *};
 
@@ -10,22 +9,38 @@ fn get(text: &str, start: &str) -> SerFunction {
 }
 
 const COMPARE: &str = "tests/compare";
+const SNAP_COMPARE: &str = "tests/snapshots/compare";
+const EXPECT_COMPARE: &str = "./snapshots/compare";
 
 fn compare(
-    tmp: &str,
+    shared_file: &str,
     v_file: &[&str],
     f: &str,
     assert: impl Fn(&SerFunction, &SerFunction, &str, &str, &str),
 ) {
+    struct ProofPath {
+        src_file: String,
+        hash_json: String,
+        hash_json_expected: String,
+    }
+
     let len = v_file.len();
     assert!(len > 1);
-    let tmp = format!("{COMPARE}/{tmp}.rs");
+    let v_path: Vec<_> = v_file
+        .iter()
+        .map(|file| ProofPath {
+            src_file: format!("{COMPARE}/{file}.rs"),
+            hash_json: format!("{SNAP_COMPARE}/{file}.json"),
+            hash_json_expected: format!("{EXPECT_COMPARE}/{file}.json"),
+        })
+        .collect();
+    let tmp = format!("{COMPARE}/{shared_file}.rs");
 
     let mut v_func = vec![];
-    for ele in v_file {
-        copy(format!("{COMPARE}/{ele}.rs"), &tmp).unwrap();
+    for path in &v_path {
+        copy(&path.src_file, &tmp).unwrap();
         let text = run_dv(&[&tmp]);
-        expect_file![format!("./snapshots/compare/{ele}.json")].assert_eq(&text);
+        expect_file![&path.hash_json_expected].assert_eq(&text);
         v_func.push(get(&text, f));
     }
 
@@ -38,10 +53,19 @@ fn compare(
             assert(&v_func[i], &v_func[j], f, v_file[i], v_file[j]);
         }
     }
+
+    if let [old, new] = v_path.as_slice() {
+        let diff = run_vrs_diff(&old.hash_json, &new.hash_json);
+        let diff_json = format!("{EXPECT_COMPARE}/diff/{shared_file}.json");
+        expect_file![diff_json].assert_eq(&diff);
+    }
 }
 
 #[test]
 fn test_compare() {
+    _ = create_dir_all(SNAP_COMPARE);
+    _ = create_dir_all(format!("{SNAP_COMPARE}/diff"));
+
     fn eq(fn1: &SerFunction, fn2: &SerFunction, f: &str, f1: &str, f2: &str) {
         assert_eq!(
             fn1.hash, fn2.hash,
