@@ -7,8 +7,16 @@ pub use expect_test::{expect, expect_file};
 pub use eyre::Result;
 pub use pretty_assertions::assert_eq;
 
-pub fn cmd(args: &[&str]) -> String {
-    let mut command = Command::cargo_bin(env!("CARGO_PKG_NAME")).unwrap();
+pub fn run_dv(args: &[&str]) -> String {
+    run(env!("CARGO_PKG_NAME"), args)
+}
+
+pub fn run_vrs(args: &[&str]) -> String {
+    run("verify_rust_std", args)
+}
+
+fn run(bin: &str, args: &[&str]) -> String {
+    let mut command = Command::cargo_bin(bin).unwrap();
     command.env("DV_LOG", "off").args(args);
     let output = command.output().unwrap();
     assert!(

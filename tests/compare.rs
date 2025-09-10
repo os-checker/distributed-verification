@@ -24,7 +24,7 @@ fn compare(
     let mut v_func = vec![];
     for ele in v_file {
         copy(format!("{COMPARE}/{ele}.rs"), &tmp).unwrap();
-        let text = cmd(&[&tmp]);
+        let text = run_dv(&[&tmp]);
         expect_file![format!("./snapshots/compare/{ele}.json")].assert_eq(&text);
         v_func.push(get(&text, f));
     }

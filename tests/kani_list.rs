@@ -25,13 +25,13 @@ fn validate_kani_list_json() -> Result<()> {
         expect_file![list_path].assert_debug_eq(&kani_list);
 
         // run `distributed-verification`
-        let text = cmd(&[path]);
+        let text = run_dv(&[path]);
         let v_ser_function: Vec<SerFunction> = serde_json::from_str(&text).unwrap();
         let v_proof: Vec<_> = v_ser_function.iter().filter(|f| f.is_proof()).collect();
         check_proofs(&kani_list, &v_proof).unwrap();
 
         // test `distributed-verification --check-kani-list`
-        _ = cmd(&[path, "--check-kani-list=kani-list.json"]);
+        _ = run_dv(&[path, "--check-kani-list=kani-list.json"]);
     }
 
     Ok(())
