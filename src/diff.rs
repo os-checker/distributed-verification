@@ -267,7 +267,16 @@ pub struct MergeHashKaniList {
 ///
 /// If new is sorted, especially directly from the stdout of verify_rust_std merge subcommand,
 /// the result is sorted.
-pub fn diff(old: &[MergeHashKaniList], new: &[MergeHashKaniList]) -> Vec<MergeHashKaniList> {
+pub fn diff_on_merged(
+    old: &[MergeHashKaniList],
+    new: &[MergeHashKaniList],
+) -> Vec<MergeHashKaniList> {
     let set: HashSet<_> = old.iter().collect();
     new.iter().filter(|item| item.hash.is_none() || !set.contains(item)).cloned().collect()
+}
+
+/// Compare two hash.json.
+pub fn diff_on_hashed_func(old: &[SerFunction], new: &[SerFunction]) -> Vec<SerFunction> {
+    let set: HashSet<_> = old.iter().collect();
+    new.iter().filter(|item| !set.contains(item)).cloned().collect()
 }

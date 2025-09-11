@@ -14,7 +14,7 @@ fn stat() -> Result<()> {
 
         let path = path.to_str().unwrap();
         // run `distributed-verification path --json=false --stat`
-        let text = &cmd(&[path, "--json=false", "--stat"]);
+        let text = &run_dv(&[path, "--json=false", "--stat"]);
         // ensure this can be deserialized
         let _: Stat = serde_json::from_str(text).unwrap();
 

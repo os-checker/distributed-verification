@@ -69,7 +69,7 @@ fn test_proofs() -> Result<()> {
     let mut v_macro = vec![];
     for (idx, path) in proofs.iter().enumerate() {
         let file_stem = file_stem(path);
-        let text = cmd(&[path.to_str().unwrap()]);
+        let text = run_dv(&[path.to_str().unwrap()]);
         v_json.push(read_proofs(&text)?);
         // collect macro generated proofs
         if file_stem.ends_with("by_macros") || file_stem.ends_with("by_nested_macros") {
@@ -111,7 +111,7 @@ fn test_compare_unique_hash() -> Result<()> {
     let mut v_json = Vec::<Vec<SerFunction>>::with_capacity(proofs.len());
     for path in &proofs {
         // let file_stem = path.file_stem().and_then(|f| f.to_str()).unwrap();
-        let text = cmd(&[path.to_str().unwrap()]);
+        let text = run_dv(&[path.to_str().unwrap()]);
         // NOTE: don't write text to json file, since compare.rs write it in a different way
         v_json.push(read_proofs(&text)?);
     }

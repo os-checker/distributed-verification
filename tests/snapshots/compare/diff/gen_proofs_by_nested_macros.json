@@ -1,0 +1,8 @@
+[
+  {
+    "hash": "6049791535301547191723508871959023129",
+    "name": "verify::proof1",
+    "file": "tests/compare/gen_proofs_by_nested_macros.rs",
+    "proof_kind": "Standard"
+  }
+]

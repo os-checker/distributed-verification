@@ -1,0 +1,77 @@
+[
+  {
+    "hash": "16423392687644375364724657870187103190",
+    "name": "std::ptr::drop_in_place::<{closure@tests/compare/contract.rs:11:5: 11:29}>",
+    "file": "library/core/src/ptr/mod.rs"
+  },
+  {
+    "hash": "16423392687644375364724657870187103190",
+    "name": "std::ptr::drop_in_place::<{closure@tests/compare/contract.rs:11:5: 11:29}>",
+    "file": "library/core/src/ptr/mod.rs"
+  },
+  {
+    "hash": "16423392687644375364724657870187103190",
+    "name": "std::ptr::drop_in_place::<{closure@tests/compare/contract.rs:11:5: 11:29}>",
+    "file": "library/core/src/ptr/mod.rs"
+  },
+  {
+    "hash": "16423392687644375364724657870187103190",
+    "name": "std::ptr::drop_in_place::<{closure@tests/compare/contract.rs:11:5: 11:29}>",
+    "file": "library/core/src/ptr/mod.rs"
+  },
+  {
+    "hash": "124569496921490884488960393718969893620",
+    "name": "verify::g",
+    "file": "tests/compare/contract.rs"
+  },
+  {
+    "hash": "73887258241161092881667616569680888010",
+    "name": "verify::g::kani_contract_mode",
+    "file": "tests/compare/contract.rs"
+  },
+  {
+    "hash": "5310357021794338182513150670169962678",
+    "name": "verify::g::kani_force_fn_once::<(), {closure@tests/compare/contract.rs:11:5: 11:29}>",
+    "file": "tests/compare/contract.rs"
+  },
+  {
+    "hash": "5310357021794338182513150670169962678",
+    "name": "verify::g::kani_force_fn_once::<(), {closure@tests/compare/contract.rs:11:5: 11:29}>",
+    "file": "tests/compare/contract.rs"
+  },
+  {
+    "hash": "5310357021794338182513150670169962678",
+    "name": "verify::g::kani_force_fn_once::<(), {closure@tests/compare/contract.rs:11:5: 11:29}>",
+    "file": "tests/compare/contract.rs"
+  },
+  {
+    "hash": "5310357021794338182513150670169962678",
+    "name": "verify::g::kani_force_fn_once::<(), {closure@tests/compare/contract.rs:11:5: 11:29}>",
+    "file": "tests/compare/contract.rs"
+  },
+  {
+    "hash": "82608928646705306325144146458835407768",
+    "name": "verify::g::kani_register_contract::<(), {closure@tests/compare/contract.rs:11:5: 11:29}>",
+    "file": "tests/compare/contract.rs"
+  },
+  {
+    "hash": "82608928646705306325144146458835407768",
+    "name": "verify::g::kani_register_contract::<(), {closure@tests/compare/contract.rs:11:5: 11:29}>",
+    "file": "tests/compare/contract.rs"
+  },
+  {
+    "hash": "82608928646705306325144146458835407768",
+    "name": "verify::g::kani_register_contract::<(), {closure@tests/compare/contract.rs:11:5: 11:29}>",
+    "file": "tests/compare/contract.rs"
+  },
+  {
+    "hash": "82608928646705306325144146458835407768",
+    "name": "verify::g::kani_register_contract::<(), {closure@tests/compare/contract.rs:11:5: 11:29}>",
+    "file": "tests/compare/contract.rs"
+  },
+  {
+    "hash": "843182267809226023016425080225293048998",
+    "name": "verify::g::{closure#0}::REENTRY",
+    "file": "tests/compare/contract.rs"
+  }
+]

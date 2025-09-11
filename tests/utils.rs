@@ -7,15 +7,27 @@ pub use expect_test::{expect, expect_file};
 pub use eyre::Result;
 pub use pretty_assertions::assert_eq;
 
-pub fn cmd(args: &[&str]) -> String {
-    let mut command = Command::cargo_bin(env!("CARGO_PKG_NAME")).unwrap();
+pub fn run_dv(args: &[&str]) -> String {
+    run(env!("CARGO_PKG_NAME"), args)
+}
+
+// verify_rust_std diff --old tests/snapshots/compare/proof1.json --new tests/snapshots/compare/proof2.json --hash-json
+pub fn run_vrs_diff(old: &str, new: &str) -> String {
+    let args = &["diff", "--old", old, "--new", new, "--hash-json"];
+    run("verify_rust_std", args)
+}
+
+fn run(bin: &str, args: &[&str]) -> String {
+    let mut command = Command::cargo_bin(bin).unwrap();
     command.env("DV_LOG", "off").args(args);
     let output = command.output().unwrap();
-    assert!(
-        output.status.success(),
-        "Failed to test standard_proof.rs:\n{}",
-        std::str::from_utf8(&output.stderr).unwrap()
-    );
+    if !output.status.success() {
+        let args = args.join(" ");
+        panic!(
+            "Failed to run `{bin} {args}`\nOutput = {}",
+            std::str::from_utf8(&output.stderr).unwrap()
+        );
+    }
 
     String::from_utf8(output.stdout).unwrap()
 }
