@@ -76,9 +76,9 @@ fn read() {
     let kani_list = read_kani_list_json();
     expect![[r#"
         Totals {
-            standard_harnesses: 20060,
-            contract_harnesses: 1079,
-            functions_under_contract: 417,
+            standard_harnesses: 20216,
+            contract_harnesses: 1081,
+            functions_under_contract: 424,
         }
     "#]]
     .assert_debug_eq(&kani_list.totals);
@@ -110,12 +110,12 @@ fn diff() {
     expect!["0"].assert_eq(&old.iter().filter(|h| h.hash.is_some()).count().to_string());
 
     let (new_file, new) = merge(KANI_LIST_JSON_NEW, "merge_new.json");
-    expect!["21135"].assert_eq(&new.len().to_string());
-    expect!["10436"].assert_eq(&new.iter().filter(|h| h.hash.is_some()).count().to_string());
+    expect!["21284"].assert_eq(&new.len().to_string());
+    expect!["10620"].assert_eq(&new.iter().filter(|h| h.hash.is_some()).count().to_string());
 
     let (_, diff) = run(&["diff", "--old", &old_file, "--new", &new_file], "merge_diff.json");
-    expect!["21135"].assert_eq(&diff.len().to_string());
-    expect!["10436"].assert_eq(&diff.iter().filter(|h| h.hash.is_some()).count().to_string());
+    expect!["21284"].assert_eq(&diff.len().to_string());
+    expect!["10620"].assert_eq(&diff.iter().filter(|h| h.hash.is_some()).count().to_string());
 }
 
 fn merge(kani_list: &str, out: &str) -> (String, Vec<MergeHashKaniList>) {
