@@ -64,8 +64,8 @@ fn core_json() {
     let count = Count { standard: merged.standard.len(), contract: merged.contract.len() };
     expect![[r#"
         Count {
-            standard: 585,
-            contract: 781,
+            standard: 590,
+            contract: 782,
         }
     "#]]
     .assert_debug_eq(&count);
@@ -111,11 +111,11 @@ fn diff() {
 
     let (new_file, new) = merge(KANI_LIST_JSON_NEW, "merge_new.json");
     expect!["21135"].assert_eq(&new.len().to_string());
-    expect!["10451"].assert_eq(&new.iter().filter(|h| h.hash.is_some()).count().to_string());
+    expect!["10436"].assert_eq(&new.iter().filter(|h| h.hash.is_some()).count().to_string());
 
     let (_, diff) = run(&["diff", "--old", &old_file, "--new", &new_file], "merge_diff.json");
     expect!["21135"].assert_eq(&diff.len().to_string());
-    expect!["10451"].assert_eq(&diff.iter().filter(|h| h.hash.is_some()).count().to_string());
+    expect!["10436"].assert_eq(&diff.iter().filter(|h| h.hash.is_some()).count().to_string());
 }
 
 fn merge(kani_list: &str, out: &str) -> (String, Vec<MergeHashKaniList>) {
