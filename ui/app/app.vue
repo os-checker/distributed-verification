@@ -1,7 +1,7 @@
 <template>
   <div>
     <NuxtLayout>
-      <Kani />
+      <NuxtPage />
     </NuxtLayout>
   </div>
 </template>
