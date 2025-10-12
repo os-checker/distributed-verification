@@ -20,7 +20,7 @@
     "file": "library/core/src/ptr/mod.rs"
   },
   {
-    "hash": "108439193619501839163495464327216517957",
+    "hash": "74294075908909308867946622958187349966",
     "name": "verify::g",
     "file": "tests/compare/contract.rs"
   },
@@ -50,22 +50,22 @@
     "file": "tests/compare/contract.rs"
   },
   {
-    "hash": "1361118254502468581214443467483044496772",
+    "hash": "146297803498381482532288005068260580006",
     "name": "verify::g::kani_register_contract::<(), {closure@tests/compare/contract.rs:11:5: 11:29}>",
     "file": "tests/compare/contract.rs"
   },
   {
-    "hash": "1361118254502468581214443467483044496772",
+    "hash": "146297803498381482532288005068260580006",
     "name": "verify::g::kani_register_contract::<(), {closure@tests/compare/contract.rs:11:5: 11:29}>",
     "file": "tests/compare/contract.rs"
   },
   {
-    "hash": "1361118254502468581214443467483044496772",
+    "hash": "146297803498381482532288005068260580006",
     "name": "verify::g::kani_register_contract::<(), {closure@tests/compare/contract.rs:11:5: 11:29}>",
     "file": "tests/compare/contract.rs"
   },
   {
-    "hash": "1361118254502468581214443467483044496772",
+    "hash": "146297803498381482532288005068260580006",
     "name": "verify::g::kani_register_contract::<(), {closure@tests/compare/contract.rs:11:5: 11:29}>",
     "file": "tests/compare/contract.rs"
   },

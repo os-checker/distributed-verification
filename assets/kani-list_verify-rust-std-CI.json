@@ -567,7 +567,14 @@
     "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/hashbrown-0.15.5/src/set.rs": [
       "set::assert_covariance"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.174/src/macros.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.175/src/macros.rs": [
+      "<new::linux_uapi::linux::can::__c_anonymous_sockaddr_can_j1939 as core::clone::Clone>::clone",
+      "<new::linux_uapi::linux::can::__c_anonymous_sockaddr_can_tp as core::clone::Clone>::clone",
+      "<new::linux_uapi::linux::can::can_filter as core::clone::Clone>::clone",
+      "<new::linux_uapi::linux::can::can_frame as core::clone::Clone>::clone",
+      "<new::linux_uapi::linux::can::canfd_frame as core::clone::Clone>::clone",
+      "<new::linux_uapi::linux::can::canxl_frame as core::clone::Clone>::clone",
+      "<new::linux_uapi::linux::can::j1939::j1939_filter as core::clone::Clone>::clone",
       "<unix::in6_addr as core::clone::Clone>::clone",
       "<unix::ipv6_mreq as core::clone::Clone>::clone",
       "<unix::itimerval as core::clone::Clone>::clone",
@@ -598,15 +605,9 @@
       "<unix::linux_like::linux::__c_anonymous_elf64_rel as core::clone::Clone>::clone",
       "<unix::linux_like::linux::__c_anonymous_elf64_rela as core::clone::Clone>::clone",
       "<unix::linux_like::linux::__c_anonymous_ifru_map as core::clone::Clone>::clone",
-      "<unix::linux_like::linux::__c_anonymous_sockaddr_can_j1939 as core::clone::Clone>::clone",
-      "<unix::linux_like::linux::__c_anonymous_sockaddr_can_tp as core::clone::Clone>::clone",
       "<unix::linux_like::linux::af_alg_iv as core::clone::Clone>::clone",
       "<unix::linux_like::linux::arch::generic::termios2 as core::clone::Clone>::clone",
       "<unix::linux_like::linux::arpd_request as core::clone::Clone>::clone",
-      "<unix::linux_like::linux::can_filter as core::clone::Clone>::clone",
-      "<unix::linux_like::linux::can_frame as core::clone::Clone>::clone",
-      "<unix::linux_like::linux::canfd_frame as core::clone::Clone>::clone",
-      "<unix::linux_like::linux::canxl_frame as core::clone::Clone>::clone",
       "<unix::linux_like::linux::cpu_set_t as core::clone::Clone>::clone",
       "<unix::linux_like::linux::dirent as core::clone::Clone>::clone",
       "<unix::linux_like::linux::dirent64 as core::clone::Clone>::clone",
@@ -704,7 +705,6 @@
       "<unix::linux_like::linux::iw_quality as core::clone::Clone>::clone",
       "<unix::linux_like::linux::iw_statistics as core::clone::Clone>::clone",
       "<unix::linux_like::linux::iw_thrspy as core::clone::Clone>::clone",
-      "<unix::linux_like::linux::j1939_filter as core::clone::Clone>::clone",
       "<unix::linux_like::linux::mnt_ns_info as core::clone::Clone>::clone",
       "<unix::linux_like::linux::mount_attr as core::clone::Clone>::clone",
       "<unix::linux_like::linux::mq_attr as core::clone::Clone>::clone",
@@ -877,7 +877,7 @@
       "unix::ntohl",
       "unix::ntohs"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.174/src/unix/linux_like/linux/gnu/mod.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.175/src/unix/linux_like/linux/gnu/mod.rs": [
       "<unix::linux_like::linux::gnu::sifields_sigchld as core::clone::Clone>::clone",
       "unix::linux_like::linux::gnu::<impl unix::linux_like::linux::gnu::b64::x86_64::siginfo_t>::si_addr",
       "unix::linux_like::linux::gnu::<impl unix::linux_like::linux::gnu::b64::x86_64::siginfo_t>::si_pid",
@@ -888,10 +888,11 @@
       "unix::linux_like::linux::gnu::<impl unix::linux_like::linux::gnu::b64::x86_64::siginfo_t>::si_value",
       "unix::linux_like::linux::gnu::<impl unix::linux_like::linux::gnu::b64::x86_64::siginfo_t>::sifields"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.174/src/unix/linux_like/linux/mod.rs": [
-      "unix::linux_like::linux::FUTEX_OP"
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.175/src/unix/linux_like/linux/mod.rs": [
+      "unix::linux_like::linux::FUTEX_OP",
+      "unix::linux_like::linux::issecure_mask"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.174/src/unix/linux_like/mod.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.175/src/unix/linux_like/mod.rs": [
       "unix::linux_like::_IO",
       "unix::linux_like::_IOC"
     ],
@@ -1062,13 +1063,13 @@
       "<MZStatus as rustc_std_workspace_core::cmp::PartialEq>::eq",
       "MZFlush::new"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/archive.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/archive.rs": [
       "<archive::AixFileHeader as rustc_std_workspace_core::clone::Clone>::clone",
       "<archive::AixHeader as rustc_std_workspace_core::clone::Clone>::clone",
       "<archive::AixMemberOffset as rustc_std_workspace_core::clone::Clone>::clone",
       "<archive::Header as rustc_std_workspace_core::clone::Clone>::clone"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/common.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/common.rs": [
       "<common::AddressSize as rustc_std_workspace_core::clone::Clone>::clone",
       "<common::AddressSize as rustc_std_workspace_core::cmp::Eq>::assert_receiver_is_total_eq",
       "<common::AddressSize as rustc_std_workspace_core::cmp::PartialEq>::eq",
@@ -1116,12 +1117,12 @@
       "common::BinaryFormat::native_object",
       "common::SectionKind::is_bss"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/elf.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/elf.rs": [
       "<elf::Ident as rustc_std_workspace_core::clone::Clone>::clone",
       "elf::ef_e2k_flag_to_mach",
       "elf::ef_e2k_mach_to_flag"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/endian.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/endian.rs": [
       "<endian::BigEndian as endian::Endian>::from_big_endian",
       "<endian::BigEndian as endian::Endian>::is_big_endian",
       "<endian::BigEndian as rustc_std_workspace_core::clone::Clone>::clone",
@@ -1141,7 +1142,7 @@
       "<endian::LittleEndian as rustc_std_workspace_core::cmp::PartialEq>::eq",
       "<endian::LittleEndian as rustc_std_workspace_core::default::Default>::default"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/macho.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/macho.rs": [
       "<macho::DyldCacheSlidePointer3 as rustc_std_workspace_core::clone::Clone>::clone",
       "<macho::DyldCacheSlidePointer5 as rustc_std_workspace_core::clone::Clone>::clone",
       "<macho::FatArch32 as rustc_std_workspace_core::clone::Clone>::clone",
@@ -1171,7 +1172,7 @@
       "macho::cpu_subtype_intel_family",
       "macho::cpu_subtype_intel_model"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/pe.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/pe.rs": [
       "<pe::AnonObjectHeader as rustc_std_workspace_core::clone::Clone>::clone",
       "<pe::AnonObjectHeaderBigobj as rustc_std_workspace_core::clone::Clone>::clone",
       "<pe::AnonObjectHeaderV2 as rustc_std_workspace_core::clone::Clone>::clone",
@@ -1255,13 +1256,13 @@
       "pe::ImageDelayloadDescriptor::is_null",
       "pe::ImageImportDescriptor::is_null"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/read/archive.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/read/archive.rs": [
       "<read::archive::ArchiveKind as rustc_std_workspace_core::clone::Clone>::clone",
       "<read::archive::ArchiveKind as rustc_std_workspace_core::cmp::Eq>::assert_receiver_is_total_eq",
       "<read::archive::ArchiveKind as rustc_std_workspace_core::cmp::PartialEq>::eq",
       "<read::archive::ArchiveOffset as rustc_std_workspace_core::clone::Clone>::clone"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/read/coff/file.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/read/coff/file.rs": [
       "<pe::AnonObjectHeaderBigobj as read::coff::file::CoffHeader>::characteristics",
       "<pe::AnonObjectHeaderBigobj as read::coff::file::CoffHeader>::is_type_bigobj",
       "<pe::AnonObjectHeaderBigobj as read::coff::file::CoffHeader>::machine",
@@ -1275,17 +1276,17 @@
       "<pe::ImageFileHeader as read::coff::file::CoffHeader>::number_of_symbols",
       "<pe::ImageFileHeader as read::coff::file::CoffHeader>::pointer_to_symbol_table"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/read/coff/import.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/read/coff/import.rs": [
       "<read::coff::import::ImportType as rustc_std_workspace_core::clone::Clone>::clone",
       "<read::coff::import::ImportType as rustc_std_workspace_core::cmp::Eq>::assert_receiver_is_total_eq",
       "<read::coff::import::ImportType as rustc_std_workspace_core::cmp::PartialEq>::eq",
       "read::coff::import::<impl pe::ImportObjectHeader>::import_type",
       "read::coff::import::<impl pe::ImportObjectHeader>::name_type"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/read/coff/relocation.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/read/coff/relocation.rs": [
       "read::coff::relocation::<impl pe::ImageRelocation>::symbol"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/read/coff/section.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/read/coff/section.rs": [
       "<read::coff::section::SectionTable<'_> as rustc_std_workspace_core::default::Default>::default",
       "read::coff::section::<impl pe::ImageSectionHeader>::coff_alignment",
       "read::coff::section::<impl pe::ImageSectionHeader>::coff_file_range",
@@ -1293,7 +1294,7 @@
       "read::coff::section::<impl pe::ImageSectionHeader>::name_offset",
       "read::coff::section::<impl pe::ImageSectionHeader>::raw_name"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/read/coff/symbol.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/read/coff/symbol.rs": [
       "<pe::ImageSymbol as read::coff::symbol::ImageSymbol>::number_of_aux_symbols",
       "<pe::ImageSymbol as read::coff::symbol::ImageSymbol>::raw_name",
       "<pe::ImageSymbol as read::coff::symbol::ImageSymbol>::section_number",
@@ -1308,7 +1309,7 @@
       "<pe::ImageSymbolEx as read::coff::symbol::ImageSymbol>::value",
       "read::coff::symbol::<impl pe::ImageAuxSymbolWeak>::default_symbol"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/read/elf/relocation.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/read/elf/relocation.rs": [
       "<read::elf::relocation::Crel as rustc_std_workspace_core::clone::Clone>::clone",
       "<read::elf::relocation::CrelIteratorHeader as rustc_std_workspace_core::clone::Clone>::clone",
       "<read::elf::relocation::CrelIteratorState as rustc_std_workspace_core::clone::Clone>::clone",
@@ -1316,7 +1317,7 @@
       "<read::elf::relocation::RelocationSections as rustc_std_workspace_core::default::Default>::default",
       "read::elf::relocation::Crel::symbol"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/read/elf/version.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/read/elf/version.rs": [
       "<read::elf::version::Version<'_> as rustc_std_workspace_core::default::Default>::default",
       "<read::elf::version::VersionIndex as rustc_std_workspace_core::clone::Clone>::clone",
       "<read::elf::version::VersionIndex as rustc_std_workspace_core::default::Default>::default",
@@ -1325,7 +1326,7 @@
       "read::elf::version::VersionIndex::is_hidden",
       "read::elf::version::VersionIndex::is_local"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/read/macho/dyld_cache.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/read/macho/dyld_cache.rs": [
       "<read::macho::dyld_cache::RelocationStateV2 as rustc_std_workspace_core::clone::Clone>::clone",
       "<read::macho::dyld_cache::RelocationStateV2 as rustc_std_workspace_core::cmp::Eq>::assert_receiver_is_total_eq",
       "<read::macho::dyld_cache::RelocationStateV2 as rustc_std_workspace_core::cmp::PartialEq>::eq",
@@ -1336,7 +1337,7 @@
       "<read::macho::dyld_cache::RelocationStateV5 as rustc_std_workspace_core::cmp::Eq>::assert_receiver_is_total_eq",
       "<read::macho::dyld_cache::RelocationStateV5 as rustc_std_workspace_core::cmp::PartialEq>::eq"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/read/macho/fat.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/read/macho/fat.rs": [
       "<macho::FatArch32 as read::macho::fat::FatArch>::align",
       "<macho::FatArch32 as read::macho::fat::FatArch>::cpusubtype",
       "<macho::FatArch32 as read::macho::fat::FatArch>::cputype",
@@ -1348,7 +1349,7 @@
       "<macho::FatArch64 as read::macho::fat::FatArch>::offset",
       "<macho::FatArch64 as read::macho::fat::FatArch>::size"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/read/mod.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/read/mod.rs": [
       "<read::CompressedFileRange as rustc_std_workspace_core::clone::Clone>::clone",
       "<read::CompressedFileRange as rustc_std_workspace_core::cmp::Eq>::assert_receiver_is_total_eq",
       "<read::CompressedFileRange as rustc_std_workspace_core::cmp::PartialEq>::eq",
@@ -1390,10 +1391,10 @@
       "read::Relocation::target",
       "read::SymbolSection::index"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/read/pe/data_directory.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/read/pe/data_directory.rs": [
       "read::pe::data_directory::<impl pe::ImageDataDirectory>::address_range"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/read/pe/file.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/read/pe/file.rs": [
       "<pe::ImageNtHeaders32 as read::pe::file::ImageNtHeaders>::file_header",
       "<pe::ImageNtHeaders32 as read::pe::file::ImageNtHeaders>::is_type_64",
       "<pe::ImageNtHeaders32 as read::pe::file::ImageNtHeaders>::is_valid_optional_magic",
@@ -1465,7 +1466,7 @@
       "<pe::ImageOptionalHeader64 as read::pe::file::ImageOptionalHeader>::subsystem",
       "<pe::ImageOptionalHeader64 as read::pe::file::ImageOptionalHeader>::win32_version_value"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/read/pe/import.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/read/pe/import.rs": [
       "<pe::ImageThunkData32 as read::pe::import::ImageThunkData>::address",
       "<pe::ImageThunkData32 as read::pe::import::ImageThunkData>::is_ordinal",
       "<pe::ImageThunkData32 as read::pe::import::ImageThunkData>::ordinal",
@@ -1475,12 +1476,12 @@
       "<pe::ImageThunkData64 as read::pe::import::ImageThunkData>::ordinal",
       "<pe::ImageThunkData64 as read::pe::import::ImageThunkData>::raw"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/read/pe/relocation.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/read/pe/relocation.rs": [
       "<read::pe::relocation::Relocation as rustc_std_workspace_core::clone::Clone>::clone",
       "<read::pe::relocation::Relocation as rustc_std_workspace_core::default::Default>::default",
       "<read::pe::relocation::RelocationBlockIterator<'_> as rustc_std_workspace_core::default::Default>::default"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/read/pe/resource.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/read/pe/resource.rs": [
       "<read::pe::resource::ResourceName as rustc_std_workspace_core::clone::Clone>::clone",
       "read::pe::resource::<impl pe::ImageResourceDirectoryEntry>::data_offset",
       "read::pe::resource::<impl pe::ImageResourceDirectoryEntry>::has_name",
@@ -1491,24 +1492,24 @@
       "read::pe::resource::ResourceNameOrId::id",
       "read::pe::resource::ResourceNameOrId::name"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/read/pe/rich.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/read/pe/rich.rs": [
       "<read::pe::rich::RichHeaderEntry as rustc_std_workspace_core::clone::Clone>::clone"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/read/pe/section.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/read/pe/section.rs": [
       "read::pe::section::<impl pe::ImageSectionHeader>::contains_rva",
       "read::pe::section::<impl pe::ImageSectionHeader>::pe_address_range",
       "read::pe::section::<impl pe::ImageSectionHeader>::pe_file_range",
       "read::pe::section::<impl pe::ImageSectionHeader>::pe_file_range_at"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/read/traits.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/read/traits.rs": [
       "<read::traits::NoDynamicRelocationIterator as rustc_std_workspace_core::iter::Iterator>::next"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/read/util.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/read/util.rs": [
       "<read::util::ByteString<'_> as rustc_std_workspace_core::default::Default>::default",
       "<read::util::Bytes<'_> as rustc_std_workspace_core::default::Default>::default",
       "read::util::align"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/read/xcoff/file.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/read/xcoff/file.rs": [
       "<xcoff::AuxHeader32 as read::xcoff::file::AuxHeader>::o_algndata",
       "<xcoff::AuxHeader32 as read::xcoff::file::AuxHeader>::o_algntext",
       "<xcoff::AuxHeader32 as read::xcoff::file::AuxHeader>::o_bsize",
@@ -1556,7 +1557,7 @@
       "<xcoff::FileHeader64 as read::xcoff::file::FileHeader>::f_timdat",
       "<xcoff::FileHeader64 as read::xcoff::file::FileHeader>::is_type_64"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/read/xcoff/relocation.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/read/xcoff/relocation.rs": [
       "<xcoff::Rel32 as read::xcoff::relocation::Rel>::r_rsize",
       "<xcoff::Rel32 as read::xcoff::relocation::Rel>::r_rtype",
       "<xcoff::Rel32 as read::xcoff::relocation::Rel>::r_symndx",
@@ -1566,7 +1567,7 @@
       "<xcoff::Rel64 as read::xcoff::relocation::Rel>::r_symndx",
       "<xcoff::Rel64 as read::xcoff::relocation::Rel>::r_vaddr"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/read/xcoff/section.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/read/xcoff/section.rs": [
       "<xcoff::SectionHeader32 as read::xcoff::section::SectionHeader>::s_flags",
       "<xcoff::SectionHeader32 as read::xcoff::section::SectionHeader>::s_lnnoptr",
       "<xcoff::SectionHeader32 as read::xcoff::section::SectionHeader>::s_name",
@@ -1588,7 +1589,7 @@
       "<xcoff::SectionHeader64 as read::xcoff::section::SectionHeader>::s_size",
       "<xcoff::SectionHeader64 as read::xcoff::section::SectionHeader>::s_vaddr"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/read/xcoff/symbol.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/read/xcoff/symbol.rs": [
       "<xcoff::CsectAux32 as read::xcoff::symbol::CsectAux>::x_auxtype",
       "<xcoff::CsectAux32 as read::xcoff::symbol::CsectAux>::x_parmhash",
       "<xcoff::CsectAux32 as read::xcoff::symbol::CsectAux>::x_scnlen",
@@ -1624,7 +1625,7 @@
       "<xcoff::Symbol64 as read::xcoff::symbol::Symbol>::n_value",
       "<xcoff::Symbol64 as read::xcoff::symbol::Symbol>::name_offset"
     ],
-    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.2/src/xcoff.rs": [
+    "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/object-0.37.3/src/xcoff.rs": [
       "<xcoff::AuxHeader32 as rustc_std_workspace_core::clone::Clone>::clone",
       "<xcoff::BlockAux32 as rustc_std_workspace_core::clone::Clone>::clone",
       "<xcoff::BlockAux64 as rustc_std_workspace_core::clone::Clone>::clone",
@@ -1698,6 +1699,68 @@
       "<kani::arbitrary_ptr::AllocationStatus as clone::Clone>::clone",
       "<kani::arbitrary_ptr::AllocationStatus as cmp::Eq>::assert_receiver_is_total_eq",
       "<kani::arbitrary_ptr::AllocationStatus as cmp::PartialEq>::eq"
+    ],
+    "/home/runner/work/verify-rust-std/verify-rust-std/kani_build/library/kani_core/src/iter.rs": [
+      "<ops::range::Range<i128> as kani::KaniIntoIter>::kani_into_iter",
+      "<ops::range::Range<i128> as kani::KaniIter>::assumption",
+      "<ops::range::Range<i128> as kani::KaniIter>::first",
+      "<ops::range::Range<i128> as kani::KaniIter>::len",
+      "<ops::range::Range<i128> as kani::KaniIter>::nth",
+      "<ops::range::Range<i16> as kani::KaniIntoIter>::kani_into_iter",
+      "<ops::range::Range<i16> as kani::KaniIter>::assumption",
+      "<ops::range::Range<i16> as kani::KaniIter>::first",
+      "<ops::range::Range<i16> as kani::KaniIter>::len",
+      "<ops::range::Range<i16> as kani::KaniIter>::nth",
+      "<ops::range::Range<i32> as kani::KaniIntoIter>::kani_into_iter",
+      "<ops::range::Range<i32> as kani::KaniIter>::assumption",
+      "<ops::range::Range<i32> as kani::KaniIter>::first",
+      "<ops::range::Range<i32> as kani::KaniIter>::len",
+      "<ops::range::Range<i32> as kani::KaniIter>::nth",
+      "<ops::range::Range<i64> as kani::KaniIntoIter>::kani_into_iter",
+      "<ops::range::Range<i64> as kani::KaniIter>::assumption",
+      "<ops::range::Range<i64> as kani::KaniIter>::first",
+      "<ops::range::Range<i64> as kani::KaniIter>::len",
+      "<ops::range::Range<i64> as kani::KaniIter>::nth",
+      "<ops::range::Range<i8> as kani::KaniIntoIter>::kani_into_iter",
+      "<ops::range::Range<i8> as kani::KaniIter>::assumption",
+      "<ops::range::Range<i8> as kani::KaniIter>::first",
+      "<ops::range::Range<i8> as kani::KaniIter>::len",
+      "<ops::range::Range<i8> as kani::KaniIter>::nth",
+      "<ops::range::Range<isize> as kani::KaniIntoIter>::kani_into_iter",
+      "<ops::range::Range<isize> as kani::KaniIter>::assumption",
+      "<ops::range::Range<isize> as kani::KaniIter>::first",
+      "<ops::range::Range<isize> as kani::KaniIter>::len",
+      "<ops::range::Range<isize> as kani::KaniIter>::nth",
+      "<ops::range::Range<u128> as kani::KaniIntoIter>::kani_into_iter",
+      "<ops::range::Range<u128> as kani::KaniIter>::assumption",
+      "<ops::range::Range<u128> as kani::KaniIter>::first",
+      "<ops::range::Range<u128> as kani::KaniIter>::len",
+      "<ops::range::Range<u128> as kani::KaniIter>::nth",
+      "<ops::range::Range<u16> as kani::KaniIntoIter>::kani_into_iter",
+      "<ops::range::Range<u16> as kani::KaniIter>::assumption",
+      "<ops::range::Range<u16> as kani::KaniIter>::first",
+      "<ops::range::Range<u16> as kani::KaniIter>::len",
+      "<ops::range::Range<u16> as kani::KaniIter>::nth",
+      "<ops::range::Range<u32> as kani::KaniIntoIter>::kani_into_iter",
+      "<ops::range::Range<u32> as kani::KaniIter>::assumption",
+      "<ops::range::Range<u32> as kani::KaniIter>::first",
+      "<ops::range::Range<u32> as kani::KaniIter>::len",
+      "<ops::range::Range<u32> as kani::KaniIter>::nth",
+      "<ops::range::Range<u64> as kani::KaniIntoIter>::kani_into_iter",
+      "<ops::range::Range<u64> as kani::KaniIter>::assumption",
+      "<ops::range::Range<u64> as kani::KaniIter>::first",
+      "<ops::range::Range<u64> as kani::KaniIter>::len",
+      "<ops::range::Range<u64> as kani::KaniIter>::nth",
+      "<ops::range::Range<u8> as kani::KaniIntoIter>::kani_into_iter",
+      "<ops::range::Range<u8> as kani::KaniIter>::assumption",
+      "<ops::range::Range<u8> as kani::KaniIter>::first",
+      "<ops::range::Range<u8> as kani::KaniIter>::len",
+      "<ops::range::Range<u8> as kani::KaniIter>::nth",
+      "<ops::range::Range<usize> as kani::KaniIntoIter>::kani_into_iter",
+      "<ops::range::Range<usize> as kani::KaniIter>::assumption",
+      "<ops::range::Range<usize> as kani::KaniIter>::first",
+      "<ops::range::Range<usize> as kani::KaniIter>::len",
+      "<ops::range::Range<usize> as kani::KaniIter>::nth"
     ],
     "/home/runner/work/verify-rust-std/verify-rust-std/kani_build/library/kani_core/src/mem_init.rs": [
       "kani::mem_init::MemoryInitializationState::new"
@@ -1785,7 +1848,6 @@
     ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/alloc/src/raw_vec/mod.rs": [
       "raw_vec::RawVecInner::with_capacity",
-      "raw_vec::alloc_guard",
       "raw_vec::capacity_overflow",
       "raw_vec::handle_error",
       "raw_vec::layout_array",
@@ -1806,7 +1868,6 @@
       "<i64 as string::SpecToString>::spec_to_string",
       "<i8 as string::SpecToString>::spec_to_string",
       "<isize as string::SpecToString>::spec_to_string",
-      "<string::FromUtf16Error as core::error::Error>::description",
       "<string::String as core::convert::From<char>>::from",
       "<string::String as core::default::Default>::default",
       "<u128 as string::SpecToString>::spec_to_string",
@@ -1880,6 +1941,12 @@
     ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/alloc/src/vec/set_len_on_drop.rs": [
       "vec::set_len_on_drop::SetLenOnDrop::<'_>::new"
+    ],
+    "/home/runner/work/verify-rust-std/verify-rust-std/library/alloc/src/wtf8/mod.rs": [
+      "wtf8::<impl core::wtf8::Wtf8>::empty_box",
+      "wtf8::Wtf8Buf::new",
+      "wtf8::Wtf8Buf::with_capacity",
+      "wtf8::decode_surrogate_pair"
     ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/compiler-builtins/compiler-builtins/src/float/cmp.rs": [
       "<float::cmp::Result as core::clone::Clone>::clone",
@@ -2064,48 +2131,64 @@
     "/home/runner/work/verify-rust-std/verify-rust-std/library/compiler-builtins/compiler-builtins/src/macros.rs": [
       "float::add::__adddf3",
       "float::add::__adddf3::__adddf3",
+      "float::add::__addhf3",
+      "float::add::__addhf3::__addhf3",
       "float::add::__addsf3",
       "float::add::__addsf3::__addsf3",
       "float::add::__addtf3",
       "float::add::__addtf3::__addtf3",
       "float::cmp::__eqdf2",
       "float::cmp::__eqdf2::__eqdf2",
+      "float::cmp::__eqhf2",
+      "float::cmp::__eqhf2::__eqhf2",
       "float::cmp::__eqsf2",
       "float::cmp::__eqsf2::__eqsf2",
       "float::cmp::__eqtf2",
       "float::cmp::__eqtf2::__eqtf2",
       "float::cmp::__gedf2",
       "float::cmp::__gedf2::__gedf2",
+      "float::cmp::__gehf2",
+      "float::cmp::__gehf2::__gehf2",
       "float::cmp::__gesf2",
       "float::cmp::__gesf2::__gesf2",
       "float::cmp::__getf2",
       "float::cmp::__getf2::__getf2",
       "float::cmp::__gtdf2",
       "float::cmp::__gtdf2::__gtdf2",
+      "float::cmp::__gthf2",
+      "float::cmp::__gthf2::__gthf2",
       "float::cmp::__gtsf2",
       "float::cmp::__gtsf2::__gtsf2",
       "float::cmp::__gttf2",
       "float::cmp::__gttf2::__gttf2",
       "float::cmp::__ledf2",
       "float::cmp::__ledf2::__ledf2",
+      "float::cmp::__lehf2",
+      "float::cmp::__lehf2::__lehf2",
       "float::cmp::__lesf2",
       "float::cmp::__lesf2::__lesf2",
       "float::cmp::__letf2",
       "float::cmp::__letf2::__letf2",
       "float::cmp::__ltdf2",
       "float::cmp::__ltdf2::__ltdf2",
+      "float::cmp::__lthf2",
+      "float::cmp::__lthf2::__lthf2",
       "float::cmp::__ltsf2",
       "float::cmp::__ltsf2::__ltsf2",
       "float::cmp::__lttf2",
       "float::cmp::__lttf2::__lttf2",
       "float::cmp::__nedf2",
       "float::cmp::__nedf2::__nedf2",
+      "float::cmp::__nehf2",
+      "float::cmp::__nehf2::__nehf2",
       "float::cmp::__nesf2",
       "float::cmp::__nesf2::__nesf2",
       "float::cmp::__netf2",
       "float::cmp::__netf2::__netf2",
       "float::cmp::__unorddf2",
       "float::cmp::__unorddf2::__unorddf2",
+      "float::cmp::__unordhf2",
+      "float::cmp::__unordhf2::__unordhf2",
       "float::cmp::__unordsf2",
       "float::cmp::__unordsf2::__unordsf2",
       "float::cmp::__unordtf2",
@@ -2204,6 +2287,8 @@
       "float::extend::__gnu_h2f_ieee::__gnu_h2f_ieee",
       "float::mul::__muldf3",
       "float::mul::__muldf3::__muldf3",
+      "float::mul::__mulhf3",
+      "float::mul::__mulhf3::__mulhf3",
       "float::mul::__mulsf3",
       "float::mul::__mulsf3::__mulsf3",
       "float::mul::__multf3",
@@ -2216,6 +2301,8 @@
       "float::pow::__powitf2::__powitf2",
       "float::sub::__subdf3",
       "float::sub::__subdf3::__subdf3",
+      "float::sub::__subhf3",
+      "float::sub::__subhf3::__subhf3",
       "float::sub::__subsf3",
       "float::sub::__subsf3::__subsf3",
       "float::sub::__subtf3",
@@ -9282,8 +9369,7 @@
       "arch::breakpoint"
     ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/array/mod.rs": [
-      "<array::TryFromSliceError as clone::Clone>::clone",
-      "<array::TryFromSliceError as error::Error>::description"
+      "<array::TryFromSliceError as clone::Clone>::clone"
     ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/ascii.rs": [
       "ascii::EscapeDefault::empty",
@@ -9352,7 +9438,6 @@
       "<char::convert::ParseCharError as clone::Clone>::clone",
       "<char::convert::ParseCharError as cmp::Eq>::assert_receiver_is_total_eq",
       "<char::convert::ParseCharError as cmp::PartialEq>::eq",
-      "<char::convert::ParseCharError as error::Error>::description",
       "char::convert::<impl convert::From<char> for u128>::from",
       "char::convert::<impl convert::From<char> for u32>::from",
       "char::convert::<impl convert::From<char> for u64>::from",
@@ -9368,7 +9453,6 @@
       "<char::decode::DecodeUtf16Error as clone::Clone>::clone",
       "<char::decode::DecodeUtf16Error as cmp::Eq>::assert_receiver_is_total_eq",
       "<char::decode::DecodeUtf16Error as cmp::PartialEq>::eq",
-      "<char::decode::DecodeUtf16Error as error::Error>::description",
       "char::decode::DecodeUtf16Error::unpaired_surrogate"
     ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/char/methods.rs": [
@@ -9396,6 +9480,8 @@
       "char::methods::<impl char>::is_ascii_punctuation",
       "char::methods::<impl char>::is_ascii_uppercase",
       "char::methods::<impl char>::is_ascii_whitespace",
+      "char::methods::<impl char>::is_case_ignorable",
+      "char::methods::<impl char>::is_cased",
       "char::methods::<impl char>::is_control",
       "char::methods::<impl char>::is_digit",
       "char::methods::<impl char>::is_grapheme_extended",
@@ -10196,12 +10282,6 @@
       "<u8 as default::Default>::default",
       "<usize as default::Default>::default"
     ],
-    "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/error.rs": [
-      "<cell::BorrowError as error::Error>::description",
-      "<cell::BorrowMutError as error::Error>::description",
-      "<char::convert::CharTryFromError as error::Error>::description",
-      "<fmt::Error as error::Error>::description"
-    ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/escape.rs": [
       "<escape::AlwaysEscaped as clone::Clone>::clone",
       "<escape::MaybeEscaped as clone::Clone>::clone"
@@ -10273,78 +10353,6 @@
       "fmt::PostPadding::new"
     ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/fmt/num.rs": [
-      "<fmt::num::Binary as clone::Clone>::clone",
-      "<fmt::num::Binary as cmp::PartialEq>::eq",
-      "<fmt::num::Binary as fmt::num::GenericRadix>::digit",
-      "<fmt::num::LowerHex as clone::Clone>::clone",
-      "<fmt::num::LowerHex as cmp::PartialEq>::eq",
-      "<fmt::num::LowerHex as fmt::num::GenericRadix>::digit",
-      "<fmt::num::Octal as clone::Clone>::clone",
-      "<fmt::num::Octal as cmp::PartialEq>::eq",
-      "<fmt::num::Octal as fmt::num::GenericRadix>::digit",
-      "<fmt::num::UpperHex as clone::Clone>::clone",
-      "<fmt::num::UpperHex as cmp::PartialEq>::eq",
-      "<fmt::num::UpperHex as fmt::num::GenericRadix>::digit",
-      "<i128 as fmt::num::DisplayInt>::from_u8",
-      "<i128 as fmt::num::DisplayInt>::to_u128",
-      "<i128 as fmt::num::DisplayInt>::to_u64",
-      "<i128 as fmt::num::DisplayInt>::to_u8",
-      "<i128 as fmt::num::DisplayInt>::zero",
-      "<i16 as fmt::num::DisplayInt>::from_u8",
-      "<i16 as fmt::num::DisplayInt>::to_u128",
-      "<i16 as fmt::num::DisplayInt>::to_u64",
-      "<i16 as fmt::num::DisplayInt>::to_u8",
-      "<i16 as fmt::num::DisplayInt>::zero",
-      "<i32 as fmt::num::DisplayInt>::from_u8",
-      "<i32 as fmt::num::DisplayInt>::to_u128",
-      "<i32 as fmt::num::DisplayInt>::to_u64",
-      "<i32 as fmt::num::DisplayInt>::to_u8",
-      "<i32 as fmt::num::DisplayInt>::zero",
-      "<i64 as fmt::num::DisplayInt>::from_u8",
-      "<i64 as fmt::num::DisplayInt>::to_u128",
-      "<i64 as fmt::num::DisplayInt>::to_u64",
-      "<i64 as fmt::num::DisplayInt>::to_u8",
-      "<i64 as fmt::num::DisplayInt>::zero",
-      "<i8 as fmt::num::DisplayInt>::from_u8",
-      "<i8 as fmt::num::DisplayInt>::to_u128",
-      "<i8 as fmt::num::DisplayInt>::to_u64",
-      "<i8 as fmt::num::DisplayInt>::to_u8",
-      "<i8 as fmt::num::DisplayInt>::zero",
-      "<isize as fmt::num::DisplayInt>::from_u8",
-      "<isize as fmt::num::DisplayInt>::to_u128",
-      "<isize as fmt::num::DisplayInt>::to_u64",
-      "<isize as fmt::num::DisplayInt>::to_u8",
-      "<isize as fmt::num::DisplayInt>::zero",
-      "<u128 as fmt::num::DisplayInt>::from_u8",
-      "<u128 as fmt::num::DisplayInt>::to_u128",
-      "<u128 as fmt::num::DisplayInt>::to_u64",
-      "<u128 as fmt::num::DisplayInt>::to_u8",
-      "<u128 as fmt::num::DisplayInt>::zero",
-      "<u16 as fmt::num::DisplayInt>::from_u8",
-      "<u16 as fmt::num::DisplayInt>::to_u128",
-      "<u16 as fmt::num::DisplayInt>::to_u64",
-      "<u16 as fmt::num::DisplayInt>::to_u8",
-      "<u16 as fmt::num::DisplayInt>::zero",
-      "<u32 as fmt::num::DisplayInt>::from_u8",
-      "<u32 as fmt::num::DisplayInt>::to_u128",
-      "<u32 as fmt::num::DisplayInt>::to_u64",
-      "<u32 as fmt::num::DisplayInt>::to_u8",
-      "<u32 as fmt::num::DisplayInt>::zero",
-      "<u64 as fmt::num::DisplayInt>::from_u8",
-      "<u64 as fmt::num::DisplayInt>::to_u128",
-      "<u64 as fmt::num::DisplayInt>::to_u64",
-      "<u64 as fmt::num::DisplayInt>::to_u8",
-      "<u64 as fmt::num::DisplayInt>::zero",
-      "<u8 as fmt::num::DisplayInt>::from_u8",
-      "<u8 as fmt::num::DisplayInt>::to_u128",
-      "<u8 as fmt::num::DisplayInt>::to_u64",
-      "<u8 as fmt::num::DisplayInt>::to_u8",
-      "<u8 as fmt::num::DisplayInt>::zero",
-      "<usize as fmt::num::DisplayInt>::from_u8",
-      "<usize as fmt::num::DisplayInt>::to_u128",
-      "<usize as fmt::num::DisplayInt>::to_u64",
-      "<usize as fmt::num::DisplayInt>::to_u8",
-      "<usize as fmt::num::DisplayInt>::zero",
       "fmt::num::<impl i128>::format_into",
       "fmt::num::<impl u128>::format_into",
       "fmt::num::div_rem_1e16",
@@ -13170,11 +13178,23 @@
       "<i8 as intrinsics::fallback::CarryingMulAdd>::carrying_mul_add",
       "<isize as intrinsics::fallback::CarryingMulAdd>::carrying_mul_add",
       "<u128 as intrinsics::fallback::CarryingMulAdd>::carrying_mul_add",
+      "<u128 as intrinsics::fallback::FunnelShift>::unchecked_funnel_shl",
+      "<u128 as intrinsics::fallback::FunnelShift>::unchecked_funnel_shr",
       "<u16 as intrinsics::fallback::CarryingMulAdd>::carrying_mul_add",
+      "<u16 as intrinsics::fallback::FunnelShift>::unchecked_funnel_shl",
+      "<u16 as intrinsics::fallback::FunnelShift>::unchecked_funnel_shr",
       "<u32 as intrinsics::fallback::CarryingMulAdd>::carrying_mul_add",
+      "<u32 as intrinsics::fallback::FunnelShift>::unchecked_funnel_shl",
+      "<u32 as intrinsics::fallback::FunnelShift>::unchecked_funnel_shr",
       "<u64 as intrinsics::fallback::CarryingMulAdd>::carrying_mul_add",
+      "<u64 as intrinsics::fallback::FunnelShift>::unchecked_funnel_shl",
+      "<u64 as intrinsics::fallback::FunnelShift>::unchecked_funnel_shr",
       "<u8 as intrinsics::fallback::CarryingMulAdd>::carrying_mul_add",
+      "<u8 as intrinsics::fallback::FunnelShift>::unchecked_funnel_shl",
+      "<u8 as intrinsics::fallback::FunnelShift>::unchecked_funnel_shr",
       "<usize as intrinsics::fallback::CarryingMulAdd>::carrying_mul_add",
+      "<usize as intrinsics::fallback::FunnelShift>::unchecked_funnel_shl",
+      "<usize as intrinsics::fallback::FunnelShift>::unchecked_funnel_shr",
       "intrinsics::fallback::wide_mul_u128",
       "intrinsics::fallback::wide_mul_u128::from_low_high",
       "intrinsics::fallback::wide_mul_u128::scalar_mul",
@@ -13547,12 +13567,8 @@
       "num::from_ascii_radix_panic::do_panic::runtime",
       "slice::<impl [T]>::copy_from_slice::len_mismatch_fail::do_panic::compiletime",
       "slice::<impl [T]>::copy_from_slice::len_mismatch_fail::do_panic::runtime",
-      "slice::index::slice_end_index_len_fail::do_panic::compiletime",
-      "slice::index::slice_end_index_len_fail::do_panic::runtime",
-      "slice::index::slice_index_order_fail::do_panic::compiletime",
-      "slice::index::slice_index_order_fail::do_panic::runtime",
-      "slice::index::slice_start_index_len_fail::do_panic::compiletime",
-      "slice::index::slice_start_index_len_fail::do_panic::runtime",
+      "slice::index::slice_index_fail::do_panic::compiletime",
+      "slice::index::slice_index_fail::do_panic::runtime",
       "ub_checks::check_language_ub::compiletime",
       "ub_checks::check_language_ub::runtime"
     ],
@@ -13819,7 +13835,6 @@
       "<net::parser::AddrParseError as clone::Clone>::clone",
       "<net::parser::AddrParseError as cmp::Eq>::assert_receiver_is_total_eq",
       "<net::parser::AddrParseError as cmp::PartialEq>::eq",
-      "<net::parser::AddrParseError as error::Error>::description",
       "<u16 as net::parser::ReadNumberHelper>::checked_add",
       "<u16 as net::parser::ReadNumberHelper>::checked_mul",
       "<u32 as net::parser::ReadNumberHelper>::checked_add",
@@ -13934,7 +13949,10 @@
       "num::dec2flt::decimal_seq::DecimalSeq::round",
       "num::dec2flt::decimal_seq::DecimalSeq::trim",
       "num::dec2flt::decimal_seq::DecimalSeq::try_add_digit",
-      "num::dec2flt::decimal_seq::number_of_digits_decimal_left_shift"
+      "num::dec2flt::decimal_seq::decimal_seq_verify::check_left_shift",
+      "num::dec2flt::decimal_seq::decimal_seq_verify::check_number_of_digits_decimal_left_shift",
+      "num::dec2flt::decimal_seq::decimal_seq_verify::check_right_shift",
+      "num::dec2flt::decimal_seq::decimal_seq_verify::check_round"
     ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/num/dec2flt/float.rs": [
       "<f16 as num::dec2flt::float::RawFloat>::classify",
@@ -13969,7 +13987,6 @@
       "<num::dec2flt::ParseFloatError as clone::Clone>::clone",
       "<num::dec2flt::ParseFloatError as cmp::Eq>::assert_receiver_is_total_eq",
       "<num::dec2flt::ParseFloatError as cmp::PartialEq>::eq",
-      "<num::dec2flt::ParseFloatError as error::Error>::description",
       "num::dec2flt::pfe_empty",
       "num::dec2flt::pfe_invalid"
     ],
@@ -13989,11 +14006,9 @@
       "<num::error::ParseIntError as clone::Clone>::clone",
       "<num::error::ParseIntError as cmp::Eq>::assert_receiver_is_total_eq",
       "<num::error::ParseIntError as cmp::PartialEq>::eq",
-      "<num::error::ParseIntError as error::Error>::description",
       "<num::error::TryFromIntError as clone::Clone>::clone",
       "<num::error::TryFromIntError as cmp::Eq>::assert_receiver_is_total_eq",
       "<num::error::TryFromIntError as cmp::PartialEq>::eq",
-      "<num::error::TryFromIntError as error::Error>::description",
       "num::error::ParseIntError::kind"
     ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/num/f128.rs": [
@@ -14278,11 +14293,14 @@
       "num::<impl i128>::div_euclid",
       "num::<impl i128>::div_floor",
       "num::<impl i128>::exact_div",
+      "num::<impl i128>::exact_shl",
+      "num::<impl i128>::exact_shr",
       "num::<impl i128>::from_be",
       "num::<impl i128>::from_be_bytes",
       "num::<impl i128>::from_le",
       "num::<impl i128>::from_le_bytes",
       "num::<impl i128>::from_ne_bytes",
+      "num::<impl i128>::highest_one",
       "num::<impl i128>::ilog",
       "num::<impl i128>::ilog10",
       "num::<impl i128>::ilog2",
@@ -14293,6 +14311,7 @@
       "num::<impl i128>::isqrt",
       "num::<impl i128>::leading_ones",
       "num::<impl i128>::leading_zeros",
+      "num::<impl i128>::lowest_one",
       "num::<impl i128>::max_value",
       "num::<impl i128>::min_value",
       "num::<impl i128>::next_multiple_of",
@@ -14350,6 +14369,8 @@
       "num::<impl i128>::unbounded_shl",
       "num::<impl i128>::unbounded_shr",
       "num::<impl i128>::unchecked_exact_div",
+      "num::<impl i128>::unchecked_exact_shl",
+      "num::<impl i128>::unchecked_exact_shr",
       "num::<impl i128>::unsigned_abs",
       "num::<impl i128>::widening_mul",
       "num::<impl i128>::wrapping_abs",
@@ -14397,11 +14418,14 @@
       "num::<impl i16>::div_euclid",
       "num::<impl i16>::div_floor",
       "num::<impl i16>::exact_div",
+      "num::<impl i16>::exact_shl",
+      "num::<impl i16>::exact_shr",
       "num::<impl i16>::from_be",
       "num::<impl i16>::from_be_bytes",
       "num::<impl i16>::from_le",
       "num::<impl i16>::from_le_bytes",
       "num::<impl i16>::from_ne_bytes",
+      "num::<impl i16>::highest_one",
       "num::<impl i16>::ilog",
       "num::<impl i16>::ilog10",
       "num::<impl i16>::ilog2",
@@ -14412,6 +14436,7 @@
       "num::<impl i16>::isqrt",
       "num::<impl i16>::leading_ones",
       "num::<impl i16>::leading_zeros",
+      "num::<impl i16>::lowest_one",
       "num::<impl i16>::max_value",
       "num::<impl i16>::min_value",
       "num::<impl i16>::next_multiple_of",
@@ -14469,6 +14494,8 @@
       "num::<impl i16>::unbounded_shl",
       "num::<impl i16>::unbounded_shr",
       "num::<impl i16>::unchecked_exact_div",
+      "num::<impl i16>::unchecked_exact_shl",
+      "num::<impl i16>::unchecked_exact_shr",
       "num::<impl i16>::unsigned_abs",
       "num::<impl i16>::widening_mul",
       "num::<impl i16>::wrapping_abs",
@@ -14516,11 +14543,14 @@
       "num::<impl i32>::div_euclid",
       "num::<impl i32>::div_floor",
       "num::<impl i32>::exact_div",
+      "num::<impl i32>::exact_shl",
+      "num::<impl i32>::exact_shr",
       "num::<impl i32>::from_be",
       "num::<impl i32>::from_be_bytes",
       "num::<impl i32>::from_le",
       "num::<impl i32>::from_le_bytes",
       "num::<impl i32>::from_ne_bytes",
+      "num::<impl i32>::highest_one",
       "num::<impl i32>::ilog",
       "num::<impl i32>::ilog10",
       "num::<impl i32>::ilog2",
@@ -14531,6 +14561,7 @@
       "num::<impl i32>::isqrt",
       "num::<impl i32>::leading_ones",
       "num::<impl i32>::leading_zeros",
+      "num::<impl i32>::lowest_one",
       "num::<impl i32>::max_value",
       "num::<impl i32>::min_value",
       "num::<impl i32>::next_multiple_of",
@@ -14588,6 +14619,8 @@
       "num::<impl i32>::unbounded_shl",
       "num::<impl i32>::unbounded_shr",
       "num::<impl i32>::unchecked_exact_div",
+      "num::<impl i32>::unchecked_exact_shl",
+      "num::<impl i32>::unchecked_exact_shr",
       "num::<impl i32>::unsigned_abs",
       "num::<impl i32>::widening_mul",
       "num::<impl i32>::wrapping_abs",
@@ -14635,11 +14668,14 @@
       "num::<impl i64>::div_euclid",
       "num::<impl i64>::div_floor",
       "num::<impl i64>::exact_div",
+      "num::<impl i64>::exact_shl",
+      "num::<impl i64>::exact_shr",
       "num::<impl i64>::from_be",
       "num::<impl i64>::from_be_bytes",
       "num::<impl i64>::from_le",
       "num::<impl i64>::from_le_bytes",
       "num::<impl i64>::from_ne_bytes",
+      "num::<impl i64>::highest_one",
       "num::<impl i64>::ilog",
       "num::<impl i64>::ilog10",
       "num::<impl i64>::ilog2",
@@ -14650,6 +14686,7 @@
       "num::<impl i64>::isqrt",
       "num::<impl i64>::leading_ones",
       "num::<impl i64>::leading_zeros",
+      "num::<impl i64>::lowest_one",
       "num::<impl i64>::max_value",
       "num::<impl i64>::min_value",
       "num::<impl i64>::next_multiple_of",
@@ -14707,6 +14744,8 @@
       "num::<impl i64>::unbounded_shl",
       "num::<impl i64>::unbounded_shr",
       "num::<impl i64>::unchecked_exact_div",
+      "num::<impl i64>::unchecked_exact_shl",
+      "num::<impl i64>::unchecked_exact_shr",
       "num::<impl i64>::unsigned_abs",
       "num::<impl i64>::widening_mul",
       "num::<impl i64>::wrapping_abs",
@@ -14754,11 +14793,14 @@
       "num::<impl i8>::div_euclid",
       "num::<impl i8>::div_floor",
       "num::<impl i8>::exact_div",
+      "num::<impl i8>::exact_shl",
+      "num::<impl i8>::exact_shr",
       "num::<impl i8>::from_be",
       "num::<impl i8>::from_be_bytes",
       "num::<impl i8>::from_le",
       "num::<impl i8>::from_le_bytes",
       "num::<impl i8>::from_ne_bytes",
+      "num::<impl i8>::highest_one",
       "num::<impl i8>::ilog",
       "num::<impl i8>::ilog10",
       "num::<impl i8>::ilog2",
@@ -14769,6 +14811,7 @@
       "num::<impl i8>::isqrt",
       "num::<impl i8>::leading_ones",
       "num::<impl i8>::leading_zeros",
+      "num::<impl i8>::lowest_one",
       "num::<impl i8>::max_value",
       "num::<impl i8>::min_value",
       "num::<impl i8>::next_multiple_of",
@@ -14826,6 +14869,8 @@
       "num::<impl i8>::unbounded_shl",
       "num::<impl i8>::unbounded_shr",
       "num::<impl i8>::unchecked_exact_div",
+      "num::<impl i8>::unchecked_exact_shl",
+      "num::<impl i8>::unchecked_exact_shr",
       "num::<impl i8>::unsigned_abs",
       "num::<impl i8>::widening_mul",
       "num::<impl i8>::wrapping_abs",
@@ -14873,11 +14918,14 @@
       "num::<impl isize>::div_euclid",
       "num::<impl isize>::div_floor",
       "num::<impl isize>::exact_div",
+      "num::<impl isize>::exact_shl",
+      "num::<impl isize>::exact_shr",
       "num::<impl isize>::from_be",
       "num::<impl isize>::from_be_bytes",
       "num::<impl isize>::from_le",
       "num::<impl isize>::from_le_bytes",
       "num::<impl isize>::from_ne_bytes",
+      "num::<impl isize>::highest_one",
       "num::<impl isize>::ilog",
       "num::<impl isize>::ilog10",
       "num::<impl isize>::ilog2",
@@ -14888,6 +14936,7 @@
       "num::<impl isize>::isqrt",
       "num::<impl isize>::leading_ones",
       "num::<impl isize>::leading_zeros",
+      "num::<impl isize>::lowest_one",
       "num::<impl isize>::max_value",
       "num::<impl isize>::min_value",
       "num::<impl isize>::next_multiple_of",
@@ -14945,6 +14994,8 @@
       "num::<impl isize>::unbounded_shl",
       "num::<impl isize>::unbounded_shr",
       "num::<impl isize>::unchecked_exact_div",
+      "num::<impl isize>::unchecked_exact_shl",
+      "num::<impl isize>::unchecked_exact_shr",
       "num::<impl isize>::unsigned_abs",
       "num::<impl isize>::widening_mul",
       "num::<impl isize>::wrapping_abs",
@@ -15039,6 +15090,12 @@
       "num::verify::widening_mul_u8"
     ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/num/niche_types.rs": [
+      "<num::niche_types::CodePointInner as clone::Clone>::clone",
+      "<num::niche_types::CodePointInner as cmp::Eq>::assert_receiver_is_total_eq",
+      "<num::niche_types::CodePointInner as cmp::Ord>::cmp",
+      "<num::niche_types::CodePointInner as cmp::PartialEq>::eq",
+      "<num::niche_types::CodePointInner as cmp::PartialOrd>::partial_cmp",
+      "<num::niche_types::CodePointInner as default::Default>::default",
       "<num::niche_types::I32NotAllOnes as clone::Clone>::clone",
       "<num::niche_types::I32NotAllOnes as cmp::Eq>::assert_receiver_is_total_eq",
       "<num::niche_types::I32NotAllOnes as cmp::Ord>::cmp",
@@ -15135,6 +15192,9 @@
       "<num::niche_types::UsizeNoHighBit as cmp::Ord>::cmp",
       "<num::niche_types::UsizeNoHighBit as cmp::PartialEq>::eq",
       "<num::niche_types::UsizeNoHighBit as cmp::PartialOrd>::partial_cmp",
+      "num::niche_types::CodePointInner::as_inner",
+      "num::niche_types::CodePointInner::new",
+      "num::niche_types::CodePointInner::new_unchecked",
       "num::niche_types::I32NotAllOnes::as_inner",
       "num::niche_types::I32NotAllOnes::new",
       "num::niche_types::I32NotAllOnes::new_unchecked",
@@ -15232,11 +15292,13 @@
       "num::nonzero::NonZero::<i128>::checked_pow",
       "num::nonzero::NonZero::<i128>::from_be",
       "num::nonzero::NonZero::<i128>::from_le",
+      "num::nonzero::NonZero::<i128>::highest_one",
       "num::nonzero::NonZero::<i128>::is_negative",
       "num::nonzero::NonZero::<i128>::is_positive",
       "num::nonzero::NonZero::<i128>::isolate_highest_one",
       "num::nonzero::NonZero::<i128>::isolate_lowest_one",
       "num::nonzero::NonZero::<i128>::leading_zeros",
+      "num::nonzero::NonZero::<i128>::lowest_one",
       "num::nonzero::NonZero::<i128>::overflowing_abs",
       "num::nonzero::NonZero::<i128>::overflowing_neg",
       "num::nonzero::NonZero::<i128>::reverse_bits",
@@ -15259,11 +15321,13 @@
       "num::nonzero::NonZero::<i16>::checked_pow",
       "num::nonzero::NonZero::<i16>::from_be",
       "num::nonzero::NonZero::<i16>::from_le",
+      "num::nonzero::NonZero::<i16>::highest_one",
       "num::nonzero::NonZero::<i16>::is_negative",
       "num::nonzero::NonZero::<i16>::is_positive",
       "num::nonzero::NonZero::<i16>::isolate_highest_one",
       "num::nonzero::NonZero::<i16>::isolate_lowest_one",
       "num::nonzero::NonZero::<i16>::leading_zeros",
+      "num::nonzero::NonZero::<i16>::lowest_one",
       "num::nonzero::NonZero::<i16>::overflowing_abs",
       "num::nonzero::NonZero::<i16>::overflowing_neg",
       "num::nonzero::NonZero::<i16>::reverse_bits",
@@ -15286,11 +15350,13 @@
       "num::nonzero::NonZero::<i32>::checked_pow",
       "num::nonzero::NonZero::<i32>::from_be",
       "num::nonzero::NonZero::<i32>::from_le",
+      "num::nonzero::NonZero::<i32>::highest_one",
       "num::nonzero::NonZero::<i32>::is_negative",
       "num::nonzero::NonZero::<i32>::is_positive",
       "num::nonzero::NonZero::<i32>::isolate_highest_one",
       "num::nonzero::NonZero::<i32>::isolate_lowest_one",
       "num::nonzero::NonZero::<i32>::leading_zeros",
+      "num::nonzero::NonZero::<i32>::lowest_one",
       "num::nonzero::NonZero::<i32>::overflowing_abs",
       "num::nonzero::NonZero::<i32>::overflowing_neg",
       "num::nonzero::NonZero::<i32>::reverse_bits",
@@ -15313,11 +15379,13 @@
       "num::nonzero::NonZero::<i64>::checked_pow",
       "num::nonzero::NonZero::<i64>::from_be",
       "num::nonzero::NonZero::<i64>::from_le",
+      "num::nonzero::NonZero::<i64>::highest_one",
       "num::nonzero::NonZero::<i64>::is_negative",
       "num::nonzero::NonZero::<i64>::is_positive",
       "num::nonzero::NonZero::<i64>::isolate_highest_one",
       "num::nonzero::NonZero::<i64>::isolate_lowest_one",
       "num::nonzero::NonZero::<i64>::leading_zeros",
+      "num::nonzero::NonZero::<i64>::lowest_one",
       "num::nonzero::NonZero::<i64>::overflowing_abs",
       "num::nonzero::NonZero::<i64>::overflowing_neg",
       "num::nonzero::NonZero::<i64>::reverse_bits",
@@ -15340,11 +15408,13 @@
       "num::nonzero::NonZero::<i8>::checked_pow",
       "num::nonzero::NonZero::<i8>::from_be",
       "num::nonzero::NonZero::<i8>::from_le",
+      "num::nonzero::NonZero::<i8>::highest_one",
       "num::nonzero::NonZero::<i8>::is_negative",
       "num::nonzero::NonZero::<i8>::is_positive",
       "num::nonzero::NonZero::<i8>::isolate_highest_one",
       "num::nonzero::NonZero::<i8>::isolate_lowest_one",
       "num::nonzero::NonZero::<i8>::leading_zeros",
+      "num::nonzero::NonZero::<i8>::lowest_one",
       "num::nonzero::NonZero::<i8>::overflowing_abs",
       "num::nonzero::NonZero::<i8>::overflowing_neg",
       "num::nonzero::NonZero::<i8>::reverse_bits",
@@ -15367,11 +15437,13 @@
       "num::nonzero::NonZero::<isize>::checked_pow",
       "num::nonzero::NonZero::<isize>::from_be",
       "num::nonzero::NonZero::<isize>::from_le",
+      "num::nonzero::NonZero::<isize>::highest_one",
       "num::nonzero::NonZero::<isize>::is_negative",
       "num::nonzero::NonZero::<isize>::is_positive",
       "num::nonzero::NonZero::<isize>::isolate_highest_one",
       "num::nonzero::NonZero::<isize>::isolate_lowest_one",
       "num::nonzero::NonZero::<isize>::leading_zeros",
+      "num::nonzero::NonZero::<isize>::lowest_one",
       "num::nonzero::NonZero::<isize>::overflowing_abs",
       "num::nonzero::NonZero::<isize>::overflowing_neg",
       "num::nonzero::NonZero::<isize>::reverse_bits",
@@ -15394,6 +15466,7 @@
       "num::nonzero::NonZero::<u128>::div_ceil",
       "num::nonzero::NonZero::<u128>::from_be",
       "num::nonzero::NonZero::<u128>::from_le",
+      "num::nonzero::NonZero::<u128>::highest_one",
       "num::nonzero::NonZero::<u128>::ilog10",
       "num::nonzero::NonZero::<u128>::ilog2",
       "num::nonzero::NonZero::<u128>::is_power_of_two",
@@ -15401,6 +15474,7 @@
       "num::nonzero::NonZero::<u128>::isolate_lowest_one",
       "num::nonzero::NonZero::<u128>::isqrt",
       "num::nonzero::NonZero::<u128>::leading_zeros",
+      "num::nonzero::NonZero::<u128>::lowest_one",
       "num::nonzero::NonZero::<u128>::midpoint",
       "num::nonzero::NonZero::<u128>::reverse_bits",
       "num::nonzero::NonZero::<u128>::saturating_add",
@@ -15418,6 +15492,7 @@
       "num::nonzero::NonZero::<u16>::div_ceil",
       "num::nonzero::NonZero::<u16>::from_be",
       "num::nonzero::NonZero::<u16>::from_le",
+      "num::nonzero::NonZero::<u16>::highest_one",
       "num::nonzero::NonZero::<u16>::ilog10",
       "num::nonzero::NonZero::<u16>::ilog2",
       "num::nonzero::NonZero::<u16>::is_power_of_two",
@@ -15425,6 +15500,7 @@
       "num::nonzero::NonZero::<u16>::isolate_lowest_one",
       "num::nonzero::NonZero::<u16>::isqrt",
       "num::nonzero::NonZero::<u16>::leading_zeros",
+      "num::nonzero::NonZero::<u16>::lowest_one",
       "num::nonzero::NonZero::<u16>::midpoint",
       "num::nonzero::NonZero::<u16>::reverse_bits",
       "num::nonzero::NonZero::<u16>::saturating_add",
@@ -15442,6 +15518,7 @@
       "num::nonzero::NonZero::<u32>::div_ceil",
       "num::nonzero::NonZero::<u32>::from_be",
       "num::nonzero::NonZero::<u32>::from_le",
+      "num::nonzero::NonZero::<u32>::highest_one",
       "num::nonzero::NonZero::<u32>::ilog10",
       "num::nonzero::NonZero::<u32>::ilog2",
       "num::nonzero::NonZero::<u32>::is_power_of_two",
@@ -15449,6 +15526,7 @@
       "num::nonzero::NonZero::<u32>::isolate_lowest_one",
       "num::nonzero::NonZero::<u32>::isqrt",
       "num::nonzero::NonZero::<u32>::leading_zeros",
+      "num::nonzero::NonZero::<u32>::lowest_one",
       "num::nonzero::NonZero::<u32>::midpoint",
       "num::nonzero::NonZero::<u32>::reverse_bits",
       "num::nonzero::NonZero::<u32>::saturating_add",
@@ -15466,6 +15544,7 @@
       "num::nonzero::NonZero::<u64>::div_ceil",
       "num::nonzero::NonZero::<u64>::from_be",
       "num::nonzero::NonZero::<u64>::from_le",
+      "num::nonzero::NonZero::<u64>::highest_one",
       "num::nonzero::NonZero::<u64>::ilog10",
       "num::nonzero::NonZero::<u64>::ilog2",
       "num::nonzero::NonZero::<u64>::is_power_of_two",
@@ -15473,6 +15552,7 @@
       "num::nonzero::NonZero::<u64>::isolate_lowest_one",
       "num::nonzero::NonZero::<u64>::isqrt",
       "num::nonzero::NonZero::<u64>::leading_zeros",
+      "num::nonzero::NonZero::<u64>::lowest_one",
       "num::nonzero::NonZero::<u64>::midpoint",
       "num::nonzero::NonZero::<u64>::reverse_bits",
       "num::nonzero::NonZero::<u64>::saturating_add",
@@ -15490,6 +15570,7 @@
       "num::nonzero::NonZero::<u8>::div_ceil",
       "num::nonzero::NonZero::<u8>::from_be",
       "num::nonzero::NonZero::<u8>::from_le",
+      "num::nonzero::NonZero::<u8>::highest_one",
       "num::nonzero::NonZero::<u8>::ilog10",
       "num::nonzero::NonZero::<u8>::ilog2",
       "num::nonzero::NonZero::<u8>::is_power_of_two",
@@ -15497,6 +15578,7 @@
       "num::nonzero::NonZero::<u8>::isolate_lowest_one",
       "num::nonzero::NonZero::<u8>::isqrt",
       "num::nonzero::NonZero::<u8>::leading_zeros",
+      "num::nonzero::NonZero::<u8>::lowest_one",
       "num::nonzero::NonZero::<u8>::midpoint",
       "num::nonzero::NonZero::<u8>::reverse_bits",
       "num::nonzero::NonZero::<u8>::saturating_add",
@@ -15514,6 +15596,7 @@
       "num::nonzero::NonZero::<usize>::div_ceil",
       "num::nonzero::NonZero::<usize>::from_be",
       "num::nonzero::NonZero::<usize>::from_le",
+      "num::nonzero::NonZero::<usize>::highest_one",
       "num::nonzero::NonZero::<usize>::ilog10",
       "num::nonzero::NonZero::<usize>::ilog2",
       "num::nonzero::NonZero::<usize>::is_power_of_two",
@@ -15521,6 +15604,7 @@
       "num::nonzero::NonZero::<usize>::isolate_lowest_one",
       "num::nonzero::NonZero::<usize>::isqrt",
       "num::nonzero::NonZero::<usize>::leading_zeros",
+      "num::nonzero::NonZero::<usize>::lowest_one",
       "num::nonzero::NonZero::<usize>::midpoint",
       "num::nonzero::NonZero::<usize>::reverse_bits",
       "num::nonzero::NonZero::<usize>::saturating_add",
@@ -16129,11 +16213,16 @@
       "num::<impl u128>::div_euclid",
       "num::<impl u128>::div_floor",
       "num::<impl u128>::exact_div",
+      "num::<impl u128>::exact_shl",
+      "num::<impl u128>::exact_shr",
       "num::<impl u128>::from_be",
       "num::<impl u128>::from_be_bytes",
       "num::<impl u128>::from_le",
       "num::<impl u128>::from_le_bytes",
       "num::<impl u128>::from_ne_bytes",
+      "num::<impl u128>::funnel_shl",
+      "num::<impl u128>::funnel_shr",
+      "num::<impl u128>::highest_one",
       "num::<impl u128>::ilog",
       "num::<impl u128>::ilog10",
       "num::<impl u128>::ilog2",
@@ -16144,6 +16233,7 @@
       "num::<impl u128>::isqrt",
       "num::<impl u128>::leading_ones",
       "num::<impl u128>::leading_zeros",
+      "num::<impl u128>::lowest_one",
       "num::<impl u128>::max_value",
       "num::<impl u128>::min_value",
       "num::<impl u128>::next_multiple_of",
@@ -16198,6 +16288,8 @@
       "num::<impl u128>::unbounded_shl",
       "num::<impl u128>::unbounded_shr",
       "num::<impl u128>::unchecked_exact_div",
+      "num::<impl u128>::unchecked_exact_shl",
+      "num::<impl u128>::unchecked_exact_shr",
       "num::<impl u128>::widening_mul",
       "num::<impl u128>::wrapping_add",
       "num::<impl u128>::wrapping_add_signed",
@@ -16244,11 +16336,16 @@
       "num::<impl u16>::div_euclid",
       "num::<impl u16>::div_floor",
       "num::<impl u16>::exact_div",
+      "num::<impl u16>::exact_shl",
+      "num::<impl u16>::exact_shr",
       "num::<impl u16>::from_be",
       "num::<impl u16>::from_be_bytes",
       "num::<impl u16>::from_le",
       "num::<impl u16>::from_le_bytes",
       "num::<impl u16>::from_ne_bytes",
+      "num::<impl u16>::funnel_shl",
+      "num::<impl u16>::funnel_shr",
+      "num::<impl u16>::highest_one",
       "num::<impl u16>::ilog",
       "num::<impl u16>::ilog10",
       "num::<impl u16>::ilog2",
@@ -16259,6 +16356,7 @@
       "num::<impl u16>::isqrt",
       "num::<impl u16>::leading_ones",
       "num::<impl u16>::leading_zeros",
+      "num::<impl u16>::lowest_one",
       "num::<impl u16>::max_value",
       "num::<impl u16>::min_value",
       "num::<impl u16>::next_multiple_of",
@@ -16313,6 +16411,8 @@
       "num::<impl u16>::unbounded_shl",
       "num::<impl u16>::unbounded_shr",
       "num::<impl u16>::unchecked_exact_div",
+      "num::<impl u16>::unchecked_exact_shl",
+      "num::<impl u16>::unchecked_exact_shr",
       "num::<impl u16>::widening_mul",
       "num::<impl u16>::wrapping_add",
       "num::<impl u16>::wrapping_add_signed",
@@ -16359,11 +16459,16 @@
       "num::<impl u32>::div_euclid",
       "num::<impl u32>::div_floor",
       "num::<impl u32>::exact_div",
+      "num::<impl u32>::exact_shl",
+      "num::<impl u32>::exact_shr",
       "num::<impl u32>::from_be",
       "num::<impl u32>::from_be_bytes",
       "num::<impl u32>::from_le",
       "num::<impl u32>::from_le_bytes",
       "num::<impl u32>::from_ne_bytes",
+      "num::<impl u32>::funnel_shl",
+      "num::<impl u32>::funnel_shr",
+      "num::<impl u32>::highest_one",
       "num::<impl u32>::ilog",
       "num::<impl u32>::ilog10",
       "num::<impl u32>::ilog2",
@@ -16374,6 +16479,7 @@
       "num::<impl u32>::isqrt",
       "num::<impl u32>::leading_ones",
       "num::<impl u32>::leading_zeros",
+      "num::<impl u32>::lowest_one",
       "num::<impl u32>::max_value",
       "num::<impl u32>::min_value",
       "num::<impl u32>::next_multiple_of",
@@ -16428,6 +16534,8 @@
       "num::<impl u32>::unbounded_shl",
       "num::<impl u32>::unbounded_shr",
       "num::<impl u32>::unchecked_exact_div",
+      "num::<impl u32>::unchecked_exact_shl",
+      "num::<impl u32>::unchecked_exact_shr",
       "num::<impl u32>::widening_mul",
       "num::<impl u32>::wrapping_add",
       "num::<impl u32>::wrapping_add_signed",
@@ -16474,11 +16582,16 @@
       "num::<impl u64>::div_euclid",
       "num::<impl u64>::div_floor",
       "num::<impl u64>::exact_div",
+      "num::<impl u64>::exact_shl",
+      "num::<impl u64>::exact_shr",
       "num::<impl u64>::from_be",
       "num::<impl u64>::from_be_bytes",
       "num::<impl u64>::from_le",
       "num::<impl u64>::from_le_bytes",
       "num::<impl u64>::from_ne_bytes",
+      "num::<impl u64>::funnel_shl",
+      "num::<impl u64>::funnel_shr",
+      "num::<impl u64>::highest_one",
       "num::<impl u64>::ilog",
       "num::<impl u64>::ilog10",
       "num::<impl u64>::ilog2",
@@ -16489,6 +16602,7 @@
       "num::<impl u64>::isqrt",
       "num::<impl u64>::leading_ones",
       "num::<impl u64>::leading_zeros",
+      "num::<impl u64>::lowest_one",
       "num::<impl u64>::max_value",
       "num::<impl u64>::min_value",
       "num::<impl u64>::next_multiple_of",
@@ -16543,6 +16657,8 @@
       "num::<impl u64>::unbounded_shl",
       "num::<impl u64>::unbounded_shr",
       "num::<impl u64>::unchecked_exact_div",
+      "num::<impl u64>::unchecked_exact_shl",
+      "num::<impl u64>::unchecked_exact_shr",
       "num::<impl u64>::widening_mul",
       "num::<impl u64>::wrapping_add",
       "num::<impl u64>::wrapping_add_signed",
@@ -16589,11 +16705,16 @@
       "num::<impl u8>::div_euclid",
       "num::<impl u8>::div_floor",
       "num::<impl u8>::exact_div",
+      "num::<impl u8>::exact_shl",
+      "num::<impl u8>::exact_shr",
       "num::<impl u8>::from_be",
       "num::<impl u8>::from_be_bytes",
       "num::<impl u8>::from_le",
       "num::<impl u8>::from_le_bytes",
       "num::<impl u8>::from_ne_bytes",
+      "num::<impl u8>::funnel_shl",
+      "num::<impl u8>::funnel_shr",
+      "num::<impl u8>::highest_one",
       "num::<impl u8>::ilog",
       "num::<impl u8>::ilog10",
       "num::<impl u8>::ilog2",
@@ -16604,6 +16725,7 @@
       "num::<impl u8>::isqrt",
       "num::<impl u8>::leading_ones",
       "num::<impl u8>::leading_zeros",
+      "num::<impl u8>::lowest_one",
       "num::<impl u8>::max_value",
       "num::<impl u8>::min_value",
       "num::<impl u8>::next_multiple_of",
@@ -16658,6 +16780,8 @@
       "num::<impl u8>::unbounded_shl",
       "num::<impl u8>::unbounded_shr",
       "num::<impl u8>::unchecked_exact_div",
+      "num::<impl u8>::unchecked_exact_shl",
+      "num::<impl u8>::unchecked_exact_shr",
       "num::<impl u8>::widening_mul",
       "num::<impl u8>::wrapping_add",
       "num::<impl u8>::wrapping_add_signed",
@@ -16704,11 +16828,16 @@
       "num::<impl usize>::div_euclid",
       "num::<impl usize>::div_floor",
       "num::<impl usize>::exact_div",
+      "num::<impl usize>::exact_shl",
+      "num::<impl usize>::exact_shr",
       "num::<impl usize>::from_be",
       "num::<impl usize>::from_be_bytes",
       "num::<impl usize>::from_le",
       "num::<impl usize>::from_le_bytes",
       "num::<impl usize>::from_ne_bytes",
+      "num::<impl usize>::funnel_shl",
+      "num::<impl usize>::funnel_shr",
+      "num::<impl usize>::highest_one",
       "num::<impl usize>::ilog",
       "num::<impl usize>::ilog10",
       "num::<impl usize>::ilog2",
@@ -16719,6 +16848,7 @@
       "num::<impl usize>::isqrt",
       "num::<impl usize>::leading_ones",
       "num::<impl usize>::leading_zeros",
+      "num::<impl usize>::lowest_one",
       "num::<impl usize>::max_value",
       "num::<impl usize>::min_value",
       "num::<impl usize>::next_multiple_of",
@@ -16773,6 +16903,8 @@
       "num::<impl usize>::unbounded_shl",
       "num::<impl usize>::unbounded_shr",
       "num::<impl usize>::unchecked_exact_div",
+      "num::<impl usize>::unchecked_exact_shl",
+      "num::<impl usize>::unchecked_exact_shr",
       "num::<impl usize>::widening_mul",
       "num::<impl usize>::wrapping_add",
       "num::<impl usize>::wrapping_add_signed",
@@ -18222,9 +18354,7 @@
       "f64::<impl f64>::clamp::do_panic",
       "num::from_ascii_radix_panic::do_panic",
       "slice::<impl [T]>::copy_from_slice::len_mismatch_fail::do_panic",
-      "slice::index::slice_end_index_len_fail::do_panic",
-      "slice::index::slice_index_order_fail::do_panic",
-      "slice::index::slice_start_index_len_fail::do_panic"
+      "slice::index::slice_index_fail::do_panic"
     ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/panic/location.rs": [
       "panic::location::Location::<'_>::caller"
@@ -18324,11 +18454,7 @@
       "slice::index::into_range",
       "slice::index::into_range_unchecked",
       "slice::index::into_slice_range",
-      "slice::index::slice_end_index_len_fail",
-      "slice::index::slice_end_index_overflow_fail",
-      "slice::index::slice_index_order_fail",
-      "slice::index::slice_start_index_len_fail",
-      "slice::index::slice_start_index_overflow_fail"
+      "slice::index::slice_index_fail"
     ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/slice/iter.rs": [
       "slice::iter::verify::verify_char::check_advance_back_by",
@@ -18410,7 +18536,8 @@
       "<usize as slice::GetDisjointMutIndex>::is_in_bounds",
       "<usize as slice::GetDisjointMutIndex>::is_overlapping",
       "slice::<impl [T]>::align_to_offsets::gcd",
-      "slice::<impl [T]>::copy_from_slice::len_mismatch_fail"
+      "slice::<impl [T]>::copy_from_slice::len_mismatch_fail",
+      "slice::verify::check_reverse"
     ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/slice/rotate.rs": [
       "slice::rotate::const_min"
@@ -18436,11 +18563,9 @@
       "<str::error::ParseBoolError as clone::Clone>::clone",
       "<str::error::ParseBoolError as cmp::Eq>::assert_receiver_is_total_eq",
       "<str::error::ParseBoolError as cmp::PartialEq>::eq",
-      "<str::error::ParseBoolError as error::Error>::description",
       "<str::error::Utf8Error as clone::Clone>::clone",
       "<str::error::Utf8Error as cmp::Eq>::assert_receiver_is_total_eq",
       "<str::error::Utf8Error as cmp::PartialEq>::eq",
-      "<str::error::Utf8Error as error::Error>::description",
       "str::error::Utf8Error::error_len",
       "str::error::Utf8Error::valid_up_to"
     ],
@@ -18764,6 +18889,7 @@
       "time::Duration::from_days",
       "time::Duration::from_hours",
       "time::Duration::from_mins",
+      "time::Duration::from_nanos_u128",
       "time::Duration::from_secs_f32",
       "time::Duration::from_secs_f64",
       "time::Duration::from_weeks",
@@ -18775,7 +18901,6 @@
       "time::Duration::saturating_sub",
       "time::Duration::try_from_secs_f32",
       "time::Duration::try_from_secs_f64",
-      "time::TryFromFloatSecsError::description",
       "time::duration_verify::duration_as_nanos",
       "time::duration_verify::duration_as_nanos_panics",
       "time::duration_verify::safe_duration"
@@ -18829,6 +18954,8 @@
       "num::<impl i128>::unchecked_add::{closure#2}::{closure#0}::precondition_check",
       "num::<impl i128>::unchecked_add::{closure#3}::{closure#0}::precondition_check",
       "num::<impl i128>::unchecked_exact_div::precondition_check",
+      "num::<impl i128>::unchecked_exact_shl::precondition_check",
+      "num::<impl i128>::unchecked_exact_shr::precondition_check",
       "num::<impl i128>::unchecked_mul::precondition_check",
       "num::<impl i128>::unchecked_mul::{closure#0}::{closure#1}::{closure#0}::precondition_check",
       "num::<impl i128>::unchecked_mul::{closure#2}::{closure#0}::precondition_check",
@@ -18854,6 +18981,8 @@
       "num::<impl i16>::unchecked_add::{closure#2}::{closure#0}::precondition_check",
       "num::<impl i16>::unchecked_add::{closure#3}::{closure#0}::precondition_check",
       "num::<impl i16>::unchecked_exact_div::precondition_check",
+      "num::<impl i16>::unchecked_exact_shl::precondition_check",
+      "num::<impl i16>::unchecked_exact_shr::precondition_check",
       "num::<impl i16>::unchecked_mul::precondition_check",
       "num::<impl i16>::unchecked_mul::{closure#0}::{closure#1}::{closure#0}::precondition_check",
       "num::<impl i16>::unchecked_mul::{closure#2}::{closure#0}::precondition_check",
@@ -18879,6 +19008,8 @@
       "num::<impl i32>::unchecked_add::{closure#2}::{closure#0}::precondition_check",
       "num::<impl i32>::unchecked_add::{closure#3}::{closure#0}::precondition_check",
       "num::<impl i32>::unchecked_exact_div::precondition_check",
+      "num::<impl i32>::unchecked_exact_shl::precondition_check",
+      "num::<impl i32>::unchecked_exact_shr::precondition_check",
       "num::<impl i32>::unchecked_mul::precondition_check",
       "num::<impl i32>::unchecked_mul::{closure#0}::{closure#1}::{closure#0}::precondition_check",
       "num::<impl i32>::unchecked_mul::{closure#2}::{closure#0}::precondition_check",
@@ -18904,6 +19035,8 @@
       "num::<impl i64>::unchecked_add::{closure#2}::{closure#0}::precondition_check",
       "num::<impl i64>::unchecked_add::{closure#3}::{closure#0}::precondition_check",
       "num::<impl i64>::unchecked_exact_div::precondition_check",
+      "num::<impl i64>::unchecked_exact_shl::precondition_check",
+      "num::<impl i64>::unchecked_exact_shr::precondition_check",
       "num::<impl i64>::unchecked_mul::precondition_check",
       "num::<impl i64>::unchecked_mul::{closure#0}::{closure#1}::{closure#0}::precondition_check",
       "num::<impl i64>::unchecked_mul::{closure#2}::{closure#0}::precondition_check",
@@ -18929,6 +19062,8 @@
       "num::<impl i8>::unchecked_add::{closure#2}::{closure#0}::precondition_check",
       "num::<impl i8>::unchecked_add::{closure#3}::{closure#0}::precondition_check",
       "num::<impl i8>::unchecked_exact_div::precondition_check",
+      "num::<impl i8>::unchecked_exact_shl::precondition_check",
+      "num::<impl i8>::unchecked_exact_shr::precondition_check",
       "num::<impl i8>::unchecked_mul::precondition_check",
       "num::<impl i8>::unchecked_mul::{closure#0}::{closure#1}::{closure#0}::precondition_check",
       "num::<impl i8>::unchecked_mul::{closure#2}::{closure#0}::precondition_check",
@@ -18954,6 +19089,8 @@
       "num::<impl isize>::unchecked_add::{closure#2}::{closure#0}::precondition_check",
       "num::<impl isize>::unchecked_add::{closure#3}::{closure#0}::precondition_check",
       "num::<impl isize>::unchecked_exact_div::precondition_check",
+      "num::<impl isize>::unchecked_exact_shl::precondition_check",
+      "num::<impl isize>::unchecked_exact_shr::precondition_check",
       "num::<impl isize>::unchecked_mul::precondition_check",
       "num::<impl isize>::unchecked_mul::{closure#0}::{closure#1}::{closure#0}::precondition_check",
       "num::<impl isize>::unchecked_mul::{closure#2}::{closure#0}::precondition_check",
@@ -18983,6 +19120,8 @@
       "num::<impl u128>::unchecked_disjoint_bitor::{closure#2}::{closure#0}::precondition_check",
       "num::<impl u128>::unchecked_disjoint_bitor::{closure#3}::{closure#0}::precondition_check",
       "num::<impl u128>::unchecked_exact_div::precondition_check",
+      "num::<impl u128>::unchecked_exact_shl::precondition_check",
+      "num::<impl u128>::unchecked_exact_shr::precondition_check",
       "num::<impl u128>::unchecked_mul::precondition_check",
       "num::<impl u128>::unchecked_mul::{closure#0}::{closure#1}::{closure#0}::precondition_check",
       "num::<impl u128>::unchecked_mul::{closure#2}::{closure#0}::precondition_check",
@@ -19008,6 +19147,8 @@
       "num::<impl u16>::unchecked_disjoint_bitor::{closure#2}::{closure#0}::precondition_check",
       "num::<impl u16>::unchecked_disjoint_bitor::{closure#3}::{closure#0}::precondition_check",
       "num::<impl u16>::unchecked_exact_div::precondition_check",
+      "num::<impl u16>::unchecked_exact_shl::precondition_check",
+      "num::<impl u16>::unchecked_exact_shr::precondition_check",
       "num::<impl u16>::unchecked_mul::precondition_check",
       "num::<impl u16>::unchecked_mul::{closure#0}::{closure#1}::{closure#0}::precondition_check",
       "num::<impl u16>::unchecked_mul::{closure#2}::{closure#0}::precondition_check",
@@ -19033,6 +19174,8 @@
       "num::<impl u32>::unchecked_disjoint_bitor::{closure#2}::{closure#0}::precondition_check",
       "num::<impl u32>::unchecked_disjoint_bitor::{closure#3}::{closure#0}::precondition_check",
       "num::<impl u32>::unchecked_exact_div::precondition_check",
+      "num::<impl u32>::unchecked_exact_shl::precondition_check",
+      "num::<impl u32>::unchecked_exact_shr::precondition_check",
       "num::<impl u32>::unchecked_mul::precondition_check",
       "num::<impl u32>::unchecked_mul::{closure#0}::{closure#1}::{closure#0}::precondition_check",
       "num::<impl u32>::unchecked_mul::{closure#2}::{closure#0}::precondition_check",
@@ -19058,6 +19201,8 @@
       "num::<impl u64>::unchecked_disjoint_bitor::{closure#2}::{closure#0}::precondition_check",
       "num::<impl u64>::unchecked_disjoint_bitor::{closure#3}::{closure#0}::precondition_check",
       "num::<impl u64>::unchecked_exact_div::precondition_check",
+      "num::<impl u64>::unchecked_exact_shl::precondition_check",
+      "num::<impl u64>::unchecked_exact_shr::precondition_check",
       "num::<impl u64>::unchecked_mul::precondition_check",
       "num::<impl u64>::unchecked_mul::{closure#0}::{closure#1}::{closure#0}::precondition_check",
       "num::<impl u64>::unchecked_mul::{closure#2}::{closure#0}::precondition_check",
@@ -19084,6 +19229,8 @@
       "num::<impl u8>::unchecked_disjoint_bitor::{closure#2}::{closure#0}::precondition_check",
       "num::<impl u8>::unchecked_disjoint_bitor::{closure#3}::{closure#0}::precondition_check",
       "num::<impl u8>::unchecked_exact_div::precondition_check",
+      "num::<impl u8>::unchecked_exact_shl::precondition_check",
+      "num::<impl u8>::unchecked_exact_shr::precondition_check",
       "num::<impl u8>::unchecked_mul::precondition_check",
       "num::<impl u8>::unchecked_mul::{closure#0}::{closure#1}::{closure#0}::precondition_check",
       "num::<impl u8>::unchecked_mul::{closure#2}::{closure#0}::precondition_check",
@@ -19109,6 +19256,8 @@
       "num::<impl usize>::unchecked_disjoint_bitor::{closure#2}::{closure#0}::precondition_check",
       "num::<impl usize>::unchecked_disjoint_bitor::{closure#3}::{closure#0}::precondition_check",
       "num::<impl usize>::unchecked_exact_div::precondition_check",
+      "num::<impl usize>::unchecked_exact_shl::precondition_check",
+      "num::<impl usize>::unchecked_exact_shr::precondition_check",
       "num::<impl usize>::unchecked_mul::precondition_check",
       "num::<impl usize>::unchecked_mul::{closure#0}::{closure#1}::{closure#0}::precondition_check",
       "num::<impl usize>::unchecked_mul::{closure#2}::{closure#0}::precondition_check",
@@ -19161,20 +19310,39 @@
       "unicode::unicode_data::ShortOffsetRunHeader::prefix_sum",
       "unicode::unicode_data::ShortOffsetRunHeader::start_index",
       "unicode::unicode_data::alphabetic::lookup",
+      "unicode::unicode_data::alphabetic::lookup_slow",
       "unicode::unicode_data::case_ignorable::lookup",
+      "unicode::unicode_data::case_ignorable::lookup_slow",
       "unicode::unicode_data::cased::lookup",
-      "unicode::unicode_data::cc::lookup",
+      "unicode::unicode_data::cased::lookup_slow",
       "unicode::unicode_data::conversions::to_lower",
       "unicode::unicode_data::conversions::to_upper",
       "unicode::unicode_data::grapheme_extend::lookup",
       "unicode::unicode_data::grapheme_extend::lookup_slow",
       "unicode::unicode_data::lowercase::lookup",
       "unicode::unicode_data::n::lookup",
+      "unicode::unicode_data::n::lookup_slow",
       "unicode::unicode_data::uppercase::lookup",
       "unicode::unicode_data::white_space::lookup"
     ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/unit.rs": [
       "<() as unit::IsUnit>::is_unit"
+    ],
+    "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/wtf8.rs": [
+      "<wtf8::CodePoint as clone::Clone>::clone",
+      "<wtf8::CodePoint as cmp::Eq>::assert_receiver_is_total_eq",
+      "<wtf8::CodePoint as cmp::Ord>::cmp",
+      "<wtf8::CodePoint as cmp::PartialEq>::eq",
+      "<wtf8::CodePoint as cmp::PartialOrd>::partial_cmp",
+      "wtf8::CodePoint::from_char",
+      "wtf8::CodePoint::from_u32",
+      "wtf8::CodePoint::from_u32_unchecked",
+      "wtf8::CodePoint::to_char",
+      "wtf8::CodePoint::to_char_lossy",
+      "wtf8::CodePoint::to_lead_surrogate",
+      "wtf8::CodePoint::to_trail_surrogate",
+      "wtf8::CodePoint::to_u32",
+      "wtf8::decode_surrogate"
     ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/proc_macro/src/bridge/arena.rs": [
       "bridge::arena::Arena::new"
@@ -20196,7 +20364,6 @@
       "<path::StripPrefixError as core::clone::Clone>::clone",
       "<path::StripPrefixError as core::cmp::Eq>::assert_receiver_is_total_eq",
       "<path::StripPrefixError as core::cmp::PartialEq>::eq",
-      "<path::StripPrefixError as core::error::Error>::description",
       "path::PathBuf::new",
       "path::PathBuf::with_capacity",
       "path::is_separator"
@@ -20281,6 +20448,12 @@
     "/home/runner/work/verify-rust-std/verify-rust-std/library/std/src/sync/lazy_lock.rs": [
       "sync::lazy_lock::panic_poisoned"
     ],
+    "/home/runner/work/verify-rust-std/verify-rust-std/library/std/src/sync/mod.rs": [
+      "<sync::WaitTimeoutResult as core::clone::Clone>::clone",
+      "<sync::WaitTimeoutResult as core::cmp::Eq>::assert_receiver_is_total_eq",
+      "<sync::WaitTimeoutResult as core::cmp::PartialEq>::eq",
+      "sync::WaitTimeoutResult::timed_out"
+    ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/std/src/sync/mpmc/array.rs": [
       "<sync::mpmc::array::ArrayToken as core::default::Default>::default"
     ],
@@ -20318,17 +20491,20 @@
       "<sync::mpsc::RecvError as core::clone::Clone>::clone",
       "<sync::mpsc::RecvError as core::cmp::Eq>::assert_receiver_is_total_eq",
       "<sync::mpsc::RecvError as core::cmp::PartialEq>::eq",
-      "<sync::mpsc::RecvError as core::error::Error>::description",
       "<sync::mpsc::RecvTimeoutError as core::clone::Clone>::clone",
       "<sync::mpsc::RecvTimeoutError as core::cmp::Eq>::assert_receiver_is_total_eq",
       "<sync::mpsc::RecvTimeoutError as core::cmp::PartialEq>::eq",
       "<sync::mpsc::RecvTimeoutError as core::convert::From<sync::mpsc::RecvError>>::from",
-      "<sync::mpsc::RecvTimeoutError as core::error::Error>::description",
       "<sync::mpsc::TryRecvError as core::clone::Clone>::clone",
       "<sync::mpsc::TryRecvError as core::cmp::Eq>::assert_receiver_is_total_eq",
       "<sync::mpsc::TryRecvError as core::cmp::PartialEq>::eq",
-      "<sync::mpsc::TryRecvError as core::convert::From<sync::mpsc::RecvError>>::from",
-      "<sync::mpsc::TryRecvError as core::error::Error>::description"
+      "<sync::mpsc::TryRecvError as core::convert::From<sync::mpsc::RecvError>>::from"
+    ],
+    "/home/runner/work/verify-rust-std/verify-rust-std/library/std/src/sync/nonpoison/condvar.rs": [
+      "<sync::nonpoison::condvar::Condvar as core::default::Default>::default",
+      "sync::nonpoison::condvar::Condvar::new",
+      "sync::nonpoison::condvar::Condvar::notify_all",
+      "sync::nonpoison::condvar::Condvar::notify_one"
     ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/std/src/sync/poison.rs": [
       "<sync::poison::Guard as core::clone::Clone>::clone",
@@ -20341,13 +20517,9 @@
     ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/std/src/sync/poison/condvar.rs": [
       "<sync::poison::condvar::Condvar as core::default::Default>::default",
-      "<sync::poison::condvar::WaitTimeoutResult as core::clone::Clone>::clone",
-      "<sync::poison::condvar::WaitTimeoutResult as core::cmp::Eq>::assert_receiver_is_total_eq",
-      "<sync::poison::condvar::WaitTimeoutResult as core::cmp::PartialEq>::eq",
       "sync::poison::condvar::Condvar::new",
       "sync::poison::condvar::Condvar::notify_all",
-      "sync::poison::condvar::Condvar::notify_one",
-      "sync::poison::condvar::WaitTimeoutResult::timed_out"
+      "sync::poison::condvar::Condvar::notify_one"
     ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/std/src/sync/poison/once.rs": [
       "sync::poison::once::Once::is_completed",
@@ -20664,7 +20836,6 @@
       "sys::pal::unix::on_broken_pipe_flag_used"
     ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/std/src/sys/pal/unix/os.rs": [
-      "<sys::pal::unix::os::JoinPathsError as core::error::Error>::description",
       "sys::pal::unix::os::current_exe",
       "sys::pal::unix::os::errno",
       "sys::pal::unix::os::error_string",
@@ -20916,26 +21087,6 @@
     "/home/runner/work/verify-rust-std/verify-rust-std/library/std/src/sys_common/mod.rs": [
       "sys_common::mul_div_u64"
     ],
-    "/home/runner/work/verify-rust-std/verify-rust-std/library/std/src/sys_common/wtf8.rs": [
-      "<sys_common::wtf8::CodePoint as core::clone::Clone>::clone",
-      "<sys_common::wtf8::CodePoint as core::cmp::Eq>::assert_receiver_is_total_eq",
-      "<sys_common::wtf8::CodePoint as core::cmp::Ord>::cmp",
-      "<sys_common::wtf8::CodePoint as core::cmp::PartialEq>::eq",
-      "<sys_common::wtf8::CodePoint as core::cmp::PartialOrd>::partial_cmp",
-      "sys_common::wtf8::CodePoint::from_char",
-      "sys_common::wtf8::CodePoint::from_u32",
-      "sys_common::wtf8::CodePoint::from_u32_unchecked",
-      "sys_common::wtf8::CodePoint::to_char",
-      "sys_common::wtf8::CodePoint::to_char_lossy",
-      "sys_common::wtf8::CodePoint::to_lead_surrogate",
-      "sys_common::wtf8::CodePoint::to_trail_surrogate",
-      "sys_common::wtf8::CodePoint::to_u32",
-      "sys_common::wtf8::Wtf8::empty_box",
-      "sys_common::wtf8::Wtf8Buf::new",
-      "sys_common::wtf8::Wtf8Buf::with_capacity",
-      "sys_common::wtf8::decode_surrogate",
-      "sys_common::wtf8::decode_surrogate_pair"
-    ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/std/src/thread/current.rs": [
       "thread::current::current",
       "thread::current::current_id",
@@ -21002,7 +21153,6 @@
       "<time::SystemTime as sys_common::FromInner<sys::pal::unix::time::SystemTime>>::from_inner",
       "<time::SystemTime as sys_common::IntoInner<sys::pal::unix::time::SystemTime>>::into_inner",
       "<time::SystemTimeError as core::clone::Clone>::clone",
-      "<time::SystemTimeError as core::error::Error>::description",
       "time::Instant::checked_add",
       "time::Instant::checked_duration_since",
       "time::Instant::checked_sub",
@@ -21022,10 +21172,10 @@
       "detect::bit::test"
     ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/std_detect/src/detect/cache.rs": [
-      "<detect::cache::Initializer as core::clone::Clone>::clone",
-      "<detect::cache::Initializer as core::cmp::Eq>::assert_receiver_is_total_eq",
-      "<detect::cache::Initializer as core::cmp::PartialEq>::eq",
-      "<detect::cache::Initializer as core::default::Default>::default",
+      "<detect::cache::Initializer as rustc_std_workspace_core::clone::Clone>::clone",
+      "<detect::cache::Initializer as rustc_std_workspace_core::cmp::Eq>::assert_receiver_is_total_eq",
+      "<detect::cache::Initializer as rustc_std_workspace_core::cmp::PartialEq>::eq",
+      "<detect::cache::Initializer as rustc_std_workspace_core::default::Default>::default",
       "detect::cache::Cache::initialize",
       "detect::cache::Cache::test",
       "detect::cache::Cache::uninitialized",
@@ -21041,7 +21191,7 @@
       "detect::cache::unset_bit"
     ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/std_detect/src/detect/macros.rs": [
-      "<detect::arch::x86::Feature as core::clone::Clone>::clone",
+      "<detect::arch::x86::Feature as rustc_std_workspace_core::clone::Clone>::clone",
       "detect::arch::x86::Feature::to_str",
       "detect::arch::x86::__is_feature_detected::adx",
       "detect::arch::x86::__is_feature_detected::aes",
@@ -21055,7 +21205,10 @@
       "detect::arch::x86::__is_feature_detected::amx_tf32",
       "detect::arch::x86::__is_feature_detected::amx_tile",
       "detect::arch::x86::__is_feature_detected::amx_transpose",
+      "detect::arch::x86::__is_feature_detected::apxf",
       "detect::arch::x86::__is_feature_detected::avx",
+      "detect::arch::x86::__is_feature_detected::avx10_1",
+      "detect::arch::x86::__is_feature_detected::avx10_2",
       "detect::arch::x86::__is_feature_detected::avx2",
       "detect::arch::x86::__is_feature_detected::avx512bf16",
       "detect::arch::x86::__is_feature_detected::avx512bitalg",
@@ -21157,6 +21310,9 @@
       "alloc::layout::verify::check_padding_needed_for",
       "alloc::layout::verify::check_repeat",
       "alloc::layout::verify::check_repeat_packed"
+    ],
+    "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/array/ascii.rs": [
+      "array::ascii::verify::proof_for_as_ascii_unchecked"
     ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/ascii/ascii_char.rs": [
       "ascii::ascii_char::AsciiChar::from_u8",
@@ -21369,6 +21525,9 @@
     "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/mem/mod.rs": [
       "mem::verify::check_swap_adt_no_drop",
       "mem::verify::check_swap_primitive"
+    ],
+    "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/num/dec2flt/decimal_seq.rs": [
+      "num::dec2flt::decimal_seq::number_of_digits_decimal_left_shift"
     ],
     "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/num/int_macros.rs": [
       "num::<impl i128>::unchecked_add",
@@ -22298,6 +22457,11 @@
       ]
     },
     {
+      "function": "<array::drain::Drain<'_, T> as iter::traits::unchecked_iterator::UncheckedIterator>::next_unchecked",
+      "file": "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/array/drain.rs",
+      "harnesses": []
+    },
+    {
       "function": "<array::iter::IntoIter<T, N> as iter::traits::iterator::Iterator>::__iterator_get_unchecked",
       "file": "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/array/iter.rs",
       "harnesses": []
@@ -22856,6 +23020,11 @@
       "harnesses": []
     },
     {
+      "function": "<iter::adapters::map::Map<I, F> as iter::traits::unchecked_iterator::UncheckedIterator>::next_unchecked",
+      "file": "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/iter/adapters/map.rs",
+      "harnesses": []
+    },
+    {
       "function": "<iter::adapters::skip::Skip<I> as iter::traits::iterator::Iterator>::__iterator_get_unchecked",
       "file": "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/iter/adapters/skip.rs",
       "harnesses": []
@@ -23242,6 +23411,13 @@
       ]
     },
     {
+      "function": "array::ascii::<impl [u8; N]>::as_ascii_unchecked",
+      "file": "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/array/ascii.rs",
+      "harnesses": [
+        "array::ascii::verify::proof_for_as_ascii_unchecked"
+      ]
+    },
+    {
       "function": "array::iter::IntoIter::<T, N>::new_unchecked",
       "file": "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/array/iter.rs",
       "harnesses": []
@@ -23430,6 +23606,16 @@
       ]
     },
     {
+      "function": "fmt::rt::<impl fmt::Arguments<'a>>::new_v1_formatted",
+      "file": "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/fmt/rt.rs",
+      "harnesses": []
+    },
+    {
+      "function": "fmt::rt::Argument::<'_>::fmt",
+      "file": "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/fmt/rt.rs",
+      "harnesses": []
+    },
+    {
       "function": "hint::assert_unchecked",
       "file": "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/hint.rs",
       "harnesses": [
@@ -23495,6 +23681,11 @@
     {
       "function": "iter::traits::iterator::Iterator::map_windows",
       "file": "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/iter/traits/iterator.rs",
+      "harnesses": []
+    },
+    {
+      "function": "iter::traits::unchecked_iterator::UncheckedIterator::next_unchecked",
+      "file": "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/iter/traits/unchecked_iterator.rs",
       "harnesses": []
     },
     {
@@ -24209,6 +24400,13 @@
     {
       "function": "num::<impl usize>::wrapping_shr",
       "file": "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/num/uint_macros.rs",
+      "harnesses": [
+        "kani::internal::automatic_harness"
+      ]
+    },
+    {
+      "function": "num::dec2flt::decimal_seq::number_of_digits_decimal_left_shift",
+      "file": "/home/runner/work/verify-rust-std/verify-rust-std/library/core/src/num/dec2flt/decimal_seq.rs",
       "harnesses": [
         "kani::internal::automatic_harness"
       ]
@@ -25811,8 +26009,8 @@
     }
   ],
   "totals": {
-    "standard-harnesses": 20060,
-    "contract-harnesses": 1079,
-    "functions-under-contract": 417
+    "standard-harnesses": 20216,
+    "contract-harnesses": 1081,
+    "functions-under-contract": 424
   }
 }
