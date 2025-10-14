@@ -21,7 +21,7 @@ WITH
           PARTITION BY
             mod
         ),
-        1
+        0
       ) AS percent
     FROM
       cut
@@ -36,7 +36,7 @@ SELECT
   mod,
   proof_kind,
   cnt,
-  CAST(percent AS TEXT) AS pct
+  CAST(percent AS INTEGER) AS pct
 FROM
   df
 WHERE
