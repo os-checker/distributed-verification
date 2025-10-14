@@ -2,8 +2,9 @@
 # to filter out search results in these files or folders.
 
 assets/**
-!assets/*.sql
-!assets/*.sh
+!**/*.sql
+!**/*.sh
+!assets/chart
 
 Cargo.lock
 tests/snapshots
