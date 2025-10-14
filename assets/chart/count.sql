@@ -2,41 +2,43 @@ WITH
   cut AS (
     SELECT
       proof_kind,
+      -- Should we handle function names leading with `<` or some monomorphized forms?
+      -- cc https://github.com/os-checker/distributed-verification/issues/129
       crate||'::'||CASE
         WHEN instr (name, '::')>0 THEN substr (name, 1, instr (name, '::') - 1)
         ELSE name
-      END AS name_category
+      END AS mod
     FROM
       db
   ),
-  a AS (
+  df AS (
     SELECT
-      name_category,
+      mod,
       proof_kind,
       COUNT(*) AS cnt,
       ROUND(
         100.0*COUNT(*)/SUM(COUNT(*)) OVER (
           PARTITION BY
-            name_category
+            mod
         ),
         1
       ) AS percent
     FROM
       cut
     GROUP BY
-      name_category,
+      mod,
       proof_kind
     ORDER BY
-      name_category,
+      mod,
       percent DESC
   )
 SELECT
-  name_category AS mod,
+  mod,
   proof_kind,
   cnt,
   CAST(percent AS TEXT) AS pct
 FROM
-  a
+  df
 WHERE
   NOT (
     proof_kind IS NULL
