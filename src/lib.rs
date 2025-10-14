@@ -1,4 +1,8 @@
 use eyre::Result;
+use rusqlite::{
+    ToSql,
+    types::{FromSql, FromSqlError, FromSqlResult, ToSqlOutput, ValueRef},
+};
 use serde::{Deserialize, Serialize};
 
 #[macro_use]
@@ -26,6 +30,38 @@ pub enum ProofKind {
     Contract,
 }
 
+impl ProofKind {
+    pub fn as_str(self) -> &'static str {
+        match self {
+            ProofKind::Standard => "Standard",
+            ProofKind::Contract => "Contract",
+        }
+    }
+
+    #[allow(clippy::should_implement_trait)]
+    pub fn from_str(s: &str) -> Option<Self> {
+        Some(match s {
+            "Standard" => Self::Standard,
+            "Contract" => Self::Contract,
+            _ => return None,
+        })
+    }
+}
+
+impl ToSql for ProofKind {
+    fn to_sql(&self) -> rusqlite::Result<ToSqlOutput<'_>> {
+        Ok(ToSqlOutput::Borrowed(ValueRef::Text(self.as_str().as_bytes())))
+    }
+}
+
+impl FromSql for ProofKind {
+    fn column_result(value: ValueRef<'_>) -> FromSqlResult<Self> {
+        let val = value.as_str()?;
+        Self::from_str(val)
+            .ok_or_else(|| FromSqlError::Other(format!("{val:?} is not a valid ProofKind").into()))
+    }
+}
+
 /// [`InstanceKind`], but remove Virtual idx and make Item as None to save space.
 ///
 /// [`InstanceKind`]: https://doc.rust-lang.org/nightly/nightly-rustc/stable_mir/mir/mono/enum.InstanceKind.html
@@ -34,6 +70,40 @@ pub enum InstKind {
     Intrinsic,
     Virtual,
     Shim,
+}
+
+impl InstKind {
+    pub fn as_str(self) -> &'static str {
+        match self {
+            Self::Intrinsic => "Intrinsic",
+            Self::Virtual => "Virtual",
+            Self::Shim => "Shim",
+        }
+    }
+
+    #[allow(clippy::should_implement_trait)]
+    pub fn from_str(s: &str) -> Option<Self> {
+        Some(match s {
+            "Intrinsic" => Self::Intrinsic,
+            "Virtual" => Self::Virtual,
+            "Shim" => Self::Shim,
+            _ => return None,
+        })
+    }
+}
+
+impl ToSql for InstKind {
+    fn to_sql(&self) -> rusqlite::Result<ToSqlOutput<'_>> {
+        Ok(ToSqlOutput::Borrowed(ValueRef::Text(self.as_str().as_bytes())))
+    }
+}
+
+impl FromSql for InstKind {
+    fn column_result(value: ValueRef<'_>) -> FromSqlResult<Self> {
+        let val = value.as_str()?;
+        Self::from_str(val)
+            .ok_or_else(|| FromSqlError::Other(format!("{val:?} is not a valid ProofKind").into()))
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
