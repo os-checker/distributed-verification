@@ -4,12 +4,14 @@ WITH
       proof_kind,
       -- Should we handle function names leading with `<` or some monomorphized forms?
       -- cc https://github.com/os-checker/distributed-verification/issues/129
-      crate||'::'||CASE
-        WHEN instr (name, '::')>0 THEN substr (name, 1, instr (name, '::') - 1)
-        ELSE name
+      CASE
+        WHEN instr (name, '::')=0 THEN crate
+        ELSE crate||'::'||substr (name, 1, instr (name, '::') - 1)
       END AS mod
     FROM
       db
+    WHERE
+      instr (name, '<')=0
   ),
   df AS (
     SELECT
@@ -39,8 +41,3 @@ SELECT
   CAST(percent AS INTEGER) AS pct
 FROM
   df
-WHERE
-  NOT (
-    proof_kind IS NULL
-    AND percent==100.0
-  );
