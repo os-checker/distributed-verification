@@ -23,7 +23,12 @@ pub struct LocalCrateFnDefs {
     pub attrs: CountAttrs,
     pub fn_defs: FnDefs,
     pub kanitools: KaniTools,
+    /// Function counts directy in root and first submodule.
+    /// The count in root module is not traversally collected.
+    pub count_in_module: MapCountInModule,
 }
+
+pub type MapCountInModule = IndexMap<String, CountInModule>;
 
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct KaniTools {
@@ -55,4 +60,11 @@ pub struct FnDefs {
 pub struct KaniToolsFnDefs {
     pub count: usize,
     pub names: Vec<String>,
+}
+
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+pub struct CountInModule {
+    pub not_proof: usize,
+    pub standard: usize,
+    pub contract: usize,
 }

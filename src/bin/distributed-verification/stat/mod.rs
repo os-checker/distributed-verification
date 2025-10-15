@@ -1,7 +1,9 @@
-use crate::{cli::Output, functions::TOOL};
-use distributed_verification::statistics::*;
+use crate::{
+    cli::Output,
+    functions::kani::{PROOF, PROOF_FOR_CONTRACT, TOOL},
+};
+use distributed_verification::{ProofKind, statistics::*};
 use indexmap::IndexMap;
-use itertools::Itertools;
 use rustc_middle::ty::TyCtxt;
 use rustc_public::{CrateDef, external_crates, local_crate, rustc_internal::internal};
 
@@ -26,6 +28,8 @@ fn new_local_crate(tcx: TyCtxt) -> LocalCrateFnDefs {
     let fn_defs = krate.fn_defs();
     this.fn_defs.total = fn_defs.len();
 
+    let module = &mut String::with_capacity(64);
+
     for fn_def in fn_defs {
         let name = fn_def.name();
         let mut kanitool_fn = false;
@@ -39,18 +43,21 @@ fn new_local_crate(tcx: TyCtxt) -> LocalCrateFnDefs {
                 if paths.first().map(|ident| ident.as_str() == TOOL).unwrap_or(false) {
                     kanitool_fn = true;
                     this.attrs.kanitools += 1;
-                    return Some(paths.iter().map(|ident| ident.as_str()).join("::"));
+                    return Some(paths.iter().map(|ident| ident.as_str()).collect::<Vec<_>>());
                 }
             }
             None
         });
 
-        for attr_str in kanitools_attrs {
+        for kani_attr in kanitools_attrs {
+            let attr_str = kani_attr.join("::");
             if let Some(v) = this.kanitools.annotated_functions.get_mut(&attr_str) {
                 v.push(name.clone());
             } else {
                 this.kanitools.annotated_functions.insert(attr_str, vec![name.clone()]);
             }
+
+            count_in_module(&name, &krate.name, module, &kani_attr, &mut this.count_in_module);
         }
 
         // Only metric on fns annotated with kani.
@@ -106,3 +113,48 @@ pub fn analyze(out: Output, tcx: TyCtxt) -> crate::Result<()> {
 // `#[kanitool::recursion_check = ...]`
 // `#[kanitool::disable_checks(pointer)]`
 // `#[kanitool::unstable(feature = \"ghost-state\", issue = 3946, reason =...]`
+
+/// For the local crate being compiled, classify the function as per ProofKind, and add the count.
+fn count_in_module(
+    fn_name: &str,
+    krate: &str,
+    module: &mut String,
+    kani_attr: &[&str],
+    map: &mut MapCountInModule,
+) {
+    // module string is cleared to be reused
+    module.clear();
+    module.push_str(krate);
+
+    // Crate root is not as a part of fn_name, thus fn under root won't contains `::` in its name.
+    // In other words, name containing `::` manifests that the fn comes from a sub module.
+    if let Some(mod_str_end) = fn_name.find("::") {
+        module.push_str("::");
+        module.push_str(&fn_name[..mod_str_end]);
+    }
+
+    let increment = |val: &mut CountInModule| {
+        let proof_kind = proof_kind(kani_attr);
+        let count = match proof_kind {
+            Some(ProofKind::Standard) => &mut val.standard,
+            Some(ProofKind::Contract) => &mut val.contract,
+            None => &mut val.not_proof,
+        };
+        *count += 1
+    };
+    if let Some(val) = map.get_mut(module) {
+        increment(val);
+    } else {
+        let mut val = CountInModule::default();
+        increment(&mut val);
+        map.insert(module.clone(), val);
+    }
+}
+
+fn proof_kind(attr: &[&str]) -> Option<ProofKind> {
+    Some(match attr {
+        [TOOL, PROOF] => ProofKind::Standard,
+        [TOOL, PROOF_FOR_CONTRACT] => ProofKind::Contract,
+        _ => return None,
+    })
+}
