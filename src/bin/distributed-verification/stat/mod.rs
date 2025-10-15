@@ -49,6 +49,7 @@ fn new_local_crate(tcx: TyCtxt) -> LocalCrateFnDefs {
             None
         });
 
+        let mut added_proof = false;
         for kani_attr in kanitools_attrs {
             let attr_str = kani_attr.join("::");
             if let Some(v) = this.kanitools.annotated_functions.get_mut(&attr_str) {
@@ -57,7 +58,18 @@ fn new_local_crate(tcx: TyCtxt) -> LocalCrateFnDefs {
                 this.kanitools.annotated_functions.insert(attr_str, vec![name.clone()]);
             }
 
-            count_in_module(&name, &krate.name, module, &kani_attr, &mut this.count_in_module);
+            added_proof = add_proof_in_module(
+                &name,
+                &krate.name,
+                module,
+                &kani_attr,
+                &mut this.count_in_module,
+            );
+        }
+
+        if !added_proof {
+            // This function is not a proof.
+            add_non_proof_in_module(&name, &krate.name, module, &mut this.count_in_module);
         }
 
         // Only metric on fns annotated with kani.
@@ -115,13 +127,45 @@ pub fn analyze(out: Output, tcx: TyCtxt) -> crate::Result<()> {
 // `#[kanitool::unstable(feature = \"ghost-state\", issue = 3946, reason =...]`
 
 /// For the local crate being compiled, classify the function as per ProofKind, and add the count.
-fn count_in_module(
+/// If the attr is not as ProofKind, nothing happens.
+fn add_proof_in_module(
     fn_name: &str,
     krate: &str,
     module: &mut String,
     kani_attr: &[&str],
     map: &mut MapCountInModule,
+) -> bool {
+    let proof_kind = proof_kind(kani_attr);
+    if proof_kind.is_none() {
+        return false;
+    }
+
+    module_name(fn_name, krate, module);
+
+    let increment = |val: &mut CountInModule| {
+        let count = match proof_kind {
+            Some(ProofKind::Standard) => &mut val.standard,
+            Some(ProofKind::Contract) => &mut val.contract,
+            None => unreachable!("None ProofKind has been handled for {kani_attr:?}"),
+        };
+        *count += 1;
+    };
+    with_map_count_in_module(module, increment, map);
+
+    true
+}
+
+fn add_non_proof_in_module(
+    fn_name: &str,
+    krate: &str,
+    module: &mut String,
+    map: &mut MapCountInModule,
 ) {
+    module_name(fn_name, krate, module);
+    with_map_count_in_module(module, |c| c.not_proof += 1, map);
+}
+
+fn module_name(fn_name: &str, krate: &str, module: &mut String) {
     // module string is cleared to be reused
     module.clear();
     module.push_str(krate);
@@ -131,23 +175,6 @@ fn count_in_module(
     if let Some(mod_str_end) = fn_name.find("::") {
         module.push_str("::");
         module.push_str(&fn_name[..mod_str_end]);
-    }
-
-    let increment = |val: &mut CountInModule| {
-        let proof_kind = proof_kind(kani_attr);
-        let count = match proof_kind {
-            Some(ProofKind::Standard) => &mut val.standard,
-            Some(ProofKind::Contract) => &mut val.contract,
-            None => &mut val.not_proof,
-        };
-        *count += 1
-    };
-    if let Some(val) = map.get_mut(module) {
-        increment(val);
-    } else {
-        let mut val = CountInModule::default();
-        increment(&mut val);
-        map.insert(module.clone(), val);
     }
 }
 
