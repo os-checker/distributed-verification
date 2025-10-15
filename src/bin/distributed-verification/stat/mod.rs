@@ -4,6 +4,7 @@ use crate::{
 };
 use distributed_verification::{ProofKind, statistics::*};
 use indexmap::IndexMap;
+use rustc_hir::{def_id::DefId, definitions::DefPath};
 use rustc_middle::ty::TyCtxt;
 use rustc_public::{CrateDef, external_crates, local_crate, rustc_internal::internal};
 
@@ -22,9 +23,9 @@ fn new_external_crates() -> ExternalCrates {
 fn new_local_crate(tcx: TyCtxt) -> LocalCrateFnDefs {
     let mut this = LocalCrateFnDefs::default();
 
-    // for krate in stable_mir::find_crates("core") {
     let krate = local_crate();
-    this.crate_name = krate.name.clone();
+    let crate_name = &*krate.name;
+    this.crate_name = crate_name.to_owned();
     let fn_defs = krate.fn_defs();
     this.fn_defs.total = fn_defs.len();
 
@@ -35,6 +36,9 @@ fn new_local_crate(tcx: TyCtxt) -> LocalCrateFnDefs {
         let mut kanitool_fn = false;
 
         let did = internal(tcx, fn_def.def_id());
+
+        update_module_path(tcx, did, crate_name, module);
+
         // cc https://github.com/rust-lang/project-stable-mir/issues/83
         let kanitools_attrs = tcx.get_all_attrs(did).iter().filter_map(|attr| {
             if let rustc_hir::Attribute::Unparsed(attr) = attr {
@@ -50,6 +54,7 @@ fn new_local_crate(tcx: TyCtxt) -> LocalCrateFnDefs {
         });
 
         let mut added_proof = false;
+        let map = &mut this.count_in_module;
         for kani_attr in kanitools_attrs {
             let attr_str = kani_attr.join("::");
             if let Some(v) = this.kanitools.annotated_functions.get_mut(&attr_str) {
@@ -58,18 +63,12 @@ fn new_local_crate(tcx: TyCtxt) -> LocalCrateFnDefs {
                 this.kanitools.annotated_functions.insert(attr_str, vec![name.clone()]);
             }
 
-            added_proof = add_proof_in_module(
-                &name,
-                &krate.name,
-                module,
-                &kani_attr,
-                &mut this.count_in_module,
-            );
+            added_proof = add_proof_in_module(module, &kani_attr, map);
         }
 
         if !added_proof {
             // This function is not a proof.
-            add_non_proof_in_module(&name, &krate.name, module, &mut this.count_in_module);
+            with_map_count_in_module(module, |c| c.not_proof += 1, map);
         }
 
         // Only metric on fns annotated with kani.
@@ -128,19 +127,11 @@ pub fn analyze(out: Output, tcx: TyCtxt) -> crate::Result<()> {
 
 /// For the local crate being compiled, classify the function as per ProofKind, and add the count.
 /// If the attr is not as ProofKind, nothing happens.
-fn add_proof_in_module(
-    fn_name: &str,
-    krate: &str,
-    module: &mut String,
-    kani_attr: &[&str],
-    map: &mut MapCountInModule,
-) -> bool {
+fn add_proof_in_module(module: &str, kani_attr: &[&str], map: &mut MapCountInModule) -> bool {
     let proof_kind = proof_kind(kani_attr);
     if proof_kind.is_none() {
         return false;
     }
-
-    module_name(fn_name, krate, module);
 
     let increment = |val: &mut CountInModule| {
         let count = match proof_kind {
@@ -155,26 +146,21 @@ fn add_proof_in_module(
     true
 }
 
-fn add_non_proof_in_module(
-    fn_name: &str,
-    krate: &str,
-    module: &mut String,
-    map: &mut MapCountInModule,
-) {
-    module_name(fn_name, krate, module);
-    with_map_count_in_module(module, |c| c.not_proof += 1, map);
-}
-
-fn module_name(fn_name: &str, krate: &str, module: &mut String) {
-    // module string is cleared to be reused
+fn update_module_path(tcx: TyCtxt, did: DefId, crate_name: &str, module: &mut String) {
     module.clear();
-    module.push_str(krate);
-
-    // Crate root is not as a part of fn_name, thus fn under root won't contains `::` in its name.
-    // In other words, name containing `::` manifests that the fn comes from a sub module.
-    if let Some(mod_str_end) = fn_name.find("::") {
+    module.push_str(crate_name);
+    // This is based on def_path returns path segment instead of `<...>`
+    // e.g. rustc_public generates the following path for monomorphized fn
+    // <&num::saturating::Saturating<u128> as ops::bit::BitOr<num::saturating::Saturating<u128>>>::bitor
+    let fn_path = &tcx.def_path(did).data;
+    if fn_path.len() > 1 {
+        // Push the first submodule.
+        let sym = match fn_path[0].data.name() {
+            rustc_hir::definitions::DefPathDataName::Named(symbol) => symbol,
+            rustc_hir::definitions::DefPathDataName::Anon { namespace } => namespace,
+        };
         module.push_str("::");
-        module.push_str(&fn_name[..mod_str_end]);
+        module.push_str(sym.as_str());
     }
 }
 
