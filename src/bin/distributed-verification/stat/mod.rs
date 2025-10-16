@@ -4,7 +4,7 @@ use crate::{
 };
 use distributed_verification::{ProofKind, statistics::*};
 use indexmap::IndexMap;
-use rustc_hir::{def_id::DefId, definitions::DefPath};
+use rustc_hir::def_id::DefId;
 use rustc_middle::ty::TyCtxt;
 use rustc_public::{CrateDef, external_crates, local_crate, rustc_internal::internal};
 
