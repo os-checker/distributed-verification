@@ -89,6 +89,13 @@
           "verify::contract_requires"
         ]
       }
+    },
+    "count_in_module": {
+      "standard_proofs_with_contracts::verify": {
+        "not_proof": 15,
+        "standard": 4,
+        "contract": 0
+      }
     }
   },
   "external": {

@@ -27,6 +27,13 @@
           "verify::proof3"
         ]
       }
+    },
+    "count_in_module": {
+      "gen_proofs_by_nested_macros::verify": {
+        "not_proof": 0,
+        "standard": 3,
+        "contract": 0
+      }
     }
   },
   "external": {
