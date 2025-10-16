@@ -9,7 +9,23 @@ type Datum = { mod: string, cnt: Cnt, avg?: number, time?: number[] };
 const URL = "https://raw.githubusercontent.com/os-checker/verify-rust-std_data/refs/heads/main/chart/merged.json";
 
 const data = ref<Datum[]>([]);
-download<Datum[]>(URL).then(v => data.value = v);
+download<Datum[]>(URL).then(v => {
+  data.value = v.sort((a, b) => {
+    // proofs first
+    var cmp_cnt = b.cnt.standard + b.cnt.contract - a.cnt.standard - a.cnt.contract;
+    if (cmp_cnt !== 0) return cmp_cnt;
+
+    // avg time second: the one with time or higher time is prior
+    if (a.avg === undefined && b.avg !== undefined) return 1;
+    if (b.avg === undefined && a.avg !== undefined) return -1;
+    const cmp_time = (b.avg ?? 0) - (a.avg ?? 0);
+    if (cmp_time !== 0) return cmp_time;
+
+    // total count last
+    cmp_cnt += b.cnt.not_proof - a.cnt.not_proof;
+    return cmp_cnt;
+  });
+});
 
 const module_names = computed<string[]>(() => data.value.map(d => d.mod));
 
