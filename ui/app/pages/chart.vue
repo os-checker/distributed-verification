@@ -51,24 +51,32 @@ const stackedBarData = computed<StackedDatum[]>(() => {
 });
 
 function plot() {
+  // Do nothing if data are nor ready.
   if (data.value.length === 0) return;
+  const elemId = "#chart-container";
 
-  // --- 2. 圖表尺寸設定 ---
-  const margin = { top: 50, right: 30, bottom: 30, left: 30 };
-  const width = viewportWidth.value * 0.9 - margin.left - margin.right;
+  // Styling
+  const margin = { top: 30, right: 30, bottom: 30, left: 30 };
+  const width = viewportWidth.value - margin.left - margin.right;
   const height = module_names.value.length * 40 - margin.top - margin.bottom;
-  const yAxisWidth = 100;
-  const subplotWidth = (width - yAxisWidth) / 2;
+  const yAxisWidth = 150;
+  const widthLeftRatio = 0.25;
+  const subplotWidthLeft = (width - yAxisWidth) * widthLeftRatio;
+  const subplotStartRight = subplotWidthLeft + yAxisWidth;
+  const subplotWidthRight = width - subplotStartRight;
 
-  // --- 3. SVG 容器 ---
-  const svg = d3.select("#chart-container")
+  // Clear old SVG when view size changes.
+  d3.select(elemId).selectAll("*").remove();
+
+  // Set up SVG container.
+  const svg = d3.select(elemId)
     .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-  // --- 4. 共享 Y 軸 ---
+  // Share y-axis.
   const y = d3.scaleBand()
     .domain(module_names.value)
     .range([0, height])
@@ -76,32 +84,33 @@ function plot() {
 
   const yAxis = svg.append("g")
     .attr("class", "y-axis-label")
-    .attr("transform", `translate(${subplotWidth}, 0)`)
+    .attr("transform", `translate(${subplotWidthLeft}, 0)`)
     .call(d3.axisRight(y).tickSize(0));
 
   yAxis.select(".domain").remove();
-  yAxis.selectAll("text").attr("x", yAxisWidth / 2);
+  yAxis.selectAll("text").attr("x", yAxisWidth * 0.1);
 
-  // --- 5. 左側：小提琴圖 ---
+  // Left side: violin plot
   const leftSvg = svg.append("g");
 
-  // 為左側小提琴圖建立 X 軸
-  // domain 保持不變，但 range 反轉，使其向左延伸
   const xViolinLeft = d3.scaleLinear()
+    // Deternmin the range of x-axis.
     .domain([0, d3.max(violinData.value, d => d.time)! * 1.1])
-    .range([subplotWidth, 0]); // <-- 注意 range 是反轉的
+    // NOTE: invert range, i.e. stretching to left with x-axis increasing
+    .range([subplotWidthLeft, 0]);
 
   leftSvg.append("g")
-    .call(d3.axisTop(xViolinLeft).ticks(5));
+    .call(d3.axisTop(xViolinLeft).ticks(4));
 
-  // 計算密度/直方圖的邏輯保持不變
+  // Compute density.
   const histogram = d3.bin<ViolinDatum, number>()
-    .domain(xViolinLeft.domain() as [number, number]) // 使用新 X 軸的 domain
+    .domain(xViolinLeft.domain() as [number, number])
     .thresholds(xViolinLeft.ticks(20))
     .value((d: ViolinDatum) => d.time);
 
   const sumstat = d3.group(violinData.value, d => d.mod);
 
+  // Determine the maximum of violine height.
   let maxNum = 0;
   for (const mod of module_names.value) {
     const currentNum = d3.max(histogram(sumstat.get(mod)!), d => d.length)!;
@@ -112,7 +121,7 @@ function plot() {
     .range([0, y.bandwidth() / 2])
     .domain([0, maxNum]);
 
-  // 繪製向左的小提琴圖
+  // Plot violine.
   leftSvg.selectAll("g.violin")
     .data(module_names.value)
     .join("g")
@@ -121,7 +130,7 @@ function plot() {
     .append("path")
     .datum(d => histogram(sumstat.get(d)!))
     .style("stroke", "none")
-    .style("fill", "#FFC300") // 亮黄色
+    .style("fill", "#66c2a5")
     //@ts-ignore: attr's type is restricted for Area 
     .attr("d", d3.area()
       //@ts-ignore: d is of type [...ViolinDatum[], x0, x1] here
@@ -131,34 +140,31 @@ function plot() {
       .curve(d3.curveCatmullRom)
     );
 
-  // --- 6. 右側：堆疊柱狀圖 ---
+  // Right side: stacked bar plot
   const rightSvg = svg.append("g")
-    .attr("transform", `translate(${subplotWidth + yAxisWidth}, 0)`);
+    .attr("transform", `translate(${subplotStartRight}, 0)`);
 
-  // 為右側柱狀圖建立 X 軸
   const stack = d3.stack<StackedDatum>().keys(proof_kinds);
   const stackedData = stack(stackedBarData.value);
 
-  // range 是常規的 [0, subplotWidth]，使其向右延伸
   const xBarRight = d3.scaleLinear()
     .domain([0, d3.max(stackedData, layer => d3.max(layer, d => d[1]))! * 1.1])
-    .range([0, subplotWidth]); // <-- 注意 range 是常規的
+    .range([0, subplotWidthRight]); // Normal range: left-to-right
 
   rightSvg.append("g")
     .call(d3.axisTop(xBarRight).ticks(5));
 
   const color = d3.scaleOrdinal()
     .domain(proof_kinds)
-    .range(['#66c2a5', '#fc8d62', '#8da0cb']);
+    .range(["#8da0cb", "#fc8d62", "#FFC300"]);
 
-  // 建立包含每個堆疊層的群組
   const barGroups = rightSvg.append("g")
     .selectAll("g")
     .data(stackedData)
     .join("g")
     .attr("fill", d => color(d.key) as any);
 
-  // 繪製向右延伸的矩形
+  // Plot rectangle.
   barGroups.selectAll("rect")
     .data(d => d)
     .join("rect")
@@ -167,14 +173,13 @@ function plot() {
     .attr("width", d => xBarRight(d[1]) - xBarRight(d[0])) // <-- 寬度是 d[1] 和 d[0] 的差值
     .attr("height", y.bandwidth());
 
-  // 添加文字標籤
+  // Add value annotation inside the rectangle.
   barGroups.selectAll("text")
     .data(d => d)
     .join("text")
-    .attr("x", d => xBarRight(d[1]) - 5) // <-- x 位置基於 d[0]
+    .attr("x", d => xBarRight(d[1]) - 4) // <-- x 位置基於 d[0]
     .attr("y", d => y(d.data.mod)! + y.bandwidth() / 2)
     .attr("text-anchor", "end")
-
     .attr("fill", "white")
     .attr("font-size", "11px")
     .attr("font-weight", "bold")
@@ -182,14 +187,17 @@ function plot() {
     .text(d => {
       const value = d[1] - d[0];
       const segmentWidth = xBarRight(d[1]) - xBarRight(d[0]); // <-- 使用新的比例尺計算寬度
-      if (value > 0 && segmentWidth > 20) {
+      if (value > 0 && segmentWidth > 30) {
         return value;
       }
       return "";
     });
+
+  svg.selectAll('text').attr('font-size', 16);
 }
 
 watch(data, plot);
+watch(viewportWidth, plot);
 onMounted(plot);
 </script>
 
@@ -199,7 +207,7 @@ onMounted(plot);
 
 <style lang="css" scoped>
 #chart-container {
-  background-color: #fff;
+  /* background-color: #fff; */
   padding: 10px;
   overflow: auto;
   height: 100vh;
