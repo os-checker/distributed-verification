@@ -36,13 +36,10 @@ const color = useStyleStore().color;
 
 // e.g. /base/
 const baseURL = useRuntimeConfig().app.baseURL;
-console.log("baseURL", baseURL);
-watch(active, val => console.log(`route.path=\`${val}\` baseURL=\`${baseURL}\` stripped=\`${val.replace(baseURL, "")}\``))
 
 function btnStyle(target: string) {
   // remove baseURL, leading and trailing /
   var stripped_active = active.value.replace(baseURL, "").replace(/^\/+/, "").replace(/\/+$/, "");
-  console.log(`is_active=${target === stripped_active} target=${target} stripped_active=${stripped_active} route.path=${active.value}`);
   return { background: (target === stripped_active) ? color.orange_light : color.primary, "border-color": "transparent" };
 }
 </script>
