@@ -56,7 +56,7 @@ function plot() {
   const elemId = "#chart-container";
 
   // Styling
-  const margin = { top: 30, right: 30, bottom: 30, left: 30 };
+  const margin = { top: 30, right: 40, bottom: 30, left: 10 };
   const width = viewportWidth.value - margin.left - margin.right;
   const height = module_names.value.length * 40 - margin.top - margin.bottom;
   const yAxisWidth = 150;
@@ -95,22 +95,22 @@ function plot() {
 
   const xViolinLeft = d3.scaleLinear()
     // Deternmin the range of x-axis.
-    .domain([0, d3.max(violinData.value, d => d.time)! * 1.1])
+    .domain([0, d3.max(violinData.value, d => d.time)! * 1.05])
     // NOTE: invert range, i.e. stretching to left with x-axis increasing
     .range([subplotWidthLeft, 0]);
 
   leftSvg.append("g")
-    .call(d3.axisTop(xViolinLeft).ticks(4));
+    .call(d3.axisTop(xViolinLeft).ticks(3));
 
   // Compute density.
   const histogram = d3.bin<ViolinDatum, number>()
     .domain(xViolinLeft.domain() as [number, number])
-    .thresholds(xViolinLeft.ticks(20))
+    .thresholds(xViolinLeft.ticks(10))
     .value((d: ViolinDatum) => d.time);
 
   const sumstat = d3.group(violinData.value, d => d.mod);
 
-  // Determine the maximum of violine height.
+  // Determine the maximum of violin height.
   let maxNum = 0;
   for (const mod of module_names.value) {
     const currentNum = d3.max(histogram(sumstat.get(mod)!), d => d.length)!;
@@ -121,7 +121,7 @@ function plot() {
     .range([0, y.bandwidth() / 2])
     .domain([0, maxNum]);
 
-  // Plot violine.
+  // Plot violin.
   leftSvg.selectAll("g.violin")
     .data(module_names.value)
     .join("g")
