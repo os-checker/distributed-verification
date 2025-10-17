@@ -196,15 +196,23 @@ function plot() {
   // Set font-size.
   svg.selectAll("text").attr("font-size", 16);
 
+  // Styles for legends & titles.
   const legendY = 10; // Move legend down by 10px.
   const legendYText = 15; // Move legend text down by 15px.
   const titleY = legendY + legendYText; // Move title text down.
 
   // Right plot title.
   svg.append("text")
+    .text("Verification Time")
+    .style("font-weight", "bold")
+    .attr("x", 5)
+    .attr("y", titleY);
+
+  // Right plot title.
+  svg.append("text")
     .text("Quantity Distribution of Kani Harnesses over Proof Kinds")
     .style("font-weight", "bold")
-    .attr("x", subplotStartRight + 10)
+    .attr("x", subplotStartRight + 5)
     .attr("y", titleY);
 
   // Right plot legend.
