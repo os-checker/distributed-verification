@@ -67,7 +67,7 @@ pub fn source_code_with(
 }
 
 fn get_all_attrs(tcx: TyCtxt, inst: &Instance) -> (Vec<String>, Option<ProofKind>) {
-    use super::kani::{PROOF, PROOF_FOR_CONTRACT};
+    use super::kani::{PROOF, PROOF_FOR_CONTRACT, TOOL};
     use rustc_hir::Attribute;
     use rustc_hir::attrs::AttributeKind;
 
@@ -80,7 +80,7 @@ fn get_all_attrs(tcx: TyCtxt, inst: &Instance) -> (Vec<String>, Option<ProofKind
             Attribute::Unparsed(unparsed) => {
                 let idents = &unparsed.path.segments;
                 if let Some(first) = idents.first()
-                    && first.as_str() == super::TOOL
+                    && first.as_str() == TOOL
                 {
                     if let Some(second) = idents.get(1) {
                         match second.as_str() {

@@ -87,6 +87,13 @@
           "verify::contract3"
         ]
       }
+    },
+    "count_in_module": {
+      "gen_contracts_by_macros::verify": {
+        "not_proof": 15,
+        "standard": 0,
+        "contract": 3
+      }
     }
   },
   "external": {

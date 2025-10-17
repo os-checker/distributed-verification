@@ -13,6 +13,7 @@
     "@nuxtjs/tailwindcss": "^6.14.0",
     "@pinia/nuxt": "^0.11.2",
     "@primeuix/themes": "^1.2.3",
+    "d3": "^7.9.0",
     "nuxt": "^4.0.1",
     "ofetch": "^1.4.1",
     "pinia": "^3.0.3",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "@primevue/nuxt-module": "^4.3.7",
+    "@types/d3": "^7.4.3",
     "@types/prismjs": "^1.26.5",
     "sass-embedded": "^1.90.0",
     "typescript": "^5.9.2",

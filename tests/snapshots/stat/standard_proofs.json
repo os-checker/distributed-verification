@@ -27,6 +27,23 @@
           "verify::standard_proof_empty"
         ]
       }
+    },
+    "count_in_module": {
+      "standard_proofs": {
+        "not_proof": 1,
+        "standard": 0,
+        "contract": 0
+      },
+      "standard_proofs::m": {
+        "not_proof": 1,
+        "standard": 0,
+        "contract": 0
+      },
+      "standard_proofs::verify": {
+        "not_proof": 0,
+        "standard": 3,
+        "contract": 0
+      }
     }
   },
   "external": {

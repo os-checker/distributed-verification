@@ -21,7 +21,7 @@ gh run download -D tmp -R model-checking/verify-rust-std 18371041107
 # * kani-list_verify-rust-std.json can be obtained from local, but here we just override it with the last CI
 # mv assets/kani-list_verify-rust-std-CI.json assets/kani-list_verify-rust-std.json
 # * override with the latest CI kani-list
-cp tmp/ubuntu-latest-kani-list.json/kani-list.json assets/kani-list_verify-rust-std-CI.json
+# cp tmp/ubuntu-latest-kani-list.json/kani-list.json assets/kani-list_verify-rust-std-CI.json
 
 ls -alh "$VERIFY_RUST_STD_LIBRARY"
 

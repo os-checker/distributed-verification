@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useDarkStore } from '~/stores/style';
+import { useDarkStore, useStyleStore } from '~/stores/style';
 
 const CLASS_DARK = "my-app-dark";
 const KEY = "theme";
@@ -29,12 +29,32 @@ if (isInitDark) {
   dark.value = true;
 }
 
+// Get current route path.
+const route = useRoute();
+const active = computed(() => route.path);
+const color = useStyleStore().color;
+
+// e.g. /base/
+const baseURL = useRuntimeConfig().app.baseURL;
+
+function btnStyle(target: string) {
+  // remove baseURL, leading and trailing /
+  var stripped_active = active.value.replace(baseURL, "").replace(/^\/+/, "").replace(/\/+$/, "");
+  return { background: (target === stripped_active) ? color.orange_light : color.primary, "border-color": "transparent" };
+}
 </script>
 
 <template>
   <div>
-    <div class="flex justify-between p-1">
-      <div></div>
+    <div class="flex justify-between my-1 px-2">
+      <div class="flex gap-2">
+        <NuxtLink to="/">
+          <Button title="Table" icon="pi pi-table" :style="btnStyle('')" />
+        </NuxtLink>
+        <NuxtLink to="chart">
+          <Button title="Chart" icon="pi pi-chart-bar" :style="btnStyle('chart')" />
+        </NuxtLink>
+      </div>
       <div>
         <Button :icon='dark ? "pi pi-sun" : "pi pi-moon"' @click="toggleTheme" severity="contrast" raised />
       </div>

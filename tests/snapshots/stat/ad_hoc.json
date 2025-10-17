@@ -27,6 +27,13 @@
           "adhoc::proof_in_fn_item::proof"
         ]
       }
+    },
+    "count_in_module": {
+      "ad_hoc::adhoc": {
+        "not_proof": 2,
+        "standard": 3,
+        "contract": 0
+      }
     }
   },
   "external": {

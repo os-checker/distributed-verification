@@ -1,0 +1,13 @@
+# This file is supplement to .gitignore used by the `--ignore-file` arg of rg 
+# to filter out search results in these files or folders.
+
+assets/**
+!**/*.sql
+!**/*.sh
+!assets/chart
+
+Cargo.lock
+tests/snapshots
+
+kani
+verify-rust-std

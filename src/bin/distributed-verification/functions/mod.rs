@@ -10,8 +10,7 @@ use rustc_public::{
 mod cache;
 pub use cache::{clear_rustc_ctx, set_rustc_ctx};
 
-mod kani;
-pub use kani::TOOL;
+pub mod kani;
 
 mod utils;
 

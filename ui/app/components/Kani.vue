@@ -143,7 +143,7 @@ watch(selectedHarness, val => {
 
 <template>
 
-  <DataTable :value="data" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" sortMode="multiple" removableSort
+  <DataTable :value="data" paginator :rows="20" :rowsPerPageOptions="[5, 10, 20, 50]" sortMode="multiple" removableSort
     v-model:multi-sort-meta="multiSort" stripedRows :tableStyle="{ width: `${Math.round(viewportWidth - 10)}px` }"
     tableClass="p-1" :scrollHeight="`${Math.round(viewportHeight * 0.78)}px`" v-model:filters="filters"
     :globalFilterFields="FILTERS.fields" @value-change="valueChange" selectionMode="single"

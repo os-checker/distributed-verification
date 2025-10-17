@@ -23,6 +23,9 @@ pub struct LocalCrateFnDefs {
     pub attrs: CountAttrs,
     pub fn_defs: FnDefs,
     pub kanitools: KaniTools,
+    /// Function counts directy in root and first submodule.
+    /// The count in root module is not traversally collected.
+    pub count_in_module: MapCountInModule,
 }
 
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
@@ -55,4 +58,28 @@ pub struct FnDefs {
 pub struct KaniToolsFnDefs {
     pub count: usize,
     pub names: Vec<String>,
+}
+
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+pub struct CountInModule {
+    pub not_proof: usize,
+    pub standard: usize,
+    pub contract: usize,
+}
+
+pub type MapCountInModule = IndexMap<String, CountInModule>;
+
+/// Mainly used to increment the count.
+pub fn with_map_count_in_module(
+    module: &str,
+    fn_val: impl FnOnce(&mut CountInModule),
+    map: &mut MapCountInModule,
+) {
+    if let Some(val) = map.get_mut(module) {
+        fn_val(val);
+    } else {
+        let mut val = CountInModule::default();
+        fn_val(&mut val);
+        map.insert(module.to_owned(), val);
+    }
 }
