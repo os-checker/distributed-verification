@@ -42,12 +42,22 @@ const violinData = computed<ViolinDatum[]>(() => {
   return v;
 });
 
+type AvgTime = { mod: string, avg: number };
+const avgTime = computed<AvgTime[]>(() => {
+  return data.value.map(d => ({ mod: d.mod, avg: d.avg ?? 0 })).filter(d => d.avg)
+});
+
 type StackedDatum = { mod: string } & Cnt;
 const proof_kinds = ["not_proof", "standard", "contract"];
 const stackedBarData = computed<StackedDatum[]>(() => {
   return data.value.map(d => ({
     mod: d.mod, not_proof: d.cnt.not_proof, standard: d.cnt.standard, contract: d.cnt.contract
   }));
+});
+
+type TotalCountLabel = { mod: string, cnt: number };
+const totalCount = computed<TotalCountLabel[]>(() => {
+  return data.value.map(d => ({ mod: d.mod, cnt: d3.sum(Object.values(d.cnt)) }))
 });
 
 function plot() {
@@ -57,7 +67,7 @@ function plot() {
 
   // Styling
   const margin = { top: 80, right: 40, bottom: 30, left: 10 };
-  const width = viewportWidth.value - margin.left - margin.right;
+  const width = viewportWidth.value - 20 - margin.left - margin.right;
   const height = module_names.value.length * 40 - margin.top - margin.bottom;
   const yAxisWidth = 150;
   const widthLeftRatio = 0.25;
@@ -114,7 +124,7 @@ function plot() {
   let maxNum = 0;
   for (const mod of module_names.value) {
     const currentNum = d3.max(histogram(sumstat.get(mod)!), d => d.length)!;
-    if (currentNum > maxNum) { maxNum = currentNum; }
+    if (currentNum > maxNum) maxNum = currentNum
   }
 
   const yViolin = d3.scaleLinear()
@@ -139,6 +149,15 @@ function plot() {
       .y1(d => yViolin(d.length))
       .curve(d3.curveCatmullRom)
     );
+
+  leftSvg.append("g").selectAll("text")
+    .data(avgTime.value)
+    .join("text")
+    .attr("x", 0)
+    .attr("y", d => y(d.mod)! + y.bandwidth() * 0.6)
+    .text(d => `${(d.avg / 1000).toFixed(1)}s`)
+    // Inherent font color sensitive to the theme.
+    .attr("fill", "currentColor");
 
   // Right side: stacked bar plot
   const rightSvg = svg.append("g")
@@ -172,16 +191,17 @@ function plot() {
     .attr("height", y.bandwidth());
 
   // Add value annotation inside the rectangle.
+  const yLabelAdjust = 0.64;
   barGroups.selectAll("text")
     .data(d => d)
     .join("text")
     .attr("x", d => xBarRight(d[1]) - 4) // <-- x 位置基於 d[0]
-    .attr("y", d => y(d.data.mod)! + y.bandwidth() / 2)
+    .attr("y", d => y(d.data.mod)! + y.bandwidth() * yLabelAdjust)
     .attr("text-anchor", "end")
     .attr("fill", "white")
     .attr("font-size", "11px")
     .attr("font-weight", "bold")
-    .attr("dominant-baseline", "middle")
+    // .attr("dominant-baseline", "middle")
     .text(d => {
       const value = d[1] - d[0];
       const segmentWidth = xBarRight(d[1]) - xBarRight(d[0]); // <-- 使用新的比例尺計算寬度
@@ -190,6 +210,16 @@ function plot() {
       }
       return "";
     });
+
+  // Add total count value next to the rectangle.
+  rightSvg.append("g").selectAll("text")
+    .data(totalCount.value)
+    .join("text")
+    .attr("x", d => xBarRight(d.cnt) + 4)
+    .attr("y", d => y(d.mod)! + y.bandwidth() * yLabelAdjust)
+    .text(d => `(${d.cnt.toString()})`)
+    // Inherent font color sensitive to the theme.
+    .attr("fill", "currentColor");
 
   svg = d3.select("svg");
 
@@ -203,8 +233,9 @@ function plot() {
 
   // Right plot title.
   svg.append("text")
-    .text("Verification Time")
+    .text("Average Verification Time and Distribution (unit: ms)")
     .style("font-weight", "bold")
+    .attr("fill", "currentColor")
     .attr("x", 5)
     .attr("y", titleY);
 
@@ -212,6 +243,7 @@ function plot() {
   svg.append("text")
     .text("Quantity Distribution of Kani Harnesses over Proof Kinds")
     .style("font-weight", "bold")
+    .attr("fill", "currentColor")
     .attr("x", subplotStartRight + 5)
     .attr("y", titleY);
 
@@ -231,6 +263,7 @@ function plot() {
     .attr('fill', d => color(d));
   legend.append("text")
     .text(d => d)
+    .attr("fill", "currentColor")
     .attr('transform', `translate(${legendRectWidth + 4},${legendYText})`);
 }
 
