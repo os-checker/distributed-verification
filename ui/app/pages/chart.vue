@@ -56,7 +56,7 @@ function plot() {
   const elemId = "#chart-container";
 
   // Styling
-  const margin = { top: 30, right: 40, bottom: 30, left: 10 };
+  const margin = { top: 80, right: 40, bottom: 30, left: 10 };
   const width = viewportWidth.value - margin.left - margin.right;
   const height = module_names.value.length * 40 - margin.top - margin.bottom;
   const yAxisWidth = 150;
@@ -69,7 +69,7 @@ function plot() {
   d3.select(elemId).selectAll("*").remove();
 
   // Set up SVG container.
-  const svg = d3.select(elemId)
+  var svg = d3.select(elemId)
     .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -154,15 +154,13 @@ function plot() {
   rightSvg.append("g")
     .call(d3.axisTop(xBarRight).ticks(5));
 
-  const color = d3.scaleOrdinal()
-    .domain(proof_kinds)
-    .range(["#8da0cb", "#fc8d62", "#FFC300"]);
+  const color = d3.scaleOrdinal(["#8da0cb", "#fc8d62", "#FFC300"]).domain(proof_kinds);
 
   const barGroups = rightSvg.append("g")
     .selectAll("g")
     .data(stackedData)
     .join("g")
-    .attr("fill", d => color(d.key) as any);
+    .attr("fill", d => color(d.key));
 
   // Plot rectangle.
   barGroups.selectAll("rect")
@@ -193,7 +191,39 @@ function plot() {
       return "";
     });
 
-  svg.selectAll('text').attr('font-size', 16);
+  svg = d3.select("svg");
+
+  // Set font-size.
+  svg.selectAll("text").attr("font-size", 16);
+
+  const legendY = 10; // Move legend down by 10px.
+  const legendYText = 15; // Move legend text down by 15px.
+  const titleY = legendY + legendYText; // Move title text down.
+
+  // Right plot title.
+  svg.append("text")
+    .text("Quantity Distribution of Kani Harnesses over Proof Kinds")
+    .style("font-weight", "bold")
+    .attr("x", subplotStartRight + 10)
+    .attr("y", titleY);
+
+  // Right plot legend.
+  const legendItemWidth = 110;
+  const legendRectWidth = 20;
+  const legendStartX = width - 300;
+  const legend = svg.append("g")
+    .attr('transform', `translate(${legendStartX},${legendY})`)
+    .selectAll("g")
+    .data(proof_kinds)
+    .enter().append('g')
+    .attr('transform', (_, i) => `translate(${i * legendItemWidth},0)`);
+  legend.append('rect')
+    .attr('width', legendRectWidth)
+    .attr('height', legendRectWidth)
+    .attr('fill', d => color(d));
+  legend.append("text")
+    .text(d => d)
+    .attr('transform', `translate(${legendRectWidth + 4},${legendYText})`);
 }
 
 watch(data, plot);
