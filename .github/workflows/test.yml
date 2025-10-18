@@ -79,7 +79,8 @@ jobs:
       - name: Kani list with Autoharness
         working-directory: verify-rust-std
         if: env.AUTO == '-autoharness'
-        run: kani autoharness -Z autoharness --list ${{ env.UNSTABLE_ARGS }} --std ./library --format=json \
+        run: |
+          kani autoharness -Z autoharness --list ${{ env.UNSTABLE_ARGS }} --std ./library --format=json \
             --include-pattern "<(.+)[[:space:]]as[[:space:]](.+)>::disjoint_bitor" \
             --include-pattern "<(.+)[[:space:]]as[[:space:]](.+)>::unchecked_disjoint_bitor" \
             --include-pattern "<(.+)[[:space:]]as[[:space:]]iter::range::Step>::backward_unchecked" \
