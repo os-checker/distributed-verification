@@ -32,7 +32,5 @@ jobs:
           kani autoharness -Z autoharness -Z function-contracts -Z mem-predicates \
             -Z float-lib -Z c-ffi -Z loop-contracts -Z quantifiers -Z stubbing \
             --std ./library -Z unstable-options --harness-timeout 10m --default-unwind 1000 \
-            # This line reduces time by skipping mismatched autoharness, but it still includes contract harnesses.
-            --include-pattern intrinsics::verify::should_succeed_i32_to_u32 \
-            # This line reduces time by running the exact harness verification.
-            --harness intrinsics::verify::should_succeed_i32_to_u32 
+            --include-pattern intrinsics::verify::should_succeed_i32_to_u32 \ # This line reduces time by skipping mismatched autoharness, but it still includes contract harnesses.
+            --harness intrinsics::verify::should_succeed_i32_to_u32 # This line reduces time by running the exact harness verification.
