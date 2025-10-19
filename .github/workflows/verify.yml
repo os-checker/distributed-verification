@@ -1,4 +1,4 @@
-name: Run Tests
+name: Verify
 
 on:
   push:
@@ -24,4 +24,5 @@ jobs:
           kani autoharness -Z autoharness -Z function-contracts -Z mem-predicates \
             -Z float-lib -Z c-ffi -Z loop-contracts -Z quantifiers -Z stubbing \
             --std ./library -Z unstable-options --harness-timeout 10m --default-unwind 1000 \
-            --include-pattern intrinsics::verify::should_succeed_i32_to_u32
+            --include-pattern intrinsics::verify::should_succeed_i32_to_u32 \
+            --harness intrinsics::verify::should_succeed_i32_to_u32
