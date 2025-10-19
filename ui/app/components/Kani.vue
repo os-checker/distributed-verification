@@ -43,6 +43,8 @@ const counts = computed<Counts>(() => {
     if (standard !== 0) kinds.push({ kind: ProofKind.Standard, count: standard })
     const contract = v.filter(ele => ele.proof_kind === ProofKind.Contract).length;
     if (contract !== 0) kinds.push({ kind: ProofKind.Contract, count: contract })
+    const auto = v.filter(ele => ele.proof_kind === ProofKind.Auto).length;
+    if (auto !== 0) kinds.push({ kind: ProofKind.Auto, count: auto })
     const unknown = v.filter(ele => !ele.proof_kind || ele.proof_kind === ProofKind.Unknown).length;
     if (unknown !== 0) kinds.push({ kind: ProofKind.Unknown, count: unknown })
     kinds.sort((a, b) => b.count - a.count);
