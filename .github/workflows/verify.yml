@@ -20,8 +20,12 @@ jobs:
 
       - name: Run Kani on Autoharness
         working-directory: verify-rust-std
+        # This command only takes less than 40s to finish.
         run: |
           kani autoharness -Z autoharness -Z function-contracts -Z mem-predicates \
             -Z float-lib -Z c-ffi -Z loop-contracts -Z quantifiers -Z stubbing \
             --std ./library -Z unstable-options --harness-timeout 10m --default-unwind 1000 \
-            --harness intrinsics::verify::should_succeed_i32_to_u32
+            # This line reduces time by skipping mismatched autoharness, but it still includes contract harnesses.
+            --include-pattern intrinsics::verify::should_succeed_i32_to_u32 \
+            # This line reduces time by running the exact harness verification.
+            --harness intrinsics::verify::should_succeed_i32_to_u32 
