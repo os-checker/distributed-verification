@@ -57,13 +57,6 @@ jobs:
       UNSTABLE_ARGS: -Z function-contracts -Z mem-predicates -Z float-lib -Z c-ffi -Z loop-contracts -Z quantifiers -Z stubbing
       AUTO: ${{ matrix.autoharness }}
     steps:
-      - name: Remove unnecessary software to free up disk space
-        run: |
-          # inspired by https://github.com/easimon/maximize-build-space/blob/master/action.yml
-          df -h
-          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /usr/local/.ghcup
-          df -h
-
       - uses: actions/checkout@v4
         with:
           submodules: 'recursive'
