@@ -31,6 +31,9 @@ LIMIT
   10;
 
 SELECT
+  '_______________________________________' AS _;
+
+SELECT
   crate,
   count() AS `Functions`,
   COUNT(
