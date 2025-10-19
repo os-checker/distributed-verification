@@ -1,0 +1,27 @@
+name: Run Tests
+
+on:
+  push:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    # runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+
+      - name: Install kani
+        run: bash ./.github/install-kani.sh
+
+      - name: Run Kani on Autoharness
+        working-directory: verify-rust-std
+        run: |
+          kani autoharness -Z autoharness -Z function-contracts -Z mem-predicates \
+            -Z float-lib -Z c-ffi -Z loop-contracts -Z quantifiers -Z stubbing \
+            --std ./library -Z unstable-options --harness-timeout 10m --default-unwind 1000 \
+            --include-pattern intrinsics::verify::should_succeed_i32_to_u32
