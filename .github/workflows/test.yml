@@ -57,13 +57,6 @@ jobs:
       UNSTABLE_ARGS: -Z function-contracts -Z mem-predicates -Z float-lib -Z c-ffi -Z loop-contracts -Z quantifiers -Z stubbing
       AUTO: ${{ matrix.autoharness }}
     steps:
-      - name: Remove unnecessary software to free up disk space
-        run: |
-          # inspired by https://github.com/easimon/maximize-build-space/blob/master/action.yml
-          df -h
-          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /usr/local/.ghcup
-          df -h
-
       - uses: actions/checkout@v4
         with:
           submodules: 'recursive'
@@ -73,13 +66,119 @@ jobs:
 
       - name: Kani list
         working-directory: verify-rust-std
-        if: ${{ env.AUTO == '' }}
+        if: env.AUTO == ''
         run:  kani list ${{ env.UNSTABLE_ARGS }} --std ./library --format=json
 
       - name: Kani list with Autoharness
         working-directory: verify-rust-std
-        if: ${{ env.AUTO == '-autoharness' }}
-        run: kani autoharness -Z autoharness --list ${{ env.UNSTABLE_ARGS }} --std ./library --format=json
+        if: env.AUTO == '-autoharness'
+        run: |
+          kani autoharness -Z autoharness --list ${{ env.UNSTABLE_ARGS }} --std ./library --format=json \
+            --include-pattern "<(.+)[[:space:]]as[[:space:]](.+)>::disjoint_bitor" \
+            --include-pattern "<(.+)[[:space:]]as[[:space:]](.+)>::unchecked_disjoint_bitor" \
+            --include-pattern "<(.+)[[:space:]]as[[:space:]]iter::range::Step>::backward_unchecked" \
+            --include-pattern "<(.+)[[:space:]]as[[:space:]]iter::range::Step>::forward_unchecked" \
+            --include-pattern alloc::__default_lib_allocator:: \
+            --include-pattern alloc::layout::Layout::from_size_align \
+            --include-pattern ascii::ascii_char::AsciiChar::from_u8 \
+            --include-pattern char::convert::from_u32_unchecked \
+            --include-pattern core_arch::x86::__m128d::as_f64x2 \
+            --include-pattern "convert::num::<impl.convert::From<num::nonzero::NonZero<" \
+            --include-pattern "num::<impl.i8>::unchecked_add" \
+            --include-pattern "num::<impl.i16>::unchecked_add" \
+            --include-pattern "num::<impl.i32>::unchecked_add" \
+            --include-pattern "num::<impl.i64>::unchecked_add" \
+            --include-pattern "num::<impl.i128>::unchecked_add" \
+            --include-pattern "num::<impl.isize>::unchecked_add" \
+            --include-pattern "num::<impl.u8>::unchecked_add" \
+            --include-pattern "num::<impl.u16>::unchecked_add" \
+            --include-pattern "num::<impl.u32>::unchecked_add" \
+            --include-pattern "num::<impl.u64>::unchecked_add" \
+            --include-pattern "num::<impl.u128>::unchecked_add" \
+            --include-pattern "num::<impl.usize>::unchecked_add" \
+            --include-pattern "num::<impl.i8>::unchecked_neg" \
+            --include-pattern "num::<impl.i16>::unchecked_neg" \
+            --include-pattern "num::<impl.i32>::unchecked_neg" \
+            --include-pattern "num::<impl.i64>::unchecked_neg" \
+            --include-pattern "num::<impl.i128>::unchecked_neg" \
+            --include-pattern "num::<impl.isize>::unchecked_neg" \
+            --include-pattern "num::<impl.i8>::unchecked_sh" \
+            --include-pattern "num::<impl.i16>::unchecked_sh" \
+            --include-pattern "num::<impl.i32>::unchecked_sh" \
+            --include-pattern "num::<impl.i64>::unchecked_sh" \
+            --include-pattern "num::<impl.i128>::unchecked_sh" \
+            --include-pattern "num::<impl.isize>::unchecked_sh" \
+            --include-pattern "num::<impl.u8>::unchecked_sh" \
+            --include-pattern "num::<impl.u16>::unchecked_sh" \
+            --include-pattern "num::<impl.u32>::unchecked_sh" \
+            --include-pattern "num::<impl.u64>::unchecked_sh" \
+            --include-pattern "num::<impl.u128>::unchecked_sh" \
+            --include-pattern "num::<impl.usize>::unchecked_sh" \
+            --include-pattern "num::<impl.i8>::unchecked_sub" \
+            --include-pattern "num::<impl.i16>::unchecked_sub" \
+            --include-pattern "num::<impl.i32>::unchecked_sub" \
+            --include-pattern "num::<impl.i64>::unchecked_sub" \
+            --include-pattern "num::<impl.i128>::unchecked_sub" \
+            --include-pattern "num::<impl.isize>::unchecked_sub" \
+            --include-pattern "num::<impl.u8>::unchecked_sub" \
+            --include-pattern "num::<impl.u16>::unchecked_sub" \
+            --include-pattern "num::<impl.u32>::unchecked_sub" \
+            --include-pattern "num::<impl.u64>::unchecked_sub" \
+            --include-pattern "num::<impl.u128>::unchecked_sub" \
+            --include-pattern "num::<impl.usize>::unchecked_sub" \
+            --include-pattern "num::<impl.i8>::wrapping_sh" \
+            --include-pattern "num::<impl.i16>::wrapping_sh" \
+            --include-pattern "num::<impl.i32>::wrapping_sh" \
+            --include-pattern "num::<impl.i64>::wrapping_sh" \
+            --include-pattern "num::<impl.i128>::wrapping_sh" \
+            --include-pattern "num::<impl.isize>::wrapping_sh" \
+            --include-pattern "num::<impl.u8>::wrapping_sh" \
+            --include-pattern "num::<impl.u16>::wrapping_sh" \
+            --include-pattern "num::<impl.u32>::wrapping_sh" \
+            --include-pattern "num::<impl.u64>::wrapping_sh" \
+            --include-pattern "num::<impl.u128>::wrapping_sh" \
+            --include-pattern "num::<impl.usize>::wrapping_sh" \
+            --include-pattern "num::nonzero::NonZero::<i8>::count_ones" \
+            --include-pattern "num::nonzero::NonZero::<i16>::count_ones" \
+            --include-pattern "num::nonzero::NonZero::<i32>::count_ones" \
+            --include-pattern "num::nonzero::NonZero::<i64>::count_ones" \
+            --include-pattern "num::nonzero::NonZero::<i128>::count_ones" \
+            --include-pattern "num::nonzero::NonZero::<isize>::count_ones" \
+            --include-pattern "num::nonzero::NonZero::<u8>::count_ones" \
+            --include-pattern "num::nonzero::NonZero::<u16>::count_ones" \
+            --include-pattern "num::nonzero::NonZero::<u32>::count_ones" \
+            --include-pattern "num::nonzero::NonZero::<u64>::count_ones" \
+            --include-pattern "num::nonzero::NonZero::<u128>::count_ones" \
+            --include-pattern "num::nonzero::NonZero::<usize>::count_ones" \
+            --include-pattern "num::nonzero::NonZero::<i8>::rotate_" \
+            --include-pattern "num::nonzero::NonZero::<i16>::rotate_" \
+            --include-pattern "num::nonzero::NonZero::<i32>::rotate_" \
+            --include-pattern "num::nonzero::NonZero::<i64>::rotate_" \
+            --include-pattern "num::nonzero::NonZero::<i128>::rotate_" \
+            --include-pattern "num::nonzero::NonZero::<isize>::rotate_" \
+            --include-pattern "num::nonzero::NonZero::<u8>::rotate_" \
+            --include-pattern "num::nonzero::NonZero::<u16>::rotate_" \
+            --include-pattern "num::nonzero::NonZero::<u32>::rotate_" \
+            --include-pattern "num::nonzero::NonZero::<u64>::rotate_" \
+            --include-pattern "num::nonzero::NonZero::<u128>::rotate_" \
+            --include-pattern "num::nonzero::NonZero::<usize>::rotate_" \
+            --include-pattern ptr::align_offset::mod_inv \
+            --include-pattern ptr::alignment::Alignment::as_nonzero \
+            --include-pattern ptr::alignment::Alignment::as_usize \
+            --include-pattern ptr::alignment::Alignment::log2 \
+            --include-pattern ptr::alignment::Alignment::mask \
+            --include-pattern ptr::alignment::Alignment::new \
+            --include-pattern ptr::alignment::Alignment::new_unchecked \
+            --include-pattern time::Duration::from_micros \
+            --include-pattern time::Duration::from_millis \
+            --include-pattern time::Duration::from_nanos \
+            --exclude-pattern time::Duration::from_nanos_u128 \
+            --include-pattern time::Duration::from_secs \
+            --exclude-pattern time::Duration::from_secs_f \
+            --include-pattern unicode::unicode_data::conversions::to_ \
+            --exclude-pattern ::precondition_check \
+            -Z unstable-options --harness-timeout 10m \
+            --default-unwind 1000 \
 
       - name: View list
         working-directory: verify-rust-std
