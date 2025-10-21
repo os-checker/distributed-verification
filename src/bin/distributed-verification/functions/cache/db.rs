@@ -55,6 +55,7 @@ impl Db {
                 ":callees_len": func.callees_len,
                 ":callees": to_string_pretty(&func.callees).unwrap(),
                 ":crate": &func.krate,
+                ":path": &func.path,
             };
 
             if let Err(err) = stmt.insert(params) {
@@ -119,6 +120,7 @@ fn cache_to_db_func(map: &Functions, crate_name: &str) -> impl Iterator<Item = R
             callees_len: callees.len(),
             callees,
             krate: crate_name.into(),
+            path: src.path.clone(),
         })
     })
 }

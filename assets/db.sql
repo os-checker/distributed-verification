@@ -14,19 +14,18 @@
 --   callees_len INTEGER,
 --   callees TEXT,
 --   crate TEXT
+--   path TEXT
 -- ) STRICT;
 SELECT
   crate,
-  file,
   name,
-  hash,
-  hash_direct,
-  proof_kind,
-  callees_len
+  path
 FROM
   db
 WHERE
-  proof_kind IS NOT NULL
+  name LIKE 'convert::num::<impl convert::From<num::nonzero::NonZero<i32>> for num::nonzero::NonZero<i128>>::from'
+  OR name='<ascii::ascii_char::AsciiChar as iter::range::Step>::backward_unchecked'
+  OR name='<str::pattern::MatchOnly as str::pattern::TwoWayStrategy>::matching'
 LIMIT
   10;
 
