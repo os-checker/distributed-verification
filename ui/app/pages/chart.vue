@@ -4,27 +4,40 @@ import { download } from "~/shared/utils";
 
 const { viewportWidth } = storeToRefs(useStyleStore());
 
-type Cnt = { not_proof: number, standard: number, contract: number };
-type Datum = { mod: string, cnt: Cnt, avg?: number, time?: number[] };
+type Cnt = { NotProof?: number, Standard?: number, Contract?: number, AutoStandard?: number, AutoContract?: number };
+type Time = { avg: number, time: number[] }
+type Datum = { mod: string, total: number, kind?: Cnt, time?: Time };
 const URL = "https://raw.githubusercontent.com/os-checker/verify-rust-std_data/refs/heads/main/chart/merged.json";
 
 const data = ref<Datum[]>([]);
 download<Datum[]>(URL).then(v => {
-  data.value = v.sort((a, b) => {
-    // proofs first
-    var cmp_cnt = b.cnt.standard + b.cnt.contract - a.cnt.standard - a.cnt.contract;
-    if (cmp_cnt !== 0) return cmp_cnt;
+  data.value = v
+    .map(d => {
+      const k = d.kind;
+      // Compute NotProof
+      if (k) k.NotProof =
+        d.total - (k.Standard ?? 0) - (k.Contract ?? 0) - (k.AutoStandard ?? 0) - (k.AutoContract ?? 0)
+      else d.kind = { NotProof: d.total };
+      return d;
+    })
+    .sort((a, b) => {
+      // proofs first
+      if (a.kind === undefined && b.kind !== undefined) return 1;
+      if (b.kind === undefined && a.kind !== undefined) return -1;
+      // More proofs prior
+      var cmp_cnt = (b.total - (b.kind?.NotProof ?? 0)) - (a.total - (a.kind?.NotProof ?? 0));
+      if (cmp_cnt !== 0) return cmp_cnt;
 
-    // avg time second: the one with time or higher time is prior
-    if (a.avg === undefined && b.avg !== undefined) return 1;
-    if (b.avg === undefined && a.avg !== undefined) return -1;
-    const cmp_time = (b.avg ?? 0) - (a.avg ?? 0);
-    if (cmp_time !== 0) return cmp_time;
+      // avg time second: the one with time or higher time is prior
+      if (a.time === undefined && b.time !== undefined) return 1;
+      if (b.time === undefined && a.time !== undefined) return -1;
+      const cmp_time = (b.time?.avg ?? 0) - (a.time?.avg ?? 0);
+      if (cmp_time !== 0) return cmp_time;
 
-    // total count last
-    cmp_cnt += b.cnt.not_proof - a.cnt.not_proof;
-    return cmp_cnt;
-  });
+      // total count last
+      cmp_cnt += b.total - a.total;
+      return cmp_cnt;
+    });
 });
 
 const module_names = computed<string[]>(() => data.value.map(d => d.mod));
@@ -34,7 +47,7 @@ const violinData = computed<ViolinDatum[]>(() => {
   let v: ViolinDatum[] = [];
   for (const d of data.value) {
     if (d.time)
-      for (const t of d.time ?? []) {
+      for (const t of d.time?.time ?? []) {
         v.push({ mod: d.mod, time: t });
       }
     else v.push({ mod: d.mod, time: 0 });
@@ -44,20 +57,20 @@ const violinData = computed<ViolinDatum[]>(() => {
 
 type AvgTime = { mod: string, avg: number };
 const avgTime = computed<AvgTime[]>(() => {
-  return data.value.map(d => ({ mod: d.mod, avg: d.avg ?? 0 })).filter(d => d.avg)
+  return data.value.map(d => ({ mod: d.mod, avg: d.time?.avg ?? 0 })).filter(d => d.avg)
 });
 
 type StackedDatum = { mod: string } & Cnt;
-const proof_kinds = ["not_proof", "standard", "contract"];
-const stackedBarData = computed<StackedDatum[]>(() => {
-  return data.value.map(d => ({
-    mod: d.mod, not_proof: d.cnt.not_proof, standard: d.cnt.standard, contract: d.cnt.contract
-  }));
-});
+const proof_kinds = ["NotProof", "Standard", "Contract", "AutoStandard", "AutoContract"];
+const stackedBarData = computed<StackedDatum[]>(() => data.value.map(d => ({
+  mod: d.mod, NotProof: d.kind?.NotProof ?? 0,
+  Standard: d.kind?.Standard ?? 0, Contract: d.kind?.Contract ?? 0,
+  AutoStandard: d.kind?.AutoStandard ?? 0, AutoContract: d.kind?.AutoContract ?? 0
+})));
 
 type TotalCountLabel = { mod: string, cnt: number };
 const totalCount = computed<TotalCountLabel[]>(() => {
-  return data.value.map(d => ({ mod: d.mod, cnt: d3.sum(Object.values(d.cnt)) }))
+  return data.value.map(d => ({ mod: d.mod, cnt: d3.sum(Object.values(d.kind ?? {})) }))
 });
 
 function plot() {
@@ -173,7 +186,7 @@ function plot() {
   rightSvg.append("g")
     .call(d3.axisTop(xBarRight).ticks(5));
 
-  const color = d3.scaleOrdinal(["#8da0cb", "#fc8d62", "#FFC300"]).domain(proof_kinds);
+  const color = d3.scaleOrdinal(["#8DA0CB", "#FC8D62", "#FFC300", "#D7B0E3", "#750699"]).domain(proof_kinds);
 
   const barGroups = rightSvg.append("g")
     .selectAll("g")
@@ -241,30 +254,38 @@ function plot() {
 
   // Right plot title.
   svg.append("text")
-    .text("Quantity Distribution of Kani Harnesses over Proof Kinds")
+    .text("Count of Kani Harnesses over Proof Kinds")
     .style("font-weight", "bold")
     .attr("fill", "currentColor")
     .attr("x", subplotStartRight + 5)
     .attr("y", titleY);
 
   // Right plot legend.
-  const legendItemWidth = 110;
   const legendRectWidth = 20;
-  const legendStartX = width - 300;
+  const legendStartX = width - 550;
   const legend = svg.append("g")
     .attr('transform', `translate(${legendStartX},${legendY})`)
     .selectAll("g")
     .data(proof_kinds)
-    .enter().append('g')
-    .attr('transform', (_, i) => `translate(${i * legendItemWidth},0)`);
+    .enter().append('g');
   legend.append('rect')
     .attr('width', legendRectWidth)
     .attr('height', legendRectWidth)
     .attr('fill', d => color(d));
   legend.append("text")
     .text(d => d)
-    .attr("fill", "currentColor")
-    .attr('transform', `translate(${legendRectWidth + 4},${legendYText})`);
+    .attr("x", legendRectWidth + 4)
+    .attr("y", legendY + legendRectWidth * 0.35)
+    .attr("fill", "currentColor");
+
+  const gap = 5;
+  var offsetX = 0;
+  legend.each(function () {
+    const g = d3.select(this)!;
+    const bbox = g.node()!.getBBox(); // 整组实际占宽
+    g.attr("transform", `translate(${offsetX}, 0)`);
+    offsetX += bbox.width + gap;     // 下一项起点
+  })
 }
 
 watch(data, plot);
