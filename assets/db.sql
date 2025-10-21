@@ -23,7 +23,8 @@ SELECT
 FROM
   db
 WHERE
-  name LIKE 'convert::num::<impl convert::From<num::nonzero::NonZero<i32>> for num::nonzero::NonZero<i128>>::from'
+  name LIKE '%::set_len'
+  OR name='convert::num::<impl convert::From<num::nonzero::NonZero<i32>> for num::nonzero::NonZero<i128>>::from'
   OR name='<ascii::ascii_char::AsciiChar as iter::range::Step>::backward_unchecked'
   OR name='<str::pattern::MatchOnly as str::pattern::TwoWayStrategy>::matching'
 LIMIT

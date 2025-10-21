@@ -71,10 +71,27 @@ pub fn source_code_with(
     }
 }
 
-// FIXME: need to comfirm how `tcx.def_path_str(def_id)` differs from this
+// NOTE: `tcx.def_path_str(def_id)` is identical to name, containing generics,
+// like `<ascii::ascii_char::AsciiChar as iter::range::Step>::backward_unchecked`
+// thus is not what we want.
 fn defid_to_path(did: DefId, tcx: TyCtxt) -> Box<str> {
-    tcx.def_path_str(did).into()
-    // use std::fmt::Write;
+    use std::fmt::Write;
+    let mut buf = String::with_capacity(128);
+
+    let mut def_id = did;
+    loop {
+        if let Some((parent_did, def_kind)) = tcx.assoc_parent(def_id) {
+            _ = writeln!(&mut buf, "({def_kind:?}) {:?}", tcx.def_path_str(parent_did));
+            def_id = parent_did;
+        } else {
+            _ = write!(&mut buf, "{:?}", def_id);
+            break;
+        }
+    }
+    buf.into()
+
+    // format!("{:?}", tcx.parent_module_from_def_id(did.expect_local())).into()
+
     //
     // let mut buf = String::with_capacity(64);
     // let def_path = tcx.def_path(did);
