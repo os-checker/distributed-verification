@@ -1,7 +1,7 @@
 use distributed_verification::{InstKind, MacroBacktrace, ProofKind, SourceCode};
 use itertools::Itertools;
 use rustc_hir::def_id::DefId;
-use rustc_middle::ty::TyCtxt;
+use rustc_middle::ty::{TyCtxt, TyKind};
 use rustc_public::{
     CrateDef,
     mir::mono::{Instance, InstanceKind},
@@ -78,17 +78,11 @@ fn defid_to_path(did: DefId, tcx: TyCtxt) -> Box<str> {
     use std::fmt::Write;
     let mut buf = String::with_capacity(128);
 
-    let mut def_id = did;
-    loop {
-        if let Some((parent_did, def_kind)) = tcx.assoc_parent(def_id) {
-            _ = writeln!(&mut buf, "({def_kind:?}) {:?}", tcx.def_path_str(parent_did));
-            def_id = parent_did;
-        } else {
-            _ = write!(&mut buf, "{:?}", def_id);
-            break;
-        }
+    let ty = tcx.type_of(did).instantiate_identity();
+    if let TyKind::FnDef(def_id, _) = ty.kind() {
+        return tcx.def_path_str(def_id).into();
     }
-    buf.into()
+    _ = write!(&mut buf, "{did:?}");
 
     // format!("{:?}", tcx.parent_module_from_def_id(did.expect_local())).into()
 
@@ -111,7 +105,7 @@ fn defid_to_path(did: DefId, tcx: TyCtxt) -> Box<str> {
     //     _ = write!(&mut buf, "{fmt_path}");
     // }
     //
-    // buf.into()
+    buf.into()
 }
 
 fn get_all_attrs(tcx: TyCtxt, inst: &Instance) -> (Vec<String>, Option<ProofKind>) {
