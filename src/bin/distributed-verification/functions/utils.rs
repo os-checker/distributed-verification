@@ -1,7 +1,6 @@
 use distributed_verification::{InstKind, MacroBacktrace, ProofKind, SourceCode};
-use itertools::Itertools;
 use rustc_hir::def_id::DefId;
-use rustc_middle::ty::{TyCtxt, TyKind};
+use rustc_middle::ty::TyCtxt;
 use rustc_public::{
     CrateDef,
     mir::mono::{Instance, InstanceKind},
@@ -75,24 +74,19 @@ pub fn source_code_with(
 // like `<ascii::ascii_char::AsciiChar as iter::range::Step>::backward_unchecked`
 // thus is not what we want.
 fn defid_to_path(did: DefId, tcx: TyCtxt) -> Box<str> {
-    use std::fmt::Write;
-
     let mut buf = String::with_capacity(64);
+
     let def_path = tcx.def_path(did);
-    let fmt_path = def_path
-        .data
-        .iter()
-        .map(|d| match d.data.name() {
-            rustc_hir::definitions::DefPathDataName::Named(symbol) => symbol,
-            rustc_hir::definitions::DefPathDataName::Anon { namespace } => namespace,
-        })
-        .format_with("::", |ele, f| f(&format_args!("{}", ele.as_str())));
-    if did.is_local() {
-        let crate_name = tcx.crate_name(def_path.krate);
-        let crate_name = crate_name.as_str();
-        _ = write!(&mut buf, "{crate_name}::{fmt_path}");
-    } else {
-        _ = write!(&mut buf, "{fmt_path}");
+    // Crate root is not in def_path.data even for non-local items,
+    // so always add the root.
+    buf.push_str(tcx.crate_name(def_path.krate).as_str());
+
+    for name in def_path.data.iter().map(|d| match d.data.name() {
+        rustc_hir::definitions::DefPathDataName::Named(symbol) => symbol,
+        rustc_hir::definitions::DefPathDataName::Anon { namespace } => namespace,
+    }) {
+        buf.push_str("::");
+        buf.push_str(name.as_str());
     }
 
     buf.into()
