@@ -74,15 +74,8 @@ pub fn source_code_with(
 // NOTE: `tcx.def_path_str(def_id)` is identical to name, containing generics,
 // like `<ascii::ascii_char::AsciiChar as iter::range::Step>::backward_unchecked`
 // thus is not what we want.
-fn defid_to_path(mut did: DefId, tcx: TyCtxt) -> Box<str> {
+fn defid_to_path(did: DefId, tcx: TyCtxt) -> Box<str> {
     use std::fmt::Write;
-
-    let ty = tcx.type_of(did).instantiate_identity();
-    if let TyKind::FnDef(def_id, _) = ty.kind()
-        && let Some((parent_id, _)) = tcx.assoc_parent(*def_id)
-    {
-        did = parent_id;
-    }
 
     let mut buf = String::with_capacity(64);
     let def_path = tcx.def_path(did);
