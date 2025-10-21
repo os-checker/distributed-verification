@@ -1,6 +1,6 @@
 [
   {
-    "hash": "6049791535301547191723508871959023129",
+    "hash": "94249917058657327412202584109662011503",
     "name": "verify::proof1",
     "file": "tests/compare/gen_proofs_by_nested_macros.rs",
     "proof_kind": "Standard"
