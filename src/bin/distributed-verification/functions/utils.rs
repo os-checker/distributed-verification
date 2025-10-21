@@ -73,27 +73,28 @@ pub fn source_code_with(
 
 // FIXME: need to comfirm how `tcx.def_path_str(def_id)` differs from this
 fn defid_to_path(did: DefId, tcx: TyCtxt) -> Box<str> {
-    use std::fmt::Write;
-
-    let mut buf = String::with_capacity(64);
-    let def_path = tcx.def_path(did);
-    let fmt_path = def_path
-        .data
-        .iter()
-        .map(|d| match d.data.name() {
-            rustc_hir::definitions::DefPathDataName::Named(symbol) => symbol,
-            rustc_hir::definitions::DefPathDataName::Anon { namespace } => namespace,
-        })
-        .format_with("::", |ele, f| f(&format_args!("{}", ele.as_str())));
-    if did.is_local() {
-        let crate_name = tcx.crate_name(def_path.krate);
-        let crate_name = crate_name.as_str();
-        _ = write!(&mut buf, "{crate_name}::{fmt_path}");
-    } else {
-        _ = write!(&mut buf, "{fmt_path}");
-    }
-
-    buf.into()
+    tcx.def_path_str(did).into()
+    // use std::fmt::Write;
+    //
+    // let mut buf = String::with_capacity(64);
+    // let def_path = tcx.def_path(did);
+    // let fmt_path = def_path
+    //     .data
+    //     .iter()
+    //     .map(|d| match d.data.name() {
+    //         rustc_hir::definitions::DefPathDataName::Named(symbol) => symbol,
+    //         rustc_hir::definitions::DefPathDataName::Anon { namespace } => namespace,
+    //     })
+    //     .format_with("::", |ele, f| f(&format_args!("{}", ele.as_str())));
+    // if did.is_local() {
+    //     let crate_name = tcx.crate_name(def_path.krate);
+    //     let crate_name = crate_name.as_str();
+    //     _ = write!(&mut buf, "{crate_name}::{fmt_path}");
+    // } else {
+    //     _ = write!(&mut buf, "{fmt_path}");
+    // }
+    //
+    // buf.into()
 }
 
 fn get_all_attrs(tcx: TyCtxt, inst: &Instance) -> (Vec<String>, Option<ProofKind>) {
