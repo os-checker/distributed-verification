@@ -74,37 +74,34 @@ pub fn source_code_with(
 // NOTE: `tcx.def_path_str(def_id)` is identical to name, containing generics,
 // like `<ascii::ascii_char::AsciiChar as iter::range::Step>::backward_unchecked`
 // thus is not what we want.
-fn defid_to_path(did: DefId, tcx: TyCtxt) -> Box<str> {
+fn defid_to_path(mut did: DefId, tcx: TyCtxt) -> Box<str> {
     use std::fmt::Write;
-    let mut buf = String::with_capacity(128);
 
     let ty = tcx.type_of(did).instantiate_identity();
-    if let TyKind::FnDef(def_id, _) = ty.kind() {
-        return tcx.def_path_str(def_id).into();
+    if let TyKind::FnDef(def_id, _) = ty.kind()
+        && let Some((parent_id, _)) = tcx.assoc_parent(*def_id)
+    {
+        did = parent_id;
     }
-    _ = write!(&mut buf, "{did:?}");
 
-    // format!("{:?}", tcx.parent_module_from_def_id(did.expect_local())).into()
+    let mut buf = String::with_capacity(64);
+    let def_path = tcx.def_path(did);
+    let fmt_path = def_path
+        .data
+        .iter()
+        .map(|d| match d.data.name() {
+            rustc_hir::definitions::DefPathDataName::Named(symbol) => symbol,
+            rustc_hir::definitions::DefPathDataName::Anon { namespace } => namespace,
+        })
+        .format_with("::", |ele, f| f(&format_args!("{}", ele.as_str())));
+    if did.is_local() {
+        let crate_name = tcx.crate_name(def_path.krate);
+        let crate_name = crate_name.as_str();
+        _ = write!(&mut buf, "{crate_name}::{fmt_path}");
+    } else {
+        _ = write!(&mut buf, "{fmt_path}");
+    }
 
-    //
-    // let mut buf = String::with_capacity(64);
-    // let def_path = tcx.def_path(did);
-    // let fmt_path = def_path
-    //     .data
-    //     .iter()
-    //     .map(|d| match d.data.name() {
-    //         rustc_hir::definitions::DefPathDataName::Named(symbol) => symbol,
-    //         rustc_hir::definitions::DefPathDataName::Anon { namespace } => namespace,
-    //     })
-    //     .format_with("::", |ele, f| f(&format_args!("{}", ele.as_str())));
-    // if did.is_local() {
-    //     let crate_name = tcx.crate_name(def_path.krate);
-    //     let crate_name = crate_name.as_str();
-    //     _ = write!(&mut buf, "{crate_name}::{fmt_path}");
-    // } else {
-    //     _ = write!(&mut buf, "{fmt_path}");
-    // }
-    //
     buf.into()
 }
 
