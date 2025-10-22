@@ -27,6 +27,7 @@ pub fn split_to_json(db_file: &str, base: &str) -> Result<()> {
             callees_len: row.get(10)?,
             callees: row.get(11).map(convert)?,
             krate: row.get(12)?,
+            path: row.get(13)?,
         })
     })?;
 

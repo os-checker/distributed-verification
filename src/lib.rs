@@ -158,6 +158,9 @@ pub struct SourceCode {
     #[serde(skip_serializing_if = "Vec::is_empty")]
     #[serde(default)]
     pub macro_backtrace: Vec<MacroBacktrace>,
+
+    /// Item path, separated by `::`. This should not contain generics (i.e. `<...>`).
+    pub path: BoxStr,
 }
 
 fn zero(n: &usize) -> bool {

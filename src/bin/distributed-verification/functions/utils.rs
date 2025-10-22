@@ -1,4 +1,5 @@
 use distributed_verification::{InstKind, MacroBacktrace, ProofKind, SourceCode};
+use rustc_hir::def_id::DefId;
 use rustc_middle::ty::TyCtxt;
 use rustc_public::{
     CrateDef,
@@ -54,6 +55,8 @@ pub fn source_code_with(
         }
     }
 
+    let path = defid_to_path(internal(tcx, inst.def.def_id()), tcx);
+
     SourceCode {
         name: inst.name(),
         inst_kind: new_inst_kind(inst.kind),
@@ -63,7 +66,30 @@ pub fn source_code_with(
         src,
         macro_backtrace_len,
         macro_backtrace,
+        path,
     }
+}
+
+// NOTE: `tcx.def_path_str(def_id)` is identical to name, containing generics,
+// like `<ascii::ascii_char::AsciiChar as iter::range::Step>::backward_unchecked`
+// thus is not what we want.
+fn defid_to_path(did: DefId, tcx: TyCtxt) -> Box<str> {
+    let mut buf = String::with_capacity(64);
+
+    let def_path = tcx.def_path(did);
+    // Crate root is not in def_path.data even for non-local items,
+    // so always add the root.
+    buf.push_str(tcx.crate_name(def_path.krate).as_str());
+
+    for name in def_path.data.iter().map(|d| match d.data.name() {
+        rustc_hir::definitions::DefPathDataName::Named(symbol) => symbol,
+        rustc_hir::definitions::DefPathDataName::Anon { namespace } => namespace,
+    }) {
+        buf.push_str("::");
+        buf.push_str(name.as_str());
+    }
+
+    buf.into()
 }
 
 fn get_all_attrs(tcx: TyCtxt, inst: &Instance) -> (Vec<String>, Option<ProofKind>) {

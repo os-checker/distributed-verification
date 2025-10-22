@@ -19,7 +19,6 @@ pub fn analyze(tcx: TyCtxt) -> (String, Vec<SerFunction>) {
     // FIXME: retrieve functions using local_crate
     let local_items = all_local_items();
     let cap = local_items.len();
-    dbg!(&crate_name, cap);
 
     let mut entries = Vec::with_capacity(cap);
 

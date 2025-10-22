@@ -16,12 +16,13 @@ CREATE TABLE IF NOT EXISTS db (
   macro_backtrace TEXT,
   callees_len INTEGER,
   callees TEXT,
-  crate TEXT
+  crate TEXT,
+  path TEXT
 ) STRICT;
 ";
 pub const SQL_INSERT: &str = "\
-INSERT INTO db (file, name, hash, hash_direct, inst_kind, proof_kind, attrs, src, macro_backtrace_len, macro_backtrace, callees_len, callees, crate) 
-VALUES (:file, :name, :hash, :hash_direct, :inst_kind, :proof_kind, :attrs, :src, :macro_backtrace_len, :macro_backtrace, :callees_len, :callees, :crate)
+INSERT INTO db (file, name, hash, hash_direct, inst_kind, proof_kind, attrs, src, macro_backtrace_len, macro_backtrace, callees_len, callees, crate, path) 
+VALUES (:file, :name, :hash, :hash_direct, :inst_kind, :proof_kind, :attrs, :src, :macro_backtrace_len, :macro_backtrace, :callees_len, :callees, :crate, :path)
 ";
 pub const SQL_SELECT_ALL: &str = "SELECT * FROM db";
 

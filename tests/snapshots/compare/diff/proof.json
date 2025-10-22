@@ -1,6 +1,6 @@
 [
   {
-    "hash": "1360231931955151956814099580363286591245",
+    "hash": "141977319256134377211672753194977807565",
     "name": "verify::g",
     "file": "tests/compare/proof.rs",
     "proof_kind": "Standard"

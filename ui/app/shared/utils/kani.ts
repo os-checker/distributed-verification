@@ -25,7 +25,8 @@ export interface MergeHashKaniList {
 export enum ProofKind {
   Standard = "Standard",
   Contract = "Contract",
-  Auto = "Auto",
+  AutoStandard = "AutoStandard",
+  AutoContract = "AutoContract",
   // Placeholder for null proof_kind
   Unknown = "Unknown",
 }

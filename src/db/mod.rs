@@ -50,6 +50,9 @@ pub struct DbFunction {
     /// Crate name.
     #[serde(rename = "crate")]
     pub krate: BoxStr,
+
+    /// Item path, separated by `::`. This should not contain generics (i.e. `<...>`).
+    pub path: BoxStr,
 }
 
 impl DbFunction {
