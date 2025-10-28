@@ -27,7 +27,6 @@ pub fn run(args: &[String]) -> Result<()> {
     if Command::new("kani")
         .arg("autoharness")
         .args(UNSTABLE_ARGS)
-        .args(LIST_ARGS)
         .args(args)
         .spawn()?
         .wait()?
