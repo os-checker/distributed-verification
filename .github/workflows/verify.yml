@@ -52,7 +52,7 @@ jobs:
 
       - name: verify_rust_std kani-list
         # This should takes the same verification time as `kani autoharness --list`.
-        run: verify_rust_std kani-list --std verify-rust-std/library
+        run: verify_rust_std kani-list --std verify-rust-std/library --format=json
 
       - name: View list
         run: ls -alh kani-list.json && head -n 100 kani-list.json
