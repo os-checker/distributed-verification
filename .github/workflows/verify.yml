@@ -53,3 +53,15 @@ jobs:
       - name: verify_rust_std kani-list
         # This should takes the same verification time as `kani autoharness --list`.
         run: verify_rust_std kani-list --std verify-rust-std/library
+
+      - name: View list
+        run: ls -alh kani-list.json && head -n 100 kani-list.json
+
+      - name: Upload kani-list.json
+        uses: actions/upload-artifact@v4
+        with:
+          name: vrs-kani-list-${{ matrix.os }}
+          path: kani-list.json
+          compression-level: 9
+          if-no-files-found: error
+
