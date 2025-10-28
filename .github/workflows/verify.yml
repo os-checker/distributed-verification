@@ -45,7 +45,10 @@ jobs:
 
       - name: verify_rust_std kani-run
         # This should takes the same verification time as the kani cmd above.
-        run: verify_rust_std kani-run --std verify-rust-std/library --harness intrinsics::verify::should_succeed_i32_to_u32
+        run: |
+          verify_rust_std kani-run --std verify-rust-std/library \
+            --include-pattern intrinsics::verify::should_succeed_i32_to_u32 \
+            --harness intrinsics::verify::should_succeed_i32_to_u32
 
       - name: verify_rust_std kani-list
         # This should takes the same verification time as `kani autoharness --list`.
