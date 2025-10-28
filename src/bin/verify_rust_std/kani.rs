@@ -1,16 +1,18 @@
 use crate::Result;
+use eyre::Context;
 use std::process::Command;
 
-/// There must be `--std path/to/library` in args.
+/// Env var `STD_LIBRARY=path/to/library` must be set.
 //
 // Kani generates `kani-list.json` if succeeds.
 pub fn list(args: &[String]) -> Result<()> {
     if Command::new("kani")
         .arg("autoharness")
-        .arg("--list")
         .args(UNSTABLE_ARGS)
         .args(LIST_ARGS)
         .args(args)
+        .args(["--std", &std_library()?])
+        .args(["--list", "--format=json"])
         .spawn()?
         .wait()?
         .success()
@@ -20,14 +22,20 @@ pub fn list(args: &[String]) -> Result<()> {
     Ok(())
 }
 
-/// There must be `--std path/to/library` and `--harness name` in args.
+/// Env var `STD_LIBRARY=path/to/library` must be set.
+///
+/// The arguments are harness names that will be passed with
+/// `--include-pattern` and `--harness` options to minimize run time.
 //
 // Run kani verification.
-pub fn run(args: &[String]) -> Result<()> {
+pub fn run(v_harness: &[String]) -> Result<()> {
+    let harnesses =
+        v_harness.iter().flat_map(|h| ["--include-pattern", h.as_str(), "--harness", h.as_str()]);
     if Command::new("kani")
         .arg("autoharness")
         .args(UNSTABLE_ARGS)
-        .args(args)
+        .args(harnesses)
+        .args(["--std", &std_library()?])
         .spawn()?
         .wait()?
         .success()
@@ -35,6 +43,11 @@ pub fn run(args: &[String]) -> Result<()> {
         println!("Kani verification is done.");
     }
     Ok(())
+}
+
+fn std_library() -> Result<String> {
+    std::env::var("STD_LIBRARY")
+        .with_context(|| "Env var `STD_LIBRARY` must be set to the library path in verify-rut-std.")
 }
 
 const UNSTABLE_ARGS: &[&str] = &[

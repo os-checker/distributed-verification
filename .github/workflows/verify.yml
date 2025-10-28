@@ -5,6 +5,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  STD_LIBRARY: verify-rust-std/library
 
 jobs:
   verify:
@@ -46,13 +47,11 @@ jobs:
       - name: verify_rust_std kani-run
         # This should takes the same verification time as the kani cmd above.
         run: |
-          verify_rust_std kani-run --std verify-rust-std/library \
-            --include-pattern intrinsics::verify::should_succeed_i32_to_u32 \
-            --harness intrinsics::verify::should_succeed_i32_to_u32
+          verify_rust_std kani-run intrinsics::verify::should_succeed_i32_to_u32
 
       - name: verify_rust_std kani-list
         # This should takes the same verification time as `kani autoharness --list`.
-        run: verify_rust_std kani-list --std verify-rust-std/library --format=json
+        run: verify_rust_std kani-list
 
       - name: View list
         run: ls -alh kani-list.json && head -n 100 kani-list.json
