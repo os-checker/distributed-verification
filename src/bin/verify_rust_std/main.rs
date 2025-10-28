@@ -13,6 +13,7 @@ mod env;
 use env::ENV;
 
 mod diff;
+mod kani;
 mod merge;
 
 fn main() -> Result<()> {
@@ -45,6 +46,8 @@ fn main() -> Result<()> {
         match subcmd.as_str() {
             "merge" => merge::run(&args),
             "diff" => diff::run(&args),
+            "kani-list" => kani::list(&args[1..]),
+            "kani-run" => kani::run(&args[1..]),
             _ => run_cargo(),
         }
     } else {
