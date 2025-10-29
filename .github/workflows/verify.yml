@@ -57,8 +57,8 @@ jobs:
         run: ls -alh kani-list.json && head -n 100 kani-list.json
 
       - name: Generate hash.json
-        run: >-
-          verify_rust_std merge --hash-json assets/json/ --kani-list kani-list.json
+        run: |
+          verify_rust_std merge --hash-json assets/json/ --kani-list kani-list.json \
             --strip-kani-list-prefix $PWD/verify-rust-std/library/ > hash.json
 
       - name: Generate Diff Result
