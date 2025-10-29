@@ -21,12 +21,12 @@ jobs:
         with:
           submodules: 'recursive'
 
-      - name: Remove unnecessary software to free up disk space
-        run: |
-          # inspired by https://github.com/easimon/maximize-build-space/blob/master/action.yml
-          df -h
-          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /usr/local/.ghcup
-          df -h
+      # - name: Remove unnecessary software to free up disk space
+      #   run: |
+      #     # inspired by https://github.com/easimon/maximize-build-space/blob/master/action.yml
+      #     df -h
+      #     sudo rm -rf /usr/share/dotnet /usr/local/lib/android /usr/local/.ghcup
+      #     df -h
 
       - name: Install kani
         run: bash ./.github/install-kani.sh
@@ -79,7 +79,7 @@ jobs:
           jq -e 'type == "array" and length == 0' diff.json && echo "No diff to run." && exit 0
           verify_rust_std kani-run $( jq -r 'join(" ")' diff.json )
 
-      - run: ll -alh
+      - run: ls -alh
 
       - name: Upload JSONs
         uses: actions/upload-artifact@v4
