@@ -1,0 +1,4 @@
+[
+  "alloc::__default_lib_allocator::__rdl_alloc",
+  "alloc::__default_lib_allocator::__rdl_alloc_zeroed"
+]

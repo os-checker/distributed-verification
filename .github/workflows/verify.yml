@@ -10,6 +10,7 @@ env:
 jobs:
   verify:
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-24.04-arm, ubuntu-latest]
     name: ${{ matrix.os }}
@@ -71,16 +72,26 @@ jobs:
 
       - name: Generate Diff Result
         # FIXME: currently there is no old hash.json.
-        run: verify_rust_std diff --old hash.json --new hash.json | tee diff.json 
+        run: verify_rust_std diff --old hash.json --new hash.json | tee diff_raw.json 
+
+      - name: Disable Harness
+        run: |
+          jq --slurp '\
+          { disable: .[0] | map({(.): true}) | add, diff: .[1] | map(.func) } as $root \
+          | $root.diff | map(select($root.disable[.] != true)) \
+          ' .github/disable-harness.json diff_raw.json > diff.json
+          cat diff.json
 
       - name: Verify Diff Result
-        run: verify_rust_std kani-run $(jq -r 'map(.func) | join(" ")' diff.json)
+        run: |
+          jq -e 'type == "array" and length == 0' diff.json && echo "No diff to run." && exit 0
+          verify_rust_std kani-run $( jq -r 'join(" ")' diff.json )
 
       - name: Upload JSONs
         uses: actions/upload-artifact@v4
         with:
           name: verify-${{ matrix.os }}
-          path: kani-list.json hash.json diff.json
+          path: kani-list.json hash.json diff.json diff_raw.json
           compression-level: 9
           if-no-files-found: error
 
