@@ -63,12 +63,11 @@ jobs:
 
       - name: Generate hash.json
         run: |
-          # CI kani-list.json
-          # export PREFIX=$PWD/verify-rust-std/verify-rust-std/library/
-          # local kani-list.json
-          export PREFIX=/home/runner/work/verify-rust-std/verify-rust-std/library/
+          export PREFIX_CI=$PWD/verify-rust-std/library/
+          export PREFIX_LOCAL=/home/gh-zjp-CN/distributed-verification/verify-rust-std/library/
           verify_rust_std merge --hash-json assets/json/ --kani-list kani-list.json \
-            --strip-kani-list-prefix $PREFIX > hash.json
+            --strip-hash-json-prefix $PREFIX_CI \
+            --strip-kani-list-prefix $PREFIX_LOCAL > hash.json
 
       - name: Generate Diff Result
         # FIXME: currently there is no old hash.json.
