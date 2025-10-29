@@ -51,15 +51,24 @@ jobs:
       - name: verify_rust_std kani-list
         # This should takes the same verification time as `kani autoharness --list`.
         # run: verify_rust_std kani-list
-        run: cp assets/kani-list_vrs.json kani-list.json
+        run: cp assets/kani-list_vrs.json kani-list.json # local kani-list.json
 
-      - name: View kani.json
+      - name: View kani-list.json
         run: ls -alh kani-list.json && head -n 100 kani-list.json
+
+      - name: Generate assets/json
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: ./.github/gen_core.json.sh
 
       - name: Generate hash.json
         run: |
+          # CI kani-list.json
+          # export PREFIX=$PWD/verify-rust-std/verify-rust-std/library/
+          # local kani-list.json
+          export PREFIX=/home/runner/work/verify-rust-std/verify-rust-std/library/
           verify_rust_std merge --hash-json assets/json/ --kani-list kani-list.json \
-            --strip-kani-list-prefix $PWD/verify-rust-std/library/ > hash.json
+            --strip-kani-list-prefix $PREFIX > hash.json
 
       - name: Generate Diff Result
         # FIXME: currently there is no old hash.json.
