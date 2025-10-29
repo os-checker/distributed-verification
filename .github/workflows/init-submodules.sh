@@ -8,7 +8,7 @@ avail_k=$(df -k /mnt | awk 'NR==2{print $4}')
 df -alh
 
 if ((avail_k < need_k)); then
-  git submodule update --init --recursive
+  git submodule update --init --recursive kani verify-rust-std
   exit 0
 fi
 
@@ -26,7 +26,7 @@ sudo chmod 755 /mnt/my
 
 sudo mount --bind /mnt/my "$TARGET_DIR"
 
-git submodule update --init --recursive
+git submodule update --init --recursive kani verify-rust-std
 
 ls -alh "$TARGET_DIR"
 ls -alh /mnt/my

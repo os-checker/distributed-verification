@@ -73,7 +73,8 @@ jobs:
           jq -e 'type == "array" and length == 0' diff.json && echo "No diff to run." && exit 0
           verify_rust_std kani-run $( jq -r 'join(" ")' diff.json )
 
-      - run: ls -alh
+      - name: View
+        run: df -alh && ls -alh
 
       - name: Upload JSONs
         uses: actions/upload-artifact@v4
