@@ -55,12 +55,22 @@ jobs:
       - name: Generate assets/json
         env:
           GH_TOKEN: ${{ github.token }}
-        run: ./.github/gen_core.json.sh
+        run: |
+          mkdir diff
+          ./.github/gen_core.json.sh
+          mv assets/json diff/json-original
+          # mock some proof is modified
+          cd verify-rust-std
+          git apply ../.github/patch/check_align.patch
+          ../.github/gen_core.json.sh
 
       - name: Generate hash.json
         run: |
           export PREFIX_CI=$PWD/verify-rust-std/library/
           export PREFIX_LOCAL=/home/gh-zjp-CN/distributed-verification/verify-rust-std/library/
+          verify_rust_std merge --hash-json diff/json-original --kani-list kani-list.json \
+            --strip-hash-json-prefix $PREFIX_CI \
+            --strip-kani-list-prefix $PREFIX_LOCAL > hash-original.json
           verify_rust_std merge --hash-json assets/json/ --kani-list kani-list.json \
             --strip-hash-json-prefix $PREFIX_CI \
             --strip-kani-list-prefix $PREFIX_LOCAL > hash.json
