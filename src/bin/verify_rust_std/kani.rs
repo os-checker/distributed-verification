@@ -18,8 +18,10 @@ pub fn list(args: &[String]) -> Result<()> {
         .success()
     {
         println!("kani-list.json is done.");
+        Ok(())
+    } else {
+        bail!("kani-list.json failed to be generated.")
     }
-    Ok(())
 }
 
 /// Env var `STD_LIBRARY=path/to/library` must be set.
@@ -41,8 +43,10 @@ pub fn run(v_harness: &[String]) -> Result<()> {
         .success()
     {
         println!("Kani verification is done.");
+        Ok(())
+    } else {
+        bail!("Kani verification is failed.")
     }
-    Ok(())
 }
 
 fn std_library() -> Result<String> {
