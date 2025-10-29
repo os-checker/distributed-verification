@@ -71,16 +71,7 @@ jobs:
             --strip-kani-list-prefix $PREFIX_LOCAL > hash.json
 
       - name: Generate Diff Result
-        # FIXME: currently there is no old hash.json.
-        run: verify_rust_std diff --old hash.json --new hash.json | tee diff_raw.json 
-
-      - name: Disable Harness
-        run: |
-          jq --slurp '\
-          { disable: .[0] | map({(.): true}) | add, diff: .[1] | map(.func) } as $root \
-          | $root.diff | map(select($root.disable[.] != true)) \
-          ' .github/disable-harness.json diff_raw.json > diff.json
-          cat diff.json
+        run: .github/disable/gen_diff.sh
 
       - name: Verify Diff Result
         run: |
