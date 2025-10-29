@@ -1,22 +1,16 @@
 use crate::Result;
 use eyre::Context;
-use std::process::Command;
+use std::{env, process::Command};
 
 /// Env var `STD_LIBRARY=path/to/library` must be set.
 //
 // Kani generates `kani-list.json` if succeeds.
 pub fn list(args: &[String]) -> Result<()> {
-    if Command::new("kani")
-        .arg("autoharness")
-        .args(UNSTABLE_ARGS)
-        .args(LIST_ARGS)
-        .args(args)
-        .args(["--std", &std_library()?])
-        .args(["--list", "--format=json"])
-        .spawn()?
-        .wait()?
-        .success()
-    {
+    let kani = KaniArgs::new_for_list(args);
+    if is_debug() {
+        kani.debug();
+    }
+    if kani.exec()? {
         println!("kani-list.json is done.");
         Ok(())
     } else {
@@ -31,17 +25,11 @@ pub fn list(args: &[String]) -> Result<()> {
 //
 // Run kani verification.
 pub fn run(v_harness: &[String]) -> Result<()> {
-    let harnesses =
-        v_harness.iter().flat_map(|h| ["--include-pattern", h.as_str(), "--harness", h.as_str()]);
-    if Command::new("kani")
-        .arg("autoharness")
-        .args(UNSTABLE_ARGS)
-        .args(harnesses)
-        .args(["--std", &std_library()?])
-        .spawn()?
-        .wait()?
-        .success()
-    {
+    let kani = KaniArgs::new_for_run(v_harness);
+    if is_debug() {
+        kani.debug();
+    }
+    if kani.exec()? {
         println!("Kani verification is done.");
         Ok(())
     } else {
@@ -49,8 +37,65 @@ pub fn run(v_harness: &[String]) -> Result<()> {
     }
 }
 
+#[derive(Default)]
+struct KaniArgs {
+    args: Vec<String>,
+}
+
+impl KaniArgs {
+    fn new_for_run(v_harness: &[String]) -> Self {
+        let mut this = Self::basic();
+
+        // See https://github.com/model-checking/kani/issues/4079#issuecomment-3459290399
+        this.args.reserve(v_harness.len() * 4);
+        for arg in v_harness
+            .iter()
+            .flat_map(|h| ["--include-pattern", h.as_str(), "--harness", h.as_str()])
+        {
+            this.args.push(arg.to_owned());
+        }
+
+        this
+    }
+
+    fn new_for_list(args: &[String]) -> Self {
+        let mut this = Self::basic();
+
+        this.add_slice(&["--list", "--format=json"]);
+        this.add_slice(LIST_ARGS);
+        this.add_slice(args);
+        this
+    }
+
+    fn basic() -> Self {
+        let mut this = Self::default();
+        this.args.push("autoharness".to_owned());
+        this.add_slice(&["--std".to_owned(), std_library().unwrap()]);
+        this.add_slice(UNSTABLE_ARGS);
+        this
+    }
+
+    fn add_slice<T: Clone + Into<String>>(&mut self, v: &[T]) {
+        self.args.extend(v.iter().map(|s| s.clone().into()));
+    }
+
+    fn exec(self) -> Result<bool> {
+        Ok(Command::new("kani").args(self.args).spawn()?.wait()?.success())
+    }
+
+    fn debug(&self) {
+        let mut v = vec!["kani"];
+        v.extend(self.args.iter().map(|arg| arg.as_str()));
+        println!("cmd=`{}`", v.join(" "));
+    }
+}
+
+fn is_debug() -> bool {
+    env::var("DEBUG").is_ok_and(|s| !matches!(&*s.to_lowercase(), "0" | "false"))
+}
+
 fn std_library() -> Result<String> {
-    std::env::var("STD_LIBRARY")
+    env::var("STD_LIBRARY")
         .with_context(|| "Env var `STD_LIBRARY` must be set to the library path in verify-rut-std.")
 }
 
