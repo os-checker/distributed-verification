@@ -46,21 +46,31 @@ jobs:
 
       - name: verify_rust_std kani-run
         # This should takes the same verification time as the kani cmd above.
-        run: |
-          verify_rust_std kani-run intrinsics::verify::should_succeed_i32_to_u32
+        run: verify_rust_std kani-run intrinsics::verify::should_succeed_i32_to_u32
 
       - name: verify_rust_std kani-list
         # This should takes the same verification time as `kani autoharness --list`.
         run: verify_rust_std kani-list
 
-      - name: View list
+      - name: View kani.json
         run: ls -alh kani-list.json && head -n 100 kani-list.json
 
-      - name: Upload kani-list.json
+      - name: Generate hash.json
+        run: verify_rust_std merge --hash-json assets/json/ --kani-list kani-list.json \
+            --strip-kani-list-prefix $PWD/verify-rust-std/library/ > hash.json
+
+      - name: Generate Diff Result
+        # FIXME: currently there is no old hash.json.
+        run: verify_rust_std diff --old hash.json --new hash.json | tee diff.json 
+
+      - name: Verify Diff Result
+        run: verify_rust_std kani-run $(jq -r 'map(.func) | join(" ")' diff.json)
+
+      - name: Upload JSONs
         uses: actions/upload-artifact@v4
         with:
-          name: vrs-kani-list-${{ matrix.os }}
-          path: kani-list.json
+          name: verify-${{ matrix.os }}
+          path: kani-list.json hash.json diff.json
           compression-level: 9
           if-no-files-found: error
 
