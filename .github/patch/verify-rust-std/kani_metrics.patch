@@ -11,6 +11,21 @@ index 32b7c7f9c1c..b9d384bc713 100755
  
          line = lines[i].rstrip()
          i += 1
+diff --git a/scripts/kani-std-analysis/std-analysis.sh b/scripts/kani-std-analysis/std-analysis.sh
+index 29223388380..99d7f92628a 100755
+--- a/scripts/kani-std-analysis/std-analysis.sh
++++ b/scripts/kani-std-analysis/std-analysis.sh
+@@ -38,7 +38,9 @@ else
+   echo
+   echo "Std-Lib codegen regression only works on Linux or OSX x86 platforms, skipping..."
+   echo
+-  exit 0
++  TARGET="aarch64-unknown-linux-gnu"
++  WRAPPER="time"
++  # exit 0
+ fi
+ 
+ # Get Kani root
 diff --git a/scripts/run-kani.sh b/scripts/run-kani.sh
 index b996564989b..74afd812f4c 100755
 --- a/scripts/run-kani.sh
