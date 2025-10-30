@@ -83,7 +83,11 @@ jobs:
           verify_rust_std kani-run $( jq -r 'join(" ")' diff.json ) | tee autoharness-verification.log
 
       - name: View
-        run: df -alh && ls -alh && cp kani-list.json verify-rust-std/
+        run: df -alh && ls -alh
+
+      - name: Prepare kani-list and autoharness-verification.log
+        working-directory: verify-rust-std
+        run: cp ../kani-list.json . && cp ../autoharness-verification.log .
 
       - name: Set up Python
         uses: actions/setup-python@v4
