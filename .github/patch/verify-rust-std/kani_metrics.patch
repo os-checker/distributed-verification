@@ -1,8 +1,27 @@
 diff --git a/scripts/run-kani.sh b/scripts/run-kani.sh
-index b996564989b..945e0b18d55 100755
+index b996564989b..74afd812f4c 100755
 --- a/scripts/run-kani.sh
 +++ b/scripts/run-kani.sh
-@@ -322,11 +322,11 @@ main() {
+@@ -174,7 +174,8 @@ build_kani() {
+ 
+ get_kani_path() {
+     local build_dir="$1"
+-    echo "$(realpath "$build_dir/scripts/kani")"
++    # echo "$(realpath "$build_dir/scripts/kani")"
++    echo "kani"
+ }
+ 
+ # Run kani list with JSON format and process with jq to extract harness names and total number of harnesses.
+@@ -261,7 +262,7 @@ main() {
+         setup_kani_repo "$REPO_URL" "$build_dir" "$BRANCH_NAME" "$commit"
+ 
+         # Build project
+-        build_kani "$build_dir"
++        # build_kani "$build_dir"
+ 
+         echo "Kani build completed successfully!"
+     fi
+@@ -322,11 +323,11 @@ main() {
      elif [[ "$run_command" == "metrics" ]]; then
          local current_dir=$(pwd)
          echo "Running Kani list command..."
