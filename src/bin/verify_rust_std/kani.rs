@@ -45,6 +45,7 @@ struct KaniArgs {
 impl KaniArgs {
     fn new_for_run(v_harness: &[String]) -> Self {
         let mut this = Self::basic();
+        this.args.push("--output-format=terse".to_owned());
 
         // See https://github.com/model-checking/kani/issues/4079#issuecomment-3459290399
         this.args.reserve(v_harness.len() * 4);
