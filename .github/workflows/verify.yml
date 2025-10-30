@@ -80,20 +80,49 @@ jobs:
       - name: Verify Diff Result
         run: |
           jq -e 'type == "array" and length == 0' diff.json && echo "No diff to run." && exit 0
-          verify_rust_std kani-run $( jq -r 'join(" ")' diff.json )
+          verify_rust_std kani-run $( jq -r 'join(" ")' diff.json ) | tee autoharness-verification.log
 
       - name: View
-        run: df -alh && ls -alh
+        run: df -alh && ls -alh && cp kani-list.json verify-rust-std/
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Run Kani Metrics
+        working-directory: verify-rust-std
+        run: |
+          # This generates /tmp/std_lib_analysis/results
+          scripts/run-kani.sh --run metrics --with-autoharness
+          mv /tmp/std_lib_analysis/results .
+
+      - name: Run log parser
+        working-directory: verify-rust-std
+        run: |
+          python3 scripts/kani-std-analysis/log_parser.py \
+            --kani-list-file kani-list.json \
+            --analysis-results-dir results/ \
+            autoharness-verification.log \
+            -o results.json
+            ls -alh results.json && head -n 20 results.json
+
+      - name: Collect Artifacts
+        run: |
+          mkdir artifacts
+          ls -alh . 
+          ls -alh verify-rust-std
+          mv kani-list.json artifacts
+          mv hash.json artifacts
+          mv diff.json artifacts
+          mv diff_raw.json artifacts
+          mv verify-rust-std/autoharness-verification.log artifacts
+          mv verify-rust-std/results artifacts
 
       - name: Upload JSONs
         uses: actions/upload-artifact@v4
         with:
           name: verify-${{ matrix.os }}
-          path: |
-            kani-list.json
-            hash.json
-            diff.json
-            diff_raw.json
+          path: artifacts
           compression-level: 9
           if-no-files-found: error
-
