@@ -60,9 +60,8 @@ jobs:
           ./.github/gen_core.json.sh
           mv assets/json diff/json-original
           # mock some proof is modified
-          cd verify-rust-std
-          git apply ../.github/patch/check_align.patch
-          ../.github/gen_core.json.sh
+          cd verify-rust-std && git apply ../.github/patch/check_align.patch && cd ..
+          ./.github/gen_core.json.sh
 
       - name: Generate hash.json
         run: |
