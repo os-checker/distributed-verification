@@ -93,6 +93,7 @@ jobs:
       - name: Run Kani Metrics
         working-directory: verify-rust-std
         run: |
+          git apply ../.github/patch/verify-rust-std/kani_metrics.patch
           # This generates /tmp/std_lib_analysis/results
           scripts/run-kani.sh --run metrics --with-autoharness
           mv /tmp/std_lib_analysis/results .

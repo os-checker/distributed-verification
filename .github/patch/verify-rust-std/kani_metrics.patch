@@ -1,0 +1,21 @@
+diff --git a/scripts/run-kani.sh b/scripts/run-kani.sh
+index b996564989b..945e0b18d55 100755
+--- a/scripts/run-kani.sh
++++ b/scripts/run-kani.sh
+@@ -322,11 +322,11 @@ main() {
+     elif [[ "$run_command" == "metrics" ]]; then
+         local current_dir=$(pwd)
+         echo "Running Kani list command..."
+-        if [[ "$with_autoharness" == "true" ]]; then
+-            "$kani_path" autoharness -Z autoharness --list $unstable_args --std ./library --format json
+-        else
+-            "$kani_path" list $unstable_args ./library --std --format json
+-        fi
++        # if [[ "$with_autoharness" == "true" ]]; then
++        #     "$kani_path" autoharness -Z autoharness --list $unstable_args --std ./library --format json
++        # else
++        #     "$kani_path" list $unstable_args ./library --std --format json
++        # fi
+         pushd scripts/kani-std-analysis
+         echo "Running Kani's std-analysis command..."
+         ./std-analysis.sh $build_dir
