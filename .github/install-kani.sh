@@ -8,7 +8,7 @@ set -exo pipefail
 git submodule update --init kani
 
 # Temporary patch to https://github.com/model-checking/kani/pull/4312
-cp .github/kani_contract_mode.patch kani
+cp .github/patch/kani_contract_mode.patch kani
 
 # Install kani
 pushd kani
