@@ -1,3 +1,16 @@
+diff --git a/scripts/kani-std-analysis/log_parser.py b/scripts/kani-std-analysis/log_parser.py
+index 32b7c7f9c1c..b9d384bc713 100755
+--- a/scripts/kani-std-analysis/log_parser.py
++++ b/scripts/kani-std-analysis/log_parser.py
+@@ -452,6 +452,8 @@ def parse_log_lines(
+     while i < len(lines):
+         if lines[i].startswith('Kani generated automatic harnesses for'):
+             (i, autoharness_info) = parse_autoharness_info(lines, i)
++        else:
++            autoharness_info = {}
+ 
+         line = lines[i].rstrip()
+         i += 1
 diff --git a/scripts/run-kani.sh b/scripts/run-kani.sh
 index b996564989b..74afd812f4c 100755
 --- a/scripts/run-kani.sh
