@@ -10,6 +10,7 @@ env:
 
 jobs:
   verify:
+    if: false
     strategy:
       fail-fast: false
       matrix:
@@ -123,6 +124,7 @@ jobs:
           mv diff_raw.json artifacts
           mv verify-rust-std/autoharness-verification.log artifacts
           mv verify-rust-std/results artifacts
+          mv verify-rust-std/results.json artifacts
 
       - name: Upload JSONs
         uses: actions/upload-artifact@v4

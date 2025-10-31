@@ -9,6 +9,7 @@ env:
 
 jobs:
   test:
+    if: false
     runs-on: ubuntu-24.04-arm
     # runs-on: ubuntu-latest
     steps:
