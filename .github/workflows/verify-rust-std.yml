@@ -9,16 +9,16 @@ jobs:
     with:
       os: ubuntu-latest
 
-  kani-list-aarch64:
-    uses: ./.github/workflows/_kani-list.yml
-    with:
-      os: ubuntu-24.04-arm
-
   verify-amd64:
     needs: [kani-list-amd64]
     uses: ./.github/workflows/_verify.yml
     with:
       os: ubuntu-latest
+
+  kani-list-aarch64:
+    uses: ./.github/workflows/_kani-list.yml
+    with:
+      os: ubuntu-24.04-arm
 
   verify-aarch64:
     needs: [kani-list-aarch64]
