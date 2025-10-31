@@ -5,25 +5,22 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  STD_LIBRARY: verify-rust-std/library
+  DEBUG: true
 
 jobs:
   verify:
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-24.04-arm, ubuntu-latest]
     name: ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: 'recursive'
 
-      # - name: Remove unnecessary software to free up disk space
-      #   run: |
-      #     # inspired by https://github.com/easimon/maximize-build-space/blob/master/action.yml
-      #     df -h
-      #     sudo rm -rf /usr/share/dotnet /usr/local/lib/android /usr/local/.ghcup
-      #     df -h
+      - name: Init Submodules
+        run: .github/workflows/init-submodules.sh
 
       - name: Install kani
         run: bash ./.github/install-kani.sh
@@ -39,3 +36,98 @@ jobs:
             --std ./library -Z unstable-options --harness-timeout 10m --default-unwind 1000 \
             --include-pattern intrinsics::verify::should_succeed_i32_to_u32 \
             --harness intrinsics::verify::should_succeed_i32_to_u32 
+
+      - name: Install verify_rust_std
+        run: cargo install --path . --locked --debug
+
+      - name: verify_rust_std kani-run
+        # This should takes the same verification time as the kani cmd above.
+        run: verify_rust_std kani-run intrinsics::verify::should_succeed_i32_to_u32
+
+      - name: verify_rust_std kani-list
+        # This should takes the same verification time as `kani autoharness --list`.
+        # run: verify_rust_std kani-list
+        run: cp assets/kani-list_vrs.json kani-list.json # local kani-list.json
+
+      - name: View kani-list.json
+        run: ls -alh kani-list.json && head -n 100 kani-list.json
+
+      - name: Generate assets/json
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir diff
+          ./.github/gen_core.json.sh
+          mv assets/json diff/json-original
+          # mock some proof is modified
+          cd verify-rust-std && git apply ../.github/patch/verify-rust-std/check_align.patch && cd ..
+          ./.github/gen_core.json.sh
+
+      - name: Generate hash.json
+        run: |
+          export PREFIX_CI=$PWD/verify-rust-std/library/
+          export PREFIX_LOCAL=/home/gh-zjp-CN/distributed-verification/verify-rust-std/library/
+          verify_rust_std merge --hash-json diff/json-original --kani-list kani-list.json \
+            --strip-hash-json-prefix $PREFIX_CI \
+            --strip-kani-list-prefix $PREFIX_LOCAL > hash-original.json
+          verify_rust_std merge --hash-json assets/json/ --kani-list kani-list.json \
+            --strip-hash-json-prefix $PREFIX_CI \
+            --strip-kani-list-prefix $PREFIX_LOCAL > hash.json
+
+      - name: Generate diff.json
+        run: .github/disable/gen_diff.sh
+
+      - name: Verify Diff Result
+        run: |
+          jq -e 'type == "array" and length == 0' diff.json && echo "No diff to run." && exit 0
+          verify_rust_std kani-run $( jq -r 'join(" ")' diff.json ) | tee autoharness-verification.log
+
+      - name: View
+        run: df -alh && ls -alh
+
+      - name: Prepare kani-list and autoharness-verification.log
+        working-directory: verify-rust-std
+        run: cp ../kani-list.json . && cp ../autoharness-verification.log .
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Run Kani Metrics
+        working-directory: verify-rust-std
+        run: |
+          git apply ../.github/patch/verify-rust-std/kani_metrics.patch
+          # This generates /tmp/std_lib_analysis/results
+          scripts/run-kani.sh --run metrics --with-autoharness
+          mv /tmp/std_lib_analysis/results .
+
+      - name: Run log parser
+        working-directory: verify-rust-std
+        run: |
+          python3 scripts/kani-std-analysis/log_parser.py \
+            --kani-list-file kani-list.json \
+            --analysis-results-dir results/ \
+            autoharness-verification.log \
+            -o results.json
+            ls -alh results.json && head -n 20 results.json
+
+      - name: Collect Artifacts
+        run: |
+          mkdir artifacts
+          ls -alh . 
+          ls -alh verify-rust-std
+          mv kani-list.json artifacts
+          mv hash.json artifacts
+          mv diff.json artifacts
+          mv diff_raw.json artifacts
+          mv verify-rust-std/autoharness-verification.log artifacts
+          mv verify-rust-std/results artifacts
+
+      - name: Upload JSONs
+        uses: actions/upload-artifact@v4
+        with:
+          name: verify-${{ matrix.os }}
+          path: artifacts
+          compression-level: 9
+          if-no-files-found: error

@@ -1,0 +1,13 @@
+diff --git a/library/core/src/alloc/layout.rs b/library/core/src/alloc/layout.rs
+index 857a520e15d..e1dfcc6fae0 100644
+--- a/library/core/src/alloc/layout.rs
++++ b/library/core/src/alloc/layout.rs
+@@ -653,7 +653,7 @@ mod verify {
+     #[kani::proof]
+     pub fn check_align() {
+         let layout = kani::any::<Layout>();
+-        assert!(layout.align().is_power_of_two());
++        assert!(layout.align().is_power_of_two())
+     }
+ 
+     // pub const fn new<T>() -> Self
