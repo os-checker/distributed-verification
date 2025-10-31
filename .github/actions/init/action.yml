@@ -14,7 +14,7 @@ runs:
 
     # - name: Install kani
     #   shell: bash
-    #   run: bash ./.github/install-kani.sh
+    #   run: ./.github/install-kani.sh
     #
     # - name: Install verify_rust_std
     #   shell: bash
