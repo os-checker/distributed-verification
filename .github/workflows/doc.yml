@@ -1,11 +1,11 @@
 name: Deploy Doc
 
 on:
-  push:
+  # push:
+  workflow_dispatch:
 
 jobs:
   build:
-    if: false
     # Specify runner +  build & upload the static files as an artifact
     runs-on: ubuntu-latest
     steps:
