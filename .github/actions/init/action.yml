@@ -29,12 +29,18 @@ runs:
       shell: bash
       # This should takes the same verification time as `kani autoharness --list`.
       # run: verify_rust_std kani-list
-      run: cp assets/kani-list_vrs.json kani-list.json # local kani-list.json
+      run: |
+        cp assets/kani-list_vrs.json kani-list.json # local kani-list.json
+        .github/actions/init/partition.sh
+        mkdir -p output
+        mv kani-list.json output
+        mv kani-list_arr.json output
+        mv partition output
 
     - name: Upload kani-list.json
       uses: actions/upload-artifact@v4
       with:
         name: kani-list.json-${{ inputs.os }}
-        path: kani-list.json
+        path: output
         compression-level: 9
         if-no-files-found: error
