@@ -3,8 +3,6 @@ name: Initialize and Install kani
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v4
-
     - name: Init Submodules
       run: .github/workflows/init-submodules.sh
 
