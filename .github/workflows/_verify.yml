@@ -7,6 +7,11 @@ on:
         description: os that runs-os takes
         type: string
 
+env:
+  CARGO_TERM_COLOR: always
+  STD_LIBRARY: verify-rust-std/library
+  DEBUG: true
+
 jobs:
   verify:
     strategy:
