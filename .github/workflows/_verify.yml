@@ -25,7 +25,7 @@ jobs:
           name: kani-list.json-${{ inputs.os }}
 
       - name: View kani-list
-        working_directory: output
+        working-directory: output
         run: |
           ls -alh
           # head -n 100 kani-list.json

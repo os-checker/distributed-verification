@@ -14,7 +14,7 @@ jq '
 
 N=8
 i=1
-OUT_DIR=parition
+OUT_DIR=partition
 mkdir $OUT_DIR -p
 
 # Split the array to $N batches, with length as much close as possible.
