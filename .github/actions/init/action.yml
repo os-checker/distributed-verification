@@ -5,6 +5,8 @@ runs:
   steps:
     - name: Init Submodules
       run: .github/workflows/init-submodules.sh
+      shell: bash
 
     - name: Install kani
       run: bash ./.github/install-kani.sh
+      shell: bash
