@@ -2,17 +2,19 @@ name: Generate kani-list
 
 on:
   workflow_call:
+    inputs:
+      os:
+        description: os that runs-os takes
+        type: string
 
 jobs:
   gen-kani-list:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-24.04-arm, ubuntu-latest]
-    name: ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+    name: ${{ inputs.os }}
+    runs-on: ${{ inputs.os }}
     steps:
       - uses: actions/checkout@v5
 
       - name: Init
         uses: ./.github/actions/init
+        with:
+          os: ${{ inputs.os }}

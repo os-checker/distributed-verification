@@ -2,23 +2,27 @@ name: Verify Kani Harnesses
 
 on:
   workflow_call:
+    inputs:
+      os:
+        description: os that runs-os takes
+        type: string
 
 jobs:
   verify:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04-arm, ubuntu-latest]
+        # os: [ubuntu-24.04-arm, ubuntu-latest]
         partition: [1,2,3,4,5,6,7,8]
-    name: ${{ matrix.os }}-partition-${ matrix.os }}
-    runs-on: ${{ matrix.os }}
+    name: ${{ inputs.os }}-partition-${ matrix.partition }}
+    runs-on: ${{ inputs.os }}
     steps:
       - uses: actions/checkout@v5
 
       - name: Download kani-list.json
         uses: actions/download-artifact@v4
         with:
-          name: kani-list.json-${{ matrix.os }}
+          name: kani-list.json-${{ inputs.os }}
 
       - name: View kani-list
         run: ls -alh && head -n 100 kani-list.json

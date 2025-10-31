@@ -1,5 +1,10 @@
 name: Initialize and Install kani
 
+inputs:
+  os:
+    description: os that runs-os takes
+    type: string
+
 runs:
   using: "composite"
   steps:
@@ -29,7 +34,7 @@ runs:
     - name: Upload kani-list.json
       uses: actions/upload-artifact@v4
       with:
-        name: kani-list.json-${{ matrix.os }}
+        name: kani-list.json-${{ inputs.os }}
         path: kani-list.json
         compression-level: 9
         if-no-files-found: error
