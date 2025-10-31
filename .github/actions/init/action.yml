@@ -1,26 +1,27 @@
 name: Initialize and Install kani
 
-defaults:
-  run:
-    shell: bash
-
 runs:
   using: "composite"
   steps:
     - name: Init Submodules
+      shell: bash
       run: .github/workflows/init-submodules.sh
 
     - name: Install kani
+      shell: bash
       run: bash ./.github/install-kani.sh
 
     - name: Install verify_rust_std
+      shell: bash
       run: cargo install --path . --locked --debug
 
     - name: verify_rust_std kani-run
+      shell: bash
       # This should takes the same verification time as the kani cmd above.
       run: verify_rust_std kani-run intrinsics::verify::should_succeed_i32_to_u32
 
     - name: verify_rust_std kani-list
+      shell: bash
       # This should takes the same verification time as `kani autoharness --list`.
       # run: verify_rust_std kani-list
       run: cp assets/kani-list_vrs.json kani-list.json # local kani-list.json
