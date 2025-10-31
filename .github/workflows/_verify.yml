@@ -25,8 +25,8 @@ jobs:
           name: kani-list.json-${{ inputs.os }}
 
       - name: View kani-list
-        working-directory: output
+        # working-directory: output
         run: |
           ls -alh
           # head -n 100 kani-list.json
-          cat partition/${{ matrix.partition }}.json
+          # cat partition/${{ matrix.partition }}.json
