@@ -1,0 +1,8 @@
+name: Verify Rust Std (kani)
+
+on:
+  push:
+
+jobs:
+  kani-list:
+    uses: ./.github/verify-rust-std/kani-list.yml
