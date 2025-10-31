@@ -5,4 +5,4 @@ on:
 
 jobs:
   kani-list:
-    uses: ./.github/verify-rust-std/kani-list.yml
+    uses: ./.github/workflows/kani-list.yml
