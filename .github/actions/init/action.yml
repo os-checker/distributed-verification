@@ -12,10 +12,10 @@ runs:
       shell: bash
       run: .github/workflows/init-submodules.sh
 
-    # - name: Install kani
-    #   shell: bash
-    #   run: ./.github/install-kani.sh
-    #
+    - name: Install kani
+      shell: bash
+      run: ./.github/install-kani.sh
+
     - name: Install verify_rust_std
       shell: bash
       run: cargo install --path . --locked --debug
