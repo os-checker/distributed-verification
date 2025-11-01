@@ -48,6 +48,7 @@ fn main() -> Result<()> {
             "diff" => diff::run(&args),
             "kani-list" => kani::list(&args[1..]),
             "kani-run" => kani::run(&args[1..]),
+            "kani-run-no-auto" => kani::run_no_auto(&args[1..]),
             _ => run_cargo(),
         }
     } else {

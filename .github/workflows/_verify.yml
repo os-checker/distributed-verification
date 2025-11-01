@@ -48,7 +48,7 @@ jobs:
 
       - name: Verify Proofs
         run: |
-          verify_rust_std kani-run \
+          verify_rust_std kani-run-no-auto \
             $( jq -r 'join(" ")' partition/${{ matrix.partition }}.json ) \
             | tee autoharness-verification.log
 

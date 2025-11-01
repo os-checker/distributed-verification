@@ -3,19 +3,21 @@
 set -eoux pipefail
 
 # Flatten nested harnesses and deduplicate.
-jq '
-. as $root
-| ($root["standard-harnesses"] | to_entries | map(.value) | add) +
-  ($root["contract-harnesses"] | to_entries | map(.value) | add) +
-  ($root["contracts"] | map(.harnesses) | add)
-| unique
-| sort
-| map(select(endswith("kani::internal::automatic_harness") | not))
-' kani-list.json >kani-list_arr.json
+# jq '
+# . as $root
+# | ($root["standard-harnesses"] | to_entries | map(.value) | add) +
+#   ($root["contract-harnesses"] | to_entries | map(.value) | add) #+
+#   # ($root["contracts"] | map(.harnesses) | add)
+# | unique
+# | sort
+# | map(select(endswith("kani::internal::automatic_harness") | not))
+# ' kani-list.json >kani-list_arr.json
+cp assets/kani-list_arr.json .
 
 N=8
 i=1
 OUT_DIR=partition
+rm $OUT_DIR -rf
 mkdir $OUT_DIR -p
 
 # Split the array to $N batches, with length as much close as possible.

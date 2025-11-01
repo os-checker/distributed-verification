@@ -37,6 +37,19 @@ pub fn run(v_harness: &[String]) -> Result<()> {
     }
 }
 
+pub fn run_no_auto(v_harness: &[String]) -> Result<()> {
+    let kani = KaniArgs::new_for_run_no_auto(v_harness);
+    if is_debug() {
+        kani.debug();
+    }
+    if kani.exec()? {
+        println!("Kani verification is done.");
+        Ok(())
+    } else {
+        bail!("Kani verification is failed.")
+    }
+}
+
 #[derive(Default, Debug)]
 struct KaniArgs {
     args: Vec<String>,
@@ -44,7 +57,7 @@ struct KaniArgs {
 
 impl KaniArgs {
     fn new_for_run(v_harness: &[String]) -> Self {
-        let mut this = Self::basic();
+        let mut this = Self::basic(AUTOHARNESS);
         // Github runners have 4 CPUs, but they will get shutdown for no clear reason,
         // say it happenss when -j(=N) is specified or not.
         this.add_slice(&["--output-format=terse", "--no-assert-contracts", "--exact", "-j"]);
@@ -63,7 +76,7 @@ impl KaniArgs {
     }
 
     fn new_for_list(args: &[String]) -> Self {
-        let mut this = Self::basic();
+        let mut this = Self::basic(AUTOHARNESS);
 
         this.add_slice(&["--list", "--format=json"]);
         this.add_slice(FILTER_PATTERN);
@@ -71,11 +84,26 @@ impl KaniArgs {
         this
     }
 
-    fn basic() -> Self {
+    fn basic(subcmd: &str) -> Self {
         let mut this = Self::default();
-        this.args.push("autoharness".to_owned());
-        this.add_slice(&["--std".to_owned(), std_library().unwrap()]);
+        this.add_slice(&[subcmd, "--std", &std_library().unwrap()]);
         this.add_slice(UNSTABLE_ARGS);
+        this
+    }
+
+    // The arguments must be exact harness names.
+    fn new_for_run_no_auto(v_harness: &[String]) -> Self {
+        let mut this = Self::basic(VERIFY_STD);
+        this.add_slice(&["--output-format=terse", "--no-assert-contracts", "--exact", "-j"]);
+
+        // See https://github.com/model-checking/kani/issues/4079#issuecomment-3459290399
+        this.args.reserve(v_harness.len() * 2);
+        for arg in v_harness.iter().flat_map(|h| ["--harness", h.as_str()]) {
+            this.args.push(arg.to_owned());
+        }
+
+        this.add_slice(&["--cbmc-args", "-object-bits", "12"]);
+
         this
     }
 
@@ -93,6 +121,9 @@ impl KaniArgs {
         println!("self={self:#?}\ncmd=`{}`", v.join(" "));
     }
 }
+
+const AUTOHARNESS: &str = "autoharness";
+const VERIFY_STD: &str = "verify-std";
 
 fn is_debug() -> bool {
     env::var("DEBUG").is_ok_and(|s| !matches!(&*s.to_lowercase(), "0" | "false"))
