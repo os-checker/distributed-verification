@@ -57,6 +57,8 @@ impl KaniArgs {
             this.args.push(arg.to_owned());
         }
 
+        this.add_slice(&["--no-assert-contracts", "--exact"]);
+        this.add_slice(&["--cbmc-args", "-object-bits", "12"]);
         this
     }
 
