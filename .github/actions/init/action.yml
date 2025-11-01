@@ -8,17 +8,22 @@ inputs:
 runs:
   using: "composite"
   steps:
-    # - name: Init Submodules
-    #   shell: bash
-    #   run: .github/workflows/init-submodules.sh
+    - name: Init Submodules
+      shell: bash
+      run: .github/workflows/init-submodules.sh
 
     # - name: Install kani
     #   shell: bash
     #   run: ./.github/install-kani.sh
     #
-    # - name: Install verify_rust_std
-    #   shell: bash
-    #   run: cargo install --path . --locked --debug
+    - name: Install verify_rust_std
+      shell: bash
+      run: cargo install --path . --locked --debug
+
+    - name: Generate kani-list_arr.json
+      shell: bash
+      run: .github/actions/init/gen_kani_list.sh
+
     #
     # - name: verify_rust_std kani-run
     #   shell: bash
