@@ -37,7 +37,7 @@ pub fn run(v_harness: &[String]) -> Result<()> {
     }
 }
 
-#[derive(Default)]
+#[derive(Default, Debug)]
 struct KaniArgs {
     args: Vec<String>,
 }
@@ -90,7 +90,7 @@ impl KaniArgs {
     fn debug(&self) {
         let mut v = vec!["kani"];
         v.extend(self.args.iter().map(|arg| arg.as_str()));
-        println!("cmd=`{}`", v.join(" "));
+        println!("self={self:?}\ncmd=`{}`", v.join(" "));
     }
 }
 
