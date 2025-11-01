@@ -68,7 +68,7 @@ impl KaniArgs {
             .iter()
             .flat_map(|h| ["--include-pattern", h.as_str(), "--harness", h.as_str()])
         {
-            this.args.push(arg.to_owned());
+            this.add(arg);
         }
 
         this.add_slice(&["--cbmc-args", "-object-bits", "12"]);
@@ -84,9 +84,10 @@ impl KaniArgs {
         this
     }
 
-    fn basic(subcmd: &str) -> Self {
+    fn basic(subcmd: &[&str]) -> Self {
         let mut this = Self::default();
-        this.add_slice(&[subcmd, "--std", &std_library().unwrap()]);
+        this.add_slice(subcmd);
+        this.add(std_library().unwrap());
         this.add_slice(UNSTABLE_ARGS);
         this
     }
@@ -99,7 +100,7 @@ impl KaniArgs {
         // See https://github.com/model-checking/kani/issues/4079#issuecomment-3459290399
         this.args.reserve(v_harness.len() * 2);
         for arg in v_harness.iter().flat_map(|h| ["--harness", h.as_str()]) {
-            this.args.push(arg.to_owned());
+            this.add(arg);
         }
 
         this.add_slice(&["--cbmc-args", "-object-bits", "12"]);
@@ -109,6 +110,10 @@ impl KaniArgs {
 
     fn add_slice<T: Clone + Into<String>>(&mut self, v: &[T]) {
         self.args.extend(v.iter().map(|s| s.clone().into()));
+    }
+
+    fn add<T: Into<String>>(&mut self, v: T) {
+        self.args.push(v.into());
     }
 
     fn exec(self) -> Result<bool> {
@@ -122,8 +127,8 @@ impl KaniArgs {
     }
 }
 
-const AUTOHARNESS: &str = "autoharness";
-const VERIFY_STD: &str = "verify-std";
+const AUTOHARNESS: &[&str] = &["autoharness", "--std"];
+const VERIFY_STD: &[&str] = &["verify-std"];
 
 fn is_debug() -> bool {
     env::var("DEBUG").is_ok_and(|s| !matches!(&*s.to_lowercase(), "0" | "false"))
