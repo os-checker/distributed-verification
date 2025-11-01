@@ -45,8 +45,9 @@ struct KaniArgs {
 impl KaniArgs {
     fn new_for_run(v_harness: &[String]) -> Self {
         let mut this = Self::basic();
-        // Github runners have 4 CPUs, but they will get shutdown if -j(=4) is specified.
-        this.add_slice(&["--output-format=terse", "--no-assert-contracts", "--exact"]);
+        // Github runners have 4 CPUs, but they will get shutdown for no clear reason,
+        // say it happenss when -j(=N) is specified or not.
+        this.add_slice(&["--output-format=terse", "--no-assert-contracts", "--exact", "-j"]);
 
         // See https://github.com/model-checking/kani/issues/4079#issuecomment-3459290399
         this.args.reserve(v_harness.len() * 4);
