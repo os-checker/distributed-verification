@@ -66,7 +66,6 @@ impl KaniArgs {
         let mut this = Self::basic();
 
         this.add_slice(&["--list", "--format=json"]);
-        this.add_slice(LIST_ARGS);
         this.add_slice(args);
         this
     }
@@ -76,6 +75,7 @@ impl KaniArgs {
         this.args.push("autoharness".to_owned());
         this.add_slice(&["--std".to_owned(), std_library().unwrap()]);
         this.add_slice(UNSTABLE_ARGS);
+        this.add_slice(FILTER_PATTERN);
         this
     }
 
@@ -117,7 +117,7 @@ const UNSTABLE_ARGS: &[&str] = &[
     "--default-unwind=1000",
 ];
 
-const LIST_ARGS: &[&str] = &[
+const FILTER_PATTERN: &[&str] = &[
     "--include-pattern",
     "<(.+)[[:space:]]as[[:space:]](.+)>::disjoint_bitor",
     "--include-pattern",
