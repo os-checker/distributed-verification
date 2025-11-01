@@ -48,7 +48,6 @@ impl KaniArgs {
         this.args.push("--output-format=terse".to_owned());
         this.args.push("-j=3".to_owned());
         this.add_slice(&["--no-assert-contracts", "--exact"]);
-        this.add_slice(&["--cbmc-args", "-object-bits", "12"]);
 
         // See https://github.com/model-checking/kani/issues/4079#issuecomment-3459290399
         this.args.reserve(v_harness.len() * 4);
@@ -59,6 +58,7 @@ impl KaniArgs {
             this.args.push(arg.to_owned());
         }
 
+        this.add_slice(&["--cbmc-args", "-object-bits", "12"]);
         this
     }
 
