@@ -10,6 +10,7 @@ jq '
   ($root["contracts"] | map(.harnesses) | add)
 | unique
 | sort
+| map(select(endswith("kani::internal::automatic_harness") | not))
 ' kani-list.json >kani-list_arr.json
 
 N=8
