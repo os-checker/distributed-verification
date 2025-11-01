@@ -22,6 +22,8 @@ runs:
 
     - name: Generate kani-list_arr.json
       shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
       run: .github/actions/init/gen_kani_list.sh
 
     #
