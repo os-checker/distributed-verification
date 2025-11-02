@@ -157,7 +157,7 @@ CREATE TABLE IF NOT EXISTS db (
 },
 ```
 
-There are `core.sqlite3` and `json` outputs under `assets` folder.
+There are `core.sqlite3` and hash `json` outputs under `assets` folder.
 
 </details>
 
@@ -168,4 +168,45 @@ analysis code is stolen from kani to keep traversal logics identical.
 There will be two hash vaules for each function, becuase dv first computes the hash from 
 direct calls individually and globally, then computes the desired hash by tracing down the
 call graph and aggregating all the direct hashes.
+
+It only takes 2 minutes to extract proofs and dump function info, while kani needs 20
+minutes to generate `kani-list.json`.
+
+## verify_rust_std (vrs)
+
+The vrs can be used as follows
+* `verify_rust_std` applies dv to the standard library as `cargo build` wrapper. The cargo
+  build system helps pass correct compiler flags via cargo flags like `-Zbuild-std` and
+  `__CARGO_TESTS_ONLY_SRC_ROOT` to compile the standard library through dv. Some edge
+  cases are also handled, for instance, running `rust -vV` and skipping build scripts. The
+  vrs command asks for some environment variables to be present to store outputs of dv.
+
+```bash
+export VERIFY_RUST_STD_LIBRARY=$PWD/verify-rust-std/library
+export KANI_DIR=$PWD/kani/target/kani
+export OUTPUT_DIR=$PWD/assets
+verify_rust_std
+```
+
+* `verify_rust_std merge --hash-json ... --kani-list ... > merge.json` merges the hash
+  value into `kani-list.json`, and stores the output in `merge.json`.
+* `verify_rust_std diff --old merge-old.json --new merge-new.json > diff.json` removes
+  proofs from new `merge.json` that have existed in old `merged.json`, and stores the
+  output in `diff.json` which should be verified as wel as ideally be small in minor
+  source code changes.
+* `verify_rust_std kani-list` is a `kani autoharness --list` wrapper to generate
+  `kani-list.json` regarding standard, contract, and automated harnesses. The dv doesn't 
+  implement autoharness filtering logics, thus `kani` cmd is used.
+* `verify_rust_std kani-run proof1 ...` is a `kani autoharness` wrapper to run
+  verifications. Each proof name passed in must be the exact function name and passed to
+  kani with extra `--include-pattern` and `--harness`.
+* `verify_rust_std kani-run-no-auto proof1 ...` is a `kani verify-std` wrapper to only 
+  verify standard and contract harnesses. The proof name must be exact with extra
+  `--harness` passed.
+
+These kani command wrappers pass extra kani arguments too, but are not so useful in
+practice (see [#143] and [#4438]).
+
+[#143]: https://github.com/os-checker/distributed-verification/issues/143
+[#4438]: https://github.com/model-checking/kani/issues/4438
 
