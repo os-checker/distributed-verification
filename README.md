@@ -4,6 +4,16 @@ Context: [Distributed and resource-efficient verification][distributed], GSoC Ru
 
 [distributed]: https://github.com/rust-lang/google-summer-of-code/tree/45141d74c28d91e114cf621d2d56aea6c3f82547?tab=readme-ov-file#distributed-and-resource-efficient-verification
 
+![](https://github.com/user-attachments/assets/5f5733e5-7716-4f79-8501-4763d79c10a3)
+
+![](https://github.com/user-attachments/assets/dd6fa67d-138f-4c54-9d4a-3db84588448b)
+
+View [os-checker.github.io/distributed-verification][home] for kani proof verification
+results.
+
+[home]: https://os-checker.github.io/distributed-verification
+[chart]: https://os-checker.github.io/distributed-verification/chart
+
 ## Initialization
 
 ### Submodules
@@ -209,4 +219,20 @@ practice (see [#143] and [#4438]).
 
 [#143]: https://github.com/os-checker/distributed-verification/issues/143
 [#4438]: https://github.com/model-checking/kani/issues/4438
+
+## WebUI
+
+`ui` folder contains the WebUI code to display kani verification results.
+* The [home] page offers harness table to view or query a proof name, hash, kind, status,
+  and verification time and so on. You can click each row to see the source code of
+  verification as well as target function. 
+* The [chart] page offers two statistical chart on the time and quantities over proof
+  kinds. Both charts are grouped by the second module path.
+
+The webpage is statically hosted on Github Pages, with data stored in the [data repo]
+which precomputes all the JSON data that the frontend requires by aggregating
+`results.json` and `core.sqlite3`.
+
+[data repo]: https://github.com/os-checker/verify-rust-std_data
+
 
