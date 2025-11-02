@@ -14,9 +14,9 @@ results.
 [home]: https://os-checker.github.io/distributed-verification
 [chart]: https://os-checker.github.io/distributed-verification/chart
 
-## Initialization
+# Initialization
 
-### Submodules
+## Submodules
 
 There are three submodules, while only verify-rust-std and kani are needed.
 
@@ -33,7 +33,7 @@ git submodule update --init --recursive verify-rust-std kani
 [WebUI](https://os-checker.github.io/distributed-verification), which is unnecessary to
 initialize in most cases.
 
-### Install kani
+## Install kani
 
 ```bash
 cd kani
@@ -49,7 +49,7 @@ export PATH=$(pwd)/scripts:$PATH
 
 There is a bug in kani as referenced above, so a patch is made to let dv work.
 
-### Install dv and vrs
+## Install dv and vrs
 
 ```bash
 cargo install --path . --locked
@@ -235,4 +235,28 @@ which precomputes all the JSON data that the frontend requires by aggregating
 
 [data repo]: https://github.com/os-checker/verify-rust-std_data
 
+## Testing
+
+`tests` folder contains snapshot tests to ensure that hash values of kani verifications
+change if and only if relevant code change. But they do change when a Rust toolchain
+bumps for various reasons, say toolchain path to the libstd source code will change, and 
+the Rust compiler use unstable mangled names and unstable hash algorithm.
+
+In any case to update snapshots, run `UPDATE_EXPECT=1 cargo test`.
+
+The `test` and `verify` workflows also run tests to ensure difference correctness.
+
+# Troubles
+
+At the time of writing, there are over 31 issues in the repo. The main ones are:
+* [Partitioned proof runners regularly receive shutdown or communication lost][#143]
+* [compiler_builtins cannot call functions through upstream monomorphizations][#111]
+  * kani[#4312] has been submitted but not merged for months
+* [Function names and monomorphization][#129]
+* [Should mangled_name be considered as a part of hash computation?][#68]
+
+[#129]: https://github.com/os-checker/distributed-verification/issues/129
+[#111]: https://github.com/os-checker/distributed-verification/issues/111
+[#4312]: https://github.com/model-checking/kani/pull/4312
+[#68]: https://github.com/os-checker/distributed-verification/issues/68
 
