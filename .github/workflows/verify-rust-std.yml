@@ -1,7 +1,8 @@
 name: Verify Rust Std (kani)
 
 on:
-  push:
+  # push:
+  workflow_dispatch:
 
 jobs:
   kani-list-amd64:
