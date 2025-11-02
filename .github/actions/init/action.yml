@@ -1,0 +1,54 @@
+name: Initialize and Install kani
+
+inputs:
+  os:
+    description: os that runs-os takes
+    type: string
+
+runs:
+  using: "composite"
+  steps:
+    - name: Init Submodules
+      shell: bash
+      run: .github/workflows/init-submodules.sh
+
+    - name: Install kani
+      shell: bash
+      run: ./.github/install-kani.sh
+
+    - name: Install verify_rust_std
+      shell: bash
+      run: cargo install --path . --locked --debug
+
+    - name: Generate kani-list_arr.json
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: .github/actions/init/gen_kani_list.sh
+
+    #
+    # - name: verify_rust_std kani-run
+    #   shell: bash
+    #   # This should takes the same verification time as the kani cmd above.
+    #   run: verify_rust_std kani-run intrinsics::verify::should_succeed_i32_to_u32
+
+    - name: verify_rust_std kani-list
+      shell: bash
+      # This should takes the same verification time as `kani autoharness --list`.
+      # run: verify_rust_std kani-list
+      run: |
+        cp assets/kani-list_vrs.json kani-list.json # local kani-list.json
+        .github/actions/init/partition.sh
+        mkdir -p output
+        mv kani-list.json output
+        mv kani-list_arr.json output
+        mv partition output
+
+    - name: Upload kani-list.json
+      uses: actions/upload-artifact@v4
+      with:
+        name: kani-list.json-${{ inputs.os }}
+        # The folder `output` is not included when using download-artifact.
+        path: output
+        compression-level: 9
+        if-no-files-found: error

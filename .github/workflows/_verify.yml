@@ -1,0 +1,61 @@
+name: Verify Kani Harnesses
+
+on:
+  workflow_call:
+    inputs:
+      os:
+        description: os that runs-os takes
+        type: string
+
+env:
+  CARGO_TERM_COLOR: always
+  STD_LIBRARY: verify-rust-std/library
+  DEBUG: true
+
+jobs:
+  verify:
+    strategy:
+      fail-fast: false
+      matrix:
+        # os: [ubuntu-24.04-arm, ubuntu-latest]
+        partition: [1,2,3,4,5,6,7,8]
+    name: ${{ inputs.os }}-partition-${{ matrix.partition }}
+    runs-on: ${{ inputs.os }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Download kani-list.json
+        uses: actions/download-artifact@v4
+        with:
+          name: kani-list.json-${{ inputs.os }}
+
+      - name: View Partitioned Proofs
+        run: |
+          ls -alh
+          # head -n 100 kani-list.json
+          cat partition/${{ matrix.partition }}.json
+
+      - name: Init Submodules
+        shell: bash
+        run: .github/workflows/init-submodules.sh
+    
+      - name: Install kani
+        shell: bash
+        run: bash ./.github/install-kani.sh
+
+      - name: Install verify_rust_std CLI
+        run: cargo install --path . --locked --debug
+
+      - name: Verify Proofs
+        run: |
+          verify_rust_std kani-run-no-auto \
+            $( jq -r 'join(" ")' partition/${{ matrix.partition }}.json ) \
+            | tee autoharness-verification.log
+
+      - name: Upload autoharness-verification.log
+        uses: actions/upload-artifact@v4
+        with:
+          name: autoharness-verification.log-${{ inputs.os }}-partition-${{ matrix.partition }}
+          path: autoharness-verification.log
+          compression-level: 9
+          if-no-files-found: error

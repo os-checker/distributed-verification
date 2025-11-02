@@ -1,0 +1,20 @@
+name: Generate kani-list
+
+on:
+  workflow_call:
+    inputs:
+      os:
+        description: os that runs-os takes
+        type: string
+
+jobs:
+  gen-kani-list:
+    name: ${{ inputs.os }}
+    runs-on: ${{ inputs.os }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Init
+        uses: ./.github/actions/init
+        with:
+          os: ${{ inputs.os }}
