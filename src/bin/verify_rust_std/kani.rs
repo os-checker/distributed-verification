@@ -95,7 +95,7 @@ impl KaniArgs {
     // The arguments must be exact harness names.
     fn new_for_run_no_auto(v_harness: &[String]) -> Self {
         let mut this = Self::basic(VERIFY_STD);
-        this.add_slice(&["--output-format=terse", "--no-assert-contracts", "--exact", "-j=3"]);
+        this.add_slice(&["--output-format=terse", "--no-assert-contracts", "--exact"]);
 
         // See https://github.com/model-checking/kani/issues/4079#issuecomment-3459290399
         this.args.reserve(v_harness.len() * 2);
